@@ -1,0 +1,186 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica matemática I}
+\fancyhead[c]{Problemas sección 1.6}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+
+\section*{Solución: Ley de Conservación para la Ecuación de Ondas sin Fuentes}
+
+\subsection*{1. Planteamiento del Problema}
+Considérese la ecuación de ondas escalar en un medio homogéneo y sin fuentes, definida por:
+\begin{equation}
+    \nabla^2\psi(\mathbf{r}, t) - \frac{1}{v^2} \ddot{\psi}(\mathbf{r}, t) = 0
+\end{equation}
+donde $\psi(\mathbf{r}, t)$ es un campo escalar real, $\ddot{\psi}$ representa la segunda derivada temporal ($\partial^2\psi / \partial t^2$) y $v$ es la velocidad de propagación de la onda. El objetivo es demostrar que esta ecuación puede expresarse como una ley de conservación de la forma:
+\begin{equation}
+    \nabla \cdot \mathbf{S} + \frac{\partial E}{\partial t} = 0
+\end{equation}
+
+\subsection*{2. Desarrollo Matemático Paso a Paso}
+
+\textbf{Paso 1: Multiplicación por la derivada temporal.}
+Multiplicamos la ecuación de ondas original por $\dot{\psi} = \frac{\partial \psi}{\partial t}$:
+\begin{equation}
+    \dot{\psi} \nabla^2\psi - \frac{1}{v^2} \dot{\psi} \ddot{\psi} = 0
+\end{equation}
+
+\textbf{Paso 2: Identificación de la derivada temporal de la energía cinética.}
+Observamos que el segundo término contiene el producto de una función por su derivada, lo que permite reescribirlo como la derivada de un cuadrado:
+\begin{equation}
+    \dot{\psi} \ddot{\psi} = \frac{1}{2} \frac{\partial}{\partial t} (\dot{\psi})^2
+\end{equation}
+Por lo tanto, el término temporal de la ecuación queda como:
+\begin{equation}
+    \frac{1}{v^2} \dot{\psi} \ddot{\psi} = \frac{\partial}{\partial t} \left( \frac{1}{2v^2} \dot{\psi}^2 \right)
+\end{equation}
+
+\textbf{Paso 3: Aplicación de identidades vectoriales al término espacial.}
+Para el término $\dot{\psi} \nabla^2\psi$, utilizamos la identidad vectorial $\nabla \cdot (\phi \mathbf{A}) = \phi (\nabla \cdot \mathbf{A}) + \mathbf{A} \cdot \nabla \phi$. 
+Haciendo $\phi = \dot{\psi}$ y $\mathbf{A} = \nabla \psi$:
+\begin{equation}
+    \nabla \cdot (\dot{\psi} \nabla \psi) = \dot{\psi} (\nabla \cdot \nabla \psi) + \nabla \psi \cdot \nabla \dot{\psi} = \dot{\psi} \nabla^2\psi + \nabla \psi \cdot \nabla \dot{\psi}
+\end{equation}
+Despejando el término de interés:
+\begin{equation}
+    \dot{\psi} \nabla^2\psi = \nabla \cdot (\dot{\psi} \nabla \psi) - \nabla \psi \cdot \nabla \dot{\psi}
+\end{equation}
+
+\textbf{Paso 4: Transformación del término $\nabla \psi \cdot \nabla \dot{\psi}$.}
+Dado que las derivadas espaciales y temporales conmutan en funciones regulares, tenemos que $\nabla \dot{\psi} = \frac{\partial}{\partial t} (\nabla \psi)$. Entonces:
+\begin{equation}
+    \nabla \psi \cdot \nabla \dot{\psi} = \nabla \psi \cdot \frac{\partial}{\partial t} (\nabla \psi) = \frac{1}{2} \frac{\partial}{\partial t} (\nabla \psi)^2
+\end{equation}
+
+\textbf{Paso 5: Reensamblaje de la ecuación.}
+Sustituimos los resultados de los pasos 2, 3 y 4 en la ecuación del Paso 1:
+\begin{equation}
+    \nabla \cdot (\dot{\psi} \nabla \psi) - \frac{1}{2} \frac{\partial}{\partial t} (\nabla \psi)^2 - \frac{\partial}{\partial t} \left( \frac{1}{2v^2} \dot{\psi}^2 \right) = 0
+\end{equation}
+Agrupando las derivadas temporales:
+\begin{equation}
+    \nabla \cdot (\dot{\psi} \nabla \psi) - \frac{\partial}{\partial t} \left[ \frac{1}{2} (\nabla \psi)^2 + \frac{1}{2v^2} \dot{\psi}^2 \right] = 0
+\end{equation}
+
+\subsection*{3. Definición de Magnitudes Físicas}
+Para que la expresión coincida con la ley de conservación estándar, multiplicamos toda la ecuación por una constante negativa $-K$ (donde $K$ depende de las propiedades físicas del medio):
+\begin{equation}
+    \nabla \cdot (-K \dot{\psi} \nabla \psi) + \frac{\partial}{\partial t} \left[ \frac{K}{2} \left( (\nabla \psi)^2 + \frac{1}{v^2} \dot{\psi}^2 \right) \right] = 0
+\end{equation}
+
+Definimos entonces:
+\begin{itemize}
+    \item \textbf{Vector de Poynting Escalar ($\mathbf{S}$):} $\mathbf{S} = -K\dot{\psi}\nabla\psi$. Representa la \textbf{densidad de flujo de energía} de la onda (energía que cruza la unidad de área por unidad de tiempo).
+    \item \textbf{Densidad Volumétrica de Energía ($E$):} $E = \frac{K}{2} [(\nabla\psi)^2 + \frac{1}{v^2} \dot{\psi}^2]$. Representa la energía almacenada por unidad de volumen en el campo ondulatorio.
+\end{itemize}
+
+\subsection*{4. Conclusión}
+La ecuación final toma la forma de una **ecuación de continuidad**:
+\begin{equation}
+    \nabla \cdot \mathbf{S} + \frac{\partial E}{\partial t} = 0
+\end{equation}
+Esta expresión garantiza que, en ausencia de fuentes, la variación temporal de la energía en un volumen es igual al flujo neto de energía a través de la superficie que lo rodea.
+
+\section*{Solución: Conservación de la Probabilidad (Ecuación de Schrödinger)}
+
+\subsection*{1. Planteamiento del Problema}
+El objetivo es demostrar que a partir de la ecuación de Schrödinger dependiente del tiempo para una partícula de masa $m$ bajo un potencial $V(\mathbf{r}, t)$, se deriva una ley de conservación (ecuación de continuidad) para la densidad de probabilidad $\rho$ y la densidad de corriente de probabilidad $\mathbf{J}$.
+
+La ecuación de Schrödinger es:
+\begin{equation}
+    -\frac{\hbar^2}{2m} \nabla^2\Psi + V\Psi = i\hbar \frac{\partial\Psi}{\partial t}
+\end{equation}
+
+\subsection*{2. Procedimiento Matemático}
+
+\textbf{Paso 1: Multiplicación por el complejo conjugado.}
+Multiplicamos la ecuación original por $\Psi^*$ por la izquierda:
+\begin{equation}
+    -\frac{\hbar^2}{2m} \Psi^* \nabla^2\Psi + \Psi^* V\Psi = i\hbar \Psi^* \frac{\partial\Psi}{\partial t} \quad \text{(Eq. A)}
+\end{equation}
+
+\textbf{Paso 2: Obtención de la ecuación compleja conjugada.}
+Tomamos el complejo conjugado de la ecuación de Schrödinger original. Suponiendo que el potencial $V$ es real ($V = V^*$), obtenemos:
+\begin{equation}
+    -\frac{\hbar^2}{2m} \nabla^2\Psi^* + V\Psi^* = -i\hbar \frac{\partial\Psi^*}{\partial t}
+\end{equation}
+Ahora multiplicamos esta ecuación por $\Psi$ por la izquierda:
+\begin{equation}
+    -\frac{\hbar^2}{2m} \Psi \nabla^2\Psi^* + \Psi V\Psi^* = -i\hbar \Psi \frac{\partial\Psi^*}{\partial t} \quad \text{(Eq. B)}
+\end{equation}
+
+\textbf{Paso 3: Resta de las ecuaciones (A) y (B).}
+Restamos la ecuación (B) de la ecuación (A):
+\begin{equation}
+    -\frac{\hbar^2}{2m} (\Psi^* \nabla^2\Psi - \Psi \nabla^2\Psi^*) + (V\Psi^*\Psi - V\Psi\Psi^*) = i\hbar \left( \Psi^* \frac{\partial\Psi}{\partial t} + \Psi \frac{\partial\Psi^*}{\partial t} \right)
+\end{equation}
+Observamos que los términos del potencial se cancelan mutuamente ($V\Psi^*\Psi - V\Psi\Psi^* = 0$).
+
+\textbf{Paso 4: Identificación de la derivada temporal de la densidad.}
+El término a la derecha puede simplificarse usando la regla del producto para la derivada temporal:
+\begin{equation}
+    \Psi^* \frac{\partial\Psi}{\partial t} + \Psi \frac{\partial\Psi^*}{\partial t} = \frac{\partial}{\partial t} (\Psi^* \Psi)
+\end{equation}
+Definimos la \textbf{densidad volumétrica de probabilidad} como $\rho = \Psi^* \Psi$. Así, el lado derecho es $i\hbar \frac{\partial\rho}{\partial t}$.
+
+\textbf{Paso 5: Identificación de la divergencia de la corriente.}
+Para el término de la izquierda, utilizamos la identidad vectorial $\nabla \cdot (f \nabla g) = f \nabla^2 g + \nabla f \cdot \nabla g$. Esto nos permite escribir:
+\begin{equation}
+    \nabla \cdot (\Psi^* \nabla\Psi - \Psi \nabla\Psi^*) = \Psi^* \nabla^2\Psi + \nabla\Psi^* \cdot \nabla\Psi - \Psi \nabla^2\Psi^* - \nabla\Psi \cdot \nabla\Psi^*
+\end{equation}
+Los términos de producto de gradientes se cancelan, quedando:
+\begin{equation}
+    \Psi^* \nabla^2\Psi - \Psi \nabla^2\Psi^* = \nabla \cdot (\Psi^* \nabla\Psi - \Psi \nabla\Psi^*)
+\end{equation}
+
+\textbf{Paso 6: Reensamblaje de la ley de conservación.}
+Sustituyendo los resultados de los pasos 4 y 5 en la ecuación de la resta:
+\begin{equation}
+    -\frac{\hbar^2}{2m} \nabla \cdot (\Psi^* \nabla\Psi - \Psi \nabla\Psi^*) = i\hbar \frac{\partial\rho}{\partial t}
+\end{equation}
+Dividiendo ambos lados por $i\hbar$ y reordenando:
+\begin{equation}
+    \frac{\partial\rho}{\partial t} + \nabla \cdot \left[ \frac{\hbar}{2im} (\Psi^* \nabla\Psi - \Psi \nabla\Psi^*) \right] = 0
+\end{equation}
+
+\subsection*{3. Definición de Magnitudes Físicas}
+Definimos la \textbf{densidad de corriente de probabilidad} $\mathbf{J}$ como:
+\begin{equation}
+    \mathbf{J} = \frac{\hbar}{2im} (\Psi^* \nabla\Psi - \Psi \nabla\Psi^*)
+\end{equation}
+La expresión final toma la forma de una ecuación de continuidad:
+\begin{equation}
+    \nabla \cdot \mathbf{J} + \frac{\partial\rho}{\partial t} = 0
+\end{equation}
+
+\subsection*{4. Conclusión}
+Se ha demostrado que la probabilidad se conserva localmente en el espacio. El cambio en la probabilidad de encontrar una partícula en un volumen dado es igual al flujo neto de probabilidad a través de la superficie que encierra dicho volumen. Esta estructura matemática garantiza que la normalización de la función de onda se mantenga constante en el tiempo.
+
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}

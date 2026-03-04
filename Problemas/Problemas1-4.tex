@@ -1,0 +1,816 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica matemática I}
+\fancyhead[c]{Problemas sección 1.4}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+\section*{Solución de Problemas - Página 22: Gradiente y Propiedades}
+
+\subsection*{1. Gradiente en Coordenadas Cartesianas y Cilíndricas}
+\textbf{Enunciado:} Escriba $\nabla \phi$ en coordenadas cartesianas y cilíndricas.
+
+\begin{itemize}
+    \item \textbf{Cartesianas $(x, y, z)$:} Con factores de escala $h_x = h_y = h_z = 1$ \cite{82}:
+    \begin{equation}
+        \nabla \phi = \hat{i} \frac{\partial \phi}{\partial x} + \hat{j} \frac{\partial \phi}{\partial y} + \hat{k} \frac{\partial \phi}{\partial z}
+    \end{equation}
+    \item \textbf{Cilíndricas $(\rho, \phi, z)$:} Con factores de escala $h_\rho = 1, h_\phi = \rho, h_z = 1$ \cite{82}:
+    \begin{equation}
+        \nabla \phi = \hat{e}_\rho \frac{\partial \phi}{\partial \rho} + \frac{\hat{e}_\phi}{\rho} \frac{\partial \phi}{\partial \phi} + \hat{e}_z \frac{\partial \phi}{\partial z}
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Regla del Producto para el Gradiente}
+\textbf{Enunciado:} Demuestre que: $\nabla(\phi \psi) = \phi \nabla \psi + \psi \nabla \phi$.
+
+\begin{itemize}
+    \item \textbf{Paso 1:} Aplicamos la definición general en coordenadas curvilíneas \cite{79, 82}:
+    \begin{equation}
+        \nabla(\phi \psi) = \sum_{i=1}^3 \frac{\hat{e}_i}{h_i} \frac{\partial(\phi \psi)}{\partial u_i}
+    \end{equation}
+    \item \textbf{Paso 2:} Aplicamos la regla de la derivada del producto:
+    \begin{equation}
+        \nabla(\phi \psi) = \sum_{i=1}^3 \frac{\hat{e}_i}{h_i} \left( \phi \frac{\partial \psi}{\partial u_i} + \psi \frac{\partial \phi}{\partial u_i} \right)
+    \end{equation}
+    \item \textbf{Paso 3:} Distribuimos el sumatorio:
+    \begin{equation}
+        \nabla(\phi \psi) = \phi \left( \sum_{i=1}^3 \frac{\hat{e}_i}{h_i} \frac{\partial \psi}{\partial u_i} \right) + \psi \left( \sum_{i=1}^3 \frac{\hat{e}_i}{h_i} \frac{\partial \phi}{\partial u_i} \right) = \phi \nabla \psi + \psi \nabla \phi \quad \text{(Q.E.D.)}
+    \end{equation}
+\end{itemize}
+
+\subsection*{3. Gradiente de una Función Radial}
+\textbf{Enunciado:} Si $f = f(r)$ con $r = \sqrt{x^2 + y^2 + z^2}$, demuestre que $\nabla f(r) = \hat{r} \frac{df(r)}{dr}$. Si $\nabla f(r) = 2r^4\hat{r}$, halle $f(r)$.
+
+\begin{itemize}
+    \item \textbf{Demostración:} En esféricas, el gradiente depende solo de $r$ si $f$ es radial \cite{82}:
+    \begin{equation}
+        \nabla f(r) = \frac{\hat{e}_r}{h_r} \frac{\partial f}{\partial r} + \frac{\hat{e}_\theta}{r} \frac{\partial f}{\partial \theta} + \frac{\hat{e}_\phi}{r \sin \theta} \frac{\partial f}{\partial \phi}
+    \end{equation}
+    Como $\frac{\partial f}{\partial \theta} = 0$ y $\frac{\partial f}{\partial \phi} = 0$, y $h_r = 1$, se tiene $\nabla f(r) = \hat{r} \frac{df}{dr}$.
+    \item \textbf{Cálculo de $f(r)$:} Si $\hat{r} \frac{df}{dr} = 2r^4\hat{r}$, entonces:
+    \begin{equation}
+        \frac{df}{dr} = 2r^4 \implies f(r) = \int 2r^4 dr = \frac{2}{5}r^5 + C
+    \end{equation}
+\end{itemize}
+
+\subsection*{4. Vector Normal y Plano Tangente}
+\textbf{Enunciado:} Hallar el vector unitario normal a la superficie $x^2y + 2xz = 4$ en $(1, 2, 1)$ y la ecuación del plano tangente.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Gradiente de la superficie.} Sea $g(x,y,z) = x^2y + 2xz - 4 = 0$ \cite{82}:
+    \begin{equation}
+        \nabla g = (2xy + 2z)\hat{i} + x^2\hat{j} + 2x\hat{k}
+    \end{equation}
+    \item \textbf{Paso 2: Evaluación en $P(1, 2, 1)$.}
+    \begin{equation}
+        \nabla g(1,2,1) = (2(1)(2) + 2(1))\hat{i} + (1)^2\hat{j} + 2(1)\hat{k} = 6\hat{i} + \hat{j} + 2\hat{k}
+    \end{equation}
+    \item \textbf{Paso 3: Vector unitario normal $\hat{n}$.}
+    \begin{equation}
+        \hat{n} = \frac{\nabla g}{|\nabla g|} = \frac{6\hat{i} + \hat{j} + 2\hat{k}}{\sqrt{6^2 + 1^2 + 2^2}} = \frac{6\hat{i} + \hat{j} + 2\hat{k}}{\sqrt{41}}
+    \end{equation}
+    \item \textbf{Paso 4: Plano tangente.} $A(x-x_0) + B(y-y_0) + C(z-z_0) = 0$:
+    \begin{equation}
+        6(x-1) + 1(y-2) + 2(z-1) = 0 \implies 6x + y + 2z - 10 = 0
+    \end{equation}
+\end{itemize}
+
+\subsection*{5. Ángulo entre Superficies}
+\textbf{Enunciado:} Hallar el ángulo entre $x^2 + y^2 + z^2 = 9$ y $x^2 + y^2 - z = 3$ en $(2, -1, 2)$.
+
+\begin{itemize}
+    \item \textbf{Gradientes en $P(2, -1, 2)$:} \cite{83}
+    \begin{align*}
+        \nabla g_1 &= 2x\hat{i} + 2y\hat{j} + 2z\hat{k} = 4\hat{i} - 2\hat{j} + 4\hat{k} \quad |\nabla g_1| = 6 \\
+        \nabla g_2 &= 2x\hat{i} + 2y\hat{j} - \hat{k} = 4\hat{i} - 2\hat{j} - \hat{k} \quad |\nabla g_2| = \sqrt{21}
+    \end{align*}
+    \item \textbf{Coseno del ángulo:}
+    \begin{equation}
+        \cos \theta = \frac{\nabla g_1 \cdot \nabla g_2}{|\nabla g_1| |\nabla g_2|} = \frac{16 + 4 - 4}{6\sqrt{21}} = \frac{16}{6\sqrt{21}} = \frac{8}{3\sqrt{21}} \implies \theta = \cos^{-1}\left(\frac{8}{3\sqrt{21}}\right)
+    \end{equation}
+\end{itemize}
+
+\subsection*{6. Derivada Direccional}
+\textbf{Enunciado:} Hallar la derivada direccional de $\phi = x^2yz + 4xz^2$ en $(1, -2, -1)$ en dirección $\mathbf{a} = 2\hat{i} - \hat{j} - 2\hat{k}$.
+
+\begin{itemize}
+    \item \textbf{Gradiente en $P$:} $\nabla \phi = (2xyz + 4z^2)\hat{i} + x^2z\hat{j} + (x^2y + 8xz)\hat{k} = 8\hat{i} - \hat{j} - 10\hat{k}$ \cite{83}.
+    \item \textbf{Vector unitario $\hat{u}$:} $\hat{u} = \frac{\mathbf{a}}{|\mathbf{a}|} = \frac{2\hat{i} - \hat{j} - 2\hat{k}}{3}$.
+    \item \textbf{Resultado:} $\frac{d\phi}{dl} = \nabla \phi \cdot \hat{u} = \frac{16 + 1 + 20}{3} = \frac{37}{3}$.
+\end{itemize}
+
+\subsection*{7. Gradiente de un Producto Escalar}
+\textbf{Enunciado:} Si $\mathbf{A} = \text{constante}$, demuestre que: $\nabla(\mathbf{r} \cdot \mathbf{A}) = \mathbf{A}$.
+
+\begin{itemize}
+    \item $\mathbf{r} \cdot \mathbf{A} = xA_x + yA_y + zA_z$.
+    \item $\nabla(\mathbf{r} \cdot \mathbf{A}) = \hat{i} \frac{\partial}{\partial x}(xA_x) + \hat{j} \frac{\partial}{\partial y}(yA_y) + \hat{k} \frac{\partial}{\partial z}(zA_z) = A_x\hat{i} + A_y\hat{j} + A_z\hat{k} = \mathbf{A}$ \cite{83}.
+\end{itemize}
+
+\subsection*{8. Gradiente de Coordenadas Curvilíneas}
+\textbf{Enunciado:} Demuestre que $\nabla u_i = \hat{e}_i/h_i$.
+
+\begin{itemize}
+    \item Usamos la definición del gradiente para la función $\phi = u_i$ \cite{79, 83}:
+    \begin{equation}
+        \nabla u_i = \sum_{k=1}^3 \frac{\hat{e}_k}{h_k} \frac{\partial u_i}{\partial u_k}
+    \end{equation}
+    \item Dado que $\frac{\partial u_i}{\partial u_k} = \delta_{ik}$ (vale 1 solo si $i=k$), entonces $\nabla u_i = \frac{\hat{e}_i}{h_i}$.
+\end{itemize}
+
+\subsection*{9. Bases Recíprocas}
+\textbf{Enunciado:} Demuestre que: $\frac{\partial \mathbf{r}}{\partial u_i} \cdot \nabla u_j = \delta_{ij}$.
+
+\begin{itemize}
+    \item \textbf{Paso 1:} Recordamos que $\frac{\partial \mathbf{r}}{\partial u_i} = h_i \hat{e}_i$ \cite{41} y $\nabla u_j = \frac{\hat{e}_j}{h_j}$ (del problema anterior).
+    \item \textbf{Paso 2:} Realizamos el producto escalar \cite{83}:
+    \begin{equation}
+        (h_i \hat{e}_i) \cdot \left( \frac{\hat{e}_j}{h_j} \right) = \frac{h_i}{h_j} (\hat{e}_i \cdot \hat{e}_j) = \frac{h_i}{h_j} \delta_{ij}
+    \end{equation}
+    \item \textbf{Conclusión:} Si $i \neq j$, el resultado es 0. Si $i = j$, el resultado es $\frac{h_i}{h_i} (1) = 1$. Por tanto, es igual a $\delta_{ij}$.
+\end{itemize}
+
+\section*{Solución de Problemas - Página 23: Gradiente (Continuación)}
+
+\subsection*{1. Invarianza del Gradiente}
+\textbf{Enunciado:} Partiendo de la forma cartesiana del gradiente de un escalar: $\nabla\phi = \sum \hat{\varepsilon}_i \frac{\partial \phi}{\partial x_i}$ y utilizando argumentos de la sección 1.2, obtenga la forma general en coordenadas curvilíneas. Esto demuestra la invarianza del gradiente bajo transformación de coordenadas.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Relación de derivadas parciales.} Usamos la regla de la cadena para expresar la derivada respecto a las coordenadas cartesianas $x_j$ en términos de las coordenadas curvilíneas $u_i$:
+    \begin{equation}
+        \frac{\partial \phi}{\partial x_j} = \sum_{i=1}^3 \frac{\partial \phi}{\partial u_i} \frac{\partial u_i}{\partial x_j}
+    \end{equation}
+    \item \textbf{Paso 2: Sustitución en la forma cartesiana.} Sustituimos esta expresión en la definición del operador nabla en cartesianas ($\hat{\varepsilon}_j$ son los vectores unitarios $\hat{i}, \hat{j}, \hat{k}$):
+    \begin{equation}
+        \nabla\phi = \sum_{j=1}^3 \hat{\varepsilon}_j \left( \sum_{i=1}^3 \frac{\partial \phi}{\partial u_i} \frac{\partial u_i}{\partial x_j} \right)
+    \end{equation}
+    \item \textbf{Paso 3: Reordenamiento de sumatorias.} Intercambiamos el orden de la suma para agrupar los términos que dependen de $u_i$:
+    \begin{equation}
+        \nabla\phi = \sum_{i=1}^3 \frac{\partial \phi}{\partial u_i} \left( \sum_{j=1}^3 \hat{\varepsilon}_j \frac{\partial u_i}{\partial x_j} \right)
+    \end{equation}
+    \item \textbf{Paso 4: Identificación del gradiente de la coordenada.} El término entre paréntesis es, por definición, el gradiente de la función escalar $u_i$ expresado en coordenadas cartesianas ($\nabla u_i$):
+    \begin{equation}
+        \nabla\phi = \sum_{i=1}^3 \frac{\partial \phi}{\partial u_i} (\nabla u_i)
+    \end{equation}
+    \item \textbf{Paso 5: Resultado final.} Utilizando el resultado del problema 8 de la página 22, sabemos que $\nabla u_i = \frac{\hat{e}_i}{h_i}$. Sustituyendo obtenemos la forma invariante \cite{79, 84}:
+    \begin{equation}
+        \nabla\phi = \sum_{i=1}^3 \frac{\hat{e}_i}{h_i} \frac{\partial \phi}{\partial u_i}
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Campo Electrostático de un Dipolo}
+\textbf{Enunciado:} El potencial electrostático de un dipolo eléctrico $\mathbf{p} = p_0 \hat{e}_z$ es $\phi = \frac{p_0 \cos \theta}{r^2}$, con $p_0$ constante. Calcule el campo electrostático $\mathbf{E} = -\nabla\phi$ en coordenadas esféricas.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Definición del gradiente en esféricas.} Aplicamos la fórmula general con $h_r=1, h_\theta=r, h_\phi=r \sin\theta$ \cite{82}:
+    \begin{equation}
+        \nabla\phi = \hat{e}_r \frac{\partial \phi}{\partial r} + \frac{\hat{e}_\theta}{r} \frac{\partial \phi}{\partial \theta} + \frac{\hat{e}_\phi}{r \sin \theta} \frac{\partial \phi}{\partial \phi}
+    \end{equation}
+    \item \textbf{Paso 2: Cálculo de derivadas parciales.}
+    \begin{enumerate}
+        \item Respecto a $r$: $\frac{\partial}{\partial r} \left( \frac{p_0 \cos\theta}{r^2} \right) = - \frac{2 p_0 \cos\theta}{r^3}$
+        \item Respecto a $\theta$: $\frac{\partial}{\partial \theta} \left( \frac{p_0 \cos\theta}{r^2} \right) = - \frac{p_0 \sin\theta}{r^2}$
+        \item Respecto a $\phi$: $\frac{\partial}{\partial \phi} (\phi) = 0$ (el potencial no depende de la longitud).
+    \end{enumerate}
+    \item \textbf{Paso 3: Construcción del vector $\mathbf{E}$.}
+    \begin{equation}
+        \mathbf{E} = -\left[ \hat{e}_r \left( -\frac{2 p_0 \cos\theta}{r^3} \right) + \frac{\hat{e}_\theta}{r} \left( -\frac{p_0 \sin\theta}{r^2} \right) + 0 \right]
+    \end{equation}
+    \item \textbf{Resultado:}
+    \begin{equation}
+        \mathbf{E} = \frac{p_0}{r^3} (2 \cos \theta \hat{e}_r + \sin \theta \hat{e}_\theta) \quad \text{\cite{84, 99}}
+    \end{equation}
+\end{itemize}
+
+\subsection*{3. Ecuación Básica de la Hidrostática}
+\textbf{Enunciado:} La ecuación básica de la hidrostática tiene la forma $\nabla P + \rho \nabla G = 0$, donde $P$ es la presión, $\rho$ la densidad y $G$ el potencial gravitacional. Demuestre que, en cada punto, las normales a las superficies de presión y potencial constante son paralelas.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Interpretación física del gradiente.} De la teoría (página 21), sabemos que el gradiente de una función escalar es un vector perpendicular (normal) a la superficie donde dicha función es constante ($\phi = \text{cte}$) \cite{80, 84}.
+    \item \textbf{Paso 2: Análisis de vectores normales.}
+    \begin{itemize}
+        \item El vector $\mathbf{n}_P = \nabla P$ es normal a la superficie de presión constante.
+        \item El vector $\mathbf{n}_G = \nabla G$ es normal a la superficie de potencial constante.
+    \end{itemize}
+    \item \textbf{Paso 3: Relación de proporcionalidad.} De la ecuación dada:
+    \begin{equation}
+        \nabla P = -\rho \nabla G
+    \end{equation}
+    \item \textbf{Conclusión:} Como la densidad $\rho$ es un escalar, esta ecuación indica que el vector $\nabla P$ es un múltiplo escalar del vector $\nabla G$. En el análisis vectorial, si dos vectores están relacionados por un escalar ($\mathbf{A} = k \mathbf{B}$), estos son **paralelos** \cite{84}. Por lo tanto, las normales a ambas superficies coinciden en dirección.
+\end{itemize}
+
+
+\section*{Solución de Problemas - Página 26: Divergencia}
+
+En esta sección se demuestra la equivalencia entre la definición geométrica de la divergencia ($\text{Div }\mathbf{B}$) y la aplicación formal del operador nabla ($\nabla \cdot \mathbf{B}$), además de obtener sus expresiones en diferentes sistemas.
+
+\subsection*{1. Demostración de $\nabla \cdot \mathbf{B} = \text{Div }\mathbf{B}$}
+La definición general de la divergencia en coordenadas curvilíneas ortogonales es \cite{88, 90}:
+\begin{equation}
+    \text{Div }\mathbf{B} = \frac{1}{h} \sum_{i=1}^3 \frac{\partial}{\partial u_i} \left( \frac{B_i h}{h_i} \right) \quad \text{donde } h = h_1 h_2 h_3
+\end{equation}
+
+\textbf{A. Coordenadas Cartesianas $(x, y, z)$:}
+Con factores de escala $h_x = h_y = h_z = 1 \implies h = 1$ \cite{82, 90}:
+\begin{itemize}
+    \item \textbf{Cálculo de Div $\mathbf{B}$:}
+    \begin{equation}
+        \text{Div }\mathbf{B} = \frac{1}{1} \left[ \frac{\partial}{\partial x}(B_x \cdot 1) + \frac{\partial}{\partial y}(B_y \cdot 1) + \frac{\partial}{\partial z}(B_z \cdot 1) \right] = \frac{\partial B_x}{\partial x} + \frac{\partial B_y}{\partial y} + \frac{\partial B_z}{\partial z}
+    \end{equation}
+    \item \textbf{Cálculo de $\nabla \cdot \mathbf{B}$:}
+    \begin{equation}
+        (\hat{i} \partial_x + \hat{j} \partial_y + \hat{k} \partial_z) \cdot (B_x \hat{i} + B_y \hat{j} + B_z \hat{k}) = \frac{\partial B_x}{\partial x} + \frac{\partial B_y}{\partial y} + \frac{\partial B_z}{\partial z}
+    \end{equation}
+\end{itemize}
+\textbf{Conclusión:} En cartesianas ambos coinciden directamente \cite{90}.
+
+\textbf{B. Coordenadas Cilíndricas $(\rho, \phi, z)$:}
+Con factores de escala $h_\rho = 1, h_\phi = \rho, h_z = 1 \implies h = \rho$ \cite{73, 90}:
+\begin{itemize}
+    \item \textbf{Cálculo de Div $\mathbf{B}$:}
+    \begin{equation}
+        \text{Div }\mathbf{B} = \frac{1}{\rho} \left[ \frac{\partial}{\partial \rho}(\rho B_\rho) + \frac{\partial B_\phi}{\partial \phi} + \frac{\partial (\rho B_z)}{\partial z} \right] = \frac{1}{\rho} \frac{\partial}{\partial \rho}(\rho B_\rho) + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi} + \frac{\partial B_z}{\partial z}
+    \end{equation}
+    \item \textbf{Cálculo de $\nabla \cdot \mathbf{B}$:}
+    Usamos el operador $\nabla = \hat{e}_\rho \frac{\partial}{\partial \rho} + \frac{\hat{e}_\phi}{\rho} \frac{\partial}{\partial \phi} + \hat{e}_z \frac{\partial}{\partial z}$ y recordamos que las derivadas de los vectores unitarios son $\frac{\partial \hat{e}_\rho}{\partial \phi} = \hat{e}_\phi$ y $\frac{\partial \hat{e}_\phi}{\partial \phi} = -\hat{e}_\rho$ \cite{50, 82, 90}:
+    \begin{equation}
+        \nabla \cdot \mathbf{B} = \left( \hat{e}_\rho \frac{\partial}{\partial \rho} + \frac{\hat{e}_\phi}{\rho} \frac{\partial}{\partial \phi} + \hat{e}_z \frac{\partial}{\partial z} \right) \cdot (B_\rho \hat{e}_\rho + B_\phi \hat{e}_\phi + B_z \hat{e}_z)
+    \end{equation}
+    Al expandir, el término crítico es la derivada respecto a $\phi$:
+    \begin{equation}
+        \frac{\hat{e}_\phi}{\rho} \cdot \frac{\partial (B_\rho \hat{e}_\rho + B_\phi \hat{e}_\phi)}{\partial \phi} = \frac{\hat{e}_\phi}{\rho} \cdot \left[ \frac{\partial B_\rho}{\partial \phi} \hat{e}_\rho + B_\rho \hat{e}_\phi + \frac{\partial B_\phi}{\partial \phi} \hat{e}_\phi - B_\phi \hat{e}_\rho \right] = \frac{B_\rho}{\rho} + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi}
+    \end{equation}
+    Sumando los términos radiales y de $z$:
+    \begin{equation}
+        \nabla \cdot \mathbf{B} = \frac{\partial B_\rho}{\partial \rho} + \frac{B_\rho}{\rho} + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi} + \frac{\partial B_z}{\partial z} = \frac{1}{\rho} \frac{\partial}{\partial \rho}(\rho B_\rho) + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi} + \frac{\partial B_z}{\partial z}
+    \end{equation}
+\end{itemize}
+\textbf{Conclusión:} Se demuestra que $\nabla \cdot \mathbf{B} = \text{Div }\mathbf{B}$ \cite{90}.
+
+\subsection*{2. Expresiones de $\nabla \cdot \mathbf{B}$}
+\textbf{Cartesianas:}
+\begin{equation}
+    \nabla \cdot \mathbf{B} = \frac{\partial B_x}{\partial x} + \frac{\partial B_y}{\partial y} + \frac{\partial B_z}{\partial z}
+\end{equation}
+
+\textbf{Cilíndricas:}
+\begin{equation}
+    \nabla \cdot \mathbf{B} = \frac{1}{\rho} \frac{\partial}{\partial \rho}(\rho B_\rho) + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi} + \frac{\partial B_z}{\partial z}
+\end{equation}
+
+\subsection*{3. Evaluación de Divergencias con Potencias de $r$}
+\textbf{Enunciado:} Evaluar $\nabla \cdot (r^n \mathbf{r})$ y $\nabla \cdot (r \nabla r^n)$ en coordenadas cartesianas.
+
+\begin{itemize}
+    \item \textbf{Parte A: $\nabla \cdot (r^n \mathbf{r})$} \\
+    Usamos la identidad vectorial $\nabla \cdot (\phi \mathbf{A}) = \phi \nabla \cdot \mathbf{A} + \mathbf{A} \cdot \nabla \phi$ \cite{90}. 
+    Hacemos $\phi = r^n$ y $\mathbf{A} = \mathbf{r}$:
+    \begin{equation*}
+        \nabla \cdot (r^n \mathbf{r}) = r^n (\nabla \cdot \mathbf{r}) + \mathbf{r} \cdot \nabla r^n
+    \end{equation*}
+    Sabemos que $\nabla \cdot \mathbf{r} = 3$ y $\nabla r^n = n r^{n-2} \mathbf{r}$ \cite{109}:
+    \begin{equation*}
+        \nabla \cdot (r^n \mathbf{r}) = 3r^n + \mathbf{r} \cdot (n r^{n-2} \mathbf{r}) = 3r^n + n r^{n-2} (r^2) = (3+n)r^n
+    \end{equation*}
+
+    \item \textbf{Parte B: $\nabla \cdot (r \nabla r^n)$} \\
+    Nuevamente aplicamos la identidad con $\phi = r$ y $\mathbf{A} = \nabla r^n$:
+    \begin{equation*}
+        \nabla \cdot (r \nabla r^n) = r (\nabla \cdot \nabla r^n) + \nabla r^n \cdot \nabla r = r \nabla^2 r^n + \nabla r^n \cdot \nabla r
+    \end{equation*}
+    Usamos las identidades $\nabla^2 r^n = n(n+1)r^{n-2}$ \cite{110} y $\nabla r = \frac{\mathbf{r}}{r}$ \cite{192}:
+    \begin{equation*}
+        \nabla \cdot (r \nabla r^n) = r [n(n+1)r^{n-2}] + (n r^{n-2} \mathbf{r}) \cdot \frac{\mathbf{r}}{r} = n(n+1)r^{n-1} + n r^{n-1} = n(n+2)r^{n-1}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{4. Divergencia Nula del Campo Central}
+\textbf{Enunciado:} Demostrar que $\nabla \cdot (\mathbf{r}/r^3) = 0$ para $r \neq 0$.
+
+Aplicamos el resultado del punto anterior con $n = -3$:
+\begin{equation*}
+    \nabla \cdot (r^{-3} \mathbf{r}) = (3 + (-3))r^{-3} = 0 \cdot r^{-3} = 0 \quad \text{\cite{110}}
+\end{equation*}
+Este campo es fundamental en física pues representa la divergencia de un campo de fuerzas que decae con el cuadrado de la distancia (como el campo eléctrico de una carga puntual).
+
+\subsection*{5. Comprobación del Teorema de Gauss}
+\textbf{Enunciado:} Compruebe el teorema de la divergencia para $\mathbf{A} = 4x\hat{i} - 2y\hat{j} + z^2\hat{k}$ sobre una esfera de radio 4.
+
+\begin{itemize}
+    \item \textbf{Integral de Volumen:}
+    Calculamos la divergencia: $\nabla \cdot \mathbf{A} = \frac{\partial}{\partial x}(4x) + \frac{\partial}{\partial y}(-2y) + \frac{\partial}{\partial z}(z^2) = 4 - 2 + 2z = 2 + 2z$.
+    \begin{equation*}
+        \int_V (2 + 2z) dV = 2 \int_V dV + 2 \int_V z dV = 2 V_{esfera} + 0 = 2 \left( \frac{4}{3}\pi \cdot 4^3 \right) = \frac{512}{3} \pi
+    \end{equation*}
+    La integral de $z$ es nula por simetría respecto al plano $xy$ \cite{91}.
+    \item \textbf{Integral de Superficie:}
+    En la esfera $r=4$, el diferencial de superficie es $d\mathbf{S} = \frac{\mathbf{r}}{4} dS$.
+    $\mathbf{A} \cdot \hat{n} = (4x, -2y, z^2) \cdot (\frac{x}{4}, \frac{y}{4}, \frac{z}{4}) = x^2 - \frac{1}{2}y^2 + \frac{1}{4}z^3$.
+    Al integrar sobre la superficie, los términos impares como $z^3$ se anulan y por isotropía $\oint x^2 dS = \oint y^2 dS = \frac{1}{3} \oint r^2 dS = \frac{1}{3} (16 \cdot 64\pi) = \frac{1024\pi}{3}$.
+    \begin{equation*}
+        \oint_S \mathbf{A} \cdot d\mathbf{S} = \frac{1024\pi}{3} - \frac{1}{2} \frac{1024\pi}{3} = \frac{512\pi}{3}
+    \end{equation*}
+    Los resultados coinciden, verificando el teorema \cite{91}.
+\end{itemize}
+
+\subsection*{6. Flujo a través de un Cilindro}
+\textbf{Enunciado:} Hallar el flujo de $\mathbf{A} = z\hat{i} + x\hat{j} - 3y^2z\hat{k}$ a través de $x^2 + y^2 = 16$.
+
+Calculamos la divergencia: $\nabla \cdot \mathbf{A} = 0 + 0 - 3y^2 = -3y^2$.
+Asumiendo un cilindro cerrado de altura $L$, usamos el teorema de Gauss en coordenadas cilíndricas:
+\begin{equation*}
+    \Phi = \int_V -3\rho^2 \text{ sen}^2\phi (\rho d\rho d\phi dz) = -3 \int_0^L dz \int_0^{2\pi} \text{ sen}^2\phi d\phi \int_0^4 \rho^3 d\rho
+\end{equation*}
+\begin{equation*}
+    \Phi = -3 (L) (\pi) \left( \frac{4^4}{4} \right) = -192\pi L \quad \text{\cite{91}}
+\end{equation*}
+
+\subsection*{7. Divergencia de un Campo Polinomial}
+\textbf{Enunciado:} Hallar la divergencia de $\mathbf{A} = \hat{i}(x^2 + yz) + \hat{j}(y^2 + xz) + \hat{k}(z^2 + xy)$.
+
+Aplicando el operador en cartesianas:
+\begin{equation*}
+    \nabla \cdot \mathbf{A} = \frac{\partial(x^2 + yz)}{\partial x} + \frac{\partial(y^2 + xz)}{\partial y} + \frac{\partial(z^2 + xy)}{\partial z} = 2x + 2y + 2z = 2(x+y+z) \quad \text{\cite{91}}
+\end{equation*}
+
+\subsection*{8. Flujo del Vector Posición}
+\textbf{Enunciado:} Demuestre que $\oint \mathbf{r} \cdot d\mathbf{S} = 3V$.
+
+Por el teorema de la divergencia \cite{89}:
+\begin{equation*}
+    \oint_S \mathbf{r} \cdot d\mathbf{S} = \int_V (\nabla \cdot \mathbf{r}) dV
+\end{equation*}
+Como $\nabla \cdot \mathbf{r} = 3$ en cualquier sistema coordenado \cite{109}:
+\begin{equation*}
+    \int_V 3 dV = 3 \int_V dV = 3V \quad \text{(Q.E.D.) \cite{91}}
+\end{equation*}
+
+\section*{Solución de Problemas - Página 27: Aplicaciones de la Divergencia}
+
+\subsection*{9. Divergencia del campo eléctrico de una carga puntual}
+\textbf{Enunciado:} Demuestre que el campo eléctrico de una carga puntual, $\mathbf{E} = \frac{q\hat{r}}{4\pi\epsilon_0r^2}$, cumple $\nabla \cdot \mathbf{E} = 0$ para $r \neq 0$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Identificación de componentes.} En coordenadas esféricas, el campo tiene solo componente radial: $E_r = \frac{q}{4\pi\epsilon_0r^2}$, mientras que $E_\theta = 0$ y $E_\phi = 0$ \cite{91, 92}.
+    \item \textbf{Paso 2: Aplicación de la divergencia en esféricas.} La fórmula es \cite{90}:
+    \begin{equation*}
+        \nabla \cdot \mathbf{E} = \frac{1}{r^2} \frac{\partial}{\partial r}(r^2 E_r) + \dots
+    \end{equation*}
+    \item \textbf{Paso 3: Cálculo de la derivada.}
+    \begin{equation*}
+        \nabla \cdot \mathbf{E} = \frac{1}{r^2} \frac{\partial}{\partial r} \left( r^2 \frac{q}{4\pi\epsilon_0r^2} \right) = \frac{1}{r^2} \frac{\partial}{\partial r} \left( \frac{q}{4\pi\epsilon_0} \right)
+    \end{equation*}
+    Dado que el término entre paréntesis es una constante, su derivada respecto a $r$ es cero.
+    \item \textbf{Conclusión:} $\nabla \cdot \mathbf{E} = 0$ para todo $r > 0$. En $r=0$ el campo diverge, lo que se trata matemáticamente con la delta de Dirac \cite{92, 171}.
+\end{itemize}
+
+\subsection*{10. Ley de Gauss en forma diferencial}
+\textbf{Enunciado:} Partiendo de la ley de Gauss integral $\oint \mathbf{E} \cdot d\mathbf{S} = q/\epsilon_0$, demuestre su forma diferencial $\nabla \cdot \mathbf{E} = \rho/\epsilon_0$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Teorema de la Divergencia.} Transformamos la integral de superficie en una de volumen \cite{89, 92}:
+    \begin{equation*}
+        \oint_S \mathbf{E} \cdot d\mathbf{S} = \int_V (\nabla \cdot \mathbf{E}) dV
+    \end{equation*}
+    \item \textbf{Paso 2: Definición de la carga $q$.} La carga total encerrada se expresa en términos de la densidad volumétrica $\rho$ \cite{92}:
+    \begin{equation*}
+        q = \int_V \rho dV \implies \frac{q}{\epsilon_0} = \int_V \frac{\rho}{\epsilon_0} dV
+    \end{equation*}
+    \item \textbf{Paso 3: Igualación de integrales.}
+    \begin{equation*}
+        \int_V (\nabla \cdot \mathbf{E}) dV = \int_V \frac{\rho}{\epsilon_0} dV
+    \end{equation*}
+    \item \textbf{Conclusión:} Como el volumen $V$ es arbitrario, la igualdad debe cumplirse para los integrandos: $\nabla \cdot \mathbf{E} = \rho/\epsilon_0$ \cite{92}.
+\end{itemize}
+
+\subsection*{11. Flujo del vector posición a través de un octante de esfera}
+\textbf{Enunciado:} Calcule el flujo de $\mathbf{A} = \mathbf{r}$ a través de una superficie cerrada limitada por los planos coordenados y el primer octante de una esfera de radio $a$.
+
+\textbf{Método 1: Cálculo Directo}
+La superficie total $S$ se compone de 4 partes:
+\begin{enumerate}
+    \item \textbf{Plano $x=0, y=0, z=0$:} En estos planos, el vector $\mathbf{r}$ es perpendicular a la normal o su componente es nula (ej. en $x=0$, $\mathbf{r} \cdot \hat{n} = (0\hat{i} + y\hat{j} + z\hat{k}) \cdot (-\hat{i}) = 0$). El flujo es cero en las tres caras planas \cite{92}.
+    \item \textbf{Superficie esférica ($r=a$):} Aquí $d\mathbf{S} = \hat{r} dS$. El producto $\mathbf{A} \cdot d\mathbf{S} = (a\hat{r}) \cdot (\hat{r} dS) = a dS$.
+    \begin{equation*}
+        \Phi = a \iint_{octante} dS = a \left( \frac{1}{8} 4\pi a^2 \right) = \frac{\pi a^3}{2}
+    \end{equation*}
+\end{enumerate}
+
+\textbf{Método 2: Teorema de Gauss}
+\begin{itemize}
+    \item \textbf{Paso 1: Divergencia.} $\nabla \cdot \mathbf{A} = \nabla \cdot \mathbf{r} = 3$ \cite{91, 109}.
+    \item \textbf{Paso 2: Integral de volumen.} El flujo es la integral de la divergencia sobre el volumen del octante \cite{92}:
+    \begin{equation*}
+        \Phi = \int_V 3 dV = 3 V_{octante} = 3 \left( \frac{1}{8} \frac{4}{3}\pi a^3 \right) = \frac{\pi a^3}{2}
+    \end{equation*}
+\end{itemize}
+
+
+\section*{Solución de Problemas - Página 29: Operador Rotacional}
+
+\subsection*{1. Rotacional en Coordenadas Cartesianas y Cilíndricas}
+\textbf{Enunciado:} Escriba $\nabla \times \mathbf{B}$ en coordenadas cartesianas y cilíndricas.
+
+\begin{itemize}
+    \item \textbf{Coordenadas Cartesianas $(x, y, z)$:}
+    Utilizando la definición general con factores de escala $h_x = h_y = h_z = 1$ \cite{90, 95}:
+    \begin{equation}
+        \nabla \times \mathbf{B} = \left( \frac{\partial B_z}{\partial y} - \frac{\partial B_y}{\partial z} \right) \hat{i} + \left( \frac{\partial B_x}{\partial z} - \frac{\partial B_z}{\partial x} \right) \hat{j} + \left( \frac{\partial B_y}{\partial x} - \frac{\partial B_x}{\partial y} \right) \hat{k}
+    \end{equation}
+
+    \item \textbf{Coordenadas Cilíndricas $(\rho, \phi, z)$:}
+    Los factores de escala son $h_\rho = 1, h_\phi = \rho, h_z = 1$ \cite{73}. Aplicamos la forma matricial del rotacional \cite{95}:
+    \begin{equation}
+        \nabla \times \mathbf{B} = \frac{1}{\rho} 
+        \begin{vmatrix} 
+            \hat{e}_\rho & \rho \hat{e}_\phi & \hat{e}_z \\ 
+            \frac{\partial}{\partial \rho} & \frac{\partial}{\partial \phi} & \frac{\partial}{\partial z} \\ 
+            B_\rho & \rho B_\phi & B_z 
+        \end{vmatrix}
+    \end{equation}
+    Expandiendo el determinante:
+    \begin{equation}
+        \nabla \times \mathbf{B} = \hat{e}_\rho \left[ \frac{1}{\rho} \frac{\partial B_z}{\partial \phi} - \frac{\partial B_\phi}{\partial z} \right] + \hat{e}_\phi \left[ \frac{\partial B_\rho}{\partial z} - \frac{\partial B_z}{\partial \rho} \right] + \frac{\hat{e}_z}{\rho} \left[ \frac{\partial}{\partial \rho}(\rho B_\phi) - \frac{\partial B_\rho}{\partial \phi} \right] \text{\cite{95, 191}}
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Rotacional del Campo Central $\mathbf{r}f(r)$}
+\textbf{Enunciado:} Evaluar $\nabla \times (\mathbf{r} f(r))$ en coordenadas cartesianas y esféricas.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Identidad vectorial.} Utilizamos la regla del producto para el rotacional \cite{98, 109}:
+    \begin{equation}
+        \nabla \times (\phi \mathbf{A}) = \phi \nabla \times \mathbf{A} + \nabla \phi \times \mathbf{A}
+    \end{equation}
+    Donde $\phi = f(r)$ y $\mathbf{A} = \mathbf{r}$.
+    \item \textbf{Paso 2: Evaluación de términos.} 
+    Sabemos que el rotacional del vector posición es nulo: $\nabla \times \mathbf{r} = 0$ \cite{109}. 
+    Para el gradiente de la función radial, se tiene $\nabla f(r) = f'(r) \hat{r} = f'(r) \frac{\mathbf{r}}{r}$ \cite{82}.
+    \item \textbf{Paso 3: Sustitución.}
+    \begin{equation}
+        \nabla \times (f(r) \mathbf{r}) = f(r) (\nabla \times \mathbf{r}) + \nabla f(r) \times \mathbf{r} = f(r) \cdot 0 + \left( f'(r) \frac{\mathbf{r}}{r} \right) \times \mathbf{r}
+    \end{equation}
+    \item \textbf{Conclusión:} Como el producto vectorial de un vector consigo mismo es cero ($\mathbf{r} \times \mathbf{r} = 0$), el resultado final es:
+    \begin{equation}
+        \nabla \times (\mathbf{r} f(r)) = 0
+    \end{equation}
+\end{itemize}
+
+\subsection*{3. Movimiento de Cuerpo Rígido}
+\textbf{Enunciado:} Si $\mathbf{v} = \mathbf{\omega} \times \mathbf{r}$, con $\mathbf{\omega}$ constante, demuestre que $\nabla \cdot \mathbf{v} = 0$ y $\nabla \times \mathbf{v} = 2\mathbf{\omega}$.
+
+\begin{itemize}
+    \item \textbf{Demostración de $\nabla \cdot \mathbf{v} = 0$:}
+    Usamos la identidad de la divergencia de un producto vectorial \cite{109}:
+    \begin{equation}
+        \nabla \cdot (\mathbf{A} \times \mathbf{B}) = \mathbf{B} \cdot (\nabla \times \mathbf{A}) - \mathbf{A} \cdot (\nabla \times \mathbf{B})
+    \end{equation}
+    Aplicándola a $\nabla \cdot (\mathbf{\omega} \times \mathbf{r})$:
+    \begin{equation}
+        \nabla \cdot \mathbf{v} = \mathbf{r} \cdot (\nabla \times \mathbf{\omega}) - \mathbf{\omega} \cdot (\nabla \times \mathbf{r})
+    \end{equation}
+    Dado que $\mathbf{\omega}$ es constante, $\nabla \times \mathbf{\omega} = 0$. Además, $\nabla \times \mathbf{r} = 0$ \cite{109}. Por tanto, $\nabla \cdot \mathbf{v} = 0$.
+
+    \item \textbf{Demostración de $\nabla \times \mathbf{v} = 2\mathbf{\omega}$:}
+    Usamos la identidad del rotacional de un producto vectorial \cite{109}:
+    \begin{equation}
+        \nabla \times (\mathbf{A} \times \mathbf{B}) = \mathbf{A}(\nabla \cdot \mathbf{B}) - \mathbf{B}(\nabla \cdot \mathbf{A}) + (\mathbf{B} \cdot \nabla)\mathbf{A} - (\mathbf{A} \cdot \nabla)\mathbf{B}
+    \end{equation}
+    Sustituyendo $\mathbf{A} = \mathbf{\omega}$ y $\mathbf{B} = \mathbf{r}$:
+    \begin{equation}
+        \nabla \times (\mathbf{\omega} \times \mathbf{r}) = \mathbf{\omega}(\nabla \cdot \mathbf{r}) - \mathbf{r}(\nabla \cdot \mathbf{\omega}) + (\mathbf{r} \cdot \nabla)\mathbf{\omega} - (\mathbf{\omega} \cdot \nabla)\mathbf{r}
+    \end{equation}
+    Evaluamos cada término \cite{109}:
+    \begin{enumerate}
+        \item $\nabla \cdot \mathbf{r} = 3$.
+        \item $\nabla \cdot \mathbf{\omega} = 0$ (por ser constante).
+        \item $(\mathbf{r} \cdot \nabla)\mathbf{\omega} = 0$ (por ser constante).
+        \item $(\mathbf{\omega} \cdot \nabla)\mathbf{r} = \mathbf{\omega}$ (propiedad del operador gradiente direccional sobre $\mathbf{r}$).
+    \end{enumerate}
+    Sustituyendo estos resultados:
+    \begin{equation}
+        \nabla \times \mathbf{v} = 3\mathbf{\omega} - 0 + 0 - \mathbf{\omega} = 2\mathbf{\omega} \quad \text{(Q.E.D.) \cite{97}}
+    \end{equation}
+\end{itemize}
+
+\section*{Solución de Problemas - Página 30: Operador Rotacional}
+
+\subsection*{1. Rotacional en Coordenadas Cartesianas y Cilíndricas}
+\textbf{Enunciado:} Escriba $\nabla \times \mathbf{B}$ en coordenadas cartesianas y cilíndricas.
+
+\begin{itemize}
+    \item \textbf{Coordenadas Cartesianas $(x, y, z)$:} Utilizando factores de escala $h_x = h_y = h_z = 1$ \cite{95, 191}:
+    \begin{equation}
+        \nabla \times \mathbf{B} = \left( \frac{\partial B_z}{\partial y} - \frac{\partial B_y}{\partial z} \right) \hat{i} + \left( \frac{\partial B_x}{\partial z} - \frac{\partial B_z}{\partial x} \right) \hat{j} + \left( \frac{\partial B_y}{\partial x} - \frac{\partial B_x}{\partial y} \right) \hat{k}
+    \end{equation}
+
+    \item \textbf{Coordenadas Cilíndricas $(\rho, \phi, z)$:} Con factores de escala $h_\rho = 1, h_\phi = \rho, h_z = 1$ \cite{95, 191}:
+    \begin{equation}
+        \nabla \times \mathbf{B} = \hat{e}_\rho \left[ \frac{1}{\rho} \frac{\partial B_z}{\partial \phi} - \frac{\partial B_\phi}{\partial z} \right] + \hat{e}_\phi \left[ \frac{\partial B_\rho}{\partial z} - \frac{\partial B_z}{\partial \rho} \right] + \frac{\hat{e}_z}{\rho} \left[ \frac{\partial}{\partial \rho}(\rho B_\phi) - \frac{\partial B_\rho}{\partial \phi} \right]
+    \end{equation}
+\end{itemize}
+
+\subsection*{2. Rotacional del Campo Central $\mathbf{r} f(r)$}
+\textbf{Enunciado:} Evaluar $\nabla \times (\mathbf{r} f(r))$ en coordenadas cartesianas y esféricas.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Identidad vectorial.} Utilizamos la regla del producto para el rotacional \cite{98, 109}:
+    \begin{equation}
+        \nabla \times (f(r) \mathbf{r}) = f(r) (\nabla \times \mathbf{r}) + \nabla f(r) \times \mathbf{r}
+    \end{equation}
+    \item \textbf{Paso 2: Evaluación de términos.} Sabemos que el rotacional del vector posición es nulo: $\nabla \times \mathbf{r} = 0$ \cite{109}. Para el gradiente de una función radial, se tiene $\nabla f(r) = f'(r) \hat{r} = f'(r) \frac{\mathbf{r}}{r}$ \cite{82}.
+    \item \textbf{Paso 3: Sustitución.}
+    \begin{equation}
+        \nabla \times (f(r) \mathbf{r}) = f(r) \cdot 0 + \left( \frac{f'(r)}{r} \mathbf{r} \right) \times \mathbf{r}
+    \end{equation}
+    \item \textbf{Conclusión:} Como el producto vectorial de un vector consigo mismo es cero ($\mathbf{r} \times \mathbf{r} = 0$), el resultado es $\nabla \times (\mathbf{r} f(r)) = 0$ \cite{97}.
+\end{itemize}
+
+\subsection*{3. Movimiento de Cuerpo Rígido}
+\textbf{Enunciado:} Si $\mathbf{v} = \mathbf{\omega} \times \mathbf{r}$, con $\mathbf{\omega}$ constante, demuestre que $\nabla \cdot \mathbf{v} = 0$ y $\nabla \times \mathbf{v} = 2\mathbf{\omega}$.
+
+\begin{itemize}
+    \item \textbf{Demostración de $\nabla \cdot \mathbf{v} = 0$:} Usamos la identidad de la divergencia de un producto vectorial \cite{109}:
+    \begin{equation}
+        \nabla \cdot (\mathbf{\omega} \times \mathbf{r}) = \mathbf{r} \cdot (\nabla \times \mathbf{\omega}) - \mathbf{\omega} \cdot (\nabla \times \mathbf{r})
+    \end{equation}
+    Como $\mathbf{\omega}$ es constante, $\nabla \times \mathbf{\omega} = 0$. Además, $\nabla \times \mathbf{r} = 0$ \cite{109}. Por tanto, $\nabla \cdot \mathbf{v} = 0$ \cite{97}.
+
+    \item \textbf{Demostración de $\nabla \times \mathbf{v} = 2\mathbf{\omega}$:} Usamos la identidad del rotacional de un producto vectorial \cite{109}:
+    \begin{equation}
+        \nabla \times (\mathbf{\omega} \times \mathbf{r}) = \mathbf{\omega}(\nabla \cdot \mathbf{r}) - \mathbf{r}(\nabla \cdot \mathbf{\omega}) + (\mathbf{r} \cdot \nabla)\mathbf{\omega} - (\mathbf{\omega} \cdot \nabla)\mathbf{r}
+    \end{equation}
+    Evaluamos cada término para $\mathbf{\omega}$ constante \cite{97, 109}:
+    1) $\nabla \cdot \mathbf{r} = 3$. 2) $\nabla \cdot \mathbf{\omega} = 0$. 3) $(\mathbf{r} \cdot \nabla)\mathbf{\omega} = 0$. 4) $(\mathbf{\omega} \cdot \nabla)\mathbf{r} = \mathbf{\omega}$.
+    Sustituyendo: $\nabla \times \mathbf{v} = 3\mathbf{\omega} - 0 + 0 - \mathbf{\omega} = 2\mathbf{\omega}$.
+\end{itemize}
+
+\subsection*{4. Regla del Producto para el Rotacional}
+\textbf{Enunciado:} Demuestre que: $\nabla \times (\phi \mathbf{A}) = \phi \nabla \times \mathbf{A} + \nabla \phi \times \mathbf{A}$.
+
+\begin{itemize}
+    \item \textbf{Procedimiento:} Utilizando la notación de componentes con el símbolo de Levi-Civita $\epsilon_{ijk}$ \cite{95}:
+    \begin{equation}
+        [\nabla \times (\phi \mathbf{A})]_i = \sum_{j,k} \epsilon_{ijk} \partial_j (\phi A_k) = \sum_{j,k} \epsilon_{ijk} (\partial_j \phi A_k + \phi \partial_j A_k)
+    \end{equation}
+    \item \textbf{Separación:}
+    \begin{equation}
+        = \phi \sum_{j,k} \epsilon_{ijk} \partial_j A_k + \sum_{j,k} \epsilon_{ijk} (\partial_j \phi) A_k = \phi (\nabla \times \mathbf{A})_i + (\nabla \phi \times \mathbf{A})_i
+    \end{equation}
+    \item \textbf{Resultado:} Reensamblando los vectores, obtenemos la identidad buscada \cite{98, 109}.
+\end{itemize}
+
+\subsection*{5. Condición de Diferencial Exacto}
+\textbf{Enunciado:} Demostrar que la condición necesaria y suficiente para que $\mathbf{F} \cdot d\mathbf{r}$ sea un diferencial exacto es $\nabla \times \mathbf{F} = 0$.
+
+\begin{itemize}
+    \item \textbf{Condición Necesaria:} Si $\mathbf{F} \cdot d\mathbf{r}$ es un diferencial exacto, entonces existe un campo escalar $\phi$ tal que $d\phi = \mathbf{F} \cdot d\mathbf{r}$. Esto implica que $\mathbf{F} = \nabla \phi$ \cite{79, 118}. Aplicando el rotacional:
+    \begin{equation}
+        \nabla \times \mathbf{F} = \nabla \times \nabla \phi \equiv 0
+    \end{equation}
+    según la identidad vectorial demostrada en la sección 1.5 \cite{106, 109}.
+    \item \textbf{Condición Suficiente:} Si $\nabla \times \mathbf{F} = 0$, el teorema de Stokes \cite{97} asegura que la integral de línea alrededor de cualquier trayectoria cerrada es nula ($\oint \mathbf{F} \cdot d\mathbf{l} = 0$), lo que define a un campo conservativo que puede expresarse como el gradiente de un potencial \cite{106, 120}.
+\end{itemize}
+
+
+\section*{Solución: Últimos 5 Problemas de la Página 30 (Operador Rotacional)}
+
+Para estas soluciones se aplican el teorema de Stokes, identidades del operador rotacional y propiedades de coordenadas curvilíneas.
+
+\subsection*{1. Circulación en un Contorno Cuadrado}
+\textbf{Enunciado:} Hallar la circulación del campo $\mathbf{A} = (x^2 - y^2)\hat{i} + 2xy\hat{j}$ a lo largo de un contorno cuadrado de lado $a$ situado en el plano $xy$ y recorrido en sentido antihorario \cite{99}.
+
+\begin{itemize}
+    \item \textbf{Cálculo del Rotacional:} Aplicamos $\nabla \times \mathbf{A}$ en cartesianas:
+    \begin{equation*}
+        \nabla \times \mathbf{A} = \hat{k} \left( \frac{\partial (2xy)}{\partial x} - \frac{\partial (x^2 - y^2)}{\partial y} \right) = \hat{k} (2y - (-2y)) = 4y\hat{k}
+    \end{equation*}
+    \item \textbf{Aplicación del Teorema de Stokes:} $\oint \mathbf{A} \cdot d\mathbf{l} = \int_S (\nabla \times \mathbf{A}) \cdot d\mathbf{S}$ \cite{97}.
+    \item \textbf{Integral de Superficie:} Con $d\mathbf{S} = dx dy \hat{k}$ sobre el cuadrado de $0$ a $a$:
+    \begin{equation*}
+        \int_0^a \int_0^a 4y \, dx dy = \int_0^a [4xy]_0^a \, dy = \int_0^a 4ay \, dy = [2ay^2]_0^a = 2a^3 \text{\cite{99}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{2. Circulación sobre una Parábola}
+\textbf{Enunciado:} Hallar la circulación del campo $\mathbf{A} = x\hat{i} - y\hat{i}$ [según el texto literal: $\hat{i}x - \hat{i}y$], a lo largo de la curva $y^2 = 4x$, desde $(0, 0)$ hasta $(4, 4)$ \cite{99}.
+
+\begin{itemize}
+    \item \textbf{Simplificación del Vector:} Según la fuente, $\mathbf{A} = (x - y)\hat{i}$.
+    \item \textbf{Integral de Línea:} $\int \mathbf{A} \cdot d\mathbf{r} = \int (x - y) dx$.
+    \item \textbf{Parametrización:} De $y^2 = 4x \implies x = y^2/4$ y $dx = (y/2) dy$.
+    \item \textbf{Cálculo:} Evaluamos de $y=0$ a $y=4$:
+    \begin{equation*}
+        \int_0^4 \left( \frac{y^2}{4} - y \right) \left( \frac{y}{2} \right) dy = \int_0^4 \left( \frac{y^3}{8} - \frac{y^2}{2} \right) dy = \left[ \frac{y^4}{32} - \frac{y^3}{6} \right]_0^4
+    \end{equation*}
+    \begin{equation*}
+        = \frac{256}{32} - \frac{64}{6} = 8 - \frac{32}{3} = -\frac{8}{3} \text{\cite{99}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{3. Propiedades del Dipolo Eléctrico}
+\textbf{Enunciado:} El campo de un dipolo es $\mathbf{E} = \frac{p_0}{r^3}(2\hat{e}_r \cos \theta + \hat{e}_\theta \sin \theta)$. Demuestre que $\nabla \times \mathbf{E} = 0$ y que, para $r \neq 0$, $\nabla \cdot \mathbf{E} = 0$ \cite{99}.
+
+\begin{itemize}
+    \item \textbf{Rotacional en Esféricas:} Solo sobrevive la componente $\phi$:
+    \begin{equation*}
+        (\nabla \times \mathbf{E})_\phi = \frac{1}{r} \left[ \frac{\partial (r E_\theta)}{\partial r} - \frac{\partial E_r}{\partial \theta} \right] = \frac{1}{r} \left[ \frac{\partial}{\partial r} \left( \frac{p_0 \sin \theta}{r^2} \right) - \frac{\partial}{\partial \theta} \left( \frac{2 p_0 \cos \theta}{r^3} \right) \right]
+    \end{equation*}
+    \begin{equation*}
+        = \frac{1}{r} \left[ -\frac{2 p_0 \sin \theta}{r^3} - \left( -\frac{2 p_0 \sin \theta}{r^3} \right) \right] = 0 \quad \text{(Irrotacional) \cite{99}}
+    \end{equation*}
+    \item \textbf{Divergencia en Esféricas:}
+    \begin{equation*}
+        \nabla \cdot \mathbf{E} = \frac{1}{r^2} \frac{\partial (r^2 E_r)}{\partial r} + \frac{1}{r \sin \theta} \frac{\partial (\sin \theta E_\theta)}{\partial \theta} = \frac{1}{r^2} \frac{\partial}{\partial r} \left( \frac{2 p_0 \cos \theta}{r} \right) + \frac{1}{r \sin \theta} \frac{\partial}{\partial \theta} \left( \frac{p_0 \sin^2 \theta}{r^3} \right)
+    \end{equation*}
+    \begin{equation*}
+        = -\frac{2 p_0 \cos \theta}{r^4} + \frac{2 p_0 \cos \theta}{r^4} = 0 \quad \text{(Solenoidal) \cite{99}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{4. Funciones con Dependencia Funcional}
+\textbf{Enunciado:} Demuestre que si $u$ y $v$ satisfacen $f(u, v) = 0$, entonces $\nabla u \times \nabla v = 0$ \cite{99}.
+
+\begin{itemize}
+    \item \textbf{Argumento:} Si $f(u, v) = 0$, las funciones no son independientes; una puede expresarse como función de la otra: $v = g(u)$.
+    \item \textbf{Regla de la Cadena:} El gradiente de $v$ es $\nabla v = \frac{dg}{du} \nabla u$ \cite{82}.
+    \item \textbf{Producto Vectorial:}
+    \begin{equation*}
+        \nabla u \times \nabla v = \nabla u \times (g'(u) \nabla u) = g'(u) (\nabla u \times \nabla u)
+    \end{equation*}
+    Dado que el producto vectorial de un vector consigo mismo es nulo, $\nabla u \times \nabla v = 0$ \cite{99}.
+\end{itemize}
+
+\subsection*{5. Ley de Ampere en Forma Diferencial}
+\textbf{Enunciado:} Utilizando el teorema de Stokes, obtenga la ley de Ampere en forma diferencial: $\nabla \times \mathbf{B} = \mu_0 \mathbf{J}$ \cite{100}.
+
+\begin{itemize}
+    \item \textbf{Forma Integral:} Partimos de $\oint_c \mathbf{B} \cdot d\mathbf{l} = \mu_0 i$, donde $i = \int_S \mathbf{J} \cdot d\mathbf{S}$ \cite{100}.
+    \item \textbf{Transformación:} Por Stokes, la integral de línea se convierte en flujo del rotacional \cite{97}:
+    \begin{equation*}
+        \int_S (\nabla \times \mathbf{B}) \cdot d\mathbf{S} = \mu_0 \int_S \mathbf{J} \cdot d\mathbf{S}
+    \end{equation*}
+    \item \textbf{Igualdad de Integrandos:} Dado que la superficie $S$ es arbitraria, la igualdad debe cumplirse localmente:
+    \begin{equation*}
+        \nabla \times \mathbf{B} = \mu_0 \mathbf{J} \text{ \cite{100}}
+    \end{equation*}
+\end{itemize}
+
+
+\section*{Solución de Problemas - Página 32: Laplaciano y Potenciales}
+
+\subsection*{1. Laplaciano de una potencia radial ($r^n$)}
+\textbf{Enunciado:} En coordenadas cartesianas demuestre que $\nabla^2 r^n = n(n+1)r^{n-2}$ \cite{110}. (Nota: En la página 31 del texto original \cite{103} aparece por error $n(n-1)$, pero la identidad correcta para tres dimensiones es la que figura en la página 34 \cite{110}).
+
+\begin{itemize}
+    \item \textbf{Paso 1: Gradiente de $r^n$.} Primero calculamos $\nabla r^n$:
+    \begin{equation*}
+        \nabla r^n = n r^{n-1} \nabla r = n r^{n-1} \frac{\mathbf{r}}{r} = n r^{n-2} \mathbf{r} \text{ \cite{109}}
+    \end{equation*}
+    \item \textbf{Paso 2: Divergencia del gradiente.} Aplicamos el Laplaciano como $\nabla \cdot (\nabla r^n)$:
+    \begin{equation*}
+        \nabla^2 r^n = \nabla \cdot (n r^{n-2} \mathbf{r})
+    \end{equation*}
+    \item \textbf{Paso 3: Identidad de la divergencia.} Usamos $\nabla \cdot (\phi \mathbf{A}) = \phi \nabla \cdot \mathbf{A} + \mathbf{A} \cdot \nabla \phi$ con $\phi = n r^{n-2}$ y $\mathbf{A} = \mathbf{r}$:
+    \begin{equation*}
+        \nabla^2 r^n = (n r^{n-2})(\nabla \cdot \mathbf{r}) + \mathbf{r} \cdot \nabla(n r^{n-2})
+    \end{equation*}
+    Sabemos que $\nabla \cdot \mathbf{r} = 3$ \cite{109}. Calculamos el segundo término:
+    \begin{equation*}
+        \mathbf{r} \cdot [n(n-2)r^{n-3} \hat{r}] = \mathbf{r} \cdot [n(n-2)r^{n-4} \mathbf{r}] = n(n-2)r^{n-4} r^2 = n(n-2)r^{n-2}
+    \end{equation*}
+    \item \textbf{Paso 4: Suma de términos.}
+    \begin{equation*}
+        \nabla^2 r^n = 3n r^{n-2} + n(n-2)r^{n-2} = (3n + n^2 - 2n)r^{n-2} = n(n+1)r^{n-2} \text{ \cite{110}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{2. Laplaciano de un producto de funciones}
+\textbf{Enunciado:} Utilizando coordenadas curvilíneas demuestre que $\nabla^2 (\phi \psi) = \phi \nabla^2 \psi + \psi \nabla^2 \phi + 2 \nabla \phi \cdot \nabla \psi$ \cite{103}.
+
+\begin{itemize}
+    \item \textbf{Procedimiento:} Partimos de la definición $\nabla^2 = \nabla \cdot \nabla$:
+    \begin{equation*}
+        \nabla^2 (\phi \psi) = \nabla \cdot [\nabla (\phi \psi)]
+    \end{equation*}
+    \item \textbf{Paso 1: Gradiente del producto.} Usamos $\nabla(\phi \psi) = \phi \nabla \psi + \psi \nabla \phi$ \cite{82}:
+    \begin{equation*}
+        \nabla^2 (\phi \psi) = \nabla \cdot [\phi \nabla \psi + \psi \nabla \phi]
+    \end{equation*}
+    \item \textbf{Paso 2: Divergencia de la suma.} Aplicamos la propiedad distributiva:
+    \begin{equation*}
+        \nabla^2 (\phi \psi) = \nabla \cdot (\phi \nabla \psi) + \nabla \cdot (\psi \nabla \phi)
+    \end{equation*}
+    \item \textbf{Paso 3: Aplicación de la regla de la divergencia.} Para cada término:
+    \begin{enumerate}
+        \item $\nabla \cdot (\phi \nabla \psi) = \phi (\nabla \cdot \nabla \psi) + \nabla \phi \cdot \nabla \psi = \phi \nabla^2 \psi + \nabla \phi \cdot \nabla \psi$
+        \item $\nabla \cdot (\psi \nabla \phi) = \psi (\nabla \cdot \nabla \phi) + \nabla \psi \cdot \nabla \phi = \psi \nabla^2 \phi + \nabla \psi \cdot \nabla \phi$
+    \end{enumerate}
+    \item \textbf{Resultado final:} Sumando ambos y dado que el producto escalar es conmutativo:
+    \begin{equation*}
+        \nabla^2 (\phi \psi) = \phi \nabla^2 \psi + \psi \nabla^2 \phi + 2 \nabla \phi \cdot \nabla \psi \text{ \cite{103, 110}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{3. Laplaciano de la divergencia del campo central}
+\textbf{Enunciado:} Demuestre que $\nabla^2 [\nabla \cdot (\mathbf{r}/r^2)] = 2r^{-4}$ \cite{103, 111}.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Cálculo de la divergencia interior.}
+    \begin{equation*}
+        \nabla \cdot (\mathbf{r}/r^2) = \nabla \cdot (r^{-2} \mathbf{r}) = r^{-2}(\nabla \cdot \mathbf{r}) + \mathbf{r} \cdot \nabla(r^{-2})
+    \end{equation*}
+    Usando $\nabla \cdot \mathbf{r} = 3$ y $\nabla r^{-2} = -2r^{-4}\mathbf{r}$:
+    \begin{equation*}
+        \nabla \cdot (\mathbf{r}/r^2) = 3r^{-2} + \mathbf{r} \cdot (-2r^{-4}\mathbf{r}) = 3r^{-2} - 2r^{-2} = r^{-2}
+    \end{equation*}
+    \item \textbf{Paso 2: Cálculo del Laplaciano del resultado.} Aplicamos la fórmula $\nabla^2 r^n = n(n+1)r^{n-2}$ con $n = -2$:
+    \begin{equation*}
+        \nabla^2 (r^{-2}) = (-2)(-2+1)r^{-2-2} = (-2)(-1)r^{-4} = 2r^{-4} \text{ \cite{103, 111}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{4. Identidades del Laplaciano Radial}
+\textbf{Enunciado:} Demuestre las formas equivalentes para $\nabla^2 \psi(r)$ \cite{103}:
+\begin{equation*}
+    \nabla^2 \psi(r) = \frac{1}{r^2} \frac{d}{dr} \left( r^2 \frac{d\psi}{dr} \right) = \frac{1}{r} \frac{d^2}{dr^2}(r\psi) = \frac{d^2\psi}{dr^2} + \frac{2}{r} \frac{d\psi}{dr}
+\end{equation*}
+
+\begin{itemize}
+    \item \textbf{Forma 1 a Forma 3:} Expandimos la derivada del producto:
+    \begin{equation*}
+        \frac{1}{r^2} \frac{d}{dr} \left( r^2 \psi' \right) = \frac{1}{r^2} [2r \psi' + r^2 \psi''] = \frac{2}{r} \psi' + \psi'' = \frac{d^2\psi}{dr^2} + \frac{2}{r} \frac{d\psi}{dr}
+    \end{equation*}
+    \item \textbf{Forma 2 a Forma 3:} Expandimos $\frac{d^2}{dr^2}(r\psi)$:
+    \begin{equation*}
+        \frac{1}{r} \frac{d}{dr} [\psi + r \psi'] = \frac{1}{r} [\psi' + \psi' + r \psi''] = \frac{1}{r} [2\psi' + r \psi''] = \frac{2}{r} \psi' + \psi'' \text{ \cite{103}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{5. Distribución de carga para potencial esférico}
+\textbf{Enunciado:} El potencial electrostático satisface $\nabla^2 \phi = 4\pi \rho / \epsilon_0$ (según convención de la fuente \cite{103}). Si $\phi = R^2 - r^2$ para $r < R$ y $\phi = 0$ para $r > R$, evalúe $\rho$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Cálculo del Laplaciano interior.} Usamos $\psi = R^2 - r^2$:
+    \begin{equation*}
+        \nabla^2 (R^2 - r^2) = \nabla^2 R^2 - \nabla^2 r^2 = 0 - 6 = -6
+    \end{equation*}
+    (Recordando que $\nabla^2 r^2 = 2(2+1)r^0 = 6$).
+    \item \textbf{Paso 2: Igualación a la fuente.}
+    \begin{equation*}
+        -6 = \frac{4\pi \rho}{\epsilon_0} \implies \rho = -\frac{3 \epsilon_0}{2\pi} \text{ \cite{103}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{6. Distribución de carga para campo eléctrico lineal}
+\textbf{Enunciado:} Si dentro de una esfera de radio $R$ el campo es $\mathbf{E} = \alpha \mathbf{r}$ y fuera es cero, obtenga $\rho$.
+
+\begin{itemize}
+    \item \textbf{Procedimiento:} Usamos la ley de Gauss en forma diferencial $\nabla \cdot \mathbf{E} = \rho / \epsilon_0$ \cite{92}:
+    \begin{equation*}
+        \rho = \epsilon_0 \nabla \cdot (\alpha \mathbf{r}) = \alpha \epsilon_0 (\nabla \cdot \mathbf{r}) = 3\alpha \epsilon_0 \text{ \cite{104}}
+    \end{equation*}
+\end{itemize}
+
+\subsection*{7. Distribución de carga para potencial cilíndrico}
+\textbf{Enunciado:} Si para $\rho < b$ el potencial es $\phi = \alpha \rho^2$ y para $\rho > b$ es $\phi = \alpha b^2 [1 + \ln(\rho/b)]$, evalúe la distribución $\rho'$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Laplaciano en cilíndricas interior.} Para $\rho < b$:
+    \begin{equation*}
+        \nabla^2 (\alpha \rho^2) = \frac{1}{\rho} \frac{\partial}{\partial \rho} \left( \rho \frac{\partial(\alpha \rho^2)}{\partial \rho} \right) = \frac{1}{\rho} \frac{\partial}{\partial \rho} (2\alpha \rho^2) = \frac{4\alpha \rho}{\rho} = 4\alpha
+    \end{equation*}
+    \item \textbf{Paso 2: Laplaciano en cilíndricas exterior.} Para $\rho > b$:
+    \begin{equation*}
+        \nabla^2 (\ln \rho) = \frac{1}{\rho} \frac{\partial}{\partial \rho} \left( \rho \frac{1}{\rho} \right) = 0
+    \end{equation*}
+    \item \textbf{Conclusión:} La carga se encuentra distribuida en el interior con densidad $\rho' = \frac{4\alpha \epsilon_0}{4\pi} = \frac{\alpha \epsilon_0}{\pi}$ (usando la convención de Poisson de la fuente \cite{103, 104}).
+\end{itemize}
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}

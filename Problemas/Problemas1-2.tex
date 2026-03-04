@@ -1,0 +1,181 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica matemática I}
+\fancyhead[c]{Problemas sección 1.6}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+\section*{Solución de Problemas - Página 8 (Teoría de Transformación)}
+
+\subsection*{Problema 1: Vector posición en coordenadas cilíndricas}
+\textbf{Enunciado:} Demuestre que en coordenadas cilíndricas: $\mathbf{r} = \rho\hat{e}_\rho + z\hat{e}_z$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Definición en cartesianas.} Partimos del vector posición general: $\mathbf{r} = x\hat{i} + y\hat{j} + z\hat{k}$.
+    \item \textbf{Paso 2: Transformación de coordenadas.} En cilíndricas, $x = \rho \cos\phi$ y $y = \rho \sin\phi$. Sustituyendo:
+    \begin{equation}
+        \mathbf{r} = (\rho \cos\phi)\hat{i} + (\rho \sin\phi)\hat{j} + z\hat{k} = \rho (\cos\phi \hat{i} + \sin\phi \hat{j}) + z\hat{k}
+    \end{equation}
+    \item \textbf{Paso 3: Identificación del vector unitario $\hat{e}_\rho$.} Según la teoría (Ec. 1.5), $\hat{e}_\rho = \frac{1}{h_\rho} \frac{\partial \mathbf{r}}{\partial \rho}$. Dado que $h_\rho = 1$ en cilíndricas:
+    \begin{equation}
+        \hat{e}_\rho = \frac{\partial}{\partial \rho} (\rho \cos\phi \hat{i} + \rho \sin\phi \hat{j} + z\hat{k}) = \cos\phi \hat{i} + \sin\phi \hat{j}
+    \end{equation}
+    \item \textbf{Conclusión:} Sustituyendo $\hat{e}_\rho$ en la expresión del paso 2 y notando que $\hat{e}_z = \hat{k}$, se obtiene: $\mathbf{r} = \rho\hat{e}_\rho + z\hat{e}_z$.
+\end{itemize}
+
+\subsection*{Problema 2: Vector $\mathbf{A}$ en coordenadas esféricas}
+\textbf{Enunciado:} Escriba en esféricas el vector $\mathbf{A} = xy\hat{i} - x\hat{j} + 3x\hat{k}$ y halle sus componentes $A_r, A_\theta, A_\phi$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Sustitución de componentes cartesianas.} Usamos $x = r \sin\theta \cos\phi$ y $y = r \sin\theta \sin\phi$:
+    \begin{align*}
+        A_x &= (r \sin\theta \cos\phi)(r \sin\theta \sin\phi) = r^2 \sin^2\theta \sin\phi \cos\phi \\
+        A_y &= -r \sin\theta \cos\phi \\
+        A_z &= 3r \sin\theta \cos\phi
+    \end{align*}
+    \item \textbf{Paso 2: Cálculo de componentes esféricas.} Proyectamos $\mathbf{A}$ sobre la base esférica (Ec. 1.8):
+    \begin{align*}
+        A_r &= \mathbf{A} \cdot \hat{e}_r = A_x \sin\theta \cos\phi + A_y \sin\theta \sin\phi + A_z \cos\theta \\
+        A_\theta &= \mathbf{A} \cdot \hat{e}_\theta = A_x \cos\theta \cos\phi + A_y \cos\theta \sin\phi - A_z \sin\theta \\
+        A_\phi &= \mathbf{A} \cdot \hat{e}_\phi = -A_x \sin\phi + A_y \cos\phi
+    \end{align*}
+    \item \textbf{Resultado:} Sustituyendo los valores de $A_x, A_y, A_z$ se obtienen las expresiones finales en términos de $(r, \theta, \phi)$.
+\end{itemize}
+
+\subsection*{Problema 3: Demostración de no ortogonalidad}
+\textbf{Enunciado:} Demuestre que la transformación $x = 2uv, y = u^2+v^2, z = w$ no es ortogonal.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Cálculo de vectores tangentes.} Obtenemos las derivadas del vector posición $\mathbf{r} = 2uv\hat{i} + (u^2+v^2)\hat{j} + w\hat{k}$:
+    \begin{equation}
+        \frac{\partial \mathbf{r}}{\partial u} = 2v\hat{i} + 2u\hat{j}, \quad \frac{\partial \mathbf{r}}{\partial v} = 2u\hat{i} + 2v\hat{j}
+    \end{equation}
+    \item \textbf{Paso 2: Producto escalar.} Un sistema es ortogonal si $\frac{\partial \mathbf{r}}{\partial u_i} \cdot \frac{\partial \mathbf{r}}{\partial u_j} = 0$ para $i \neq j$:
+    \begin{equation}
+        \frac{\partial \mathbf{r}}{\partial u} \cdot \frac{\partial \mathbf{r}}{\partial v} = (2v)(2u) + (2u)(2v) = 4uv + 4uv = 8uv \neq 0
+    \end{equation}
+    \item \textbf{Conclusión:} Al no ser nulo el producto escalar, el sistema no es ortogonal.
+\end{itemize}
+
+\subsection*{Problema 4: Demostración de ortogonalidad}
+\textbf{Enunciado:} Demuestre que $x = 2uv, y = u^2 - v^2, z = w$ es ortogonal.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Derivadas parciales.}
+    \begin{equation}
+        \frac{\partial \mathbf{r}}{\partial u} = 2v\hat{i} + 2u\hat{j}, \quad \frac{\partial \mathbf{r}}{\partial v} = 2u\hat{i} - 2v\hat{j}, \quad \frac{\partial \mathbf{r}}{\partial w} = \hat{k}
+    \end{equation}
+    \item \textbf{Paso 2: Verificación de ortogonalidad.}
+    \begin{equation}
+        \frac{\partial \mathbf{r}}{\partial u} \cdot \frac{\partial \mathbf{r}}{\partial v} = (2v)(2u) + (2u)(-2v) = 4uv - 4uv = 0
+    \end{equation}
+    Los productos con $\hat{k}$ también son nulos. Por tanto, el sistema es ortogonal.
+\end{itemize}
+
+\subsection*{Problema 5: Coordenadas cilíndricas elípticas}
+\textbf{Enunciado:} Demuestre la ortogonalidad y halle los factores de escala para $x = 2A \cosh \sigma \cos \tau, y = 2A \sinh \sigma \sin \tau, z = z$.
+
+\begin{itemize}
+    \item \textbf{Paso 1: Ortogonalidad.} Calculamos las derivadas y su producto:
+    \begin{align*}
+        \frac{\partial \mathbf{r}}{\partial \sigma} &= 2A \sinh \sigma \cos \tau \hat{i} + 2A \cosh \sigma \sin \tau \hat{j} \\
+        \frac{\partial \mathbf{r}}{\partial \tau} &= -2A \cosh \sigma \sin \tau \hat{i} + 2A \sinh \sigma \cos \tau \hat{j} \\
+        \frac{\partial \mathbf{r}}{\partial \sigma} \cdot \frac{\partial \mathbf{r}}{\partial \tau} &= -4A^2 \sinh \sigma \cos \tau \cosh \sigma \sin \tau + 4A^2 \cosh \sigma \sin \tau \sinh \sigma \cos \tau = 0
+    \end{align*}
+    \item \textbf{Paso 2: Factores de escala ($h_i^2 = |\partial \mathbf{r}/\partial u_i|^2$).}
+    \begin{align*}
+        h_\sigma^2 &= 4A^2 (\sinh^2 \sigma \cos^2 \tau + \cosh^2 \sigma \sin^2 \tau) \\
+        &= 4A^2 [\sinh^2 \sigma (1-\sin^2 \tau) + (1+\sinh^2 \sigma)\sin^2 \tau] \\
+        &= 4A^2 (\sinh^2 \sigma + \sin^2 \tau)
+    \end{align*}
+    Por simetría, $h_\tau^2 = h_\sigma^2 = 4A^2 (\sinh^2 \sigma + \sin^2 \tau)$. Claramente $h_z = 1$.
+\end{itemize}
+
+\section*{Solución: Derivadas Parciales de Vectores Unitarios (Página 9)}
+
+Para calcular las derivadas parciales de los vectores unitarios en sistemas curvilíneos, el procedimiento estándar consiste en expresarlos primero en términos de la base cartesiana fija $\{\hat{i}, \hat{j}, \hat{k}\}$, realizar la derivación y luego proyectar el resultado de nuevo a la base curvilínea.
+
+\subsection*{1. Coordenadas Cilíndricas $(\rho, \phi, z)$}
+
+Partimos de las definiciones de los vectores unitarios cilíndricos:
+\begin{align*}
+    \hat{e}_\rho &= \hat{i} \cos\phi + \hat{j} \sin\phi \\
+    \hat{e}_\phi &= -\hat{i} \sin\phi + \hat{j} \cos\phi \\
+    \hat{e}_z &= \hat{k}
+\end{align*}
+
+\textbf{Cálculo de las derivadas:}
+\begin{itemize}
+    \item \textbf{Derivadas respecto a $\rho$ y $z$:} Como los vectores solo dependen del ángulo $\phi$, todas las derivadas respecto a $\rho$ y $z$ son nulas.
+    \item \textbf{Derivada de $\hat{e}_\rho$ respecto a $\phi$:}
+    \begin{equation*}
+        \frac{\partial \hat{e}_\rho}{\partial \phi} = \frac{\partial}{\partial \phi} (\hat{i} \cos\phi + \hat{j} \sin\phi) = -\hat{i} \sin\phi + \hat{j} \cos\phi = \hat{e}_\phi
+    \end{equation*}
+    \item \textbf{Derivada de $\hat{e}_\phi$ respecto a $\phi$:}
+    \begin{equation*}
+        \frac{\partial \hat{e}_\phi}{\partial \phi} = \frac{\partial}{\partial \phi} (-\hat{i} \sin\phi + \hat{j} \cos\phi) = -(\hat{i} \cos\phi + \hat{j} \sin\phi) = -\hat{e}_\rho
+    \end{equation*}
+\end{itemize}
+\textbf{Conclusión:} Las únicas derivadas no nulas son $\frac{\partial \hat{e}_\rho}{\partial \phi} = \hat{e}_\phi$ y $\frac{\partial \hat{e}_\phi}{\partial \phi} = -\hat{e}_\rho$.
+
+\subsection*{2. Coordenadas Esféricas $(r, \theta, \phi)$}
+
+Utilizamos las expresiones de los vectores unitarios en términos de la base cartesiana dadas en la \textbf{ecuación (1.8)} del texto:
+\begin{align*}
+    \hat{e}_r &= \hat{i} \sin\theta \cos\phi + \hat{j} \sin\theta \sin\phi + \hat{k} \cos\theta \\
+    \hat{e}_\theta &= \hat{i} \cos\theta \cos\phi + \hat{j} \cos\theta \sin\phi - \hat{k} \sin\theta \\
+    \hat{e}_\phi &= -\hat{i} \sin\phi + \hat{j} \cos\phi
+\end{align*}
+
+\textbf{Cálculo de las derivadas no nulas:}
+\begin{itemize}
+    \item \textbf{Derivadas respecto a $\theta$:}
+    \begin{align*}
+        \frac{\partial \hat{e}_r}{\partial \theta} &= \hat{i} \cos\theta \cos\phi + \hat{j} \cos\theta \sin\phi - \hat{k} \sin\theta = \hat{e}_\theta \\
+        \frac{\partial \hat{e}_\theta}{\partial \theta} &= -\hat{i} \sin\theta \cos\phi - \hat{j} \sin\theta \sin\phi - \hat{k} \cos\theta = -\hat{e}_r
+    \end{align*}
+    \item \textbf{Derivadas respecto a $\phi$:}
+    \begin{align*}
+        \frac{\partial \hat{e}_r}{\partial \phi} &= \sin\theta (-\hat{i} \sin\phi + \hat{j} \cos\phi) = \hat{e}_\phi \sin\theta \\
+        \frac{\partial \hat{e}_\theta}{\partial \phi} &= \cos\theta (-\hat{i} \sin\phi + \hat{j} \cos\phi) = \hat{e}_\phi \cos\theta \\
+        \frac{\partial \hat{e}_\phi}{\partial \phi} &= -\hat{i} \cos\phi - \hat{j} \sin\phi
+    \end{align*}
+\end{itemize}
+
+\textbf{Paso final para $\frac{\partial \hat{e}_\phi}{\partial \phi}$:} 
+Para expresar $-\hat{i} \cos\phi - \hat{j} \sin\phi$ en la base esférica, sumamos las componentes de $\hat{e}_r$ y $\hat{e}_\theta$ que contienen $\hat{i}$ y $\hat{j}$. De las relaciones inversas en la página 7, se observa que:
+\begin{equation*}
+    \hat{e}_r \sin\theta + \hat{e}_\theta \cos\theta = \hat{i} \cos\phi + \hat{j} \sin\phi
+\end{equation*}
+Por lo tanto:
+\begin{equation*}
+    \frac{\partial \hat{e}_\phi}{\partial \phi} = -(\hat{e}_r \sin\theta + \hat{e}_\theta \cos\theta) = -\hat{e}_r \sin\theta - \hat{e}_\theta \cos\theta
+\end{equation*}
+
+\textbf{Conclusión:} Se han verificado todas las identidades de las derivadas para coordenadas esféricas indicadas en el texto.
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
