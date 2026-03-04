@@ -1,0 +1,237 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica Matemática I}
+\fancyhead[c]{Clase \#4}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+
+\section{Operadores Diferenciales en Coordenadas Curvilíneas}
+
+El estudio de los campos físicos requiere definir cómo varían estos en el espacio. Para ello, utilizamos el operador nabla ($\nabla$), cuya expresión general en coordenadas curvilíneas ortogonales depende de los factores de escala $h_i$.
+
+\subsection{Divergencia ($\nabla \cdot \mathbf{B}$)}
+
+La divergencia de un campo vectorial $\mathbf{B}$ representa el flujo neto por unidad de volumen. Su expresión general es:
+\begin{equation}
+    \nabla \cdot \mathbf{B} = \frac{1}{h_1 h_2 h_3} \left[ \frac{\partial}{\partial u_1}(h_2 h_3 B_1) + \frac{\partial}{\partial u_2}(h_3 h_1 B_2) + \frac{\partial}{\partial u_3}(h_1 h_2 B_3) \right]
+\end{equation}
+
+\textbf{Ejemplos por sistema de coordenadas:}
+\begin{itemize}
+    \item \textbf{Cilíndricas ($\rho, \phi, z$):} Con $h_\rho = 1, h_\phi = \rho, h_z = 1$:
+    \begin{equation}
+        \nabla \cdot \mathbf{B} = \frac{1}{\rho} \frac{\partial}{\partial \rho}(\rho B_\rho) + \frac{1}{\rho} \frac{\partial B_\phi}{\partial \phi} + \frac{\partial B_z}{\partial z}
+    \end{equation}
+    \item \textbf{Esféricas ($r, \theta, \phi$):} Con $h_r = 1, h_\theta = r, h_\phi = r \sin\theta$:
+    \begin{equation}
+        \nabla \cdot \mathbf{B} = \frac{1}{r^2} \frac{\partial}{\partial r}(r^2 B_r) + \frac{1}{r \sin\theta} \frac{\partial}{\partial \theta}(\sin\theta B_\theta) + \frac{1}{r \sin\theta} \frac{\partial B_\phi}{\partial \phi}
+    \end{equation}
+\end{itemize}
+
+\textbf{Teorema de Gauss:} Este operador permite relacionar el flujo a través de una superficie cerrada con la divergencia en el volumen encerrado:
+\begin{equation}
+    \oint_S \mathbf{B} \cdot d\mathbf{S} = \int_V (\nabla \cdot \mathbf{B}) dV \quad
+\end{equation}
+
+\subsection{Rotacional ($\nabla \times \mathbf{B}$)}
+
+El rotacional mide la tendencia de un campo a inducir rotación. Utilizando el símbolo de Levi-Civita $\epsilon_{ijk}$, se define como:
+\begin{equation}
+    \nabla \times \mathbf{B} = \frac{1}{h_1 h_2 h_3} \sum_{i,j,k} \hat{e}_i h_i \epsilon_{ijk} \frac{\partial}{\partial u_j} (h_k B_k)
+\end{equation}
+
+\textbf{Representación en Cartesianas:}
+En este sistema ($h_i = 1$), el rotacional se simplifica al determinante:
+\begin{equation}
+    \nabla \times \mathbf{B} = \begin{vmatrix} 
+    \hat{i} & \hat{j} & \hat{k} \\
+    \frac{\partial}{\partial x} & \frac{\partial}{\partial y} & \frac{\partial}{\partial z} \\
+    B_x & B_y & B_z
+    \end{vmatrix}
+\end{equation}
+
+\textbf{Teorema de Stokes:} Relaciona la circulación de un vector en una curva cerrada $C$ con el flujo del rotacional a través de la superficie $S$ limitada por dicha curva:
+\begin{equation}
+    \oint_C \mathbf{B} \cdot d\mathbf{l} = \int_S (\nabla \times \mathbf{B}) \cdot d\mathbf{S} \quad
+\end{equation}
+
+\section{Identidades y Ejercicios Especiales}
+
+\subsection{Identidades Vectoriales}
+\begin{enumerate}
+    \item \textbf{Rotacional de un producto escalar-vector:}
+    $\nabla \times (\phi \mathbf{A}) = (\nabla \phi) \times \mathbf{A} + \phi (\nabla \times \mathbf{A})$
+    \item \textbf{Identidad del rotacional del rotacional:}
+    $\nabla \times (\nabla \times \mathbf{E}) = \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$
+\end{enumerate}
+
+\subsection{Caso de Estudio: Dipolo Eléctrico}
+Considerando el campo eléctrico de un dipolo $\mathbf{p} = p_0 \hat{e}_z$:
+\begin{equation}
+    \mathbf{E} = \frac{p_0}{r^3} (2\cos\theta \hat{e}_r + \sin\theta \hat{e}_\theta)
+\end{equation}
+Se puede demostrar mediante cálculo directo en coordenadas esféricas que:
+\begin{itemize}
+    \item $\nabla \times \mathbf{E} = 0$ (El campo es irrotacional).
+    \item $\nabla \cdot \mathbf{E} = 0$ (Para $r \neq 0$).
+\end{itemize}
+
+\section{Conclusión}
+Los operadores diferenciales proporcionan una descripción completa de las fuentes (divergencia) y circulaciones (rotacional) de los campos. La elección del sistema de coordenadas y el uso de los factores de escala correctos son fundamentales para la resolución de problemas en física matemática.
+
+\section*{Solución a las Identidades Vectoriales (Sección 2.1)}
+
+\subsection*{1. Rotacional de un producto escalar-vector}
+\textbf{Identidad:} $\nabla \times (\phi \mathbf{A}) = (\nabla \phi) \times \mathbf{A} + \phi (\nabla \times \mathbf{A})$
+
+\begin{itemize}
+    \item \textbf{Paso 1: Definición del rotacional.} 
+    Partimos de la definición del rotacional en coordenadas curvilíneas ortogonales (ecuación 1.34 de Alonso):
+    \begin{equation}
+        \nabla \times \mathbf{B} = \frac{1}{h_1 h_2 h_3} \sum_{i,j,k} \hat{e}_i \epsilon_{ijk} h_i \frac{\partial}{\partial u_j} (h_k B_k)
+    \end{equation}
+    Sustituimos $\mathbf{B} = \phi \mathbf{A}$, donde la componente $B_k = \phi A_k$.
+
+    \item \textbf{Paso 2: Aplicación de la regla del producto.}
+    Expandimos la derivada parcial del término $(\phi h_k A_k)$ respecto a $u_j$:
+    \begin{equation}
+        \frac{\partial}{\partial u_j} (\phi \cdot h_k A_k) = \frac{\partial \phi}{\partial u_j} (h_k A_k) + \phi \frac{\partial (h_k A_k)}{\partial u_j}
+    \end{equation}
+
+    \item \textbf{Paso 3: Separación en dos sumatorias.}
+    Distribuimos los términos en la fórmula del rotacional:
+    \begin{equation}
+        \nabla \times (\phi \mathbf{A}) = \sum_{i,j,k} \frac{\hat{e}_i h_i \epsilon_{ijk}}{h} \left( \frac{\partial \phi}{\partial u_j} h_k A_k \right) + \phi \left[ \frac{1}{h} \sum_{i,j,k} \hat{e}_i \epsilon_{ijk} h_i \frac{\partial (h_k A_k)}{\partial u_j} \right]
+    \end{equation}
+    El segundo término entre corchetes es, por definición, el rotacional de $\mathbf{A}$, es decir, $\phi(\nabla \times \mathbf{A})$.
+
+    \item \textbf{Paso 4: Identificación del producto cruz.}
+    Para el primer término, recordamos que la componente del gradiente es $(\nabla \phi)_j = \frac{1}{h_j} \frac{\partial \phi}{\partial u_j}$. Al reorganizar, el término toma la forma de un producto vectorial entre el vector gradiente y el vector $\mathbf{A}$:
+    \begin{equation}
+        \sum_{i,j,k} \hat{e}_i \epsilon_{ijk} \left( \frac{1}{h_j} \frac{\partial \phi}{\partial u_j} \right) A_k = (\nabla \phi) \times \mathbf{A}
+    \end{equation}
+    Sumando ambos resultados, obtenemos la identidad demostrada.
+\end{itemize}
+
+\subsection*{2. Identidad del rotacional del rotacional}
+\textbf{Identidad:} $\nabla \times (\nabla \times \mathbf{E}) = \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$
+
+\begin{itemize}
+    \item \textbf{Paso 1: Notación de componentes (Cartesianas).}
+    Para facilitar la demostración de esta identidad invariante, utilizamos coordenadas cartesianas donde $h_i = 1$. La componente $i$ del rotacional de un rotacional se expresa mediante el símbolo de Levi-Civita $\epsilon_{ijk}$:
+    \begin{equation}
+        [\nabla \times (\nabla \times \mathbf{E})]_i = \epsilon_{ijk} \partial_j (\epsilon_{klm} \partial_l E_m)
+    \end{equation}
+
+    \item \textbf{Paso 2: Contracción del símbolo de Levi-Civita.}
+    Reordenamos los índices aprovechando la propiedad cíclica $\epsilon_{ijk} = \epsilon_{kij}$. La expresión queda:
+    \begin{equation}
+        \epsilon_{kij} \epsilon_{klm} \partial_j \partial_l E_m
+    \end{equation}
+    Usamos la identidad fundamental de contracción (ecuación 1.24 de Alonso): $\sum_k \epsilon_{kij} \epsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}$.
+
+    \item \textbf{Paso 3: Aplicación de la Delta de Kronecker.}
+    Sustituimos la identidad anterior en nuestra expresión:
+    \begin{equation}
+        (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) \partial_j \partial_l E_m = \delta_{il}\delta_{jm} \partial_j \partial_l E_m - \delta_{im}\delta_{jl} \partial_j \partial_l E_m
+    \end{equation}
+    Al aplicar las propiedades de la delta de Kronecker:
+    \begin{itemize}
+        \item Primer término ($l=i, m=j$): $\partial_j \partial_i E_j = \partial_i (\partial_j E_j) = \nabla_i (\nabla \cdot \mathbf{E})$.
+        \item Segundo término ($m=i, l=j$): $\partial_j \partial_j E_i = \nabla^2 E_i$.
+    \end{itemize}
+
+    \item \textbf{Paso 4: Resultado final.}
+    Restando los términos obtenidos para la componente $i$:
+    \begin{equation}
+        [\nabla \times (\nabla \times \mathbf{E})]_i = \nabla_i (\nabla \cdot \mathbf{E}) - \nabla^2 E_i
+    \end{equation}
+    En forma vectorial, esto es: $\nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$. Esta relación se utiliza en el texto de Alonso para definir el Laplaciano de un vector en sistemas no cartesianos.
+\end{itemize}
+
+\section*{Solución al Caso de Estudio: Dipolo Eléctrico (Sección 2.2)}
+
+Consideramos el campo eléctrico de un dipolo $\mathbf{p} = p_0 \hat{e}_z$ expresado en coordenadas esféricas:
+\begin{equation}
+    \mathbf{E} = \frac{p_0}{r^3} (2 \cos \theta \hat{e}_r + \sin \theta \hat{e}_\theta)
+\end{equation}
+Sus componentes vectoriales son:
+\begin{itemize}
+    \item $E_r = \frac{2 p_0 \cos \theta}{r^3}$
+    \item $E_\theta = \frac{p_0 \sin \theta}{r^3}$
+    \item $E_\phi = 0$
+\end{itemize}
+
+\subsection*{1. Cálculo de la Divergencia ($\nabla \cdot \mathbf{E}$)}
+Aplicamos la fórmula de la divergencia en coordenadas esféricas (Alonso, Ec. 1.30):
+\begin{equation}
+    \nabla \cdot \mathbf{E} = \frac{1}{r^2} \frac{\partial}{\partial r}(r^2 E_r) + \frac{1}{r \sin\theta} \frac{\partial}{\partial \theta}(\sin\theta E_\theta) + \frac{1}{r \sin\theta} \frac{\partial E_\phi}{\partial \phi}
+\end{equation}
+
+\textbf{Paso 1: Primer término (derivada radial).}
+\begin{equation}
+    \frac{1}{r^2} \frac{\partial}{\partial r}\left(r^2 \cdot \frac{2 p_0 \cos \theta}{r^3}\right) = \frac{1}{r^2} \frac{\partial}{\partial r}\left(\frac{2 p_0 \cos \theta}{r}\right) = \frac{1}{r^2} \left( -\frac{2 p_0 \cos \theta}{r^2} \right) = -\frac{2 p_0 \cos \theta}{r^4}
+\end{equation}
+
+\textbf{Paso 2: Segundo término (derivada polar).}
+\begin{equation}
+    \frac{1}{r \sin\theta} \frac{\partial}{\partial \theta}\left(\sin\theta \cdot \frac{p_0 \sin \theta}{r^3}\right) = \frac{p_0}{r^4 \sin\theta} \frac{\partial}{\partial \theta}(\sin^2 \theta) = \frac{p_0}{r^4 \sin\theta} (2 \sin \theta \cos \theta) = \frac{2 p_0 \cos \theta}{r^4}
+\end{equation}
+
+\textbf{Paso 3: Suma de términos.}
+Como $E_\phi = 0$, el tercer término es nulo. Sumando los resultados:
+\begin{equation}
+    \nabla \cdot \mathbf{E} = -\frac{2 p_0 \cos \theta}{r^4} + \frac{2 p_0 \cos \theta}{r^4} + 0 = 0 \quad (\text{para } r \neq 0)
+\end{equation}
+
+\subsection*{2. Cálculo del Rotacional ($\nabla \times \mathbf{E}$)}
+Aplicamos la fórmula del rotacional en coordenadas esféricas (Alonso, Ec. 1.34):
+Debido a que $E_\phi = 0$ y las componentes no dependen de $\phi$ ($\frac{\partial E_r}{\partial \phi} = \frac{\partial E_\theta}{\partial \phi} = 0$), las componentes $\hat{e}_r$ y $\hat{e}_\theta$ del rotacional se anulan automáticamente. Solo evaluamos la componente $\hat{e}_\phi$:
+
+\begin{equation}
+    (\nabla \times \mathbf{E})_\phi = \frac{1}{r} \left[ \frac{\partial}{\partial r} (r E_\theta) - \frac{\partial E_r}{\partial \theta} \right]
+\end{equation}
+
+\textbf{Paso 1: Derivada de $r E_\theta$ respecto a $r$.}
+\begin{equation}
+    \frac{\partial}{\partial r} \left( r \cdot \frac{p_0 \sin \theta}{r^3} \right) = \frac{\partial}{\partial r} \left( \frac{p_0 \sin \theta}{r^2} \right) = -\frac{2 p_0 \sin \theta}{r^3}
+\end{equation}
+
+\textbf{Paso 2: Derivada de $E_r$ respecto a $\theta$.}
+\begin{equation}
+    \frac{\partial}{\partial \theta} \left( \frac{2 p_0 \cos \theta}{r^3} \right) = -\frac{2 p_0 \sin \theta}{r^3}
+\end{equation}
+
+\textbf{Paso 3: Resta de términos.}
+\begin{equation}
+    (\nabla \times \mathbf{E})_\phi = \frac{1}{r} \left[ -\frac{2 p_0 \sin \theta}{r^3} - \left( -\frac{2 p_0 \sin \theta}{r^3} \right) \right] = 0
+\end{equation}
+
+\textbf{Conclusión:} Se ha demostrado que $\nabla \cdot \mathbf{E} = 0$ y $\nabla \times \mathbf{E} = 0$, lo que confirma que el campo del dipolo es solenoidal e irrotacional en todo el espacio excepto en el origen.
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
