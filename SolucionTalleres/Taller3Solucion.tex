@@ -1,0 +1,189 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\title{Taller 3 -- Física Matemática}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Problema 3}
+
+Considere la base de polinomios $\{x^n\}$. Utilizando el método de Gram-Schmidt
+encuentre los dos primeros polinomios de Hermite $H_n(x)$ con
+$-\infty < x < \infty$, función de peso $w(x) = e^{-x^2}$,
+y normalización
+$$
+\langle H_n \mid H_m \rangle = 2^m\, m!\,\sqrt{\pi}\;\delta_{mn}.
+$$
+
+\subsection{Solución}
+
+\textbf{Producto interno.} Con la función de peso $w(x) = e^{-x^2}$ el
+producto interno entre dos funciones $f$ y $g$ queda definido como:
+$$
+\langle f \mid g \rangle
+= \int_{-\infty}^{\infty} e^{-x^2}\, f(x)\, g(x)\, dx.
+$$
+
+\textbf{Integrales gaussianas de referencia.} Para aplicar el procedimiento
+necesitamos los siguientes resultados estándar:
+\begin{align}
+\int_{-\infty}^{\infty} e^{-x^2}\, dx &= \sqrt{\pi}, \label{I0}\\[4pt]
+\int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx &= \frac{\sqrt{\pi}}{2}, \label{I2}\\[4pt]
+\int_{-\infty}^{\infty} x^4\, e^{-x^2}\, dx &= \frac{3\sqrt{\pi}}{4}, \label{I4}
+\end{align}
+mientras que toda integral de la forma $\int_{-\infty}^{\infty} x^{2k+1}e^{-x^2}dx = 0$
+por ser el integrando una función impar.
+
+\bigskip
+\noindent
+El método de Gram-Schmidt parte de la base $\{u_n\} = \{1,\, x,\, x^2,\, \ldots\}$
+y construye una base ortogonal $\{\varphi_n\}$ mediante:
+$$
+\varphi_n = u_n - \sum_{k=0}^{n-1}
+\frac{\langle \varphi_k \mid u_n \rangle}{\langle \varphi_k \mid \varphi_k \rangle}\,\varphi_k.
+$$
+Una vez obtenidos los $\varphi_n$ ortogonales se normalizan para satisfacer
+la condición $\langle H_n \mid H_m \rangle = 2^n n!\sqrt{\pi}\,\delta_{mn}$.
+
+% -------------------------------------------------------
+\medskip
+\noindent\textbf{Paso 0: Construcción de $H_0(x)$.}
+
+Se toma $\varphi_0 = u_0 = 1$.  Su norma cuadrada es:
+$$
+\langle \varphi_0 \mid \varphi_0 \rangle
+= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1 \cdot 1\, dx = \sqrt{\pi}.
+$$
+La condición de normalización exige
+$\langle H_0 \mid H_0 \rangle = 2^0\cdot 0!\cdot\sqrt{\pi} = \sqrt{\pi}$.
+Escribimos $H_0 = c_0\,\varphi_0$; entonces:
+$$
+\langle H_0 \mid H_0 \rangle = c_0^2 \langle \varphi_0\mid\varphi_0\rangle
+= c_0^2\,\sqrt{\pi} = \sqrt{\pi}
+\quad\Longrightarrow\quad c_0 = 1.
+$$
+
+\begin{center}
+\boxed{H_0(x) = 1}
+\end{center}
+
+% -------------------------------------------------------
+\medskip
+\noindent\textbf{Paso 1: Construcción de $H_1(x)$.}
+
+Se aplica Gram-Schmidt sobre $u_1 = x$:
+$$
+\varphi_1 = u_1 - \frac{\langle \varphi_0 \mid u_1 \rangle}{\langle \varphi_0 \mid \varphi_0 \rangle}\,\varphi_0.
+$$
+El coeficiente involucrado requiere calcular:
+$$
+\langle \varphi_0 \mid u_1 \rangle
+= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1 \cdot x\, dx = 0,
+$$
+pues el integrando $x\,e^{-x^2}$ es una función \emph{impar}.  Por tanto:
+$$
+\varphi_1 = x - 0 = x.
+$$
+La norma cuadrada de $\varphi_1$ es:
+$$
+\langle \varphi_1 \mid \varphi_1 \rangle
+= \int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}.
+$$
+La condición de normalización exige
+$\langle H_1 \mid H_1 \rangle = 2^1\cdot 1!\cdot\sqrt{\pi} = 2\sqrt{\pi}$.
+Escribimos $H_1 = c_1\,\varphi_1$; entonces:
+$$
+\langle H_1 \mid H_1 \rangle = c_1^2\,\frac{\sqrt{\pi}}{2} = 2\sqrt{\pi}
+\quad\Longrightarrow\quad c_1^2 = 4
+\quad\Longrightarrow\quad c_1 = 2.
+$$
+
+\begin{center}
+\boxed{H_1(x) = 2x}
+\end{center}
+
+% -------------------------------------------------------
+\medskip
+\noindent\textbf{Paso 2: Construcción de $H_2(x)$.}
+
+Se aplica Gram-Schmidt sobre $u_2 = x^2$:
+$$
+\varphi_2 = u_2
+  - \frac{\langle \varphi_1 \mid u_2 \rangle}{\langle \varphi_1 \mid \varphi_1 \rangle}\,\varphi_1
+  - \frac{\langle \varphi_0 \mid u_2 \rangle}{\langle \varphi_0 \mid \varphi_0 \rangle}\,\varphi_0.
+$$
+Se calculan los dos coeficientes necesarios:
+\begin{align*}
+\langle \varphi_1 \mid u_2 \rangle
+  &= \int_{-\infty}^{\infty} x\cdot x^2\, e^{-x^2}\, dx
+   = \int_{-\infty}^{\infty} x^3\, e^{-x^2}\, dx = 0
+   \quad\text{(integrando impar)},\\[6pt]
+\langle \varphi_0 \mid u_2 \rangle
+  &= \int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}.
+\end{align*}
+Por tanto:
+$$
+\varphi_2 = x^2 - 0
+  - \frac{\sqrt{\pi}/2}{\sqrt{\pi}}\cdot 1
+  = x^2 - \frac{1}{2}.
+$$
+Se calcula su norma cuadrada:
+\begin{align*}
+\langle \varphi_2 \mid \varphi_2 \rangle
+  &= \int_{-\infty}^{\infty} \left(x^2 - \tfrac{1}{2}\right)^2 e^{-x^2}\, dx\\
+  &= \int_{-\infty}^{\infty} \left(x^4 - x^2 + \tfrac{1}{4}\right) e^{-x^2}\, dx\\
+  &= \frac{3\sqrt{\pi}}{4} - \frac{\sqrt{\pi}}{2} + \frac{\sqrt{\pi}}{4}
+   = \frac{3\sqrt{\pi} - 2\sqrt{\pi} + \sqrt{\pi}}{4}
+   = \frac{\sqrt{\pi}}{2}.
+\end{align*}
+La condición de normalización exige
+$\langle H_2 \mid H_2 \rangle = 2^2\cdot 2!\cdot\sqrt{\pi} = 8\sqrt{\pi}$.
+Escribimos $H_2 = c_2\,\varphi_2$; entonces:
+$$
+\langle H_2 \mid H_2 \rangle = c_2^2\,\frac{\sqrt{\pi}}{2} = 8\sqrt{\pi}
+\quad\Longrightarrow\quad c_2^2 = 16
+\quad\Longrightarrow\quad c_2 = 4.
+$$
+\begin{center}
+\boxed{H_2(x) = 4\!\left(x^2 - \tfrac{1}{2}\right) = 4x^2 - 2}
+\end{center}
+
+% -------------------------------------------------------
+\medskip
+\noindent\textbf{Verificación de la ortogonalidad.}
+
+Es posible comprobar directamente que las tres funciones obtenidas son
+mutuamente ortogonales bajo el peso $e^{-x^2}$:
+\begin{align*}
+\langle H_0 \mid H_1 \rangle
+  &= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1\cdot 2x\, dx = 0
+  \quad\text{(integrando impar)},\\[4pt]
+\langle H_0 \mid H_2 \rangle
+  &= \int_{-\infty}^{\infty} e^{-x^2}(4x^2-2)\, dx
+   = 4\cdot\frac{\sqrt{\pi}}{2} - 2\sqrt{\pi} = 0,\\[4pt]
+\langle H_1 \mid H_2 \rangle
+  &= \int_{-\infty}^{\infty} 2x(4x^2-2)\,e^{-x^2}\, dx
+   = \int_{-\infty}^{\infty}(8x^3-4x)\,e^{-x^2}\, dx = 0
+  \quad\text{(integrando impar)}.
+\end{align*}
+
+\noindent\textbf{Resumen de resultados.}
+
+Aplicando el método de Gram-Schmidt a la base $\{1,\, x,\, x^2,\,\ldots\}$ con
+el producto interno inducido por el peso $w(x) = e^{-x^2}$, y exigiendo la
+normalización $\langle H_n \mid H_m \rangle = 2^n n!\sqrt{\pi}\,\delta_{mn}$, se
+obtienen los polinomios de Hermite:
+$$
+H_0(x) = 1,\qquad H_1(x) = 2x, \qquad H_2(x) = 4x^2 - 2,
+$$
+en concordancia con la expresión general dada en Sepúlveda (ec.\ 8.62) y con la
+fórmula de Rodrigues $H_n(x) = (-1)^n e^{x^2}\dfrac{d^n}{dx^n}\!\left(e^{-x^2}\right)$.
+
+\end{document}
