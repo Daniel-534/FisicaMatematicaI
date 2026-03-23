@@ -1,189 +1,711 @@
-\documentclass[12pt]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
-\usepackage{amsmath, amssymb}
-\usepackage{enumitem}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+\documentclass[a4paper]{article}
 
-\title{Taller 3 -- Física Matemática}
-\date{}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
 
 \begin{document}
-\maketitle
 
-\section{Problema 3}
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 3 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
 
-Considere la base de polinomios $\{x^n\}$. Utilizando el método de Gram-Schmidt
-encuentre los dos primeros polinomios de Hermite $H_n(x)$ con
-$-\infty < x < \infty$, función de peso $w(x) = e^{-x^2}$,
-y normalización
-$$
-\langle H_n \mid H_m \rangle = 2^m\, m!\,\sqrt{\pi}\;\delta_{mn}.
-$$
+\newpage
+\tableofcontents
+\newpage
+
+\section{Problema 1.a1}
+Escriba las relaciones de ortonormalidad y completez para la siguiente base:
+$$ a1. \{\varphi_n(x)\} = \left\{\sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right)\right\} \quad 0 \leq x \leq L $$
+donde $n = 1, 2, 3, ...$
 
 \subsection{Solución}
 
-\textbf{Producto interno.} Con la función de peso $w(x) = e^{-x^2}$ el
-producto interno entre dos funciones $f$ y $g$ queda definido como:
-$$
-\langle f \mid g \rangle
-= \int_{-\infty}^{\infty} e^{-x^2}\, f(x)\, g(x)\, dx.
-$$
+Para resolver este problema de manera analítica y exhaustiva, debemos remitirnos a la teoría de espacios de Hilbert y bases ortogonales expuesta en el texto de Alonso Sepúlveda. En física matemática, una base discreta de funciones $\{\varphi_n(x)\}$ definida en un intervalo $[a, b]$ permite expandir cualquier función de cuadrado integrable como una combinación lineal de sus elementos. La validez de esta expansión depende fundamentalmente de dos propiedades: la ortonormalidad y la completez.
 
-\textbf{Integrales gaussianas de referencia.} Para aplicar el procedimiento
-necesitamos los siguientes resultados estándar:
-\begin{align}
-\int_{-\infty}^{\infty} e^{-x^2}\, dx &= \sqrt{\pi}, \label{I0}\\[4pt]
-\int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx &= \frac{\sqrt{\pi}}{2}, \label{I2}\\[4pt]
-\int_{-\infty}^{\infty} x^4\, e^{-x^2}\, dx &= \frac{3\sqrt{\pi}}{4}, \label{I4}
-\end{align}
-mientras que toda integral de la forma $\int_{-\infty}^{\infty} x^{2k+1}e^{-x^2}dx = 0$
-por ser el integrando una función impar.
+\textbf{1. Relación de Ortonormalidad}
 
-\bigskip
-\noindent
-El método de Gram-Schmidt parte de la base $\{u_n\} = \{1,\, x,\, x^2,\, \ldots\}$
-y construye una base ortogonal $\{\varphi_n\}$ mediante:
-$$
-\varphi_n = u_n - \sum_{k=0}^{n-1}
-\frac{\langle \varphi_k \mid u_n \rangle}{\langle \varphi_k \mid \varphi_k \rangle}\,\varphi_k.
-$$
-Una vez obtenidos los $\varphi_n$ ortogonales se normalizan para satisfacer
-la condición $\langle H_n \mid H_m \rangle = 2^n n!\sqrt{\pi}\,\delta_{mn}$.
+De acuerdo con la definición general, un conjunto de funciones es ortonormal respecto a una función de peso $w(x) = 1$ en el intervalo $[a, b]$ si el producto escalar de dos elementos cualesquiera de la base satisface la delta de Kronecker $\delta_{nm}$. El producto escalar en un espacio de Hilbert se define mediante la integral del producto de una función por el complejo conjugado de la otra. Para la base dada, evaluamos la integral:
+$$ I = \int_{0}^{L} \varphi_n(x) \varphi_m(x) dx = \int_{0}^{L} \left[ \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right) \right] \left[ \sqrt{\frac{2}{L}} \sin\left(\frac{m\pi x}{L}\right) \right] dx $$
+Extraemos las constantes de la integral:
+$$ I = \frac{2}{L} \int_{0}^{L} \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx $$
+Para resolver esta integral analíticamente, utilizamos la identidad trigonométrica del producto de senos: $\sin A \sin B = \frac{1}{2} [\cos(A-B) - \cos(A+B)]$. Aplicando esto al integrando:
+$$ I = \frac{2}{L} \cdot \frac{1}{2} \int_{0}^{L} \left[ \cos\left(\frac{(n-m)\pi x}{L}\right) - \cos\left(\frac{(n+m)\pi x}{L}\right) \right] dx $$
+$$ I = \frac{1}{L} \left[ \int_{0}^{L} \cos\left(\frac{(n-m)\pi x}{L}\right) dx - \int_{0}^{L} \cos\left(\frac{(n+m)\pi x}{L}\right) dx \right] $$
+Analizamos los dos casos posibles para los índices $n$ y $m$:
 
-% -------------------------------------------------------
-\medskip
-\noindent\textbf{Paso 0: Construcción de $H_0(x)$.}
+\begin{itemize}
+    \item \textbf{Caso $n \neq m$:}
+    Ambas integrales involucran funciones coseno cuyos argumentos son múltiplos no nulos de $\pi x / L$. Al integrar:
+    $$ \int_{0}^{L} \cos\left(\frac{(n-m)\pi x}{L}\right) dx = \left[ \frac{L}{(n-m)\pi} \sin\left(\frac{(n-m)\pi x}{L}\right) \right]_{0}^{L} $$
+    Como $\sin((n-m)\pi) = 0$ y $\sin(0) = 0$ para cualquier entero $n, m$, la integral es nula. Lo mismo ocurre para el segundo término. Por lo tanto, $I = 0$ si $n \neq m$.
 
-Se toma $\varphi_0 = u_0 = 1$.  Su norma cuadrada es:
-$$
-\langle \varphi_0 \mid \varphi_0 \rangle
-= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1 \cdot 1\, dx = \sqrt{\pi}.
-$$
-La condición de normalización exige
-$\langle H_0 \mid H_0 \rangle = 2^0\cdot 0!\cdot\sqrt{\pi} = \sqrt{\pi}$.
-Escribimos $H_0 = c_0\,\varphi_0$; entonces:
-$$
-\langle H_0 \mid H_0 \rangle = c_0^2 \langle \varphi_0\mid\varphi_0\rangle
-= c_0^2\,\sqrt{\pi} = \sqrt{\pi}
-\quad\Longrightarrow\quad c_0 = 1.
-$$
+    \item \textbf{Caso $n = m$:}
+    El primer término del integrando se convierte en $\cos(0) = 1$. La expresión queda:
+    $$ I = \frac{1}{L} \left[ \int_{0}^{L} 1 dx - \int_{0}^{L} \cos\left(\frac{2n\pi x}{L}\right) dx \right] $$
+    $$ I = \frac{1}{L} [ L - 0 ] = 1 $$
+\end{itemize}
 
-\begin{center}
-\boxed{H_0(x) = 1}
-\end{center}
+Combinando ambos resultados, obtenemos la relación de ortonormalidad solicitada:
+$$ \frac{2}{L} \int_{0}^{L} \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx = \delta_{nm} $$
 
-% -------------------------------------------------------
-\medskip
-\noindent\textbf{Paso 1: Construcción de $H_1(x)$.}
+\textbf{2. Relación de Completez}
 
-Se aplica Gram-Schmidt sobre $u_1 = x$:
-$$
-\varphi_1 = u_1 - \frac{\langle \varphi_0 \mid u_1 \rangle}{\langle \varphi_0 \mid \varphi_0 \rangle}\,\varphi_0.
-$$
-El coeficiente involucrado requiere calcular:
-$$
-\langle \varphi_0 \mid u_1 \rangle
-= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1 \cdot x\, dx = 0,
-$$
-pues el integrando $x\,e^{-x^2}$ es una función \emph{impar}.  Por tanto:
-$$
-\varphi_1 = x - 0 = x.
-$$
-La norma cuadrada de $\varphi_1$ es:
-$$
-\langle \varphi_1 \mid \varphi_1 \rangle
-= \int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}.
-$$
-La condición de normalización exige
-$\langle H_1 \mid H_1 \rangle = 2^1\cdot 1!\cdot\sqrt{\pi} = 2\sqrt{\pi}$.
-Escribimos $H_1 = c_1\,\varphi_1$; entonces:
-$$
-\langle H_1 \mid H_1 \rangle = c_1^2\,\frac{\sqrt{\pi}}{2} = 2\sqrt{\pi}
-\quad\Longrightarrow\quad c_1^2 = 4
-\quad\Longrightarrow\quad c_1 = 2.
-$$
+La condición de completez asegura que el conjunto de funciones es suficiente para representar cualquier función del espacio sin que falte ninguna "dirección" funcional. Matemáticamente, esto se expresa como una sumatoria sobre todos los elementos de la base que debe ser equivalente a la distribución delta de Dirac $\delta(x - x')$.
 
-\begin{center}
-\boxed{H_1(x) = 2x}
-\end{center}
+Para una base con función de peso unidad, la relación de completez se escribe como:
+$$ \sum_{n=1}^{\infty} \varphi_n(x) \varphi_n(x') = \delta(x - x') $$
+Sustituyendo la expresión de nuestras funciones de base $\varphi_n(x)$:
+$$ \sum_{n=1}^{\infty} \left[ \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right) \right] \left[ \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x'}{L}\right) \right] = \delta(x - x') $$
+Simplificando los coeficientes constantes, obtenemos la relación de completez definitiva para esta base en el intervalo especificado:
+$$ \frac{2}{L} \sum_{n=1}^{\infty} \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{n\pi x'}{L}\right) = \delta(x - x') $$
 
-% -------------------------------------------------------
-\medskip
-\noindent\textbf{Paso 2: Construcción de $H_2(x)$.}
+Esta expresión analítica es fundamental en la resolución de problemas de valores en la frontera, como la cuerda vibrante con extremos fijos, ya que permite descomponer condiciones iniciales arbitrarias en una serie de senos de Fourier, garantizando que la representación sea exacta en términos de las distribuciones de Dirac.
 
-Se aplica Gram-Schmidt sobre $u_2 = x^2$:
-$$
-\varphi_2 = u_2
-  - \frac{\langle \varphi_1 \mid u_2 \rangle}{\langle \varphi_1 \mid \varphi_1 \rangle}\,\varphi_1
-  - \frac{\langle \varphi_0 \mid u_2 \rangle}{\langle \varphi_0 \mid \varphi_0 \rangle}\,\varphi_0.
-$$
-Se calculan los dos coeficientes necesarios:
-\begin{align*}
-\langle \varphi_1 \mid u_2 \rangle
-  &= \int_{-\infty}^{\infty} x\cdot x^2\, e^{-x^2}\, dx
-   = \int_{-\infty}^{\infty} x^3\, e^{-x^2}\, dx = 0
-   \quad\text{(integrando impar)},\\[6pt]
-\langle \varphi_0 \mid u_2 \rangle
-  &= \int_{-\infty}^{\infty} x^2\, e^{-x^2}\, dx = \frac{\sqrt{\pi}}{2}.
-\end{align*}
-Por tanto:
-$$
-\varphi_2 = x^2 - 0
-  - \frac{\sqrt{\pi}/2}{\sqrt{\pi}}\cdot 1
-  = x^2 - \frac{1}{2}.
-$$
-Se calcula su norma cuadrada:
-\begin{align*}
-\langle \varphi_2 \mid \varphi_2 \rangle
-  &= \int_{-\infty}^{\infty} \left(x^2 - \tfrac{1}{2}\right)^2 e^{-x^2}\, dx\\
-  &= \int_{-\infty}^{\infty} \left(x^4 - x^2 + \tfrac{1}{4}\right) e^{-x^2}\, dx\\
-  &= \frac{3\sqrt{\pi}}{4} - \frac{\sqrt{\pi}}{2} + \frac{\sqrt{\pi}}{4}
-   = \frac{3\sqrt{\pi} - 2\sqrt{\pi} + \sqrt{\pi}}{4}
-   = \frac{\sqrt{\pi}}{2}.
-\end{align*}
-La condición de normalización exige
-$\langle H_2 \mid H_2 \rangle = 2^2\cdot 2!\cdot\sqrt{\pi} = 8\sqrt{\pi}$.
-Escribimos $H_2 = c_2\,\varphi_2$; entonces:
-$$
-\langle H_2 \mid H_2 \rangle = c_2^2\,\frac{\sqrt{\pi}}{2} = 8\sqrt{\pi}
-\quad\Longrightarrow\quad c_2^2 = 16
-\quad\Longrightarrow\quad c_2 = 4.
-$$
-\begin{center}
-\boxed{H_2(x) = 4\!\left(x^2 - \tfrac{1}{2}\right) = 4x^2 - 2}
-\end{center}
 
-% -------------------------------------------------------
-\medskip
-\noindent\textbf{Verificación de la ortogonalidad.}
+\section{Problema 1.b1}
+Escriba las relaciones de ortonormalidad y completez para la siguiente base:
+$$ b1. \{\varphi_n(x)\} = \left\{\sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x}{L}\right), \frac{1}{\sqrt{L}}\right\} \quad 0 \leq x \leq L $$
+donde $n = 1, 2, 3, ...$
 
-Es posible comprobar directamente que las tres funciones obtenidas son
-mutuamente ortogonales bajo el peso $e^{-x^2}$:
-\begin{align*}
-\langle H_0 \mid H_1 \rangle
-  &= \int_{-\infty}^{\infty} e^{-x^2}\cdot 1\cdot 2x\, dx = 0
-  \quad\text{(integrando impar)},\\[4pt]
-\langle H_0 \mid H_2 \rangle
-  &= \int_{-\infty}^{\infty} e^{-x^2}(4x^2-2)\, dx
-   = 4\cdot\frac{\sqrt{\pi}}{2} - 2\sqrt{\pi} = 0,\\[4pt]
-\langle H_1 \mid H_2 \rangle
-  &= \int_{-\infty}^{\infty} 2x(4x^2-2)\,e^{-x^2}\, dx
-   = \int_{-\infty}^{\infty}(8x^3-4x)\,e^{-x^2}\, dx = 0
-  \quad\text{(integrando impar)}.
-\end{align*}
+\subsection{Solución}
 
-\noindent\textbf{Resumen de resultados.}
+Para resolver este problema de manera analítica, nos apoyaremos en la teoría de espacios de Hilbert y bases ortogonales descrita por Alonso Sepúlveda. En un espacio de funciones de cuadrado integrable definido en un intervalo $[a, b]$, un conjunto de funciones $\{\varphi_n(x)\}$ forma una base si es linealmente independiente y completo. 
 
-Aplicando el método de Gram-Schmidt a la base $\{1,\, x,\, x^2,\,\ldots\}$ con
-el producto interno inducido por el peso $w(x) = e^{-x^2}$, y exigiendo la
-normalización $\langle H_n \mid H_m \rangle = 2^n n!\sqrt{\pi}\,\delta_{mn}$, se
-obtienen los polinomios de Hermite:
-$$
-H_0(x) = 1,\qquad H_1(x) = 2x, \qquad H_2(x) = 4x^2 - 2,
-$$
-en concordancia con la expresión general dada en Sepúlveda (ec.\ 8.62) y con la
-fórmula de Rodrigues $H_n(x) = (-1)^n e^{x^2}\dfrac{d^n}{dx^n}\!\left(e^{-x^2}\right)$.
+Identificamos que la base propuesta corresponde a la base trigonométrica de cosenos en el semidominio $[0, L]$. Para este conjunto, definimos los elementos como:
+$$ \varphi_0(x) = \frac{1}{\sqrt{L}} $$
+$$ \varphi_n(x) = \sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x}{L}\right) \quad \text{para } n = 1, 2, 3, ... $$
 
+\textbf{1. Relación de Ortonormalidad}
+
+La condición de ortonormalidad para una base discreta respecto a una función de peso $w(x) = 1$ establece que el producto interno de dos elementos cualesquiera debe satisfacer la delta de Kronecker:
+$$ \langle \varphi_n | \varphi_m \rangle = \int_{0}^{L} \varphi_n(x) \varphi_m(x) dx = \delta_{nm} $$
+
+Procedemos a evaluar analíticamente los diferentes casos para los índices $n$ y $m$:
+
+\begin{itemize}
+    \item \textbf{Caso $n = m = 0$:}
+    $$ \int_{0}^{L} \varphi_0(x) \varphi_0(x) dx = \int_{0}^{L} \left( \frac{1}{\sqrt{L}} \right) \left( \frac{1}{\sqrt{L}} \right) dx = \frac{1}{L} \int_{0}^{L} dx = \frac{L}{L} = 1 $$
+    
+    \item \textbf{Caso $n = m > 0$:}
+    Utilizamos la identidad trigonométrica $\cos^2(\alpha) = \frac{1 + \cos(2\alpha)}{2}$:
+    $$ \int_{0}^{L} \left[ \sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x}{L}\right) \right]^2 dx = \frac{2}{L} \int_{0}^{L} \frac{1 + \cos\left(\frac{2n\pi x}{L}\right)}{2} dx $$
+    $$ = \frac{1}{L} \left[ x + \frac{L}{2n\pi} \sin\left(\frac{2n\pi x}{L}\right) \right]_{0}^{L} = \frac{1}{L} (L + 0) = 1 $$
+
+    \item \textbf{Caso $n \neq m$ (con al menos un índice mayor que 0):}
+    Si $m = 0$ y $n > 0$:
+    $$ \int_{0}^{L} \sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x}{L}\right) \frac{1}{\sqrt{L}} dx = \frac{\sqrt{2}}{L} \left[ \frac{L}{n\pi} \sin\left(\frac{n\pi x}{L}\right) \right]_{0}^{L} = 0 $$
+    Si $n, m > 0$ y $n \neq m$, usamos la identidad del producto de cosenos:
+    $$ \int_{0}^{L} \frac{2}{L} \cos\left(\frac{n\pi x}{L}\right) \cos\left(\frac{m\pi x}{L}\right) dx = \frac{1}{L} \int_{0}^{L} \left[ \cos\left(\frac{(n-m)\pi x}{L}\right) + \cos\left(\frac{(n+m)\pi x}{L}\right) \right] dx $$
+    Al integrar funciones coseno sobre múltiplos de su semiperiodo en el intervalo $[0, L]$, el resultado es idénticamente nulo para $n \neq m$.
+\end{itemize}
+
+Por lo tanto, se cumple la relación de ortonormalidad:
+$$ \int_{0}^{L} \varphi_n(x) \varphi_m(x) dx = \delta_{nm} $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez garantiza que cualquier función del espacio puede expandirse como combinación lineal de los elementos de la base. Matemáticamente, la suma de las proyecciones de la base debe converger a la distribución delta de Dirac:
+$$ \sum_{n=0}^{\infty} \varphi_n(x) \varphi_n(x') = \delta(x - x') $$
+
+Sustituyendo los elementos específicos de nuestra base, incluyendo el término constante para $n=0$:
+$$ \frac{1}{\sqrt{L}} \cdot \frac{1}{\sqrt{L}} + \sum_{n=1}^{\infty} \left[ \sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x}{L}\right) \right] \left[ \sqrt{\frac{2}{L}} \cos\left(\frac{n\pi x'}{L}\right) \right] = \delta(x - x') $$
+
+La expresión final analítica de la completez es:
+$$ \frac{1}{L} + \frac{2}{L} \sum_{n=1}^{\infty} \cos\left(\frac{n\pi x}{L}\right) \cos\left(\frac{n\pi x'}{L}\right) = \delta(x - x') $$
+
+Este resultado es fundamental para la expansión de funciones en series de cosenos de Fourier en el intervalo $[0, L]$, permitiendo la representación exacta de campos escalares en problemas de conducción de calor y electrostática con condiciones de Neumann homogéneas.
+
+
+\section{Problema 1.c1}
+Escriba las relaciones de ortonormalidad y completez para la siguiente base:
+$$ c1. \{\varphi_n(x)\} = \left\{\frac{1}{\sqrt{L}} \sin\left(\frac{n\pi x}{L}\right), \frac{1}{\sqrt{L}} \cos\left(\frac{n\pi x}{L}\right), \frac{1}{\sqrt{2L}}\right\} \quad c \leq x \leq c+ 2L $$
+donde $n = 1, 2, 3, ...$
+
+\subsection{Solución}
+
+Para resolver este problema, nos fundamentamos en la teoría de espacios de Hilbert y bases ortogonales descrita por Alonso Sepúlveda. En física matemática, un conjunto de funciones $\{\varphi_n(x)\}$ constituye una base completa si cualquier función de cuadrado integrable definida en el intervalo $[a, b]$ puede ser representada como una combinación lineal de los elementos de dicho conjunto. 
+
+La base propuesta corresponde a la base trigonométrica completa de Fourier definida en un intervalo de longitud $2L$ desplazado una distancia $c$ respecto al origen. Identificamos tres tipos de elementos en esta base:
+1. El término constante: $\varphi_0(x) = \frac{1}{\sqrt{2L}}$
+2. Los términos en seno: $\varphi_{n,s}(x) = \frac{1}{\sqrt{L}} \sin\left(\frac{n\pi x}{L}\right)$
+3. Los términos en coseno: $\varphi_{n,c}(x) = \frac{1}{\sqrt{L}} \cos\left(\frac{n\pi x}{L}\right)$
+
+Para que el conjunto sea una base ortonormal, debe cumplir que el producto escalar de dos elementos cualesquiera, definido por la integral sobre el dominio especificado, sea igual a la delta de Kronecker $\delta_{nm}$.
+
+\textbf{1. Relaciones de Ortonormalidad}
+
+Procedemos a evaluar las integrales de producto interno para los distintos casos, asumiendo una función de peso $w(x) = 1$:
+
+\begin{itemize}
+    \item \textbf{Normalización del término constante:}
+    $$ \langle \varphi_0 | \varphi_0 \rangle = \int_{c}^{c+2L} \left( \frac{1}{\sqrt{2L}} \right)^2 dx = \frac{1}{2L} \int_{c}^{c+2L} dx = \frac{2L}{2L} = 1 $$
+
+    \item \textbf{Ortogonalidad entre el término constante y las funciones trigonométricas:}
+    Para las funciones seno:
+    $$ \langle \varphi_0 | \varphi_{n,s} \rangle = \int_{c}^{c+2L} \frac{1}{\sqrt{2L}} \frac{1}{\sqrt{L}} \sin\left(\frac{n\pi x}{L}\right) dx = \frac{1}{L\sqrt{2}} \int_{c}^{c+2L} \sin\left(\frac{n\pi x}{L}\right) dx $$
+    Dado que estamos integrando la función seno sobre un intervalo que corresponde exactamente a su periodo fundamental (o un múltiplo entero de este), la integral es idénticamente nula. El mismo razonamiento analítico se aplica para las funciones coseno:
+    $$ \langle \varphi_0 | \varphi_{n,c} \rangle = \frac{1}{L\sqrt{2}} \int_{c}^{c+2L} \cos\left(\frac{n\pi x}{L}\right) dx = 0 $$
+
+    \item \textbf{Ortogonalidad y normalización de las funciones seno y coseno:}
+    Para dos funciones seno con índices $n$ y $m$, utilizamos la identidad trigonométrica $\sin A \sin B = \frac{1}{2}[\cos(A-B) - \cos(A+B)]$:
+    $$ \langle \varphi_{n,s} | \varphi_{m,s} \rangle = \frac{1}{L} \int_{c}^{c+2L} \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx $$
+    Si $n \neq m$, la integral de las funciones coseno resultantes sobre el intervalo $2L$ (un múltiplo de sus periodos) es cero. Si $n = m$, la integral se reduce a:
+    $$ \frac{1}{L} \int_{c}^{c+2L} \sin^2\left(\frac{n\pi x}{L}\right) dx = \frac{1}{L} \int_{c}^{c+2L} \frac{1 - \cos\left(\frac{2n\pi x}{L}\right)}{2} dx = \frac{1}{2L} (2L) = 1 $$
+    Un desarrollo análogo para las funciones coseno demuestra que $\langle \varphi_{n,c} | \varphi_{m,c} \rangle = \delta_{nm}$. Finalmente, la ortogonalidad entre senos y cosenos se cumple debido a que:
+    $$ \langle \varphi_{n,s} | \varphi_{m,c} \rangle = \frac{1}{L} \int_{c}^{c+2L} \sin\left(\frac{n\pi x}{L}\right) \cos\left(\frac{m\pi x}{L}\right) dx = 0 $$
+\end{itemize}
+
+Por lo tanto, la relación de ortonormalidad para esta base completa se sintetiza en:
+$$ \int_{c}^{c+2L} \varphi_i(x) \varphi_j(x) dx = \delta_{ij} $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez establece que la suma de los productos de los elementos de la base evaluados en dos puntos distintos $x$ y $x'$ debe converger a la distribución delta de Dirac $\delta(x - x')$. Para esta base trigonométrica en el intervalo $[c, c+2L]$, la relación se escribe analíticamente como la suma de las contribuciones del término constante, la serie de senos y la serie de cosenos:
+$$ \varphi_0(x)\varphi_0(x') + \sum_{n=1}^{\infty} \left[ \varphi_{n,s}(x)\varphi_{n,s}(x') + \varphi_{n,c}(x)\varphi_{n,c}(x') \right] = \delta(x - x') $$
+
+Sustituyendo las expresiones correspondientes:
+$$ \left(\frac{1}{\sqrt{2L}}\right)^2 + \sum_{n=1}^{\infty} \left[ \frac{1}{L} \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{n\pi x'}{L}\right) + \frac{1}{L} \cos\left(\frac{n\pi x}{L}\right) \cos\left(\frac{n\pi x'}{L}\right) \right] = \delta(x - x') $$
+
+Factorizando el término $1/L$ y utilizando la identidad de la suma de ángulos para el coseno, $\cos(A-B) = \cos A \cos B + \sin A \sin B$, la expresión de completez se reduce a:
+$$ \frac{1}{2L} + \frac{1}{L} \sum_{n=1}^{\infty} \cos\left[ \frac{n\pi}{L}(x - x') \right] = \delta(x - x') $$
+
+Esta relación analítica garantiza que cualquier señal o campo definido en el intervalo de longitud $2L$ puede ser reconstruido con exactitud mediante su expansión en esta serie de Fourier, siendo una herramienta fundamental en la resolución de ecuaciones diferenciales con condiciones de frontera periódicas o definidas en dominios finitos.
+
+
+\section{Problema 1.d1}
+Escriba las relaciones de ortonormalidad y completez para la siguiente base:
+$$ d1. \{\varphi_n(x)\} = \left\{\frac{1}{\sqrt{L}} e^{in\pi x/L}\right\} \quad c \leq x \leq c+ 2L $$
+donde $n = -\infty \to \infty.$
+
+\subsection{Solución}
+
+Para resolver este problema de manera analítica, nos fundamentamos en la teoría de espacios de Hilbert y bases ortogonales expuesta en las lecciones de Alonso Sepúlveda. El conjunto de funciones propuesto corresponde a la base exponencial de Fourier definida en un intervalo de longitud $2L$ desplazado una distancia $c$ respecto al origen.
+
+\textbf{1. Relación de Ortonormalidad}
+
+Consideramos el producto escalar (o producto interno) entre dos elementos de la base, $\varphi_n(x)$ y $\varphi_m(x),$ en el espacio de funciones de cuadrado integrable definido en el intervalo $[c, c+2L].$ De acuerdo con la definición para funciones complejas y asumiendo una función de peso $w(x) = 1$:
+$$ \langle \varphi_n | \varphi_m \rangle = \int_{c}^{c+2L} \varphi_n^*(x) \varphi_m(x) dx $$
+Sustituimos la expresión de los elementos de la base:
+$$ \langle \varphi_n | \varphi_m \rangle = \int_{c}^{c+2L} \left( \frac{1}{\sqrt{L}} e^{-in\pi x / L} \right) \left( \frac{1}{\sqrt{L}} e^{im\pi x / L} \right) dx $$
+$$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{L} \int_{c}^{c+2L} e^{i(m-n)\pi x / L} dx $$
+
+Procedemos a evaluar la integral analíticamente para los dos casos posibles de los índices:
+
+\begin{itemize}
+    \item \textbf{Caso $n = m$:}
+    El exponente se hace cero, por lo que $e^0 = 1$:
+    $$ \langle \varphi_n | \varphi_n \rangle = \frac{1}{L} \int_{c}^{c+2L} (1) dx = \frac{1}{L} [x]_{c}^{c+2L} = \frac{1}{L} (c + 2L - c) = \frac{2L}{L} = 2 $$
+    Esto indica que, con el factor de normalización $1/\sqrt{L}$ proporcionado en el enunciado, la norma de cada vector es $\sqrt{2}.$ Para que la base fuera estrictamente ortonormal (norma 1), el factor debería ser $1/\sqrt{2L}.$
+    
+    \item \textbf{Caso $n \neq m$:}
+    Calculamos la integral del exponencial:
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{L} \left[ \frac{L}{i(m-n)\pi} e^{i(m-n)\pi x / L} \right]_{c}^{c+2L} $$
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{i(m-n)\pi} \left( e^{i(m-n)\pi (c+2L) / L} - e^{i(m-n)\pi c / L} \right) $$
+    Factorizamos el término común $e^{i(m-n)\pi c / L}$:
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{e^{i(m-n)\pi c / L}}{i(m-n)\pi} \left( e^{i2(m-n)\pi} - 1 \right) $$
+    Como $(m-n)$ es un número entero no nulo, se cumple que $e^{i2(m-n)\pi} = \cos[2(m-n)\pi] + i\sin[2(m-n)\pi] = 1.$ Por lo tanto:
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{e^{i(m-n)\pi c / L}}{i(m-n)\pi} (1 - 1) = 0 $$
+\end{itemize}
+
+Combinando ambos resultados, la relación de ortonormalidad para la base dada es:
+$$ \int_{c}^{c+2L} \varphi_n^*(x) \varphi_m(x) dx = 2 \delta_{nm} $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez asegura que la base es suficiente para expandir cualquier función del espacio. Matemáticamente, la suma de los productos de los elementos de la base evaluados en dos puntos $x$ y $x'$ debe ser equivalente a la distribución delta de Dirac $\delta(x - x').$ 
+
+Dado que la base posee una normalización de 2 (según el cálculo anterior), la relación de completez requiere un factor de corrección de $1/2$ para que la expansión de la unidad sea correcta:
+$$ \sum_{n=-\infty}^{\infty} \frac{1}{2} \varphi_n(x) \varphi_n^*(x') = \delta(x - x') $$
+Sustituyendo los términos:
+$$ \sum_{n=-\infty}^{\infty} \frac{1}{2} \left( \frac{1}{\sqrt{L}} e^{in\pi x / L} \right) \left( \frac{1}{\sqrt{L}} e^{-in\pi x' / L} \right) = \delta(x - x') $$
+Simplificando, obtenemos la expresión final analítica para la completez:
+$$ \frac{1}{2L} \sum_{n=-\infty}^{\infty} e^{in\pi(x - x')/L} = \delta(x - x') $$
+
+Este resultado es consistente con la representación integral de la delta de Dirac en una dimensión y garantiza que la expansión de cualquier función $f(x)$ en esta base exponencial sobre el intervalo especificado sea exacta.
+
+
+\section{Problema 1.e1}
+Escriba las relaciones de ortonormalidad y completez para la siguiente base:
+$$ e1. \{\varphi_n(x)\} = \left\{\frac{1}{\sqrt{L}} e^{i2n\pi x/L}\right\} \quad 0 \leq x \leq L $$
+donde $n = -\infty \to \infty.$
+
+\subsection{Solución}
+
+Para resolver este problema, nos fundamentamos en la teoría de espacios de Hilbert y bases ortogonales expuesta en las lecciones de Alonso Sepúlveda. El conjunto de funciones propuesto corresponde a una base exponencial de Fourier definida en un intervalo de longitud $L.$ Esta base es fundamental para la representación de funciones periódicas y para el análisis de sistemas físicos con simetría de traslación o condiciones de contorno periódicas.
+
+\textbf{1. Relación de Ortonormalidad}
+
+De acuerdo con la definición en un espacio de funciones de cuadrado integrable definido en el intervalo $[0, L],$ el producto interno entre dos elementos de la base, $\varphi_n(x)$ y $\varphi_m(x),$ se define mediante la integral del producto de la función por el complejo conjugado de la otra, asumiendo una función de peso $w(x) = 1$:
+$$ \langle \varphi_n | \varphi_m \rangle = \int_{0}^{L} \varphi_n^*(x) \varphi_m(x) dx $$
+Sustituyendo la expresión analítica de los elementos de la base proporcionada en el enunciado:
+$$ \langle \varphi_n | \varphi_m \rangle = \int_{0}^{L} \left( \frac{1}{\sqrt{L}} e^{-i2n\pi x / L} \right) \left( \frac{1}{\sqrt{L}} e^{im2\pi x / L} \right) dx $$
+$$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{L} \int_{0}^{L} e^{i2(m-n)\pi x / L} dx $$
+
+Procedemos a evaluar esta integral analíticamente considerando los dos casos posibles para los índices enteros $n$ y $m$:
+
+\begin{itemize}
+    \item \textbf{Caso $n = m$:}
+    En este caso, el exponente de la función exponencial compleja se anula, resultando en $e^0 = 1.$ La integral se simplifica a:
+    $$ \langle \varphi_n | \varphi_n \rangle = \frac{1}{L} \int_{0}^{L} (1) dx = \frac{1}{L} [x]_{0}^{L} = \frac{L}{L} = 1 $$
+    Esto demuestra que cada vector de la base está correctamente normalizado a la unidad con el factor $1/\sqrt{L}.$
+
+    \item \textbf{Caso $n \neq m$:}
+    Realizamos la integración directa de la función exponencial:
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{L} \left[ \frac{L}{i2(m-n)\pi} e^{i2(m-n)\pi x / L} \right]_{0}^{L} $$
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{i2(m-n)\pi} \left( e^{i2(m-n)\pi} - e^0 \right) $$
+    Dado que $(m-n)$ es un número entero no nulo, la cantidad $2(m-n)$ es un entero par. Según la identidad de Euler, $e^{i2k\pi} = \cos(2k\pi) + i\sin(2k\pi) = 1$ para cualquier entero $k.$ Por lo tanto:
+    $$ \langle \varphi_n | \varphi_m \rangle = \frac{1}{i2(m-n)\pi} (1 - 1) = 0 $$
+\end{itemize}
+
+Combinando ambos resultados mediante el uso de la delta de Kronecker $\delta_{nm},$ obtenemos la relación de ortonormalidad:
+$$ \int_{0}^{L} \varphi_n^*(x) \varphi_m(x) dx = \delta_{nm} $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez garantiza que el conjunto de funciones $\{\varphi_n(x)\}$ constituye una base suficiente para expandir cualquier función del espacio de Hilbert. Matemáticamente, la suma de las proyecciones de los elementos de la base evaluados en dos puntos distintos $x$ y $x'$ debe ser equivalente a la distribución delta de Dirac $\delta(x - x').$
+
+Para esta base exponencial en el intervalo $[0, L],$ la relación de completez se escribe analíticamente como:
+$$ \sum_{n=-\infty}^{\infty} \varphi_n(x) \varphi_n^*(x') = \delta(x - x') $$
+Sustituyendo los términos de la base:
+$$ \sum_{n=-\infty}^{\infty} \left( \frac{1}{\sqrt{L}} e^{i2n\pi x / L} \right) \left( \frac{1}{\sqrt{L}} e^{-i2n\pi x' / L} \right) = \delta(x - x') $$
+Factorizando el término constante $1/L,$ obtenemos la expresión final:
+$$ \frac{1}{L} \sum_{n=-\infty}^{\infty} e^{i2n\pi(x - x')/L} = \delta(x - x') $$
+
+Este resultado es consistente con la representación de la delta de Dirac como una serie de Fourier periódica. Analíticamente, esta relación asegura que cualquier señal o campo definido en el dominio $[0, L]$ puede reconstruirse con exactitud mediante su expansión en esta base, lo cual es una herramienta potente en la resolución de ecuaciones diferenciales parciales mediante el método de transformación de Fourier discreta.
+
+\section{Problema 2.a}
+Escriba las condiciones de ortonormalidad y completez para la siguiente base continua:
+$$ \{ \varphi(k, x) \} = \left\{ \sqrt{\frac{1}{\pi}} \sin kx, \sqrt{\frac{1}{\pi}} \cos kx \right\} ; \quad 0 \leq k < \infty; \quad -\infty < x < \infty $$
+
+\subsection{Solución}
+
+Para resolver este problema de manera analítica, debemos emplear el formalismo de las bases continuas en espacios de Hilbert, tal como se desarrolla en el texto de Alonso Sepúlveda. A diferencia de las bases discretas, donde la ortogonalidad se expresa mediante la delta de Kronecker, en las bases continuas (o no enumerables) la ortogonalidad y la completez se definen a través de la distribución delta de Dirac.
+
+Consideramos un conjunto de funciones $\{ \varphi(k, x) \}$ donde $k$ es el parámetro continuo de la base y $x$ es la variable independiente definida en el dominio $(-\infty, \infty)$. La base propuesta consta de dos familias de funciones: una familia impar (senos) y una familia par (cosenos).
+
+\textbf{1. Relación de Ortonormalidad}
+
+De acuerdo con la teoría de bases continuas, un conjunto de funciones es ortonormal si el producto escalar entre dos elementos caracterizados por parámetros $k$ y $k'$ resulta en una delta de Dirac $\delta(k - k')$. En este caso, al tener dos tipos de funciones, debemos verificar tres condiciones de ortogonalidad en el intervalo $x \in (-\infty, \infty)$:
+
+\begin{itemize}
+    \item \textbf{Ortonormalidad de la parte seno:}
+    Evaluamos la integral del producto de dos funciones seno con diferentes parámetros:
+    $$ I_{ss} = \int_{-\infty}^{\infty} \left( \sqrt{\frac{1}{\pi}} \sin kx \right) \left( \sqrt{\frac{1}{\pi}} \sin k'x \right) dx = \frac{1}{\pi} \int_{-\infty}^{\infty} \sin kx \sin k'x dx $$
+    Utilizando la identidad trigonométrica del producto de senos $\sin A \sin B = \frac{1}{2} [\cos(A-B) - \cos(A+B)]$ y la representación integral de la delta de Dirac $\int_{-\infty}^{\infty} e^{iu\xi} d\xi = 2\pi \delta(u)$, se sabe que:
+    $$ \int_{-\infty}^{\infty} \sin kx \sin k'x dx = \pi \delta(k - k') $$
+    Sustituyendo esto, obtenemos:
+    $$ I_{ss} = \frac{1}{\pi} [\pi \delta(k - k')] = \delta(k - k') $$
+
+    \item \textbf{Ortonormalidad de la parte coseno:}
+    De manera análoga para las funciones coseno:
+    $$ I_{cc} = \int_{-\infty}^{\infty} \left( \sqrt{\frac{1}{\pi}} \cos kx \right) \left( \sqrt{\frac{1}{\pi}} \cos k'x \right) dx = \frac{1}{\pi} \int_{-\infty}^{\infty} \cos kx \cos k'x dx $$
+    Dada la relación $\int_{-\infty}^{\infty} \cos kx \cos k'x dx = \pi \delta(k - k')$, resulta:
+    $$ I_{cc} = \frac{1}{\pi} [\pi \delta(k - k')] = \delta(k - k') $$
+
+    \item \textbf{Ortogonalidad mutua:}
+    Debemos asegurar que una función seno es ortogonal a cualquier función coseno en el dominio infinito:
+    $$ I_{sc} = \int_{-\infty}^{\infty} \left( \sqrt{\frac{1}{\pi}} \sin kx \right) \left( \sqrt{\frac{1}{\pi}} \cos k'x \right) dx = \frac{1}{\pi} \int_{-\infty}^{\infty} \sin kx \cos k'x dx $$
+    Puesto que el integrando es una función impar (producto de una función impar por una par) integrada sobre un intervalo simétrico respecto al origen, la integral es idénticamente nula:
+    $$ I_{sc} = 0 $$
+\end{itemize}
+
+En síntesis, las condiciones de ortonormalidad se resumen analíticamente como:
+$$ \langle \varphi_{s,c}(k, x) | \varphi_{s,c}(k', x) \rangle = \delta(k - k') $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez para una base continua garantiza que el conjunto de funciones es suficiente para expandir cualquier función del espacio. Matemáticamente, esto se expresa como la integral sobre el parámetro de la base $k$ del producto de las funciones evaluadas en dos puntos distintos $x$ y $x'$, la cual debe converger a $\delta(x - x')$. 
+
+Para esta base mixta, la relación de completez suma las contribuciones de ambas familias en el rango $0 \leq k < \infty$:
+$$ \int_{0}^{\infty} \left[ \varphi_s(k, x) \varphi_s(k, x') + \varphi_c(k, x) \varphi_c(k, x') \right] dk = \delta(x - x') $$
+
+Sustituyendo las expresiones de la base:
+$$ \int_{0}^{\infty} \left[ \left( \sqrt{\frac{1}{\pi}} \sin kx \right) \left( \sqrt{\frac{1}{\pi}} \sin kx' \right) + \left( \sqrt{\frac{1}{\pi}} \cos kx \right) \left( \sqrt{\frac{1}{\pi}} \cos kx' \right) \right] dk = \delta(x - x') $$
+
+Factorizando el término $1/\pi$ y aplicando la identidad trigonométrica del coseno de una diferencia, $\cos A \cos B + \sin A \sin B = \cos(A - B)$, la expresión se simplifica a:
+$$ \frac{1}{\pi} \int_{0}^{\infty} \cos[k(x - x')] dk = \delta(x - x') $$
+
+Esta integral es una de las representaciones fundamentales de la delta de Dirac. Debido a la paridad de la función coseno, integrar de $0$ a $\infty$ es equivalente a la mitad de la integral sobre todo el eje real:
+$$ \frac{1}{\pi} \int_{0}^{\infty} \cos[k(x - x')] dk = \frac{1}{2\pi} \int_{-\infty}^{\infty} \cos[k(x - x')] dk = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik(x - x')} dk = \delta(x - x') $$
+
+\textbf{Conclusión:} Analíticamente, se ha demostrado que la base continua de senos y cosenos en el dominio infinito satisface las condiciones de ortonormalidad y completez requeridas para conformar un espacio de Hilbert, permitiendo la representación exacta de funciones mediante la integral de Fourier.
+
+
+\section{Problema 2.b}
+Escriba las condiciones de ortonormalidad y completez para la siguiente base continua:
+$$ \{ \varphi(k, x) \} = \sqrt{\frac{2}{\pi}} \sin kx ; \quad 0 \leq k < \infty; \quad 0 \leq x < \infty $$
+
+\subsection{Solución}
+
+Para resolver este problema de manera analítica, debemos emplear el formalismo de las bases continuas en espacios de Hilbert, tal como se desarrolla en el texto de Alonso Sepúlveda. A diferencia de las bases discretas (donde se utiliza la delta de Kronecker), en las bases continuas o no enumerables, la ortonormalidad y la completez se definen a través de la distribución delta de Dirac.
+
+La base propuesta corresponde a la familia de funciones seno definidas en el semidominio positivo tanto para la variable espacial $x$ como para el parámetro de la base $k$. Este conjunto es la base fundamental para la representación de funciones mediante la transformada seno de Fourier.
+
+\textbf{1. Relación de Ortonormalidad}
+
+De acuerdo con la teoría de bases continuas, un conjunto de funciones es ortonormal si el producto escalar (o producto interno) entre dos elementos de la base caracterizados por parámetros $k$ y $k'$ resulta en una delta de Dirac $\delta(k - k')$. En este caso, el dominio de integración para la variable $x$ es $[0, \infty)$.
+
+Evaluamos analíticamente la integral del producto de dos funciones de la base con diferentes parámetros:
+$$ I = \int_{0}^{\infty} \varphi^*(k, x) \varphi(k', x) dx = \int_{0}^{\infty} \left( \sqrt{\frac{2}{\pi}} \sin kx \right) \left( \sqrt{\frac{2}{\pi}} \sin k'x \right) dx $$
+Extrayendo los factores de normalización de la integral:
+$$ I = \frac{2}{\pi} \int_{0}^{\infty} \sin kx \sin k'x dx $$
+Para resolver esta integral, utilizamos la identidad trigonométrica del producto de senos: $\sin A \sin B = \frac{1}{2} [\cos(A-B) - \cos(A+B)]$. Aplicando esto al integrando:
+$$ I = \frac{2}{\pi} \cdot \frac{1}{2} \int_{0}^{\infty} \left[ \cos((k - k')x) - \cos((k + k')x) \right] dx $$
+$$ I = \frac{1}{\pi} \left[ \int_{0}^{\infty} \cos((k - k')x) dx - \int_{0}^{\infty} \cos((k + k')x) dx \right] $$
+Basándonos en la representación integral de la delta de Dirac $\int_{0}^{\infty} \cos(ax) dx = \pi \delta(a)$ (válida bajo el formalismo de distribuciones en el semidominio):
+\begin{itemize}
+    \item El primer término produce $\pi \delta(k - k')$.
+    \item El segundo término produce $\pi \delta(k + k')$. Sin embargo, dado que tanto $k$ como $k'$ son estrictamente positivos en el dominio definido para la base ($0 \leq k < \infty$), el argumento $(k + k')$ nunca se anula excepto en el origen, por lo que este término no contribuye a la ortogonalidad de las funciones dentro del dominio de interés.
+\end{itemize}
+
+Por lo tanto, la relación de ortonormalidad se reduce analíticamente a:
+$$ \frac{2}{\pi} \int_{0}^{\infty} \sin kx \sin k'x dx = \delta(k - k') $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez para una base continua garantiza que el conjunto de funciones es suficiente para expandir cualquier función del espacio de funciones de cuadrado integrable definido en $[0, \infty)$. Matemáticamente, esto se expresa como la integral sobre el parámetro continuo de la base ($k$) del producto de las funciones evaluadas en dos puntos distintos $x$ y $x'$, la cual debe converger a la delta de Dirac espacial $\delta(x - x')$.
+
+Para la base propuesta, la relación de completez se escribe como:
+$$ \int_{0}^{\infty} \varphi(k, x) \varphi^*(k, x') dk = \delta(x - x') $$
+Sustituyendo las expresiones de las funciones de la base:
+$$ \int_{0}^{\infty} \left( \sqrt{\frac{2}{\pi}} \sin kx \right) \left( \sqrt{\frac{2}{\pi}} \sin kx' \right) dk = \delta(x - x') $$
+Factorizando el término constante $2/\pi$:
+$$ \frac{2}{\pi} \int_{0}^{\infty} \sin kx \sin kx' dk = \delta(x - x') $$
+
+Esta expresión analítica es idéntica en forma a la relación de ortonormalidad debido a la simetría entre las variables $x$ y $k$ en la función seno. Esta relación es la base de la inversión de la transformada seno de Fourier: asegura que si una función $f(x)$ se expande en esta base, la reconstrucción mediante la integral recupera exactamente la función original.
+
+\textbf{Conclusión:} Analíticamente, se ha demostrado que la base continua de senos en el semidominio $[0, \infty)$ satisface las condiciones de ortonormalidad y completez requeridas para conformar un espacio de Hilbert, permitiendo la representación exacta de funciones mediante la transformada de Hankel de orden $1/2$ o transformada seno de Fourier.
+
+
+\section{Problema 2.c}
+Escriba las condiciones de ortonormalidad y completez para la siguiente base continua:
+$$ c. \{ \varphi(k, x) \} = \left\{ \sqrt{\frac{2}{\pi}} \cos kx, \sqrt{\frac{1}{\pi}} \right\} ; \quad 0 \leq k < \infty; \quad 0 \leq x < \infty $$
+
+\subsection{Solución}
+
+Para resolver este problema, emplearemos el formalismo de las bases continuas en espacios de Hilbert, tal como se desarrolla en el texto de Alonso Sepúlveda. A diferencia de las bases discretas, donde la ortogonalidad se define mediante la delta de Kronecker, en las bases continuas o no enumerables, las propiedades de ortonormalidad y completez se expresan a través de la distribución delta de Dirac.
+
+La base propuesta corresponde a la familia de funciones coseno definidas en el semidominio positivo tanto para la variable espacial $x$ como para el parámetro continuo de la base $k$. Este conjunto constituye la base fundamental para la representación de funciones mediante la transformada coseno de Fourier.
+
+\textbf{1. Relación de Ortonormalidad}
+
+De acuerdo con la teoría de bases continuas, un conjunto de funciones es ortonormal si el producto escalar (o producto interno) entre dos elementos caracterizados por los parámetros $k$ y $k'$ resulta en una delta de Dirac $\delta(k - k')$. Para funciones reales en el intervalo $[0, \infty),$ el producto escalar se define mediante la integral:
+$$ \langle \varphi(k, x) | \varphi(k', x) \rangle = \int_{0}^{\infty} \varphi(k, x) \varphi(k', x) dx $$
+Sustituyendo los elementos de la base para el caso general $k, k' > 0$:
+$$ I = \int_{0}^{\infty} \left( \sqrt{\frac{2}{\pi}} \cos kx \right) \left( \sqrt{\frac{2}{\pi}} \cos k'x \right) dx = \frac{2}{\pi} \int_{0}^{\infty} \cos kx \cos k'x dx $$
+Para evaluar esta integral analíticamente, utilizamos la identidad trigonométrica del producto de cosenos: $\cos A \cos B = \frac{1}{2} [\cos(A-B) + \cos(A+B)]$. Aplicando esto al integrando:
+$$ I = \frac{2}{\pi} \cdot \frac{1}{2} \int_{0}^{\infty} [ \cos((k - k')x) + \cos((k + k')x) ] dx $$
+$$ I = \frac{1}{\pi} \left[ \int_{0}^{\infty} \cos((k - k')x) dx + \int_{0}^{\infty} \cos((k + k')x) dx \right] $$
+Utilizando la representación integral de la delta de Dirac en el semidominio, $\int_{0}^{\infty} \cos(ax) dx = \pi \delta(a)$:
+\begin{itemize}
+    \item El primer término produce $\delta(k - k')$.
+    \item El segundo término produce $\delta(k + k')$. Dado que el dominio del parámetro es $0 \le k < \infty,$ el argumento $(k + k')$ solo se anula si $k = k' = 0$.
+\end{itemize}
+El término constante $\sqrt{1/\pi}$ proporcionado en la base corresponde precisamente al caso límite o componente de frecuencia nula. Por tanto, la relación de ortonormalidad para la base continua de cosenos es:
+$$ \frac{2}{\pi} \int_{0}^{\infty} \cos kx \cos k'x dx = \delta(k - k') $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez para una base continua garantiza que el conjunto de funciones es suficiente para expandir cualquier función del espacio de Hilbert definido en $[0, \infty)$. Matemáticamente, esto se expresa como la integral sobre el parámetro de la base $k$ del producto de las funciones evaluadas en dos puntos distintos $x$ y $x'$, la cual debe converger a la delta de Dirac espacial $\delta(x - x')$.
+
+Para la base propuesta, la relación de completez se escribe analíticamente como:
+$$ \int_{0}^{\infty} \varphi(k, x) \varphi(k, x') dk = \delta(x - x') $$
+Sustituyendo las expresiones de la base:
+$$ \int_{0}^{\infty} \left( \sqrt{\frac{2}{\pi}} \cos kx \right) \left( \sqrt{\frac{2}{\pi}} \cos kx' \right) dk = \delta(x - x') $$
+Factorizando el término constante $2/\pi$:
+$$ \frac{2}{\pi} \int_{0}^{\infty} \cos kx \cos kx' dk = \delta(x - x') $$
+
+Esta expresión es fundamental en la teoría de señales y física matemática, ya que asegura que si una función $f(x)$ se expande mediante la transformada de Hankel de orden $1/2$ (o transformada coseno de Fourier), la reconstrucción integral recupera con exactitud la función original. Esta relación de completez es la contraparte en el continuo de la serie de cosenos de Fourier utilizada en dominios finitos.
+
+\textbf{Conclusión:} Analíticamente, se ha demostrado que la base continua de cosenos en el semidominio $[0, \infty)$ satisface las condiciones de ortonormalidad y completez requeridas, permitiendo la expansión exacta de funciones de cuadrado integrable en términos de una distribución espectral continua de frecuencias espaciales.
+
+
+\section{Problema 2.d}
+Escriba las condiciones de ortonormalidad y completez para la siguiente base continua:
+$$ d. \{ \varphi(k, x) \} = \left\{ \frac{e^{ikx}}{\sqrt{2\pi}} \right\} ; \quad -\infty < k < \infty; \quad -\infty < x < \infty. $$
+
+\subsection{Solución}
+
+Para resolver este problema, utilizaremos el formalismo de las bases continuas en espacios de Hilbert, tal como se desarrolla en la obra de Alonso Sepúlveda. A diferencia de las bases discretas, donde la ortonormalidad se define mediante la delta de Kronecker, en conjuntos no enumerables como el propuesto, estas propiedades se expresan analíticamente a través de la distribución delta de Dirac.
+
+La base proporcionada corresponde a la base exponencial de Fourier, definida sobre todo el eje real para la variable espacial $x$ y el parámetro continuo $k,$ que representa el número de onda o frecuencia espacial.
+
+\textbf{1. Relación de Ortonormalidad}
+
+En un espacio de funciones de cuadrado integrable definido en $(-\infty, \infty),$ el producto interno entre dos elementos de una base continua caracterizados por los parámetros $k$ y $k'$ se define mediante la integral del producto de una función por el complejo conjugado de la otra. La condición de ortonormalidad exige que este producto interno sea equivalente a la delta de Dirac $\delta(k - k')$.
+
+Evaluamos analíticamente la integral para la base dada:
+$$ I = \int_{-\infty}^{\infty} \varphi^*(k, x) \varphi(k', x) dx $$
+Sustituyendo la expresión de los elementos de la base:
+$$ I = \int_{-\infty}^{\infty} \left( \frac{1}{\sqrt{2\pi}} e^{-ikx} \right) \left( \frac{1}{\sqrt{2\pi}} e^{ik'x} \right) dx $$
+$$ I = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{i(k' - k)x} dx $$
+De acuerdo con la representación integral de la delta de Dirac presentada en la teoría de transformadas integrales, se cumple que $\delta(u) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{iu\xi} d\xi$. Identificando $u = k' - k$ y $\xi = x,$ obtenemos el resultado:
+$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{i(k' - k)x} dx = \delta(k' - k) $$
+Dado que la delta de Dirac es una distribución simétrica, $\delta(k' - k) = \delta(k - k')$. Por lo tanto, se verifica la relación de ortonormalidad:
+$$ \langle \varphi(k, x) | \varphi(k', x) \rangle = \delta(k - k') $$
+
+\textbf{2. Relación de Completez}
+
+La condición de completez asegura que el conjunto de funciones $\{\varphi(k, x)\}$ constituye una base suficiente para expandir cualquier función del espacio de Hilbert. Matemáticamente, esto implica que la integral sobre el parámetro continuo de la base ($k$) del producto de las funciones evaluadas en dos puntos distintos $x$ y $x'$ debe converger a la delta de Dirac espacial $\delta(x - x')$.
+
+Planteamos la integral de completez para esta base exponencial:
+$$ \int_{-\infty}^{\infty} \varphi(k, x) \varphi^*(k, x') dk = \delta(x - x') $$
+Sustituyendo los términos correspondientes:
+$$ \int_{-\infty}^{\infty} \left( \frac{1}{\sqrt{2\pi}} e^{ikx} \right) \left( \frac{1}{\sqrt{2\pi}} e^{-ikx'} \right) dk = \delta(x - x') $$
+$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik(x - x')} dk = \delta(x - x') $$
+Esta expresión es analíticamente idéntica a la representación de la delta de Dirac en el espacio de posiciones, lo que confirma que la base es completa.
+
+\textbf{Conclusión:} Analíticamente, se ha demostrado que la base exponencial de Fourier en el dominio infinito satisface las condiciones de ortonormalidad y completez requeridas. Esta base es fundamental en física matemática, ya que permite la transición entre el espacio de posiciones y el espacio de momentos (o números de onda) mediante la Transformada de Fourier, garantizando que cualquier señal o campo pueda ser reconstruido con exactitud a partir de su espectro continuo.
+
+
+\section{Problema 3}
+Considere la base de polinomios $\{x^n\}.$ Utilizando el método de Gram-Schmidt encuentre los dos primeros polinomios de Hermite, $H_n(x)$ con $-\infty < x < \infty$ y función de peso $w(x) = e^{-x^2}$ con normalización $\langle H_n|H_m\rangle = 2^m m! \sqrt{\pi} \delta_{mn}.$
+
+\subsection{Solución}
+
+Para resolver este problema, emplearemos el proceso de ortogonalización de Gram-Schmidt siguiendo la teoría expuesta por Alonso Sepúlveda en sus lecciones de física matemática. Este procedimiento permite transformar un conjunto de funciones linealmente independientes (en este caso la base de Taylor $\{1, x, x^2, ...\}$) en una base ortogonal bajo una métrica definida por un producto escalar con una función de peso específica.
+
+Definimos el producto escalar en el espacio de Hilbert de las funciones de cuadrado integrable sobre el eje real con peso gaussiano como:
+$$ \langle f | g \rangle = \int_{-\infty}^{\infty} f(x)g(x)e^{-x^2} dx $$
+La condición de ortonormalidad requerida para los polinomios de Hermite $H_n(x)$ según el enunciado es:
+$$ \langle H_n | H_m \rangle = \int_{-\infty}^{\infty} H_n(x)H_m(x)e^{-x^2} dx = 2^n n! \sqrt{\pi} \delta_{nm} $$
+
+\textbf{1. Obtención del primer polinomio $H_0(x)$}
+
+Partimos del primer elemento de la base de potencias, $u_0(x) = 1.$ De acuerdo con el método de Gram-Schmidt, el primer polinomio ortogonal es proporcional a este elemento inicial:
+$$ H_0(x) = a_0 \cdot u_0(x) = a_0 $$
+Determinamos la constante $a_0$ imponiendo la condición de normalización para $n=0$:
+$$ \langle H_0 | H_0 \rangle = 2^0 0! \sqrt{\pi} = \sqrt{\pi} $$
+Evaluamos la integral analítica correspondiente:
+$$ \int_{-\infty}^{\infty} (a_0)^2 e^{-x^2} dx = a_0^2 \int_{-\infty}^{\infty} e^{-x^2} dx $$
+La integral gaussiana es un resultado fundamental de la física matemática, cuyo valor es $\sqrt{\pi}.$ Por lo tanto:
+$$ a_0^2 \sqrt{\pi} = \sqrt{\pi} \implies a_0^2 = 1 $$
+Eligiendo el valor positivo por convención, obtenemos el primer polinomio de Hermite:
+$$ H_0(x) = 1 $$
+
+\textbf{2. Obtención del segundo polinomio $H_1(x)$}
+
+Para el segundo polinomio, partimos de $u_1(x) = x$ y aplicamos la fórmula de proyección para asegurar la ortogonalidad con $H_0(x):$
+$$ H'_1(x) = u_1(x) - \frac{\langle u_1 | H_0 \rangle}{\langle H_0 | H_0 \rangle} H_0(x) $$
+Calculamos el producto escalar $\langle u_1 | H_0 \rangle$:
+$$ \langle x | 1 \rangle = \int_{-\infty}^{\infty} (x)(1)e^{-x^2} dx = \int_{-\infty}^{\infty} x e^{-x^2} dx $$
+Puesto que el integrando es una función impar ($f(-x) = -f(x)$) y el intervalo de integración es simétrico respecto al origen, la integral es idénticamente nula:
+$$ \langle u_1 | H_0 \rangle = 0 $$
+Esto implica que el polinomio $x$ ya es ortogonal a la constante en este espacio. Así, el polinomio sin normalizar es $H'_1(x) = x.$ Ahora, buscamos la forma normalizada $H_1(x) = a_1 x$ que satisfaga:
+$$ \langle H_1 | H_1 \rangle = 2^1 1! \sqrt{\pi} = 2\sqrt{\pi} $$
+Evaluamos la integral:
+$$ \int_{-\infty}^{\infty} (a_1 x)^2 e^{-x^2} dx = a_1^2 \int_{-\infty}^{\infty} x^2 e^{-x^2} dx $$
+Para resolver esta integral, podemos utilizar la definición de la función Gamma o realizar integración por partes. Sabemos que $\int_{-\infty}^{\infty} x^2 e^{-x^2} dx = \frac{\sqrt{\pi}}{2}.$ Sustituyendo:
+$$ a_1^2 \left( \frac{\sqrt{\pi}}{2} \right) = 2\sqrt{\pi} $$
+$$ a_1^2 = 4 \implies a_1 = 2 $$
+Por lo tanto, el segundo polinomio de Hermite es:
+$$ H_1(x) = 2x $$
+
+\textbf{Conclusión}
+
+Utilizando el método analítico de Gram-Schmidt y respetando la normalización establecida por la teoría de funciones especiales de Alonso Sepúlveda, los dos primeros polinomios de Hermite son:
+$$ H_0(x) = 1 $$
+$$ H_1(x) = 2x $$
+Estos resultados coinciden con la base estándar utilizada en la resolución de la ecuación de Schrödinger para el oscilador armónico cuántico, donde estos polinomios aseguran que la función de onda sea de cuadrado integrable en todo el dominio real.
+
+
+\section{Problema 4}
+Considere la base de polinomios $\{x^n\}$. Utilizando el método de Gram-Schmidt encuentre los dos primeros polinomios de Legendre, $L_n(x)$ con $-1 \leq x \leq 1$ y función de peso $w(x) = 1$ con normalización $\langle L_n|L_m\rangle = \frac{2}{2n+1} \delta_{mn}$.
+
+\subsection{Solución}
+
+Para resolver este problema, aplicaremos el proceso de ortogonalización de Gram-Schmidt sobre la base canónica de potencias $\{1, x, x^2, ...\}$, operando en el espacio de Hilbert de las funciones de cuadrado integrable definidas en el intervalo $[-1, 1]$. De acuerdo con la teoría de Alonso Sepúlveda, este procedimiento permite transformar un conjunto de funciones linealmente independientes en una base ortogonal bajo una métrica definida por un producto escalar.
+
+Definimos el producto escalar para este espacio con función de peso unidad $w(x) = 1$ como:
+$$ \langle f | g \rangle = \int_{-1}^{1} f(x)g(x) dx $$
+La condición de normalización impuesta por el enunciado para los polinomios de Legendre $L_n(x)$ es:
+$$ \langle L_n | L_m \rangle = \int_{-1}^{1} L_n(x)L_m(x) dx = \frac{2}{2n+1} \delta_{nm} $$
+
+\textbf{1. Obtención del primer polinomio $L_0(x)$}
+
+Partimos del primer elemento de la base de potencias, $u_0(x) = 1$. Según el método de Gram-Schmidt, el primer polinomio de la base ortogonal es proporcional a este elemento inicial:
+$$ L_0(x) = a_0 \cdot u_0(x) = a_0 $$
+Para determinar la constante $a_0$, aplicamos la condición de normalización para el índice $n=0$:
+$$ \langle L_0 | L_0 \rangle = \frac{2}{2(0)+1} = 2 $$
+Evaluamos la integral analítica correspondiente:
+$$ \int_{-1}^{1} (a_0)^2 dx = a_0^2 \int_{-1}^{1} dx = a_0^2 [x]_{-1}^{1} = a_0^2 (1 - (-1)) = 2a_0^2 $$
+Igualando ambos resultados:
+$$ 2a_0^2 = 2 \implies a_0^2 = 1 \implies a_0 = 1 $$
+Por convención en los polinomios de Legendre, se toma la raíz positiva. Así, el primer polinomio es:
+$$ L_0(x) = 1 $$
+
+\textbf{2. Obtención del segundo polinomio $L_1(x)$}
+
+Para el segundo polinomio, partimos de $u_1(x) = x$. Primero debemos asegurar que este nuevo elemento sea ortogonal al anterior ($L_0$). Definimos un polinomio intermedio $L'_1(x)$ mediante la proyección:
+$$ L'_1(x) = u_1(x) - \frac{\langle u_1 | L_0 \rangle}{\langle L_0 | L_0 \rangle} L_0(x) $$
+Calculamos el producto escalar $\langle u_1 | L_0 \rangle$:
+$$ \langle x | 1 \rangle = \int_{-1}^{1} (x)(1) dx = \int_{-1}^{1} x dx $$
+Dado que el integrando es una función impar y el intervalo de integración es simétrico respecto al origen, la integral es idénticamente nula:
+$$ \int_{-1}^{1} x dx = \left[ \frac{x^2}{2} \right]_{-1}^{1} = \frac{1}{2} - \frac{1}{2} = 0 $$
+Esto implica que el polinomio $x$ ya es ortogonal a la constante en este intervalo. Por lo tanto, $L'_1(x) = x$. Ahora, procedemos a normalizarlo para que cumpla la condición del enunciado para $n=1$:
+$$ \langle L_1 | L_1 \rangle = \frac{2}{2(1)+1} = \frac{2}{3} $$
+Asumiendo la forma $L_1(x) = a_1 x$, evaluamos su norma al cuadrado:
+$$ \int_{-1}^{1} (a_1 x)^2 dx = a_1^2 \int_{-1}^{1} x^2 dx = a_1^2 \left[ \frac{x^3}{3} \right]_{-1}^{1} = a_1^2 \left( \frac{1}{3} - \left(-\frac{1}{3}\right) \right) = \frac{2}{3} a_1^2 $$
+Igualando con el valor requerido:
+$$ \frac{2}{3} a_1^2 = \frac{2}{3} \implies a_1^2 = 1 \implies a_1 = 1 $$
+Nuevamente, tomando el valor positivo para que el polinomio sea creciente en el intervalo, obtenemos el segundo polinomio de Legendre:
+$$ L_1(x) = x $$
+
+\textbf{Conclusión}
+
+Utilizando el método analítico de Gram-Schmidt y respetando la normalización específica requerida en el taller, los dos primeros polinomios de Legendre son:
+$$ L_0(x) = 1 $$
+$$ L_1(x) = x $$
+Estos resultados coinciden con la definición estándar de los polinomios de Legendre obtenidos mediante la fórmula de Rodrigues o la solución de la ecuación diferencial de Legendre en el intervalo $[-1, 1]$, confirmando la consistencia del procedimiento de ortogonalización para generar bases en espacios de funciones.
+
+
+\section{Problema 5}
+Considere la base de polinomios $\{x^n\}.$ Utilizando el método de Gram-Schmidt encuentre los dos primeros polinomios de Chebyshev de tipo I, $T_n(x),$ en el intervalo $-1 \leq x \leq 1$ y función de peso $w(x) = (1-x^2)^{-1/2}$ con normalización $\langle T_n|T_m\rangle = \delta_{mn} \begin{cases} \pi & \text{si } n=m=0 \\ \pi/2 & \text{si } n=m \neq 0 \end{cases}$
+
+\subsection{Solución}
+
+Para resolver este problema, emplearemos el proceso de ortogonalización de Gram-Schmidt sobre la base canónica de potencias $\{1, x, x^2, \dots\},$ operando en el espacio de Hilbert de las funciones de cuadrado integrable definidas en el intervalo $[-1, 1].$ Según la teoría de Alonso Sepúlveda, este procedimiento permite transformar un conjunto de funciones linealmente independientes en una base ortogonal bajo una métrica definida por un producto escalar con una función de peso específica.
+
+En este caso, el producto escalar se define con la función de peso de Chebyshev $w(x) = (1-x^2)^{-1/2}$ como:
+$$ \langle f | g \rangle = \int_{-1}^{1} \frac{f(x)g(x)}{\sqrt{1-x^2}} dx $$
+
+La condición de normalización requerida por el enunciado para los polinomios de Chebyshev $T_n(x)$ es:
+$$ \langle T_n | T_m \rangle = \begin{cases} \pi & \text{si } n=m=0 \\ \pi/2 & \text{si } n=m \neq 0 \\ 0 & \text{si } n \neq m \end{cases} $$
+
+\textbf{1. Obtención del primer polinomio $T_0(x)$}
+
+Partimos del primer elemento de la base de potencias, $u_0(x) = 1.$ De acuerdo con el método de Gram-Schmidt, el primer polinomio de la base ortogonal es proporcional a este elemento inicial:
+$$ T_0(x) = a_0 \cdot u_0(x) = a_0 $$
+
+Para determinar la constante $a_0,$ aplicamos la condición de normalización para el índice $n=0$:
+$$ \langle T_0 | T_0 \rangle = \pi $$
+
+Evaluamos la integral analítica correspondiente realizando el cambio de variable trigonométrico $x = \cos \theta,$ lo que implica $dx = -\sin \theta d\theta$ y $\sqrt{1-x^2} = \sin \theta.$ Los límites de integración cambian de $x \in [-1, 1]$ a $\theta \in [\pi, 0]:$
+$$ \langle T_0 | T_0 \rangle = \int_{-1}^{1} \frac{a_0^2}{\sqrt{1-x^2}} dx = a_0^2 \int_{\pi}^{0} \frac{-\sin \theta}{\sin \theta} d\theta = a_0^2 \int_{0}^{\pi} d\theta = a_0^2 \pi $$
+
+Igualando con el valor de normalización requerido:
+$$ a_0^2 \pi = \pi \implies a_0^2 = 1 \implies a_0 = 1 $$
+
+Por convención, tomamos el valor positivo. Así, el primer polinomio de Chebyshev es:
+$$ T_0(x) = 1 $$
+
+\textbf{2. Obtención del segundo polinomio $T_1(x)$}
+
+Para el segundo polinomio, partimos de $u_1(x) = x.$ Primero debemos asegurar que este nuevo elemento sea ortogonal al anterior ($T_0$). Definimos un polinomio intermedio $T'_1(x)$ mediante la proyección:
+$$ T'_1(x) = u_1(x) - \frac{\langle u_1 | T_0 \rangle}{\langle T_0 | T_0 \rangle} T_0(x) $$
+
+Calculamos el producto escalar $\langle u_1 | T_0 \rangle$:
+$$ \langle x | 1 \rangle = \int_{-1}^{1} \frac{x}{\sqrt{1-x^2}} dx $$
+
+Dado que el integrando es una función impar ($f(-x) = -f(x)$) y el intervalo de integración es simétrico respecto al origen, la integral es idénticamente nula. Analíticamente, esto se verifica notando que la función de peso es par y la función $x$ es impar, por lo que su producto es impar. Esto implica que el polinomio $x$ ya es ortogonal a la constante en este espacio. Por lo tanto, $T'_1(x) = x.$
+
+Ahora, procedemos a normalizarlo para que cumpla la condición del enunciado para $n=1$:
+$$ \langle T_1 | T_1 \rangle = \pi/2 $$
+
+Asumiendo la forma $T_1(x) = a_1 x,$ evaluamos su norma al cuadrado utilizando el mismo cambio de variable $x = \cos \theta$:
+$$ \langle T_1 | T_1 \rangle = \int_{-1}^{1} \frac{(a_1 x)^2}{\sqrt{1-x^2}} dx = a_1^2 \int_{0}^{\pi} \cos^2 \theta d\theta $$
+
+Utilizamos la identidad trigonométrica $\cos^2 \theta = \frac{1 + \cos 2\theta}{2}$ para resolver la integral:
+$$ a_1^2 \int_{0}^{\pi} \frac{1 + \cos 2\theta}{2} d\theta = \frac{a_1^2}{2} \left[ \theta + \frac{\sin 2\theta}{2} \right]_{0}^{\pi} = \frac{a_1^2}{2} (\pi + 0) = \frac{a_1^2 \pi}{2} $$
+
+Igualando con el valor requerido:
+$$ \frac{a_1^2 \pi}{2} = \frac{\pi}{2} \implies a_1^2 = 1 \implies a_1 = 1 $$
+
+Obtenemos el segundo polinomio de Chebyshev:
+$$ T_1(x) = x $$
+
+\textbf{Conclusión}
+
+Utilizando el método analítico de Gram-Schmidt y respetando la normalización específica requerida para los polinomios de tipo I, los dos primeros polinomios de Chebyshev son:
+$$ T_0(x) = 1 $$
+$$ T_1(x) = x $$
+
+Estos resultados coinciden con la definición estándar $T_n(\cos \theta) = \cos(n\theta)$ presentada en el libro de Alonso Sepúlveda, donde se establece que estos polinomios son fundamentales para la aproximación de funciones y el análisis espectral en dominios finitos.
+
+
+\section{Problema 6}
+En mecánica cuántica se expande el vector de estado en la forma $|f⟩ = \sum_n a_n|n⟩.$ Si definimos el operador densidad como $\rho_{ij} = a_i a^*_j$ , muestre que $\rho^2_{ij} = \rho_{ij}.$
+
+\subsection{Solución}
+
+Para resolver este problema de manera analítica y exhaustiva, utilizaremos el formalismo de la mecánica cuántica basado en la notación de Dirac (bra-ket) y la teoría de espacios de Hilbert, tal como se describe en el texto de Alonso Sepúlveda. El operador densidad es una herramienta fundamental para describir el estado de un sistema cuántico, y en el caso de estados puros, este actúa como un operador de proyección.
+
+\textbf{1. Representación del estado y normalización:}
+
+Consideramos un estado cuántico representado por el vector de estado $|f\rangle$ en un espacio de Hilbert. De acuerdo con el postulado de expansión, este vector puede expresarse como una combinación lineal de los elementos de una base ortonormal $\{|n\rangle\}$:
+$$ |f\rangle = \sum_n a_n |n\rangle $$
+Donde los coeficientes $a_n$ son las amplitudes de probabilidad, dadas por el producto interno $a_n = \langle n|f\rangle$. El bra asociado a este vector es el complejo conjugado (adjunto hermítico):
+$$ \langle f| = \sum_m a^*_m \langle m| $$
+Una condición física fundamental en mecánica cuántica es que la probabilidad total debe ser igual a la unidad, lo que implica que el vector de estado debe estar normalizado:
+$$ \langle f|f\rangle = 1 $$
+Expresando esta normalización en términos de los coeficientes de la base:
+$$ \langle f|f\rangle = \left( \sum_m a^*_m \langle m| \right) \left( \sum_n a_n |n\rangle \right) = \sum_m \sum_n a^*_m a_n \langle m|n\rangle $$
+Debido a la ortonormalidad de la base, $\langle m|n\rangle = \delta_{mn}$, la expresión se reduce a:
+$$ \sum_n a^*_n a_n = \sum_n |a_n|^2 = 1 $$
+
+\textbf{2. Definición del operador densidad:}
+
+Para un estado puro $|f\rangle$, el operador densidad $\rho$ se define como el proyector sobre dicho estado:
+$$ \rho = |f\rangle\langle f| $$
+Los elementos de matriz de este operador en la base $\{|n\rangle\}$ se calculan proyectando el operador entre dos vectores de la base, $\langle i|$ y $|j\rangle$:
+$$ \rho_{ij} = \langle i|\rho|j\rangle = \langle i|(|f\rangle\langle f|)|j\rangle $$
+Sustituyendo la expansión del estado:
+$$ \rho_{ij} = \langle i|f\rangle \langle f|j\rangle $$
+Como $a_i = \langle i|f\rangle$ y $a^*_j = \langle f|j\rangle$ (por ser el complejo conjugado de $\langle j|f\rangle$), obtenemos la definición dada en el enunciado:
+$$ \rho_{ij} = a_i a^*_j $$
+
+\textbf{3. Demostración de la idempotencia ($\rho^2 = \rho$):}
+
+Para demostrar que $\rho^2_{ij} = \rho_{ij}$, procedemos a calcular el cuadrado del operador mediante el producto de matrices. El elemento $(i,j)$ del producto de dos matrices se define como la suma sobre un índice intermedio $k$:
+$$ (\rho^2)_{ij} = \sum_k \rho_{ik} \rho_{kj} $$
+Sustituyendo la forma de los elementos $\rho_{ij}$ en términos de los coeficientes $a$:
+$$ (\rho^2)_{ij} = \sum_k (a_i a^*_k) (a_k a^*_j) $$
+Dado que los coeficientes $a_i$ y $a^*_j$ no dependen del índice de la sumatoria $k$, podemos factorizarlos fuera de la suma:
+$$ (\rho^2)_{ij} = a_i \left( \sum_k a^*_k a_k \right) a^*_j $$
+Reconocemos que la sumatoria interna es exactamente la condición de normalización del vector de estado que discutimos previamente ($\sum_k |a_k|^2 = 1$):
+$$ \sum_k a^*_k a_k = 1 $$
+Por lo tanto, la expresión se simplifica a:
+$$ (\rho^2)_{ij} = a_i (1) a^*_j = a_i a^*_j $$
+Al comparar este resultado con la definición original, concluimos que:
+$$ \rho^2_{ij} = \rho_{ij} $$
+
+\textbf{4. Conclusión:}
+
+Analíticamente, se ha demostrado que los elementos de matriz del operador densidad para un estado puro satisfacen la relación de idempotencia. Este resultado es consistente con la interpretación física de $\rho$ como un operador de proyección: una vez que un sistema ha sido proyectado sobre el estado $|f\rangle$, proyecciones adicionales sobre el mismo estado no alteran el resultado. Esta propiedad es característica de los estados puros en la formulación matricial de la mecánica cuántica presentada por Alonso Sepúlveda.
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
 \end{document}
