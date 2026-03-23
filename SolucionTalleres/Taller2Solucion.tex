@@ -1,0 +1,610 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 2}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 2 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+
+\section{Problema 1}
+Escriba la densidad de masa volumétrica en términos de la delta de Dirac para las siguientes distribuciones:
+\begin{itemize}
+    \item Una varilla con densidad lineal de masa $\lambda$ situada en el eje $y.$
+    \item Cascarón esférico de radio $R$ con densidad de masa $\sigma.$
+    \item Anillo de radio $R$ con distribución lineal de masa y situado en un plano.
+    \item Disco de radio $R$ con distribución superficial de masa y situado en $z = z_0.$
+\end{itemize}
+
+\subsection{Solución}
+
+Para resolver este problema de manera analítica, debemos emplear la definición de la distribución delta de Dirac en el contexto de sistemas de coordenadas curvilíneas ortogonales, tal como se establece en la teoría de Alonso Sepúlveda. Consideramos un sistema general definido por las coordenadas $(u_1, u_2, u_3)$ y sus respectivos factores de escala $h_1, h_2, h_3.$ El diferencial de volumen se expresa como $dV = h_1 h_2 h_3 du_1 du_2 du_3.$
+
+La densidad de masa volumétrica $\rho(\vec{r})$ se define de tal forma que la masa total $M$ de un cuerpo se obtenga mediante la integral de volumen:
+$$ M = \int_V \rho(\vec{r}) dV $$
+Cuando la masa está concentrada en líneas o superficies, la densidad volumétrica debe incluir deltas de Dirac para restringir la masa a esas regiones geométricas específicas.
+
+\textbf{1. Varilla con densidad lineal $\lambda$ situada en el eje $y$}
+
+En un sistema de coordenadas cartesianas $(x, y, z),$ donde los factores de escala son todos la unidad ($h_x=h_y=h_z=1$), una varilla en el eje $y$ tiene su masa concentrada donde $x=0$ y $z=0.$ La masa total es $M = \int \lambda(y) dy.$
+Analíticamente, para que la integral triple de volumen recupere la integral lineal, la densidad volumétrica debe ser:
+$$ \rho(x, y, z) = \lambda(y) \delta(x) \delta(z) $$
+En términos de un sistema curvilíneo ortogonal arbitrario, si la varilla sigue la trayectoria de la coordenada $u_2,$ la expresión general considerando los factores de escala es:
+$$ \rho(u_1, u_2, u_3) = \frac{\lambda(u_2)}{h_1 h_3} \delta(u_1 - u_{1,0}) \delta(u_3 - u_{3,0}) $$
+Donde $u_{1,0}$ y $u_{3,0}$ definen la posición del eje.
+
+\textbf{2. Cascarón esférico de radio $R$ con densidad de masa $\sigma$}
+
+Para un cascarón esférico, el sistema más natural es el de coordenadas esféricas $(r, \theta, \phi),$ con factores de escala $h_r = 1, h_\theta = r, h_\phi = r \sin \theta.$ La masa está confinada a la superficie $r = R.$
+La masa total es $M = \int \sigma(\theta, \phi) dA = \int \sigma(\theta, \phi) R^2 \sin \theta d\theta d\phi.$ Al comparar esto con la integral volumétrica $\int \rho r^2 \sin \theta dr d\theta d\phi,$ la densidad volumétrica debe anular la componente radial fuera de $R$:
+$$ \rho(r, \theta, \phi) = \sigma(\theta, \phi) \delta(r - R) $$
+Nótese que no es necesario dividir por factores de escala adicionales en este caso porque el diferencial de área $dA$ ya está contenido en el diferencial de volumen $dV$ al integrar sobre la delta en $r.$
+
+\textbf{3. Anillo de radio $R$ con distribución lineal $\lambda$ en un plano}
+
+Supongamos el anillo situado en el plano $z = 0$ de un sistema de coordenadas cilíndricas $(\rho, \phi, z),$ donde $h_\rho = 1, h_\phi = \rho, h_z = 1.$ El anillo se define por las condiciones $\rho = R$ y $z = 0.$
+La masa total es $M = \int \lambda(\phi) R d\phi.$ Para que la integral volumétrica $\int \rho \rho d\rho d\phi dz$ sea consistente con esto, la densidad volumétrica debe ser:
+$$ \rho(\rho, \phi, z) = \frac{\lambda(\phi) R}{\rho} \delta(\rho - R) \delta(z) = \lambda(\phi) \delta(\rho - R) \delta(z) $$
+La segunda igualdad se justifica por la propiedad selectiva de la delta $f(\rho)\delta(\rho - R) = f(R)\delta(\rho - R),$ donde el factor $R/\rho$ se convierte en 1 al evaluar en la posición de la delta.
+
+\textbf{4. Disco de radio $R$ con distribución superficial $\sigma$ en $z = z_0$}
+
+Para un disco plano en $z = z_0,$ la masa se distribuye en una superficie circular de radio $R.$ Usando coordenadas cilíndricas, la densidad volumétrica concentra la masa en la altura $z_0$ y se limita al rango radial $0 \le \rho \le R$:
+$$ \rho(\rho, \phi, z) = \sigma(\rho, \phi) \delta(z - z_0) \quad \text{para } \rho \le R $$
+Para expresar esto formalmente usando la función paso de Heaviside $\theta(x),$ que asegura que la densidad sea nula fuera del borde del disco:
+$$ \rho(\rho, \phi, z) = \sigma(\rho, \phi) \theta(R - \rho) \delta(z - z_0) $$
+Esta formulación analítica garantiza que al integrar sobre todo el espacio, solo se obtenga la contribución de la superficie del disco en la altura especificada.
+
+
+
+\section{Problema 2}
+Muestre que una representación para la delta de Dirac en una dimensión puede darse de la forma:
+$$ \delta(x - x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik(x-x')} dk $$
+Generalice el resultado anterior para tres dimensiones.
+
+\subsection{Solución}
+
+Para demostrar analíticamente que la integral de Fourier representa a la distribución delta de Dirac, debemos basarnos en la teoría de transformadas integrales expuesta en las lecciones de Alonso Sepúlveda. Según el autor, la delta de Dirac no es una función en el sentido estricto, sino una distribución definida primordialmente por su propiedad selectiva o de muestreo.
+
+\textbf{1. Demostración en una dimensión}
+
+Consideremos una función $f(x)$ que sea seccionalmente continua y absolutamente integrable en el dominio $(-\infty, \infty)$. De acuerdo con la teoría de bases continuas de Fourier, esta función puede expandirse en la base ortonormal de funciones exponenciales complejas:
+$$ f(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} F(k) e^{ikx} dk $$
+donde $F(k)$ es la transformada de Fourier de $f(x)$, definida como:
+$$ F(k) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(x') e^{-ikx'} dx' $$
+Para encontrar la representación de la delta, sustituimos la expresión de la transformada $F(k)$ directamente en la integral de expansión de $f(x)$:
+$$ f(x) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} \left[ \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(x') e^{-ikx'} dx' \right] e^{ikx} dk $$
+Debido a que las integrales son convergentes para las funciones consideradas, podemos intercambiar el orden de integración (utilizando el teorema de Fubini):
+$$ f(x) = \int_{-\infty}^{\infty} f(x') \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik(x-x')} dk \right] dx' $$
+Ahora, comparamos este resultado con la definición fundamental de la delta de Dirac mediante su propiedad selectiva, la cual establece que para cualquier función $f(x')$ continua en el punto $x$:
+$$ f(x) = \int_{-\infty}^{\infty} f(x') \delta(x - x') dx' $$
+Al observar la estructura de ambas integrales, se identifica que el término entre corchetes debe comportarse exactamente como la distribución delta de Dirac. Por lo tanto, analíticamente se concluye que:
+$$ \delta(x - x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik(x-x')} dk $$
+Este resultado es de suma importancia en física matemática, ya que muestra que la delta de Dirac puede entenderse como una superposición de ondas planas de todas las frecuencias posibles (o números de onda $k$) con la misma amplitud, lo que físicamente se asocia con el principio de incertidumbre: un pico infinito en el espacio de posiciones requiere un espectro infinito y constante en el espacio de momentos.
+
+\textbf{2. Generalización a tres dimensiones}
+
+Para extender este resultado al espacio euclidiano tridimensional, partimos de la propiedad de que la delta de Dirac en coordenadas cartesianas es separable. El vector de posición se define como $\vec{r} = (x, y, z)$ y el vector de la fuente como $\vec{r}' = (x', y', z')$. La delta tridimensional se expresa como el producto de las deltas unidimensionales de sus componentes:
+$$ \delta(\vec{r} - \vec{r}') = \delta(x - x') \delta(y - y') \delta(z - z') $$
+Sustituimos la representación integral obtenida anteriormente para cada una de las dimensiones, utilizando variables de integración independientes $k_x, k_y, k_z$:
+$$ \delta(\vec{r} - \vec{r}') = \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik_x(x-x')} dk_x \right] \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik_y(y-y')} dk_y \right] \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik_z(z-z')} dk_z \right] $$
+Agrupando los términos constantes y combinando las integrales en una sola integral triple sobre todo el espacio de vectores de onda $\vec{k}$:
+$$ \delta(\vec{r} - \vec{r}') = \frac{1}{(2\pi)^3} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{i [k_x(x-x') + k_y(y-y') + k_z(z-z')]} dk_x dk_y dk_z $$
+Notamos que el argumento del exponencial es precisamente el producto escalar entre el vector $\vec{k}$ y el vector diferencia $(\vec{r} - \vec{r}')$. Utilizando la notación vectorial compacta y definiendo el elemento de volumen en el espacio recíproco como $d^3\vec{k} = dk_x dk_y dk_z$, obtenemos la representación general:
+$$ \delta(\vec{r} - \vec{r}') = \frac{1}{(2\pi)^3} \int e^{i \vec{k} \cdot (\vec{r} - \vec{r}')} d^3\vec{k} $$
+Esta expresión es fundamental en la teoría de campos y en la solución de ecuaciones diferenciales mediante el método de funciones de Green, permitiendo descomponer fuentes puntuales en el espacio tridimensional en una base continua de ondas planas.
+
+\section{Problema 3}
+Muestre las siguientes propiedades de la delta de Dirac:
+\begin{itemize}
+    \item $\int_{-\infty}^{\infty} f(x) \frac{d}{dx} \delta(x-x_0) dx = - \left( \frac{df(x)}{dx} \right)_{x=x_0}$
+    \item $\delta(ax) = \frac{\delta(x)}{|a|}$
+    \item $\int_{-\infty}^{\infty} f(x) \delta[g(x)] dx = \sum_{k=1}^N \frac{f(x_k)}{|g'(x_k)|}$ donde $x_k$ son las N raíces de $g(x) = 0$ con $g'(x_k) \neq 0$
+\end{itemize}
+
+\subsection{Solución}
+
+Para demostrar estas propiedades de la distribución delta de Dirac, utilizaremos un enfoque analítico basado en las definiciones de teoría de distribuciones y las propiedades de muestreo presentadas en el libro de Alonso Sepúlveda.
+
+\textbf{1. Derivada de la delta de Dirac}
+
+Consideremos la integral que involucra la derivada de la delta de Dirac actuando sobre una función de prueba $f(x)$ que es continua y derivable. Para evaluar esta expresión, aplicamos formalmente el método de integración por partes:
+$$ \int_{-\infty}^{\infty} u dv = [uv]_{-\infty}^{\infty} - \int_{-\infty}^{\infty} v du $$
+Definimos las partes como:
+$$ u = f(x) \implies du = f'(x)dx $$
+$$ dv = \frac{d}{dx} \delta(x-x_0) dx \implies v = \delta(x-x_0) $$
+Sustituyendo en la fórmula de integración por partes:
+$$ \int_{-\infty}^{\infty} f(x) \frac{d}{dx} \delta(x-x_0) dx = [f(x) \delta(x-x_0)]_{-\infty}^{\infty} - \int_{-\infty}^{\infty} \delta(x-x_0) f'(x) dx $$
+Evaluamos los términos:
+\begin{itemize}
+    \item El término de frontera $[f(x) \delta(x-x_0)]_{-\infty}^{\infty}$ es idénticamente nulo. Esto se debe a que la delta de Dirac $\delta(x-x_0)$ solo tiene soporte en el punto $x = x_0$ y es cero para todo valor de $x$ que tienda a $\pm \infty$.
+    \item El segundo término contiene la propiedad selectiva fundamental de la delta de Dirac. De acuerdo con la teoría, la integral de una función multiplicada por una delta centrada en $x_0$ devuelve el valor de la función evaluada en dicho punto:
+    $$ \int_{-\infty}^{\infty} \delta(x-x_0) f'(x) dx = f'(x_0) $$
+\end{itemize}
+Combinando los resultados, obtenemos la identidad solicitada:
+$$ \int_{-\infty}^{\infty} f(x) \frac{d}{dx} \delta(x-x_0) dx = - f'(x_0) = - \left( \frac{df(x)}{dx} \right)_{x=x_0} $$
+
+\textbf{2. Escalamiento de la delta de Dirac: $\delta(ax)$}
+
+Para probar que $\delta(ax) = \frac{\delta(x)}{|a|}$, analizamos el efecto de esta distribución bajo una integral con una función de prueba $f(x)$. Realizamos el cambio de variable $y = ax$, lo que implica $dy = a dx$, o bien $dx = \frac{dy}{a}$. Debemos considerar dos casos según el signo de la constante $a$:
+
+\begin{itemize}
+    \item \textbf{Caso $a > 0$:} Los límites de integración se mantienen en el mismo orden ($-\infty$ a $\infty$).
+    $$ \int_{-\infty}^{\infty} f(x) \delta(ax) dx = \int_{-\infty}^{\infty} f(y/a) \delta(y) \frac{dy}{a} = \frac{1}{a} f(0) $$
+    \item \textbf{Caso $a < 0$:} Al realizar el cambio de variable, los límites de integración se invierten ($\infty$ a $-\infty$).
+    $$ \int_{-\infty}^{\infty} f(x) \delta(ax) dx = \int_{\infty}^{-\infty} f(y/a) \delta(y) \frac{dy}{a} = -\frac{1}{a} \int_{-\infty}^{\infty} f(y/a) \delta(y) dy = -\frac{1}{a} f(0) $$
+    Dado que en este caso $a$ es negativo, $-\frac{1}{a} = \frac{1}{|a|}$.
+\end{itemize}
+
+Ambos casos se pueden unificar bajo la expresión $\frac{1}{|a|} f(0)$. Por definición de la propiedad selectiva, sabemos que $\int f(x) \frac{\delta(x)}{|a|} dx = \frac{1}{|a|} f(0)$. Por lo tanto, analíticamente se concluye que:
+$$ \delta(ax) = \frac{\delta(x)}{|a|} $$
+
+\textbf{3. Delta de una función: $\delta[g(x)]$}
+
+Supongamos que la función $g(x)$ tiene $N$ raíces aisladas $x_k$ (puntos donde $g(x_k) = 0$). Podemos dividir el intervalo de integración en pequeños subintervalos alrededor de cada raíz, donde la función $g(x)$ sea monótona. En cada uno de estos intervalos, realizamos el cambio de variable $y = g(x)$, con lo cual $dy = g'(x) dx$, o $dx = \frac{dy}{g'(x)}$.
+
+La integral total es la suma de las contribuciones de cada raíz:
+$$ \int_{-\infty}^{\infty} f(x) \delta[g(x)] dx = \sum_{k=1}^N \int_{x_k-\epsilon}^{x_k+\epsilon} f(x) \delta[g(x)] dx $$
+En la vecindad de cada raíz $x_k$, aplicamos el cambio de variable. Al transformar los límites, el signo de $g'(x_k)$ determinará si el orden de integración se mantiene o se invierte (similar al caso de $\delta(ax)$ visto anteriormente). Esto introduce el valor absoluto del jacobiano de la transformación:
+$$ \int_{x_k-\epsilon}^{x_k+\epsilon} f(x) \delta[g(x)] dx = \int_{g(x_k-\epsilon)}^{g(x_k+\epsilon)} f(g^{-1}(y)) \delta(y) \frac{dy}{|g'(x)|} $$
+Por la propiedad de muestreo de la delta de Dirac en $y=0$, la cual corresponde a $x=x_k$:
+$$ \int_{g(x_k-\epsilon)}^{g(x_k+\epsilon)} f(g^{-1}(y)) \delta(y) \frac{dy}{|g'(x)|} = \frac{f(x_k)}{|g'(x_k)|} $$
+Finalmente, sumando todas las contribuciones, obtenemos la propiedad general:
+$$ \int_{-\infty}^{\infty} f(x) \delta[g(x)] dx = \sum_{k=1}^N \frac{f(x_k)}{|g'(x_k)|} $$
+Esta identidad es fundamental en física matemática para evaluar integrales de volumen o superficie cuando las restricciones están dadas por funciones implícitas.
+
+
+\section{Problema 4}
+Utilizando la definición de Euler para la función Gamma,
+$$ \Gamma(z) = \lim_{n\to\infty} \frac{n! n^z}{z(z+1)(z+2)...(z+n)} , z \neq 0, -1, -2, -3... $$
+pruebe que se satisface la relación $\Gamma(z+1) = z\Gamma(z).$
+
+\subsection{Solución}
+
+Para demostrar la propiedad fundamental de la función Gamma utilizando su definición como límite de Euler, procederemos a evaluar la expresión para $\Gamma(z+1)$ y compararla analíticamente con la forma de $\Gamma(z).$ Esta identidad es de gran importancia en la teoría de funciones especiales y es la base de la relación de recurrencia que vincula la función Gamma con el factorial en el campo de los números enteros.
+
+\textbf{1. Planteamiento de $\Gamma(z+1)$ según la definición de Euler:}
+
+A partir de la definición proporcionada en el enunciado para un valor genérico $z,$ escribimos la expresión correspondiente para el argumento $(z+1):$
+$$ \Gamma(z+1) = \lim_{n\to\infty} \frac{n! n^{z+1}}{(z+1)(z+2)(z+3)...(z+n)(z+n+1)} $$
+En esta expresión, el término del numerador $n^{z+1}$ y los factores del denominador han sido desplazados una unidad en $z.$ Note que el producto en el denominador ahora termina en el factor $(z+n+1).$
+
+\textbf{2. Manipulación algebraica de la expresión:}
+
+Nuestro objetivo es factorizar los términos de manera que aparezca la forma original de $\Gamma(z).$ Desglosamos el término de potencia en el numerador:
+$$ n^{z+1} = n^z \cdot n $$
+Sustituyendo esto en la expresión del límite:
+$$ \Gamma(z+1) = \lim_{n\to\infty} \frac{n! n^z \cdot n}{(z+1)(z+2)...(z+n)(z+n+1)} $$
+Para recuperar la definición exacta de $\Gamma(z),$ nos hace falta un factor $z$ en el denominador. Podemos introducirlo multiplicando y dividiendo la expresión por $z$:
+$$ \Gamma(z+1) = \lim_{n\to\infty} \left[ z \cdot \frac{n! n^z}{z(z+1)(z+2)...(z+n)} \cdot \frac{n}{z+n+1} \right] $$
+
+\textbf{3. Evaluación del límite:}
+
+Haciendo uso de la propiedad del límite de un producto (siempre que los límites individuales existan), podemos separar la expresión en tres factores:
+$$ \Gamma(z+1) = z \cdot \left[ \lim_{n\to\infty} \frac{n! n^z}{z(z+1)(z+2)...(z+n)} \right] \cdot \left[ \lim_{n\to\infty} \frac{n}{z+n+1} \right] $$
+Analicemos cada factor:
+\begin{itemize}
+    \item El primer factor es la constante $z.$
+    \item El segundo término entre corchetes es, por definición de Euler, exactamente la función $\Gamma(z).$
+    \item El tercer término es un límite sencillo de una función racional cuando $n$ tiende a infinito:
+    $$ \lim_{n\to\infty} \frac{n}{z+n+1} = \lim_{n\to\infty} \frac{n}{n \left( 1 + \frac{z+1}{n} \right)} = \lim_{n\to\infty} \frac{1}{1 + \frac{z+1}{n}} = \frac{1}{1 + 0} = 1 $$
+\end{itemize}
+
+\textbf{4. Conclusión:}
+
+Al combinar los resultados de los factores anteriores, obtenemos la relación final:
+$$ \Gamma(z+1) = z \cdot \Gamma(z) \cdot 1 $$
+$$ \Gamma(z+1) = z \Gamma(z) $$
+Esta prueba analítica confirma que la definición de Euler satisface la propiedad de recurrencia fundamental de la función Gamma. Este resultado es consistente con la teoría presentada por Alonso Sepúlveda, donde se establece que esta relación define el carácter de "factorial generalizado" de la función para valores complejos de $z$ en todo su dominio de convergencia.
+
+
+\section{Problema 5}
+Usando la definición usual de la función Gamma,
+$$ \Gamma(z) = \int_{0}^{\infty} e^{-t} t^{z-1} dt , \text{Re}(z) > 0 $$
+muestre que $$ \Gamma(1/2) = \sqrt{\pi} $$
+
+\subsection{Solución}
+
+Para demostrar analíticamente que $\Gamma(1/2) = \sqrt{\pi}$ a partir de su definición integral, seguiremos el procedimiento detallado en la teoría de funciones especiales de Alonso Sepúlveda. La función Gamma, también conocida como función factorial generalizada, se define para valores positivos de su argumento mediante la integral de Euler de segunda especie.
+
+\textbf{1. Representación integral de $\Gamma(1/2)$}
+
+Partimos de la definición general proporcionada en el enunciado:
+$$ \Gamma(z) = \int_{0}^{\infty} e^{-t} t^{z-1} dt $$
+Sustituyendo el valor $z = 1/2$, obtenemos la expresión específica:
+$$ \Gamma(1/2) = \int_{0}^{\infty} e^{-t} t^{-1/2} dt $$
+De acuerdo con el formalismo matemático de las funciones especiales, resulta conveniente realizar un cambio de variable para transformar esta integral en una forma gaussiana. Definimos:
+$$ t = x^2 \implies dt = 2x dx $$
+Los límites de integración permanecen inalterados ($x$ varía de $0$ a $\infty$). Sustituyendo en la integral:
+$$ \Gamma(1/2) = \int_{0}^{\infty} e^{-x^2} (x^2)^{-1/2} (2x dx) = \int_{0}^{\infty} e^{-x^2} x^{-1} 2x dx $$
+Simplificando los términos de $x$, llegamos a la siguiente expresión fundamental:
+$$ \Gamma(1/2) = 2 \int_{0}^{\infty} e^{-x^2} dx $$
+
+\textbf{2. Evaluación mediante el cuadrado de la integral}
+
+La integral $\int_{0}^{\infty} e^{-x^2} dx$ no posee una primitiva en términos de funciones elementales, por lo que recurrimos a la técnica de evaluar su cuadrado utilizando integrales dobles en el plano. Consideramos el producto de dos representaciones idénticas de $\Gamma(1/2)$ usando variables independientes $x$ y $y$:
+$$ [\Gamma(1/2)]^2 = \left( 2 \int_{0}^{\infty} e^{-x^2} dx \right) \left( 2 \int_{0}^{\infty} e^{-y^2} dy \right) $$
+$$ [\Gamma(1/2)]^2 = 4 \int_{0}^{\infty} \int_{0}^{\infty} e^{-(x^2+y^2)} dx dy $$
+Esta integral doble se extiende sobre el primer cuadrante del plano cartesiano ($x \ge 0, y \ge 0$). Para resolverla analíticamente, realizamos un cambio a coordenadas polares:
+$$ x = r \cos \theta, \quad y = r \sin \theta $$
+$$ dx dy = r dr d\theta $$
+En este sistema de coordenadas, el primer cuadrante está definido por los intervalos $r \in [0, \infty)$ y $\theta \in [0, \pi/2]$. La expresión se transforma en:
+$$ [\Gamma(1/2)]^2 = 4 \int_{0}^{\pi/2} d\theta \int_{0}^{\infty} e^{-r^2} r dr $$
+
+\textbf{3. Resolución de las integrales resultantes}
+
+Evaluamos primero la integral radial mediante la sustitución $u = r^2$, de donde $du = 2r dr$:
+$$ \int_{0}^{\infty} e^{-r^2} r dr = \frac{1}{2} \int_{0}^{\infty} e^{-u} du = \frac{1}{2} [-e^{-u}]_{0}^{\infty} = \frac{1}{2} (0 - (-1)) = \frac{1}{2} $$
+Sustituyendo este resultado en la expresión del cuadrado de la función Gamma:
+$$ [\Gamma(1/2)]^2 = 4 \left( \int_{0}^{\pi/2} d\theta \right) \left( \frac{1}{2} \right) = 2 \int_{0}^{\pi/2} d\theta $$
+$$ [\Gamma(1/2)]^2 = 2 [\theta]_{0}^{\pi/2} = 2 \left( \frac{\pi}{2} \right) = \pi $$
+
+\textbf{4. Conclusión}
+
+Al tomar la raíz cuadrada positiva (puesto que la función Gamma es positiva para argumentos reales positivos), obtenemos el resultado solicitado:
+$$ \Gamma(1/2) = \sqrt{\pi} $$
+Esta identidad es consistente con los desarrollos de la teoría de Sturm-Liouville y el análisis de funciones especiales presentados en las lecciones de física matemática de Alonso Sepúlveda, donde se establece que este valor es el punto de partida para evaluar factoriales de números semienteros.
+
+
+\section{Problema 6}
+Utilizando la definición de Weierstrass para la función Gamma,
+$$ \frac{1}{\Gamma(z)} = z e^{\gamma z} \prod_{n=1}^{\infty} \left( 1 + \frac{z}{n} \right) e^{-z/n} $$
+muestre que $$ \Gamma(x)\Gamma(1-x) = \frac{\pi}{\sin \pi x} , x \neq \mathbb{Z} $$
+de donde $$ \Gamma(1/2) = \sqrt{\pi} .$$ Sugerencia: use el siguiente resultado $$ \prod_{n=1}^{\infty} \left( 1 - \frac{x^2}{n^2} \right) = \frac{\sin \pi x}{\pi x} $$
+
+\subsection{Solución}
+
+Para demostrar la identidad de reflexión de la función Gamma utilizando la representación de producto infinito de Weierstrass, procederemos de manera analítica evaluando el producto de las funciones Gamma inversas para los argumentos $x$ y $-x.$ Esta definición es fundamental en el estudio de funciones complejas y permite extender el dominio de la función Gamma a todo el plano complejo, excepto en los polos situados en los enteros no positivos.
+
+\textbf{1. Planteamiento de las funciones inversas:}
+
+Partimos de la definición de Weierstrass proporcionada:
+$$ \frac{1}{\Gamma(x)} = x e^{\gamma x} \prod_{n=1}^{\infty} \left( 1 + \frac{x}{n} \right) e^{-x/n} $$
+Ahora, evaluamos la misma expresión para el argumento negativo $-x$:
+$$ \frac{1}{\Gamma(-x)} = -x e^{-\gamma x} \prod_{n=1}^{\infty} \left( 1 - \frac{x}{n} \right) e^{x/n} $$
+
+\textbf{2. Cálculo del producto de las inversas:}
+
+Multiplicamos ambas expresiones término a término para encontrar el producto $\frac{1}{\Gamma(x) \Gamma(-x)}$:
+$$ \frac{1}{\Gamma(x) \Gamma(-x)} = \left[ x e^{\gamma x} \prod_{n=1}^{\infty} \left( 1 + \frac{x}{n} \right) e^{-x/n} \right] \left[ -x e^{-\gamma x} \prod_{n=1}^{\infty} \left( 1 - \frac{x}{n} \right) e^{x/n} \right] $$
+Agrupamos los términos externos y los términos dentro del producto infinito:
+$$ \frac{1}{\Gamma(x) \Gamma(-x)} = -x^2 e^{\gamma x - \gamma x} \prod_{n=1}^{\infty} \left[ \left( 1 + \frac{x}{n} \right) \left( 1 - \frac{x}{n} \right) e^{-x/n + x/n} \right] $$
+Simplificando los exponentes ($e^0 = 1$) y aplicando la diferencia de cuadrados $(1 + a)(1 - a) = 1 - a^2$ en el interior del producto:
+$$ \frac{1}{\Gamma(x) \Gamma(-x)} = -x^2 \prod_{n=1}^{\infty} \left( 1 - \frac{x^2}{n^2} \right) $$
+
+\textbf{3. Aplicación de la sugerencia (Fórmula de Euler):}
+
+Utilizamos el resultado sugerido, que corresponde al desarrollo en producto infinito de la función seno:
+$$ \prod_{n=1}^{\infty} \left( 1 - \frac{x^2}{n^2} \right) = \frac{\sin \pi x}{\pi x} $$
+Sustituyendo esto en nuestra expresión para el producto de las inversas:
+$$ \frac{1}{\Gamma(x) \Gamma(-x)} = -x^2 \left( \frac{\sin \pi x}{\pi x} \right) $$
+Simplificando una $x$:
+$$ \frac{1}{\Gamma(x) \Gamma(-x)} = - \frac{x \sin \pi x}{\pi} $$
+
+\textbf{4. Relación con $\Gamma(1-x)$:}
+
+Recordamos la propiedad de recurrencia fundamental de la función Gamma: $\Gamma(z+1) = z \Gamma(z).$ Si hacemos $z = -x,$ obtenemos:
+$$ \Gamma(1-x) = -x \Gamma(-x) \implies \Gamma(-x) = \frac{\Gamma(1-x)}{-x} $$
+Sustituimos esta expresión de $\Gamma(-x)$ en nuestro resultado anterior:
+$$ \frac{1}{\Gamma(x) \left( \frac{\Gamma(1-x)}{-x} \right)} = - \frac{x \sin \pi x}{\pi} $$
+$$ \frac{-x}{\Gamma(x) \Gamma(1-x)} = - \frac{x \sin \pi x}{\pi} $$
+Dividiendo ambos lados por $-x$ (dado que $x \neq 0$):
+$$ \frac{1}{\Gamma(x) \Gamma(1-x)} = \frac{\sin \pi x}{\pi} $$
+Invirtiendo la fracción, obtenemos la identidad de reflexión de Euler:
+$$ \Gamma(x) \Gamma(1-x) = \frac{\pi}{\sin \pi x} $$
+
+\textbf{5. Cálculo de $\Gamma(1/2)$:}
+
+Para demostrar que $\Gamma(1/2) = \sqrt{\pi},$ evaluamos la identidad anterior en $x = 1/2$:
+$$ \Gamma(1/2) \Gamma(1 - 1/2) = \frac{\pi}{\sin (\pi/2)} $$
+$$ \Gamma(1/2) \Gamma(1/2) = \frac{\pi}{1} $$
+$$ [\Gamma(1/2)]^2 = \pi $$
+Tomando la raíz cuadrada positiva (puesto que $\Gamma(x) > 0$ para $x > 0$):
+$$ \Gamma(1/2) = \sqrt{\pi} $$
+
+Esta demostración analítica confirma la consistencia de la definición de Weierstrass con las propiedades integrales de la función Gamma presentadas en el libro de Alonso Sepúlveda, validando su uso en la resolución de problemas de física matemática que involucren factoriales de números semienteros.
+
+
+\section{Problema 7}
+Utilizando la forma para la función Beta $$B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}$$, pruebe que $$B(x, x) = 2^{1-2x}B(1/2, x)$$ y con esto muestre la formula de duplicación de Legendre, $$\sqrt{\pi}\Gamma(2x) = 2^{2x-1}\Gamma(x)\Gamma(x+ 1/2) .$$
+
+\subsection{Solución}
+
+Para abordar la solución de este problema de manera analítica, utilizaremos las representaciones integrales de las funciones Gamma y Beta, así como sus propiedades de simetría y relaciones fundamentales descritas en la teoría de Alonso Sepúlveda.
+
+\textbf{1. Demostración de la identidad $B(x, x) = 2^{1-2x}B(1/2, x)$}
+
+Consideramos la definición trigonométrica de la función Beta, la cual se deriva de su forma integral estándar mediante un cambio de variable apropiado:
+$$ B(x, y) = 2 \int_{0}^{\pi/2} (\sin \theta)^{2x-1} (\cos \theta)^{2y-1} d\theta $$
+Al evaluar el caso específico donde ambos parámetros son iguales ($x = y$), la expresión se reduce a:
+$$ B(x, x) = 2 \int_{0}^{\pi/2} (\sin \theta \cos \theta)^{2x-1} d\theta $$
+Utilizamos la identidad trigonométrica fundamental para el producto de seno y coseno, $\sin \theta \cos \theta = \frac{1}{2} \sin(2\theta)$, para transformar el integrando:
+$$ B(x, x) = 2 \int_{0}^{\pi/2} \left( \frac{1}{2} \sin 2\theta \right)^{2x-1} d\theta = \frac{2}{2^{2x-1}} \int_{0}^{\pi/2} (\sin 2\theta)^{2x-1} d\theta $$
+Realizamos un cambio de variable analítico definiendo $u = 2\theta$, lo que implica que el diferencial es $du = 2d\theta$ o $d\theta = du/2$. Los límites de integración cambian de $[0, \pi/2]$ a $[0, \pi]$:
+$$ B(x, x) = 2^{2-2x} \int_{0}^{\pi} (\sin u)^{2x-1} \frac{du}{2} = 2^{1-2x} \int_{0}^{\pi} (\sin u)^{2x-1} du $$
+Debido a la simetría de la función seno respecto al eje $u = \pi/2$ en el intervalo de integración, se cumple que la integral en el rango $[0, \pi]$ es exactamente el doble de la integral en el rango $[0, \pi/2]$:
+$$ \int_{0}^{\pi} (\sin u)^{2x-1} du = 2 \int_{0}^{\pi/2} (\sin u)^{2x-1} du $$
+Sustituyendo este resultado en nuestra expresión para $B(x, x)$:
+$$ B(x, x) = 2^{1-2x} \left[ 2 \int_{0}^{\pi/2} (\sin u)^{2x-1} du \right] \quad \text{(Ecuación A)} $$
+Ahora, analicemos la función $B(1/2, x)$ utilizando la misma representación trigonométrica:
+$$ B(1/2, x) = 2 \int_{0}^{\pi/2} (\sin u)^{2(1/2)-1} (\cos u)^{2x-1} du = 2 \int_{0}^{\pi/2} (\cos u)^{2x-1} du $$
+Dada la propiedad de invarianza de la integral definida bajo el cambio de variable $u \to \pi/2 - u$, es bien sabido que la integral de una potencia de coseno es idéntica a la del seno en dicho cuadrante:
+$$ B(1/2, x) = 2 \int_{0}^{\pi/2} (\sin u)^{2x-1} du \quad \text{(Ecuación B)} $$
+Al comparar la \textbf{Ecuación A} con la \textbf{Ecuación B}, se demuestra la primera parte del problema:
+$$ B(x, x) = 2^{1-2x} B(1/2, x) $$
+
+\textbf{2. Obtención de la fórmula de duplicación de Legendre}
+
+Para la segunda parte, empleamos la relación analítica que vincula las funciones Beta y Gamma:
+$$ B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)} $$
+Sustituimos esta forma en ambos lados de la identidad probada anteriormente. Para el lado izquierdo:
+$$ B(x, x) = \frac{\Gamma(x)\Gamma(x)}{\Gamma(2x)} = \frac{[\Gamma(x)]^2}{\Gamma(2x)} $$
+Para el lado derecho:
+$$ 2^{1-2x} B(1/2, x) = 2^{1-2x} \frac{\Gamma(1/2)\Gamma(x)}{\Gamma(x + 1/2)} $$
+Igualando las dos expresiones resultantes:
+$$ \frac{[\Gamma(x)]^2}{\Gamma(2x)} = 2^{1-2x} \frac{\Gamma(1/2)\Gamma(x)}{\Gamma(x + 1/2)} $$
+Utilizamos el valor conocido de la función Gamma para el argumento semientero elemental, $\Gamma(1/2) = \sqrt{\pi}$, el cual es una constante fundamental derivada de la integral gaussiana. Simplificamos la ecuación asumiendo $x > 0$ (donde $\Gamma(x)$ no se anula):
+$$ \frac{\Gamma(x)}{\Gamma(2x)} = \frac{2^{1-2x} \sqrt{\pi}}{\Gamma(x + 1/2)} $$
+Finalmente, al reorganizar los términos para despejar $\sqrt{\pi}\Gamma(2x)$, obtenemos la fórmula de duplicación de Legendre:
+$$ \sqrt{\pi} \Gamma(2x) = 2^{2x-1} \Gamma(x) \Gamma(x + 1/2) $$
+Este resultado constituye una de las identidades más potentes en el análisis de funciones especiales, permitiendo la reducción de argumentos en cálculos de física cuántica y electromagnetismo.
+
+
+\section{Problema 8}
+Podemos definir la derivada fraccionaria de la forma
+$$D^{\nu}x^{a} = \frac{\Gamma(a+1)}{\Gamma(a-\nu+1)} x^{a-\nu}, \quad a > 0, \nu < a$$
+Muestre que:
+$$D^{1/2}x^2 = \frac{8}{3\sqrt{\pi}} x^{3/2}$$
+
+\subsection{Solución}
+
+Para demostrar la validez de la expresión solicitada para la derivada fraccionaria, utilizaremos la definición operativa proporcionada en el enunciado y las propiedades analíticas de la función Gamma descritas en las lecciones de Alonso Sepúlveda.
+
+En primer lugar, identificamos los parámetros específicos del problema. Se nos pide calcular la derivada de orden $$\nu = 1/2$$ de la función $$x^a$$ con $$a = 2$$. Sustituyendo estos valores directamente en la fórmula de la derivada fraccionaria, obtenemos la siguiente expresión:
+$$D^{1/2}x^2 = \frac{\Gamma(2+1)}{\Gamma(2-1/2+1)} x^{2-1/2}$$
+
+Simplificando los argumentos de la función Gamma en el numerador y en el denominador, la expresión se reduce a:
+$$D^{1/2}x^2 = \frac{\Gamma(3)}{\Gamma(5/2)} x^{3/2}$$
+
+A continuación, procedemos al cálculo analítico de cada uno de los términos que involucran la función Gamma basándonos en la teoría de funciones especiales.
+
+\textbf{1. Evaluación del numerador:}
+Para un número entero positivo $$n$$, se cumple que $$\Gamma(n+1) = n!$$. Dado que el argumento es $$3$$, tenemos:
+$$\Gamma(3) = \Gamma(2+1) = 2! = 2 \times 1 = 2$$
+
+\textbf{2. Evaluación del denominador:}
+Para calcular $$\Gamma(5/2)$$, recurrimos a la propiedad fundamental de recurrencia de la función Gamma, la cual establece que $$\Gamma(z+1) = z\Gamma(z)$$ para cualquier $$z$$ donde la función esté definida. Aplicando esta propiedad sucesivamente para reducir el argumento hacia el valor semientero fundamental:
+$$\Gamma(5/2) = \Gamma(3/2 + 1) = \frac{3}{2} \Gamma(3/2)$$
+$$\Gamma(3/2) = \Gamma(1/2 + 1) = \frac{1}{2} \Gamma(1/2)$$
+
+Sustituyendo la segunda expresión en la primera:
+$$\Gamma(5/2) = \frac{3}{2} \left( \frac{1}{2} \Gamma(1/2) \right) = \frac{3}{4} \Gamma(1/2)$$
+
+De acuerdo con la definición integral de Euler y el análisis de la integral gaussiana, se sabe que el valor de la función Gamma para el argumento $$1/2$$ es exactamente $$\sqrt{\pi}$$. Por lo tanto:
+$$\Gamma(5/2) = \frac{3}{4} \sqrt{\pi}$$
+
+\textbf{3. Sustitución final y simplificación:}
+Insertamos los valores obtenidos para $$\Gamma(3)$$ y $$\Gamma(5/2)$$ en la expresión original de la derivada fraccionaria:
+$$D^{1/2}x^2 = \frac{2}{\frac{3}{4}\sqrt{\pi}} x^{3/2}$$
+
+Aplicando la regla de los extremos para resolver el cociente de fracciones:
+$$D^{1/2}x^2 = \left( 2 \cdot \frac{4}{3\sqrt{\pi}} \right) x^{3/2}$$
+$$D^{1/2}x^2 = \frac{8}{3\sqrt{\pi}} x^{3/2}$$
+
+Se concluye de manera analítica que la derivada fraccionaria de orden $$1/2$$ de $$x^2$$ conduce correctamente a la expresión propuesta, demostrando la consistencia del formalismo basado en la función Gamma para la generalización del cálculo diferencial.
+
+
+\section{Problema 9}
+Una expresión muy utilizada en Física estadística es la fórmula de Stirling, para $x \to \infty$
+$$ \ln(x!) \sim x \ln x - x $$
+Pruebe esta expresión utilizando la definición usual de la función $\Gamma(x).$
+
+\subsection{Solución}
+
+Para demostrar analíticamente la aproximación de Stirling, partimos de la definición integral usual de la función Gamma (ecuación 8.93 del libro de Alonso Sepúlveda), la cual actúa como la generalización del factorial para números reales y complejos. La relación fundamental entre el factorial de un entero $x$ y la función Gamma es:
+$$ x! = \Gamma(x+1) = \int_{0}^{\infty} e^{-t} t^x dt $$
+Esta integral se puede reescribir expresando el término $t^x$ como una función exponencial, lo que permite analizar el comportamiento del integrando mediante el método de aproximación de Laplace o del punto de ensilladura para valores grandes de $x$:
+$$ x! = \int_{0}^{\infty} e^{-t + x \ln t} dt $$
+Definimos la función en el exponente como $f(t) = x \ln t - t.$ El comportamiento de la integral cuando $x \to \infty$ está dominado por los valores de $t$ cercanos al máximo de $f(t).$ Para encontrar dicho máximo, calculamos la primera derivada respecto a $t$ e igualamos a cero:
+$$ f'(t) = \frac{x}{t} - 1 = 0 \implies t = x $$
+El integrando tiene su pico máximo en $t = x.$ Evaluamos ahora la segunda derivada en este punto para determinar la curvatura de la función:
+$$ f''(t) = -\frac{x}{t^2} \implies f''(x) = -\frac{1}{x} $$
+Realizamos una expansión de Taylor de la función $f(t)$ alrededor del punto de máximo $t = x$:
+$$ f(t) \approx f(x) + f'(x)(t-x) + \frac{1}{2}f''(x)(t-x)^2 $$
+$$ f(t) \approx (x \ln x - x) + 0 - \frac{1}{2x}(t-x)^2 $$
+Sustituimos esta aproximación en la integral del factorial:
+$$ x! \approx \int_{0}^{\infty} e^{x \ln x - x - \frac{(t-x)^2}{2x}} dt $$
+Dado que el término $(x \ln x - x)$ es independiente de la variable de integración $t,$ lo extraemos de la integral:
+$$ x! \approx e^{x \ln x - x} \int_{0}^{\infty} e^{-\frac{(t-x)^2}{2x}} dt $$
+Para valores muy grandes de $x,$ el pico de la función gaussiana es tan estrecho y está tan alejado del origen que el límite inferior de integración puede extenderse de $0$ a $-\infty$ sin cometer un error significativo. La integral resultante es una integral gaussiana estándar de la forma $\int_{-\infty}^{\infty} e^{-au^2} du = \sqrt{\pi/a}$:
+$$ \int_{-\infty}^{\infty} e^{-\frac{(t-x)^2}{2x}} dt = \sqrt{2\pi x} $$
+Por lo tanto, la aproximación para el factorial (fórmula de Stirling completa) es:
+$$ x! \approx \sqrt{2\pi x} e^{x \ln x - x} = \sqrt{2\pi x} \left( \frac{x}{e} \right)^x $$
+Para obtener la forma logarítmica solicitada en el problema, aplicamos el logaritmo natural a ambos lados de la expresión:
+$$ \ln(x!) \approx \ln \left( \sqrt{2\pi x} e^{x \ln x - x} \right) $$
+$$ \ln(x!) \approx (x \ln x - x) + \frac{1}{2} \ln(2\pi x) $$
+Cuando $x \to \infty,$ el término $x \ln x$ crece mucho más rápido que el término logarítmico $\ln(2\pi x).$ Analíticamente, podemos comparar las órdenes de magnitud:
+$$ \lim_{x \to \infty} \frac{\ln(2\pi x)}{x \ln x} = 0 $$
+En consecuencia, para propósitos de física estadística y el estudio de sistemas macroscópicos donde $x$ representa el número de partículas (del orden de $10^{23}$), el término de corrección es despreciable, y la expresión se reduce a:
+$$ \ln(x!) \sim x \ln x - x $$
+Esta prueba confirma la validez de la fórmula de Stirling como el comportamiento asintótico de la función Gamma, demostrando su utilidad en la simplificación de expresiones que involucran factoriales de grandes magnitudes.
+
+
+\section{Problema 10}
+Calcule la integral $\int_{0}^{\infty} \frac{x^3}{1+x^5} dx$. Para ello utilice la representación de la función Beta en la forma,
+$$B(x, y) = \int_{0}^{\infty} \frac{u^{x-1}}{(1+u)^{x+y}} du$$
+
+\subsection{Solución}
+
+Para resolver esta integral de manera analítica, utilizaremos la relación entre la función Beta y la función Gamma, así como las propiedades de reflexión de estas funciones especiales descritas en las lecciones de Alonso Sepúlveda.
+
+\textbf{1. Transformación de la integral original:}
+
+Sea la integral a evaluar:
+$$ I = \int_{0}^{\infty} \frac{x^3}{1+x^5} dx $$
+
+Realizamos un cambio de variable para llevar la integral a la forma de la función Beta sugerida en el enunciado. Definimos:
+$$ u = x^5 \implies x = u^{1/5} $$
+Diferenciando con respecto a $u$:
+$$ dx = \frac{1}{5} u^{-4/5} du $$
+
+Evaluamos los límites de integración:
+- Cuando $x = 0$, $u = 0^5 = 0$.
+- Cuando $x \to \infty$, $u \to \infty$.
+
+Sustituyendo estos términos en la integral:
+$$ I = \int_{0}^{\infty} \frac{(u^{1/5})^3}{1+u} \left( \frac{1}{5} u^{-4/5} \right) du $$
+$$ I = \frac{1}{5} \int_{0}^{\infty} \frac{u^{3/5} u^{-4/5}}{1+u} du $$
+$$ I = \frac{1}{5} \int_{0}^{\infty} \frac{u^{-1/5}}{1+u} du $$
+
+\textbf{2. Identificación con la función Beta:}
+
+La forma general de la función Beta proporcionada es:
+$$ B(x, y) = \int_{0}^{\infty} \frac{u^{x-1}}{(1+u)^{x+y}} du $$
+
+Comparamos nuestra integral resultante con esta definición:
+- El exponente en el numerador es $x - 1 = -1/5 \implies x = 4/5$.
+- El exponente en el denominador es $x + y = 1 \implies 4/5 + y = 1 \implies y = 1/5$.
+
+Por lo tanto, la integral se puede expresar en términos de la función Beta como:
+$$ I = \frac{1}{5} B\left(\frac{4}{5}, \frac{1}{5}\right) $$
+
+\textbf{3. Evaluación analítica mediante la función Gamma:}
+
+Utilizamos la identidad que vincula las funciones Beta y Gamma:
+$$ B(x, y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)} $$
+
+Sustituyendo nuestros valores:
+$$ I = \frac{1}{5} \frac{\Gamma(4/5)\Gamma(1/5)}{\Gamma(4/5 + 1/5)} = \frac{1}{5} \frac{\Gamma(4/5)\Gamma(1/5)}{\Gamma(1)} $$
+
+Sabemos por la definición de la función Gamma que $\Gamma(1) = 1$. La expresión se reduce a:
+$$ I = \frac{1}{5} \Gamma\left(\frac{4}{5}\right)\Gamma\left(\frac{1}{5}\right) $$
+
+Para evaluar el producto $\Gamma(4/5)\Gamma(1/5)$, aplicamos la fórmula de reflexión de Euler, detallada en el libro de Alonso Sepúlveda:
+$$ \Gamma(x)\Gamma(1-x) = \frac{\pi}{\sin(\pi x)} $$
+
+Identificando $x = 1/5$ y notando que $4/5 = 1 - 1/5$:
+$$ \Gamma\left(\frac{1}{5}\right)\Gamma\left(\frac{4}{5}\right) = \frac{\pi}{\sin(\pi/5)} $$
+
+\textbf{4. Conclusión:}
+
+Sustituyendo este resultado final en nuestra expresión para $I$:
+$$ I = \frac{1}{5} \left( \frac{\pi}{\sin(\pi/5)} \right) = \frac{\pi}{5 \sin(\pi/5)} $$
+
+Analíticamente, se ha demostrado que la integral definida de la función racional propuesta equivale a $\frac{\pi}{5 \sin(\pi/5)}$, utilizando el formalismo de las funciones especiales Beta y Gamma y sus propiedades de invarianza y reflexión.
+
+
+\section{Problema 11}
+Definamos los polinomios $P_n(x)$ (de Legendre) como
+$$ P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} (x^2 - 1)^n , \quad n = 0, 1, 2..... $$
+Utilizando la función Beta y la fórmula de duplicación, pruebe que
+$$ \int_{-1}^1 x^n P_n(x) dx = \frac{2^{n+1}(n!)^2}{(2n+1)!} $$
+
+\subsection{Solución}
+
+Para demostrar esta identidad de manera analítica, utilizaremos la definición de los polinomios de Legendre mediante la fórmula de Rodrigues, las propiedades de la integración por partes, la definición integral de la función Beta y la relación de duplicación de Legendre para la función Gamma, conforme a la teoría expuesta por Alonso Sepúlveda.
+
+\textbf{1. Planteamiento de la integral y aplicación de la fórmula de Rodrigues:}
+
+Sea la integral a evaluar:
+$$ I = \int_{-1}^1 x^n P_n(x) dx $$
+Sustituimos la definición del polinomio de Legendre $P_n(x)$ proporcionada en el enunciado:
+$$ I = \int_{-1}^1 x^n \left[ \frac{1}{2^n n!} \frac{d^n}{dx^n} (x^2 - 1)^n \right] dx $$
+Dado que los términos constantes son independientes de la variable de integración $x$, podemos extraerlos de la integral:
+$$ I = \frac{1}{2^n n!} \int_{-1}^1 x^n \frac{d^n}{dx^n} (x^2 - 1)^n dx $$
+
+\textbf{2. Integración por partes sucesiva:}
+
+Para resolver esta integral, aplicamos el método de integración por partes $n$ veces. Definimos para la primera iteración:
+$$ u = x^n \implies du = n x^{n-1} dx $$
+$$ dv = \frac{d^n}{dx^n} (x^2 - 1)^n dx \implies v = \frac{d^{n-1}}{dx^{n-1}} (x^2 - 1)^n $$
+La regla de integración por partes establece que $\int u dv = uv - \int v du$. Es fundamental notar que el término de frontera $[uv]_{-1}^1$ se anula. Esto se debe a que la función $(x^2 - 1)^n = (x-1)^n(x+1)^n$ tiene ceros de orden $n$ en $x=1$ y $x=-1$; por lo tanto, cualquier derivada de orden inferior a $n$ (como la derivada de orden $n-1$) evaluada en los límites $\pm 1$ será idénticamente cero.
+
+Repitiendo este proceso $n$ veces, los términos de frontera desaparecen en cada paso, y obtenemos:
+$$ I = \frac{1}{2^n n!} (-1)^n \int_{-1}^1 \left( \frac{d^n}{dx^n} x^n \right) (x^2 - 1)^n dx $$
+Sabemos que la derivada de orden $n$ de $x^n$ es simplemente el factorial $n!$. Sustituyendo este valor:
+$$ I = \frac{(-1)^n n!}{2^n n!} \int_{-1}^1 (x^2 - 1)^n dx = \frac{(-1)^n}{2^n} \int_{-1}^1 (x^2 - 1)^n dx $$
+Utilizamos la identidad $(x^2 - 1)^n = (-(1 - x^2))^n = (-1)^n (1 - x^2)^n$ para simplificar el signo:
+$$ I = \frac{(-1)^n (-1)^n}{2^n} \int_{-1}^1 (1 - x^2)^n dx = \frac{1}{2^n} \int_{-1}^1 (1 - x^2)^n dx $$
+Debido a que el integrando $(1 - x^2)^n$ es una función par, la integral sobre el intervalo simétrico es el doble de la integral de 0 a 1:
+$$ I = \frac{2}{2^n} \int_{0}^1 (1 - x^2)^n dx = \frac{1}{2^{n-1}} \int_{0}^1 (1 - x^2)^n dx $$
+
+\textbf{3. Relación con la función Beta:}
+
+Realizamos un cambio de variable para identificar la forma de la función Beta. Definimos:
+$$ t = x^2 \implies x = t^{1/2}, \quad dx = \frac{1}{2} t^{-1/2} dt $$
+Los límites de integración se transforman de $x \in$ a $t \in$. La integral se convierte en:
+$$ I = \frac{1}{2^{n-1}} \int_0^1 (1 - t)^n \left( \frac{1}{2} t^{-1/2} \right) dt = \frac{1}{2^n} \int_0^1 t^{-1/2} (1 - t)^n dt $$
+La definición de la función Beta es $B(p, q) = \int_0^1 t^{p-1} (1-t)^{q-1} dt$. Identificamos los exponentes:
+$$ p - 1 = -1/2 \implies p = 1/2 $$
+$$ q - 1 = n \implies q = n + 1 $$
+Por lo tanto, la integral es:
+$$ I = \frac{1}{2^n} B(1/2, n+1) $$
+
+\textbf{4. Evaluación mediante funciones Gamma y duplicación de Legendre:}
+
+Expresamos la función Beta en términos de la función Gamma:
+$$ I = \frac{1}{2^n} \frac{\Gamma(1/2) \Gamma(n+1)}{\Gamma(n+1 + 1/2)} = \frac{1}{2^n} \frac{\sqrt{\pi} n!}{\Gamma(n + 3/2)} $$
+Utilizamos ahora la fórmula de duplicación de Legendre, la cual establece que $\sqrt{\pi} \Gamma(2z) = 2^{2z-1} \Gamma(z) \Gamma(z + 1/2)$. Aplicamos esta fórmula para $z = n+1$:
+$$ \sqrt{\pi} \Gamma(2n+2) = 2^{2n+1} \Gamma(n+1) \Gamma(n+1 + 1/2) $$
+$$ \sqrt{\pi} (2n+1)! = 2^{2n+1} n! \Gamma(n + 3/2) $$
+Despejamos el término del denominador $\Gamma(n + 3/2)$:
+$$ \Gamma(n + 3/2) = \frac{\sqrt{\pi} (2n+1)!}{2^{2n+1} n!} $$
+Sustituimos este resultado en nuestra expresión para $I$:
+$$ I = \frac{1}{2^n} \frac{\sqrt{\pi} n!}{\left( \frac{\sqrt{\pi} (2n+1)!}{2^{2n+1} n!} \right)} $$
+Simplificamos los términos de $\sqrt{\pi}$ y reorganizamos la fracción:
+$$ I = \frac{1}{2^n} \cdot \frac{(n!)^2 2^{2n+1}}{(2n+1)!} = \frac{2^{2n+1-n} (n!)^2}{(2n+1)!} $$
+$$ I = \frac{2^{n+1} (n!)^2}{(2n+1)!} $$
+
+\textbf{5. Conclusión:}
+
+A través de un riguroso análisis que involucra el cálculo de derivadas de orden superior, la manipulación de funciones especiales y la aplicación de identidades fundamentales como la duplicación de Legendre, se ha demostrado que:
+$$ \int_{-1}^1 x^n P_n(x) dx = \frac{2^{n+1}(n!)^2}{(2n+1)!} $$
+Este resultado es de gran relevancia en la teoría de polinomios ortogonales, pues permite evaluar momentos de orden $n$ para la base de Legendre, confirmando la consistencia de las normalizaciones empleadas en el taller.
+
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
