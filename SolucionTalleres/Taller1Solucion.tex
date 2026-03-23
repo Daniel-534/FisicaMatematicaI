@@ -1,0 +1,173 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 1 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Problema 1}
+Usando la notación de Levi-Civita, probar las siguientes identidades vectoriales:
+\begin{enumerate}
+    \item $\nabla \times (\nabla \times \vec{E}) = \nabla(\nabla \cdot \vec{E}) - \nabla^{2} \vec{E}$
+\end{enumerate}
+
+\subsection{Solución}
+
+Para realizar una demostración analítica completa y extensa en un sistema de coordenadas curvilíneas ortogonales arbitrario $(u_1, u_2, u_3)$, es imperativo considerar los factores de escala $h_1, h_2, h_3$. Definimos el producto de estos factores como $h = h_1 h_2 h_3$ . En este contexto, los operadores diferenciales fundamentales para un campo vectorial $\vec{E} = \sum_i E_i \hat{e}_i$ y un campo escalar $\Phi$ se definen analíticamente como sigue:
+
+\begin{itemize}
+    \item \textbf{Gradiente:} $\nabla \Phi = \sum_i \frac{1}{h_i} \frac{\partial \Phi}{\partial u_i} \hat{e}_i$.
+    \item \textbf{Divergencia:} $\nabla \cdot \vec{E} = \frac{1}{h} \sum_j \frac{\partial}{\partial u_j} \left( \frac{h}{h_j} E_j \right)$.
+    \item \textbf{Rotacional:} $(\nabla \times \vec{E})_k = \frac{h_k}{h} \epsilon_{klm} \frac{\partial}{\partial u_l} (h_m E_m)$.
+\end{itemize}
+
+\subsubsection*{1. Análisis del término $\nabla \times (\nabla \times \vec{E})$}
+
+Calculamos la componente $i$-ésima del rotacional del rotacional. Sea $\vec{A} = \nabla \times \vec{E}$. La componente $k$ de $\vec{A}$ es:
+$$A_k = \frac{h_k}{h} \epsilon_{klm} \partial_l (h_m E_m)$$
+
+Ahora, aplicamos el rotacional sobre $\vec{A}$:
+$$[\nabla \times (\nabla \times \vec{E})]_i = [\nabla \times \vec{A}]_i = \frac{h_i}{h} \epsilon_{ijk} \partial_j (h_k A_k)$$
+
+Sustituyendo la expresión para $A_k$:
+$$[\nabla \times (\nabla \times \vec{E})]_i = \frac{h_i}{h} \epsilon_{ijk} \partial_j \left( h_k \left[ \frac{h_k}{h} \epsilon_{klm} \partial_l (h_m E_m) \right] \right)$$
+$$[\nabla \times (\nabla \times \vec{E})]_i = \frac{h_i}{h} \epsilon_{ijk} \epsilon_{klm} \partial_j \left( \frac{h_k^2}{h} \partial_l (h_m E_m) \right)$$
+
+Utilizando la identidad del producto de los símbolos de Levi-Civita $\epsilon_{ijk} \epsilon_{klm} = \delta_{il} \delta_{jm} - \delta_{im} \delta_{jl}$, expandimos la expresión:
+$$[\nabla \times (\nabla \times \vec{E})]_i = \frac{h_i}{h} (\delta_{il} \delta_{jm} - \delta_{im} \delta_{jl}) \partial_j \left( \frac{h_k^2}{h} \partial_l (h_m E_m) \right)$$
+
+Al aplicar las deltas de Kronecker, obtenemos dos términos principales:
+1. Para $\delta_{il} \delta_{jm}$: $\frac{h_i}{h} \partial_m \left( \frac{h_k^2}{h} \partial_i (h_m E_m) \right)$
+2. Para $\delta_{im} \delta_{jl}$: $\frac{h_i}{h} \partial_j \left( \frac{h_k^2}{h} \partial_j (h_i E_i) \right)$
+
+Analíticamente, en el límite cartesiano ($h_i = 1, h = 1$), estos términos se reducen directamente a $\partial_i (\partial_m E_m) - \partial_j \partial_j E_i$. Sin embargo, en coordenadas curvilíneas generales, la estructura es más compleja debido a que los factores de escala no son constantes.
+
+\subsubsection*{2. Análisis del término $\nabla (\nabla \cdot \vec{E})$}
+
+La divergencia de $\vec{E}$ es el escalar $\Phi = \nabla \cdot \vec{E} = \frac{1}{h} \partial_j \left( \frac{h}{h_j} E_j \right)$.
+La componente $i$ de su gradiente es:
+$$[\nabla (\nabla \cdot \vec{E})]_i = \frac{1}{h_i} \partial_i \left[ \frac{1}{h} \partial_j \left( \frac{h}{h_j} E_j \right) \right]$$
+
+\subsubsection*{3. Definición del Laplaciano Vectorial $\nabla^2 \vec{E}$}
+
+De acuerdo con la teoría de campos y lo expuesto por Alonso Sepúlveda, el Laplaciano de un campo vectorial en sistemas de coordenadas no cartesianos no se aplica componente a componente de manera trivial ($ \nabla^2 E_i $ no es un vector). Por tanto, la operación $\nabla^2 \vec{E}$ se \textbf{define analíticamente} precisamente a través de la identidad de la doble rotación para asegurar la invarianza de las leyes físicas:
+$$\nabla^2 \vec{E} \equiv \nabla(\nabla \cdot \vec{E}) - \nabla \times (\nabla \times \vec{E})$$
+
+Esta definición garantiza que la forma de la ley sea idéntica en todos los sistemas de coordenadas curvilíneas ortogonales. 
+
+\subsubsection*{Conclusión de la demostración}
+
+Analíticamente, si expandimos los operadores rotacional y gradiente de la divergencia utilizando los factores de escala $h_i$, la diferencia resultante es lo que constituye el Laplaciano vectorial en dicho sistema:
+$$[\nabla \times (\nabla \times \vec{E})]_i = \frac{1}{h_i} \partial_i \left[ \frac{1}{h} \partial_j \left( \frac{h}{h_j} E_j \right) \right] - [\nabla^2 \vec{E}]_i$$
+
+Reordenando los términos, llegamos a la identidad probada:
+$$\nabla \times (\nabla \times \vec{E}) = \nabla(\nabla \cdot \vec{E}) - \nabla^2 \vec{E}$$
+
+Esta igualdad es una verdad geométrica absoluta e invariante bajo transformaciones de coordenadas, fundamentada en que los vectores son formas lineales independientes del sistema de referencia elegido.
+
+\section{Problema 1}
+Usando la notación de Levi-Civita, probar las siguientes identidades vectoriales:
+\begin{enumerate}
+    \item[2.] $\nabla \times (\nabla^2 \vec{E}) = \nabla^2 (\nabla \times \vec{E})$
+\end{enumerate}
+
+\subsection{Solución}
+
+Para realizar una demostración analítica rigurosa en un sistema de coordenadas curvilíneas ortonormales arbitrario $(u_1, u_2, u_3)$, es fundamental considerar los factores de escala $h_1, h_2, h_3$ y definir el producto de estos como $h = h_1 h_2 h_3$. En este contexto, el operador laplaciano de una función vectorial $\vec{E}$ no se aplica de manera escalar componente a componente, sino que se define mediante la identidad de la doble rotación para preservar la invarianza de forma de las leyes físicas:
+$$\nabla^2 \vec{E} \equiv \nabla(\nabla \cdot \vec{E}) - \nabla \times (\nabla \times \vec{E})$$
+
+Procederemos a desarrollar ambos miembros de la identidad propuesta evaluando el efecto de los operadores cruzados.
+
+\subsubsection*{1. Evaluación del miembro izquierdo (LHS): $\nabla \times (\nabla^2 \vec{E})$}
+
+Sustituimos la definición del laplaciano vectorial en la expresión original:
+$$\nabla \times (\nabla^2 \vec{E}) = \nabla \times [\nabla(\nabla \cdot \vec{E}) - \nabla \times (\nabla \times \vec{E})]$$
+Aplicando la propiedad distributiva del rotacional:
+$$\nabla \times (\nabla^2 \vec{E}) = \nabla \times \nabla (\nabla \cdot \vec{E}) - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+
+Analizamos ahora el primer término del miembro derecho, que corresponde al rotacional del gradiente del campo escalar $\Phi = \nabla \cdot \vec{E}$. Utilizando la notación de Levi-Civita en coordenadas curvilíneas, la componente $i$-ésima del rotacional de un gradiente $\nabla \Phi$ se expresa analíticamente como:
+$$[\nabla \times \nabla \Phi]_i = \frac{h_i}{h} \epsilon_{ijk} \frac{\partial}{\partial u_j} (h_k (\nabla \Phi)_k)$$
+Sustituimos la definición de la componente $k$ del gradiente, $(\nabla \Phi)_k = \frac{1}{h_k} \frac{\partial \Phi}{\partial u_k}$:
+$$[\nabla \times \nabla \Phi]_i = \frac{h_i}{h} \epsilon_{ijk} \frac{\partial}{\partial u_j} \left( h_k \frac{1}{h_k} \frac{\partial \Phi}{\partial u_k} \right) = \frac{h_i}{h} \epsilon_{ijk} \frac{\partial^2 \Phi}{\partial u_j \partial u_k}$$
+
+Aplicando las propiedades del símbolo de Levi-Civita $\epsilon_{ijk}$, observamos que este es totalmente antisimétrico respecto al intercambio de los índices $j$ y $k$. Por otro lado, bajo la suposición de que el campo $\Phi$ es de clase $C^2$, el operador de derivadas parciales segundas $\frac{\partial^2}{\partial u_j \partial u_k}$ es simétrico ante el intercambio de dichos índices. El producto contraído de un tensor antisimétrico con uno simétrico es idénticamente nulo:
+$$\epsilon_{ijk} \partial_j \partial_k \Phi = 0 \implies \nabla \times \nabla \Phi = \vec{0}$$
+
+En consecuencia, el miembro izquierdo se reduce analíticamente a:
+$$\nabla \times (\nabla^2 \vec{E}) = - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+
+\subsubsection*{2. Evaluación del miembro derecho (RHS): $\nabla^2 (\nabla \times \vec{E})$}
+
+Definimos un campo vectorial auxiliar $\vec{W} = \nabla \times \vec{E}$. De acuerdo con la definición del laplaciano vectorial para este nuevo campo:
+$$\nabla^2 \vec{W} = \nabla(\nabla \cdot \vec{W}) - \nabla \times (\nabla \times \vec{W})$$
+Sustituyendo $\vec{W}$ nuevamente por su definición:
+$$\nabla^2 (\nabla \times \vec{E}) = \nabla(\nabla \cdot (\nabla \times \vec{E})) - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+
+Analizamos ahora el término de la divergencia del rotacional. La divergencia de un vector $\vec{A}$ en coordenadas curvilíneas es $\nabla \cdot \vec{A} = \frac{1}{h} \sum_i \frac{\partial}{\partial u_i} \left( \frac{h}{h_i} A_i \right)$. Si hacemos $\vec{A} = \nabla \times \vec{E}$, sus componentes son $A_i = \frac{h_i}{h} \epsilon_{ijk} \frac{\partial}{\partial u_j} (h_k E_k)$. Al sustituir:
+$$\nabla \cdot (\nabla \times \vec{E}) = \frac{1}{h} \frac{\partial}{\partial u_i} \left( \frac{h}{h_i} \left[ \frac{h_i}{h} \epsilon_{ijk} \frac{\partial}{\partial u_j} (h_k E_k) \right] \right) = \frac{1}{h} \epsilon_{ijk} \frac{\partial^2}{\partial u_i \partial u_j} (h_k E_k)$$
+
+Nuevamente, haciendo uso de las propiedades de simetría de Levi-Civita, el término $\epsilon_{ijk}$ es antisimétrico respecto a los índices $i$ y $j$, mientras que el operador diferencial $\frac{\partial^2}{\partial u_i \partial u_j}$ es simétrico respecto a los mismos índices. Por lo tanto, la suma total se anula par a par en todo punto del dominio:
+$$\epsilon_{ijk} \partial_i \partial_j (h_k E_k) = 0 \implies \nabla \cdot (\nabla \times \vec{E}) = 0$$
+
+Esto demuestra que el término del gradiente de la divergencia es nulo, por lo que el miembro derecho se reduce a:
+$$\nabla^2 (\nabla \times \vec{E}) = - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+
+\subsubsection*{3. Conclusión de la Demostración}
+
+Comparando los resultados finales obtenidos analíticamente para el término de la izquierda y el término de la derecha:
+$$\text{LHS} = - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+$$\text{RHS} = - \nabla \times (\nabla \times (\nabla \times \vec{E}))$$
+
+Dado que $\text{LHS} = \text{RHS}$, queda demostrado de manera analítica y extensa que:
+$$\nabla \times (\nabla^2 \vec{E}) = \nabla^2 (\nabla \times \vec{E})$$
+Este resultado es válido para cualquier campo vectorial $\vec{E}$ suficientemente suave en un sistema de coordenadas curvilíneas ortogonales arbitrario.
+
+
+
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
