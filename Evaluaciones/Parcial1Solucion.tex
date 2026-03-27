@@ -1,0 +1,274 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+
+\section{Problema 1: potencial eléctrico}
+En coordenadas polares $(r'=ra_0,\theta)$ el potencial eléctrico de un electrón en el nivel $1s$ en un átomo de hidrógeno está dado por la siguiente expresión
+
+$$V(r) = \frac{1}{4\pi\varepsilon_0}\frac{q}{a_0}\left(\frac{1}{2r} \gamma(3,2r) + \Gamma(2,2r)\right)$$ 
+
+donde $r$ es un número en términos del radio de Bohr $a_0$ y $\gamma(x, y)$, $\Gamma(x, y)$ son las funciones gamma incompletas. Determine el potencial eléctrico para $r<<1$ a orden $\mathcal{O}(r^2)$.
+
+\textit{Ayuda:}
+
+$$\gamma(n, x) = \int_{0}^{x}e^{-t}t^{n-1}dt = (n-1)!\left(1-e^{-x}\sum_{s=0}^{n-1} \frac{x^s}{s!}\right)$$
+
+$$\Gamma(n, x) = \int_{x}^{\infty}e^{-t}t^{n-1}dt = (n-1)!e^{-x}\sum_{s=0}^{n-1} \frac{x^s}{s!}$$
+
+\subsection{Solución}
+
+\textbf{Análisis del término $\frac{1}{2r} \gamma(3, 2r)$}
+
+Utilizando la fórmula para la función gamma incompleta inferior :
+$$\gamma(n, x) = (n-1)! \left( 1 - e^{-x} \sum_{s=0}^{n-1} \frac{x^s}{s!} \right)$$
+Para $n=3$ y $x=2r$:
+$$\gamma(3, 2r) = 2! \left( 1 - e^{-2r} (1 + 2r + \frac{(2r)^2}{2}) \right) = 2 \left( 1 - e^{-2r}(1 + 2r + 2r^2) \right)$$
+
+Expandimos $e^{-2r}$ mediante su serie de Taylor hasta el orden suficiente para obtener un resultado final de $O(r^2)$ tras dividir por $2r$:
+$$e^{-2r} = 1 - 2r + \frac{(-2r)^2}{2!} + \frac{(-2r)^3}{3!} + \frac{(-2r)^4}{4!} + \dots = 1 - 2r + 2r^2 - \frac{4}{3}r^3 + \frac{2}{3}r^4 \dots$$
+
+Calculamos el producto $e^{-2r}(1 + 2r + 2r^2)$:
+$$(1 - 2r + 2r^2 - \frac{4}{3}r^3 + \frac{2}{3}r^4)(1 + 2r + 2r^2) = 1 - \frac{4}{3}r^3 + 2r^4 + O(r^5)$$
+
+Sustituyendo en la expresión de $\gamma(3, 2r)$:
+$$\gamma(3, 2r) = 2 \left( 1 - (1 - \frac{4}{3}r^3 + 2r^4) \right) = \frac{8}{3}r^3 - 4r^4$$
+
+Finalmente, el primer término del potencial es:
+$$\frac{1}{2r} \gamma(3, 2r) = \frac{1}{2r} (\frac{8}{3}r^3 - 4r^4) = \frac{4}{3}r^2 - 2r^3 + O(r^4)$$
+
+\textbf{Análisis del término $\Gamma(2, 2r)$}
+
+Utilizando la fórmula para la función gamma incompleta superior :
+$$\Gamma(n, x) = (n-1)! e^{-x} \sum_{s=0}^{n-1} \frac{x^s}{s!}$$
+Para $n=2$ y $x=2r$:
+$$\Gamma(2, 2r) = 1! e^{-2r} (1 + 2r) = (1 - 2r + 2r^2 - \frac{4}{3}r^3)(1 + 2r)$$
+$$\Gamma(2, 2r) = 1 + 2r - 2r - 4r^2 + 2r^2 + 4r^3 - \frac{4}{3}r^3 \dots = 1 - 2r^2 + \frac{8}{3}r^3 + O(r^4)$$
+
+\textbf{Combinación y resultado final}
+
+Sumamos ambos términos dentro del paréntesis de la ecuación original:
+$$\left( \frac{1}{2r} \gamma(3, 2r) + \Gamma(2, 2r) \right) = (\frac{4}{3}r^2 - 2r^3) + (1 - 2r^2 + \frac{8}{3}r^3)$$
+Combinando los términos de igual potencia:
+$$= 1 + (\frac{4}{3} - 2)r^2 + (\frac{8}{3} - 2)r^3 = 1 - \frac{2}{3}r^2 + \frac{2}{3}r^3$$
+
+Para el orden solicitado $O(r^2)$, el potencial eléctrico para $r \ll 1$ es:
+\begin{equation}
+V(r) \approx \frac{1}{4\pi\epsilon_0} \frac{q}{a_0} \left( 1 - \frac{2}{3}r^2 \right)
+\end{equation}
+
+Este resultado indica que cerca del núcleo ($r \to 0$), el potencial se comporta como una constante (el potencial en el origen debido a la distribución de carga del orbital $1s$) corregida por un término armónico proporcional al cuadrado de la distancia.
+
+\section{Problema 2: Oscilaciones}
+
+Una partícula de masa $m$ en un oscilador tiene una energía potencial $V(x)=A|x|^n$
+
+\begin{enumerate}[a.]
+	\item Mostrar que el período del oscilador es $$\tau = 2\sqrt{2m}\int_{0}^{x_{\text{max}}}\frac{dx}{\sqrt{E-Ax^n}}$$ donde $x_{\text{max}}$ es el punto clásico de retorno (donde la velocidad es cero) y $A|x_{\text{max}}|^n=E$ es la energía mecánica del sistema.
+	\item Determinar $\tau$. \textit{Ayuda:} $$B(m+1,n+1) = 2\int_{0}^{\pi/2} \cos^{2m+1}\theta \sin^{2n+1}\theta d\theta=\frac{m!n!}{(m+n+1)!}$$
+	\item Verificar que para el caso de un movimiento armónico simple (\textit{M.A.S}), donde $V(x) = \left(\frac{k}{2}\right)x^2$ entonces $\tau = 2\pi \sqrt{\frac{m}{k}}$
+\end{enumerate}
+
+
+	
+\subsection{Solución}
+
+El problema plantea un oscilador con una energía potencial de la forma $V(x) = A|x|^n$, donde $A$ es una constante y $n$ define la potencia del potencial. A continuación se presenta la solución analítica extensa para cada uno de los ítems solicitados.
+
+\textbf{a. Demostración de la integral del periodo $\tau$}
+
+Para una partícula de masa $m$, la energía mecánica total $E$ es la suma de su energía cinética y su energía potencial:
+$$E = \frac{1}{2}m\left(\frac{dx}{dt}\right)^2 + A|x|^n$$
+En los puntos clásicos de retorno, la velocidad de la partícula es cero, por lo cual $E = A|x_{max}|^n$. Despejando la velocidad $v = \frac{dx}{dt}$ para la región donde $x > 0$:
+$$\frac{dx}{dt} = \sqrt{\frac{2}{m}(E - Ax^n)}$$
+Separando las variables $x$ y $t$:
+$$dt = \sqrt{\frac{m}{2}} \frac{dx}{\sqrt{E - Ax^n}}$$
+El periodo total $\tau$ es el tiempo requerido para que la partícula realice una oscilación completa. Debido a la simetría del potencial $A|x|^n$, el tiempo total es cuatro veces el tiempo necesario para viajar desde el origen ($x=0$) hasta el punto de retorno máximo ($x=x_{max}$):
+$$\tau = 4 \int_{0}^{x_{max}} \sqrt{\frac{m}{2}} \frac{dx}{\sqrt{E - Ax^n}} = 2\sqrt{2m} \int_{0}^{x_{max}} \frac{dx}{\sqrt{E - Ax^n}}$$
+Esto demuestra la expresión solicitada para el periodo del oscilador.
+
+\textbf{b. Determinación analítica de $\tau$}
+
+Para resolver la integral, realizamos el cambio de variable $Ax^n = E \sin^2 \theta$. Esto implica que:
+$$x^n = \frac{E}{A} \sin^2 \theta \implies x = \left(\frac{E}{A}\right)^{1/n} (\sin \theta)^{2/n}$$
+Diferenciando $x$ respecto a $\theta$:
+$$dx = \left(\frac{E}{A}\right)^{1/n} \frac{2}{n} (\sin \theta)^{\frac{2}{n} - 1} \cos \theta d\theta$$
+Evaluando los límites de integración: cuando $x=0, \theta=0$; cuando $x=x_{max}$, entonces $Ax_{max}^n = E$, por lo que $\sin^2 \theta = 1$, lo cual da $\theta = \pi/2$. Sustituimos en la integral del periodo:
+$$\tau = 2\sqrt{2m} \int_{0}^{\pi/2} \frac{\left(\frac{E}{A}\right)^{1/n} \frac{2}{n} (\sin \theta)^{\frac{2}{n} - 1} \cos \theta d\theta}{\sqrt{E - E \sin^2 \theta}}$$
+$$\tau = 2\sqrt{2m} \frac{2}{n\sqrt{E}} \left(\frac{E}{A}\right)^{1/n} \int_{0}^{\pi/2} \frac{(\sin \theta)^{\frac{2}{n} - 1} \cos \theta d\theta}{\cos \theta}$$
+$$\tau = \frac{4\sqrt{2m}}{n\sqrt{E}} \left(\frac{E}{A}\right)^{1/n} \int_{0}^{\pi/2} (\sin \theta)^{\frac{2}{n} - 1} d\theta$$
+Utilizando la definición de la función Beta $B(p, q) = 2 \int_{0}^{\pi/2} \sin^{2p-1} \theta \cos^{2q-1} \theta d\theta$, identificamos $2p-1 = 2/n - 1 \implies p = 1/n$ y $2q-1 = 0 \implies q = 1/2$. La integral resultante es $\frac{1}{2} B(1/n, 1/2)$. Finalmente:
+$$\tau = \frac{2\sqrt{2m}}{n\sqrt{E}} \left(\frac{E}{A}\right)^{1/n} B\left(\frac{1}{n}, \frac{1}{2}\right)$$
+Usando la relación entre las funciones Beta y Gamma, $B(p, q) = \frac{\Gamma(p)\Gamma(q)}{\Gamma(p+q)}$, el periodo es:
+$$\tau = \frac{2\sqrt{2m}}{n\sqrt{E}} \left(\frac{E}{A}\right)^{1/n} \frac{\Gamma(1/n)\Gamma(1/2)}{\Gamma(1/n + 1/2)}$$
+
+\textbf{c. Verificación para el Movimiento Armónico Simple (M.A.S)}
+
+En el caso del M.A.S., el potencial es $V(x) = \frac{1}{2}kx^2$, lo que corresponde a $n=2$ y $A=k/2$. Sustituyendo estos valores en la fórmula general para $\tau$:
+$$\tau = \frac{2\sqrt{2m}}{2\sqrt{E}} \left(\frac{2E}{k}\right)^{1/2} B\left(\frac{1}{2}, \frac{1}{2}\right)$$
+$$\tau = \frac{\sqrt{2m}}{\sqrt{E}} \frac{\sqrt{2E}}{\sqrt{k}} B\left(\frac{1}{2}, \frac{1}{2}\right) = 2 \sqrt{\frac{m}{k}} B\left(\frac{1}{2}, \frac{1}{2}\right)$$
+Evaluamos el factor de la función Beta:
+$$B\left(\frac{1}{2}, \frac{1}{2}\right) = \frac{\Gamma(1/2)\Gamma(1/2)}{\Gamma(1)} = \frac{\sqrt{\pi}\sqrt{\pi}}{1} = \pi$$
+Reemplazando el valor de la función Beta obtenemos el periodo clásico del M.A.S.:
+$$\tau = 2\pi \sqrt{\frac{m}{k}}$$
+Esto verifica que la solución general es consistente con la teoría mecánica tradicional.
+
+
+\section{Problema 3: Expandir función con base de Fourier discreta}
+Expandir la función 
+
+$$
+f(x) =
+\begin{cases}
+-x, & \text{si }  -\pi \leq x \leq 0 \\
+x, & \text{si } 0 < x \leq \pi
+\end{cases}
+$$
+
+en la base discreta, ortonormal de Fourier $\{\phi_n(x)\} = 	\left\{\frac{1}{\sqrt{2L}}e^{i n\pi x /L}\right\}$ en $c\leq x \leq c+2L$, $n=-\infty, .., 0, ..., \infty$ del espacio de Hilbert de funciones de cuadrado integrable $\mathscr{L}^2$ con peso $p(x)=1$
+
+
+\subsection{Solución	}
+
+El problema requiere expandir la función valor absoluto definida por tramos en el intervalo $[-\pi, \pi]$ utilizando una base discreta y ortonormal de Fourier en un espacio de Hilbert. La función está dada por:
+\begin{equation}
+f(x) = \begin{cases} -x, & \text{si } -\pi \leq x \leq 0 \\ x, & \text{si } 0 < x \leq \pi \end{cases}
+\end{equation}
+La base propuesta es $\{\phi_n(x)\} = \{ \frac{1}{\sqrt{2L}} e^{in\pi x/L} \}$. Dado que el intervalo es $[-\pi, \pi]$, identificamos $L = \pi$, por lo que la base se reduce a $\phi_n(x) = \frac{1}{\sqrt{2\pi}} e^{inx}$ para $n \in \mathbb{Z}$.
+
+\textbf{1. Definición de la expansión y los coeficientes}
+
+En un espacio de Hilbert, cualquier función de cuadrado integrable $f(x)$ puede expresarse como una combinación lineal de los elementos de una base completa $\{\phi_n(x)\}$. La expansión tiene la forma:
+\begin{equation}
+f(x) = \sum_{n=-\infty}^{\infty} c_n \phi_n(x)
+\end{equation}
+Donde los coeficientes $c_n$ representan las componentes del "vector" función en dicha base y se obtienen mediante el producto escalar con el peso $p(x) = 1$:
+\begin{equation}
+c_n = \langle \phi_n | f \rangle = \int_{-\pi}^{\pi} f(x) \phi_n^*(x) dx = \int_{-\pi}^{\pi} |x| \frac{1}{\sqrt{2\pi}} e^{-inx} dx
+\end{equation}
+
+\textbf{2. Cálculo del coeficiente $c_0$}
+
+Para el caso $n = 0$, la función base es la constante $\phi_0 = 1/\sqrt{2\pi}$. Evaluamos la integral analíticamente aprovechando la simetría de la función par $|x|$:
+\begin{equation}
+c_0 = \frac{1}{\sqrt{2\pi}} \int_{-\pi}^{\pi} |x| dx = \frac{2}{\sqrt{2\pi}} \int_{0}^{\pi} x dx = \frac{2}{\sqrt{2\pi}} \left[ \frac{x^2}{2} \right]_0^\pi = \frac{\pi^2}{\sqrt{2\pi}}
+\end{equation}
+El término constante de la serie (la proyección sobre el primer vector de la base) es $c_0 \phi_0 = \frac{\pi^2}{\sqrt{2\pi}} \frac{1}{\sqrt{2\pi}} = \frac{\pi}{2}$.
+
+\textbf{3. Cálculo de los coeficientes $c_n$ para $n \neq 0$}
+
+Procedemos a integrar por partes el producto de la función con la base exponencial compleja:
+\begin{equation}
+c_n = \frac{1}{\sqrt{2\pi}} \left[ \int_{-\pi}^0 -x e^{-inx} dx + \int_0^\pi x e^{-inx} dx \right]
+\end{equation}
+Utilizando la integral estándar $\int x e^{ax} dx = \frac{e^{ax}}{a^2}(ax - 1)$, evaluamos ambos tramos:
+\begin{itemize}
+    \item Para el tramo negativo ($-\pi$ a $0$): $\int_{-\pi}^0 -x e^{-inx} dx = \left[ \frac{e^{-inx}}{(-in)^2}(-inx - 1) \right]_{-\pi}^0 \times (-1) = \frac{(-1)^n - 1}{n^2} - \frac{i\pi(-1)^n}{n}$.
+    \item Para el tramo positivo ($0$ a $\pi$): $\int_0^\pi x e^{-inx} dx = \left[ \frac{e^{-inx}}{(-in)^2}(-inx - 1) \right]_0^\pi = \frac{(-1)^n - 1}{n^2} + \frac{i\pi(-1)^n}{n}$.
+\end{itemize}
+Sumando ambos resultados analíticos, los términos imaginarios se cancelan debido a la paridad de la función original:
+\begin{equation}
+c_n = \frac{1}{\sqrt{2\pi}} \left[ \frac{2((-1)^n - 1)}{n^2} \right]
+\end{equation}
+Analizando la paridad del índice $n$:
+\begin{itemize}
+    \item Si $n$ es par ($n = 2, 4, \dots$), entonces $c_n = 0$.
+    \item Si $n$ es impar ($n = \pm 1, \pm 3, \dots$), entonces $c_n = \frac{-4}{\sqrt{2\pi} n^2}$.
+\end{itemize}
+
+\textbf{4. Resultado final de la expansión}
+
+Sustituimos los coeficientes y las funciones base en la sumatoria general:
+\begin{equation}
+f(x) = \frac{\pi^2}{\sqrt{2\pi}} \frac{1}{\sqrt{2\pi}} + \sum_{n \text{ impar}} \left( \frac{-4}{\sqrt{2\pi} n^2} \right) \frac{1}{\sqrt{2\pi}} e^{inx}
+\end{equation}
+Simplificando los factores constantes de normalización, obtenemos la expansión de la función en la base exponencial de Fourier:
+\begin{equation}
+|x| = \frac{\pi}{2} - \frac{2}{\pi} \sum_{n=-\infty, \text{impar}}^{\infty} \frac{e^{inx}}{n^2}
+\end{equation}
+Esta representación es equivalente a la serie de cosenos convencional, ya que al agrupar los términos para $n$ y $-n$ se recupera la forma $\frac{\pi}{2} - \frac{4}{\pi} \sum_{k=0}^{\infty} \frac{\cos((2k+1)x)}{(2k+1)^2}$. Este resultado garantiza la convergencia hacia la función $|x|$ en todo el intervalo $[-\pi, \pi]$.
+
+
+
+
+\section{Problema 4: Análisis de Fourier para un pulso de sonido}
+
+Considere un pulso de sonido de ancho $2T$ y amplitud constante de $1$ dado por
+
+$$
+f(t) =
+\begin{cases}
+0, & \text{si }  T \leq x \leq -T \\
+1, & \text{si } -T < x \leq T
+\end{cases}
+$$
+
+\begin{enumerate}[a.]
+	\item Usar el análisis de Fourier con la base ortogonal $\{\phi(\omega, t)\} = \left\{\frac{1}{\sqrt{2\pi}}e^{i \omega t}\right\}$ de $\mathscr{L}^2$ para estimar el ancho de banda $\Delta \omega$ mínimo. Analizar el caso $\Delta t = 2T=1\text{s}$
+	\item ¿Cuál es el contenido de frecuencias en el pulso? 
+	
+\end{enumerate}
+
+
+
+\subsection{Solución}
+
+El problema requiere realizar el análisis de Fourier para un pulso de sonido de ancho $2T$ y amplitud constante igual a 1, definido matemáticamente como $f(t) = 1$ para $-T < t \leq T$ y $f(t) = 0$ en cualquier otro caso. Para ello, se utiliza la base ortogonal de funciones del espacio $L^2$ dada por $\{\phi(\omega, t)\} = \{ \frac{1}{\sqrt{2\pi}} e^{i\omega t} \}$.
+
+\textbf{a. Estimación del ancho de banda $\Delta\omega$}
+
+Para calcular el espectro de frecuencias o transformada de Fourier $F(\omega)$ de la señal, proyectamos la función $f(t)$ sobre los vectores de la base continua:
+$$F(\omega) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} f(t) e^{-i\omega t} dt$$
+Sustituyendo los límites del pulso definido en el enunciado:
+$$F(\omega) = \frac{1}{\sqrt{2\pi}} \int_{-T}^{T} (1) e^{-i\omega t} dt = \frac{1}{\sqrt{2\pi}} \left[ \frac{e^{-i\omega t}}{-i\omega} \right]_{-T}^{T}$$
+$$F(\omega) = \frac{1}{\sqrt{2\pi}} \frac{e^{i\omega T} - e^{-i\omega T}}{i\omega} = \frac{1}{\sqrt{2\pi}} \frac{2i \sin(\omega T)}{i\omega} = \sqrt{\frac{2}{\pi}} \frac{\sin(\omega T)}{\omega}$$
+Analíticamente, esta función se expresa a menudo en términos de la función sinc como $F(\omega) = T \sqrt{\frac{2}{\pi}} \frac{\sin(\omega T)}{\omega T}$.
+
+Para estimar el ancho de banda mínimo $\Delta\omega$, observamos el comportamiento de los ceros de la función espectral. El primer cero de $F(\omega)$ ocurre cuando el argumento del seno es $\pi$, es decir, $\omega T = \pi$. Si definimos el ancho de frecuencia $\Delta\omega$ como la distancia entre los primeros ceros a ambos lados del origen ($2\omega_0$), y la duración del pulso como $\Delta t = 2T$, se encuentra que el producto de estas incertidumbres satisface la relación fundamental:
+$$\Delta\omega \Delta t \approx 2\pi$$
+En el caso específico solicitado donde $\Delta t = 2T = 1 \text{ s}$, el ancho de banda mínimo se estima como:
+$$\Delta\omega \approx \frac{2\pi}{\Delta t} = 2\pi \text{ rad/s}$$
+
+\textbf{b. Contenido de frecuencias en el pulso}
+
+El contenido de frecuencias del pulso está distribuido de acuerdo a la densidad espectral $|F(\omega)|^2$, la cual mide la intensidad de la onda en cada intervalo de frecuencia. A partir del análisis analítico se concluye lo siguiente:
+
+\begin{itemize}
+    \item El pulso no contiene una única frecuencia, sino un espectro continuo de frecuencias centrado en $\omega = 0$.
+    \item La mayor parte de la energía de la señal se concentra en el lóbulo central de la función sinc, pero existen contribuciones significativas de frecuencias más altas en los lóbulos secundarios.
+    \item Existe una relación de proporcionalidad inversa entre la duración temporal y la extensión espectral: a medida que el pulso se hace más corto en el tiempo ($\Delta t \to 0$), el contenido de frecuencias necesario para reconstruirlo se vuelve más amplio ($\Delta\omega \to \infty$).
+    \item En el límite de un pulso de duración infinitesimal (un golpe de percusión representado por una delta de Dirac), el espectro contendría todas las frecuencias con la misma amplitud.
+\end{itemize}
+
+Este resultado es una manifestación del principio de incertidumbre en el análisis de señales, indicando que una localización precisa en el tiempo requiere una superposición de una vasta cantidad de frecuencias armónicas.
+
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}

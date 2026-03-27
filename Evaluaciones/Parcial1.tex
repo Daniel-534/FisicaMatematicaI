@@ -1,0 +1,88 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+
+\section{Problema 1: potencial eléctrico}
+En coordenadas polares $(r'=ra_0,\theta)$ el potencial eléctrico de un electrón en el nivel $1s$ en un átomo de hidrógeno está dado por la siguiente expresión
+
+$$V(r) = \frac{1}{4\pi\varepsilon_0}\frac{q}{a_0}\left(\frac{1}{2r} \gamma(3,2r) + \Gamma(2,2r)\right)$$ 
+
+donde $r$ es un número en términos del radio de Bohr $a_0$ y $\gamma(x, y)$, $\Gamma(x, y)$ son las funciones gamma incompletas. Determine el potencial eléctrico para $r<<1$ a orden $\mathcal{O}(r^2)$.
+
+\textit{Ayuda:}
+
+$$\gamma(n, x) = \int_{0}^{x}e^{-t}t^{n-1}dt = (n-1)!\left(1-e^{-x}\sum_{s=0}^{n-1} \frac{x^s}{s!}\right)$$
+
+$$\Gamma(n, x) = \int_{x}^{\infty}e^{-t}t^{n-1}dt = (n-1)!e^{-x}\sum_{s=0}^{n-1} \frac{x^s}{s!}$$
+
+\section{Problema 2: Oscilaciones}
+
+Una partícula de masa $m$ en un oscilador tiene una energía potencial $V(x)=A|x|^n$
+
+\begin{enumerate}[a.]
+	\item Mostrar que el período del oscilador es $$\tau = 2\sqrt{2m}\int_{0}^{x_{\text{max}}}\frac{dx}{\sqrt{E-Ax^n}}$$ donde $x_{\text{max}}$ es el punto clásico de retorno (donde la velocidad es cero) y $A|x_{\text{max}}|^n=E$ es la energía mecánica del sistema.
+	\item Determinar $\tau$. \textit{Ayuda:} $$B(m+1,n+1) = 2\int_{0}^{\pi/2} \cos^{2m+1}\theta \sin^{2n+1}\theta d\theta=\frac{m!n!}{(m+n+1)!}$$
+	\item Verificar que para el caso de un movimiento armónico simple (\textit{M.A.S}), donde $V(x) = \left(\frac{k}{2}\right)x^2$ entonces $\tau = 2\pi \sqrt{\frac{m}{k}}$
+\end{enumerate}
+
+\section{Problema 3: Expandir función con base de Fourier discreta}
+Expandir la función 
+
+$$
+f(x) =
+\begin{cases}
+-x, & \text{si }  -\pi \leq x \leq 0 \\
+x, & \text{si } 0 < x \leq \pi
+\end{cases}
+$$
+
+en la base discreta, ortonormal de Fourier $\{\phi_n(x)\} = 	\left\{\frac{1}{\sqrt{2L}}e^{i n\pi x /L}\right\}$ en $c\leq x \leq c+2L$, $n=-\infty, .., 0, ..., \infty$ del espacio de Hilbert de funciones de cuadrado integrable $\mathscr{L}^2$ con peso $p(x)=1$
+
+
+\section{Problema 4: Análisis de Fourier para un pulso de sonido}
+
+Considere un pulso de sonido de ancho $2T$ y amplitud constante de $1$ dado por
+
+$$
+f(t) =
+\begin{cases}
+0, & \text{si }  T \leq x \leq -T \\
+1, & \text{si } -T < x \leq T
+\end{cases}
+$$
+
+\begin{enumerate}[a.]
+	\item Usar el análisis de Fourier con la base ortogonal $\{\phi(\omega, t)\} = \left\{\frac{1}{\sqrt{2\pi}}e^{i \omega t}\right\}$ de $\mathscr{L}^2$ para estimar el ancho de banda $\Delta \omega$ mínimo. Analizar el caso $\Delta t = 2T=1\text{s}$
+	\item ¿Cuál es el contenido de frecuencias en el pulso? 
+	
+\end{enumerate}
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
