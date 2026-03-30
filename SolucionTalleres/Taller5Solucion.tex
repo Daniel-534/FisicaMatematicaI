@@ -1,0 +1,1259 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 5}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 5 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Problema 1}
+El valor esperado de un operador en mecánica cuántica se define como:
+$$
+\langle A \rangle = \int \psi^*(x)A\psi(x) \, dx,
+$$
+donde $A$ es un operador lineal. Muestre que la condición $\langle A \rangle \in \mathbb{R}$ (es decir, que el valor esperado sea real) implica que $A$ debe ser un operador hermitiano.
+
+\subsection{Solución}
+
+Este problema aborda la relación fundamental entre la realidad de los valores medibles en mecánica cuántica y la propiedad matemática de hermiticidad de los operadores. La teoría subyacente se encuentra desarrollada en el \textbf{Capítulo 6 (Teoría de Sturm-Liouville)}, específicamente en la Sección 6.2.1 (\textit{El operador adjunto}) y Sección 6.2.4 (\textit{Hermiticidad y fronteras}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda, así como en el \textbf{Capítulo 5 (Bases Ortogonales)} respecto a la definición de productos internos en espacios de Hilbert.
+
+\subsubsection{1. Definición del Producto Interno y Valor Esperado}
+
+En el formalismo de espacios de Hilbert discutido en el Capítulo 5 y 6 del texto de referencia, el producto interno de dos funciones de onda $f(x)$ y $g(x)$ se define como:
+$$
+(f, g) = \int_{-\infty}^{\infty} f^*(x) g(x) \, dx.
+$$
+Utilizando la notación de Dirac presentada en el \textbf{Anexo 6.2}, esto se escribe como $\langle f | g \rangle$. El valor esperado de un operador lineal $A$ para un estado descrito por la función de onda $\psi(x)$ (asumida normalizada, $\langle \psi | \psi \rangle = 1$) es el elemento de matriz diagonal:
+$$
+\langle A \rangle = \langle \psi | A | \psi \rangle = \int_{-\infty}^{\infty} \psi^*(x) A \psi(x) \, dx.
+$$
+
+\subsubsection{2. Condición de Realidad}
+
+Físicamente, $\langle A \rangle$ representa el promedio de los resultados de muchas mediciones de la observable asociada al operador $A$. Dado que los resultados de las mediciones físicas deben ser números reales, es necesario que $\langle A \rangle \in \mathbb{R}$. Un número complejo es real si y solo si es igual a su conjugado complejo:
+$$
+\langle A \rangle = \langle A \rangle^*.
+$$
+Calculamos el conjugado complejo de la integral en la ecuación anterior:
+$$
+\langle A \rangle^* = \left( \int_{-\infty}^{\infty} \psi^*(x) A \psi(x) \, dx \right)^* = \int_{-\infty}^{\infty} \left( \psi^*(x) A \psi(x) \right)^* \, dx = \int_{-\infty}^{\infty} \psi(x) \left( A \psi(x) \right)^* \, dx.
+$$
+En la notación de producto interno, la ecuación anterior corresponde a $\langle A \psi | \psi \rangle$. Por lo tanto, la condición de realidad implica:
+$$
+\langle \psi | A \psi \rangle = \langle A \psi | \psi \rangle.
+$$
+
+\subsubsection{3. Definición del Operador Adjunto y Hermiticidad}
+
+Según la Sección 6.2.1 (\textit{El operador adjunto}) del libro de Alonso Sepúlveda, el operador adjunto $A^\dagger$ se define mediante la relación:
+$$
+\langle \phi | A \psi \rangle = \langle A^\dagger \phi | \psi \rangle,
+$$
+para cualesquiera funciones $\phi$ y $\psi$ en el dominio del operador. En términos de integrales:
+$$
+\int \phi^* (A \psi) \, dx = \int (A^\dagger \phi)^* \psi \, dx.
+$$
+Un operador se define como \textbf{hermítico} si es igual a su adjunto:
+$$
+A = A^\dagger.
+$$
+Sustituyendo $A^\dagger = A$ en la definición anterior, obtenemos la condición característica de los operadores hermíticos:
+$$
+\langle \phi | A \psi \rangle = \langle A \phi | \psi \rangle.
+$$
+
+\subsubsection{4. Demostración de la Implicación}
+
+Debemos mostrar que si $\langle \psi | A \psi \rangle$ es real para \textit{cualquier} función de onda válida $\psi$, entonces $A$ es hermítico.
+
+1.  \textbf{Paso 1: Igualdad para el mismo estado.}
+    De la condición de realidad, ya establecimos que para cualquier $\psi$:
+    $$
+    \langle \psi | A \psi \rangle = \langle A \psi | \psi \rangle.
+    $$
+
+2.  \textbf{Paso 2: Generalización a estados diferentes.}
+    Para probar que $A$ es hermítico, la igualdad debe cumplirse para dos funciones arbitrarias $\phi$ y $\psi$. Consideremos una superposición lineal $\Psi = \phi + \lambda \psi$, donde $\lambda$ es un número complejo arbitrario.
+    Dado que el valor esperado es real para \textit{cualquier} estado, debe ser real para $\Psi$:
+    $$
+    \langle \Psi | A \Psi \rangle = \langle A \Psi | \Psi \rangle.
+    $$
+    Expandiendo ambos lados usando la linealidad del operador y del producto interno (propiedades discutidas en el Capítulo 5):
+    $$
+    \text{LHS} = \langle \phi + \lambda \psi | A (\phi + \lambda \psi) \rangle = \langle \phi | A \phi \rangle + \lambda \langle \phi | A \psi \rangle + \lambda^* \langle \psi | A \phi \rangle + |\lambda|^2 \langle \psi | A \psi \rangle.
+    $$
+    $$
+    \text{RHS} = \langle A (\phi + \lambda \psi) | \phi + \lambda \psi \rangle = \langle A \phi | \phi \rangle + \lambda \langle A \psi | \phi \rangle + \lambda^* \langle A \phi | \psi \rangle + |\lambda|^2 \langle A \psi | \psi \rangle.
+    $$
+    
+    Sabemos que $\langle \phi | A \phi \rangle = \langle A \phi | \phi \rangle$ y $\langle \psi | A \psi \rangle = \langle A \psi | \psi \rangle$ porque son reales por hipótesis. Al restar estas igualdades de la expansión anterior, nos queda:
+    $$
+    \lambda \langle \phi | A \psi \rangle + \lambda^* \langle \psi | A \phi \rangle = \lambda \langle A \psi | \phi \rangle + \lambda^* \langle A \phi | \psi \rangle.
+    $$
+    
+    Esta ecuación debe valer para cualquier $\lambda$.
+    \begin{itemize}
+        \item Si elegimos $\lambda = 1$:
+        $$
+        \langle \phi | A \psi \rangle + \langle \psi | A \phi \rangle = \langle A \psi | \phi \rangle + \langle A \phi | \psi \rangle.
+        $$
+        \item Si elegimos $\lambda = i$ (donde $\lambda^* = -i$):
+        $$
+        i \langle \phi | A \psi \rangle - i \langle \psi | A \phi \rangle = i \langle A \psi | \phi \rangle - i \langle A \phi | \psi \rangle.
+        $$
+        Dividiendo por $i$:
+        $$
+        \langle \phi | A \psi \rangle - \langle \psi | A \phi \rangle = \langle A \psi | \phi \rangle - \langle A \phi | \psi \rangle.
+        $$
+    \end{itemize}
+    
+    Sumando las dos ecuaciones resultantes:
+    $$
+    2 \langle \phi | A \psi \rangle = 2 \langle A \psi | \phi \rangle \quad \Rightarrow \quad \langle \phi | A \psi \rangle = \langle A \psi | \phi \rangle.
+    $$
+    Usando la propiedad del producto interno $\langle u | v \rangle = \langle v | u \rangle^*$, el lado derecho es $\langle \phi | A^\dagger \psi \rangle$. Por lo tanto:
+    $$
+    \langle \phi | A \psi \rangle = \langle \phi | A^\dagger \psi \rangle.
+    $$
+    Dado que esto se cumple para cualquier $\phi$ y $\psi$, concluimos que:
+    $$
+    A = A^\dagger.
+    $$
+    Por lo tanto, $A$ es un operador hermítico. $\checkmark$
+
+\subsubsection{5. Consideraciones sobre Condiciones de Frontera}
+
+Es importante notar, como se discute en la Sección 6.2.4 (\textit{Hermiticidad y fronteras}) del texto de Alonso Sepúlveda y en el \textbf{Problema Resuelto 1 del Taller 5}, que para operadores diferenciales (como el momento $\hat{p} = -i\hbar \frac{d}{dx}$), la condición de hermiticidad no depende solo de la forma del operador, sino también de las condiciones de frontera.
+
+Al integrar por partes para mover el operador de una función a otra, aparecen términos de frontera:
+$$
+\int_a^b \phi^* (A \psi) \, dx = \int_a^b (A^\dagger \phi)^* \psi \, dx + \left[ Q(\phi, \psi) \right]_a^b,
+$$
+donde $Q(\phi, \psi)$ depende del operador específico. Para que el operador sea verdaderamente hermítico en el espacio de Hilbert físico, el término de frontera debe anularse:
+$$
+\left[ Q(\phi, \psi) \right]_a^b = 0.
+$$
+Esto se logra típicamente requiriendo que las funciones de onda se anulen en el infinito ($\psi(\pm \infty) = 0$) o satisfagan condiciones periódicas, asegurando así que los valores esperados sean reales y los autovalores del operador correspondan a cantidades físicas medibles.
+
+\subsubsection{6. Conclusión}
+
+Hemos demostrado analíticamente que la exigencia física de que los valores esperados de las observables sean números reales ($\langle A \rangle \in \mathbb{R}$) impone matemáticamente que el operador asociado $A$ debe ser igual a su adjunto ($A = A^\dagger$). Esto confirma que los operadores que representan observables en mecánica cuántica deben ser \textbf{hermíticos}, garantizando además que sus autovalores (los posibles resultados de las mediciones) sean reales, como se establece en la teoría de Sturm-Liouville y espacios de Hilbert presentada en los Capítulos 5 y 6 del libro de Alonso Sepúlveda. $\checkmark$
+
+
+\section{Problema 2}
+Muestre que los operadores $\vec{p} = -i\hbar\nabla$ y $\vec{L} = \vec{r} \times \vec{p}$ son autoadjuntos. ¿Qué condiciones deben satisfacer para ser hermíticos?
+
+\subsection{Solución}
+
+Este problema aborda la distinción crucial en la teoría de Sturm-Liouville y la mecánica cuántica entre un operador que es \textbf{formalmente autoadjunto} (en su expresión diferencial) y uno que es \textbf{hermítico} (que incluye las condiciones de frontera). La teoría subyacente se encuentra desarrollada en el \textbf{Capítulo 6 (Teoría de Sturm-Liouville)}, específicamente en la Sección 6.2.1 (\textit{El operador adjunto}) y la Sección 6.2.4 (\textit{Hermiticidad y fronteras}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda.
+
+\subsubsection{1. Definiciones y Marco Teórico}
+
+En un espacio de Hilbert de funciones de cuadrado integrable, el producto interno entre dos funciones de onda $\psi(\vec{r})$ y $\phi(\vec{r})$ se define como (Sección 5.2.2 del texto de referencia):
+$$
+\langle \psi | \phi \rangle = \int_V \psi^*(\vec{r}) \phi(\vec{r}) \, d^3r
+$$
+donde $V$ es el dominio de integración (usualmente todo el espacio $\mathbb{R}^3$).
+
+Según la Sección 6.2.1, el operador adjunto $A^\dagger$ de un operador $A$ se define mediante la relación:
+$$
+\langle \psi | A \phi \rangle = \langle A^\dagger \psi | \phi \rangle
+$$
+Un operador se dice \textbf{autoadjunto} (formalmente) si su expresión diferencial es idéntica a la de su adjunto ($A = A^\dagger$). Sin embargo, para que un operador sea \textbf{hermítico} en el sentido físico (garantizando autovalores reales y conservación de probabilidad), no solo debe ser autoadjunto formalmente, sino que los términos de frontera resultantes de la integración por partes deben anularse (Sección 6.2.4):
+$$
+\langle \psi | A \phi \rangle = \langle A \psi | \phi \rangle \quad \Rightarrow \quad \text{Términos de frontera} = 0
+$$
+
+\subsubsection{2. Operador Momento Lineal $\vec{p}$}
+
+El operador momento lineal en la representación de coordenadas es (Capítulo 4, Sección 4.7):
+$$
+\vec{p} = -i\hbar \nabla
+$$
+Analicemos una componente, por ejemplo $p_x = -i\hbar \frac{\partial}{\partial x}$. Consideremos el producto interno $\langle \psi | p_x \phi \rangle$:
+$$
+\langle \psi | p_x \phi \rangle = \int_{-\infty}^{\infty} \psi^*(x) \left( -i\hbar \frac{\partial \phi}{\partial x} \right) dx
+$$
+Utilizamos integración por partes ($\int u dv = uv - \int v du$), donde $u = \psi^*$ y $dv = \frac{\partial \phi}{\partial x} dx$:
+$$
+\langle \psi | p_x \phi \rangle = -i\hbar \left[ \psi^*(x) \phi(x) \right]_{-\infty}^{\infty} + i\hbar \int_{-\infty}^{\infty} \left( \frac{\partial \psi^*}{\partial x} \right) \phi(x) \, dx
+$$
+$$
+= -i\hbar \left[ \psi^* \phi \right]_{-\infty}^{\infty} + \int_{-\infty}^{\infty} \left( -i\hbar \frac{\partial \psi}{\partial x} \right)^* \phi(x) \, dx
+$$
+El segundo término es exactamente $\langle p_x \psi | \phi \rangle$. Por lo tanto:
+$$
+\langle \psi | p_x \phi \rangle = \langle p_x \psi | \phi \rangle - i\hbar \left[ \psi^*(x) \phi(x) \right]_{-\infty}^{\infty}
+$$
+
+\textbf{Autoadjunción Formal:}
+La expresión diferencial del operador adjunto es $p_x^\dagger = -i\hbar \frac{\partial}{\partial x}$, que es idéntica a $p_x$. Por lo tanto, el operador es \textbf{autoadjunto} en su forma diferencial. $\checkmark$
+
+\textbf{Condición para ser Hermítico:}
+Para que $p_x$ sea hermítico, el término de frontera debe anularse:
+$$
+\left[ \psi^*(x) \phi(x) \right]_{-\infty}^{\infty} = 0
+$$
+Esto se cumple si las funciones de onda $\psi$ y $\phi$ se anulan en el infinito ($\psi(\pm \infty) = 0$), lo cual es cierto para funciones de onda físicamente aceptables (cuadrado integrable). También se cumple para condiciones de frontera periódicas en un intervalo finito.
+
+Extendiendo esto a las tres dimensiones mediante el teorema de la divergencia, la condición general es que el flujo de probabilidad a través de la superficie frontera $S$ sea cero:
+$$
+\oint_S \psi^* \phi \, \hat{n} \cdot d\vec{S} = 0
+$$
+
+\subsubsection{3. Operador Momento Angular $\vec{L}$}
+
+El operador momento angular orbital se define como (Capítulo 3, Sección 3.3.4):
+$$
+\vec{L} = \vec{r} \times \vec{p} = -i\hbar (\vec{r} \times \nabla)
+$$
+Para demostrar que es autoadjunto, podemos usar las propiedades de los operadores adjuntos. Sabemos que $(AB)^\dagger = B^\dagger A^\dagger$.
+$$
+\vec{L}^\dagger = (\vec{r} \times \vec{p})^\dagger
+$$
+Dado que $\vec{r}$ es un operador multiplicativo real, es hermítico ($\vec{r}^\dagger = \vec{r}$). Ya demostramos que $\vec{p}$ es hermítico ($\vec{p}^\dagger = \vec{p}$). Sin embargo, debemos tener cuidado con el orden en el producto cruz. En componentes, por ejemplo para $L_z$:
+$$
+L_z = x p_y - y p_x
+$$
+Calculamos el adjunto:
+$$
+L_z^\dagger = (x p_y - y p_x)^\dagger = (x p_y)^\dagger - (y p_x)^\dagger = p_y^\dagger x^\dagger - p_x^\dagger y^\dagger
+$$
+Como $x$ y $p_y$ conmutan ($[x, p_y] = 0$), y son hermíticos:
+$$
+L_z^\dagger = p_y x - p_x y = x p_y - y p_x = L_z
+$$
+Lo mismo aplica para $L_x$ y $L_y$. Por lo tanto, $\vec{L}$ es \textbf{autoadjunto} formalmente. $\checkmark$
+
+\textbf{Condiciones para ser Hermítico:}
+Al igual que con $\vec{p}$, la hermiticidad depende de que los términos de frontera se anulen al integrar por partes. En coordenadas esféricas, las componentes de $\vec{L}$ involucran derivadas angulares. Por ejemplo:
+$$
+L_z = -i\hbar \frac{\partial}{\partial \phi}
+$$
+El producto interno involucra la integral sobre el ángulo azimutal $\phi \in [0, 2\pi]$:
+$$
+\int_0^{2\pi} \psi^* \left( -i\hbar \frac{\partial \phi}{\partial \phi} \right) d\phi = \left[ -i\hbar \psi^* \phi \right]_0^{2\pi} + \int_0^{2\pi} \left( -i\hbar \frac{\partial \psi}{\partial \phi} \right)^* \phi \, d\phi
+$$
+Para que el término de frontera $\left[ \psi^* \phi \right]_0^{2\pi}$ se anule, las funciones de onda deben ser \textbf{univaluadas} y periódicas en $\phi$:
+$$
+\psi(\phi) = \psi(\phi + 2\pi)
+$$
+Esta es una condición física estándar en mecánica cuántica. Además, para las componentes que involucran $\theta$, las funciones deben comportarse adecuadamente en los polos ($\theta = 0, \pi$) para que los términos de superficie en la esfera se anulen (generalmente garantizado por los armónicos esféricos $Y_{lm}$).
+
+\subsubsection{4. Resumen y Conclusión}
+
+Basados en la teoría de Sturm-Liouville presentada en el Capítulo 6 de Alonso Sepúlveda:
+
+\begin{enumerate}
+    \item \textbf{Autoadjunción Formal:} Ambos operadores, $\vec{p}$ y $\vec{L}$, son autoadjuntos porque sus expresiones diferenciales coinciden con las de sus operadores adjuntos ($\vec{p} = \vec{p}^\dagger$ y $\vec{L} = \vec{L}^\dagger$). Esto se debe a que los coeficientes de las derivadas son constantes o funciones reales adecuadas. $\checkmark$
+    
+    \item \textbf{Hermiticidad:} Para que sean verdaderamente hermíticos (garantizando $\langle \psi | A \phi \rangle = \langle A \psi | \phi \rangle$), los términos de frontera generados por la integración por partes deben desaparecer.
+    \begin{itemize}
+        \item Para $\vec{p}$: Las funciones de onda deben anularse en los límites del dominio (infinito) o satisfacer condiciones periódicas.
+        \item Para $\vec{L}$: Las funciones de onda deben ser periódicas en el ángulo azimutal ($\psi(\phi) = \psi(\phi+2\pi)$) y regulares en los polos.
+    \end{itemize}
+\end{enumerate}
+
+En conclusión, la propiedad de ser autoadjunto es una propiedad \textit{local} del operador diferencial, mientras que la propiedad de ser hermítico es una propiedad \textit{global} que depende del dominio y de las condiciones de frontera impuestas a las funciones del espacio de Hilbert, tal como se discute en la Sección 6.2.4 del texto de referencia. $\checkmark$
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Operador} & \textbf{Autoadjunto (Forma)} & \textbf{Condición de Hermiticidad} \\
+\hline
+$\vec{p} = -i\hbar\nabla$ & Sí & $\psi \to 0$ en fronteras o periodicidad \\
+\hline
+$\vec{L} = \vec{r} \times \vec{p}$ & Sí & Univaluación ($\psi(\phi) = \psi(\phi+2\pi)$) \\
+\hline
+\end{tabular}
+\caption{Propiedades de adjunción y hermiticidad de los operadores}
+\end{table}
+
+
+\section{Problema 3}
+Exprese las siguientes ecuaciones en forma autoadjunta:
+\begin{enumerate}
+    \item[(a)] $(1 - x^2)\ddot{y} + 2ax\dot{y} + \lambda y = 0$
+    \item[(b)] $(1 - x^3)\ddot{y} + x^2\dot{y} + \lambda y = 0$
+    \item[(c)] $x\ddot{y} + 2(1 - x^2)\dot{y} + \lambda y = 0$
+    \item[(d)] $x\ddot{y} + (3 - 2x^2)\dot{y} + \lambda xy = 0$
+    \item[(e)] $x^2\ddot{y} + 2x(1 - x^2)\dot{y} + \lambda y = 0$
+\end{enumerate}
+
+\subsection{Solución}
+
+Este problema aborda la conversión de ecuaciones diferenciales lineales de segundo orden a su \textbf{forma autoadjunta}, un tema fundamental en la teoría de Sturm-Liouville desarrollado en el \textbf{Capítulo 6 (Teoría de Sturm-Liouville)}, específicamente en la Sección 6.2.3 (\textit{Teorema}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda. Según el teorema presentado en dicha sección, siempre es posible convertir una ecuación diferencial lineal inhomogénea de segundo orden con coeficientes reales en ecuación autoadjunta mediante un factor multiplicativo apropiado.
+
+\subsubsection{Marco Teórico}
+
+Una ecuación diferencial lineal de segundo orden en su forma general se escribe como:
+$$
+a_2(x)\ddot{y} + a_1(x)\dot{y} + a_0(x)y + \lambda y = 0
+$$
+donde los puntos denotan derivadas respecto a $x$.
+
+Según la Sección 6.2.3 del texto de referencia, para convertir esta ecuación a forma autoadjunta, debemos multiplicar por un factor integrante $p(x)$ dado por:
+$$
+p(x) = \frac{1}{a_2(x)} \exp\left(\int \frac{a_1(x)}{a_2(x)} dx\right)
+$$
+
+La forma autoadjunta resultante es:
+$$
+\frac{d}{dx}\left[q(x)\frac{dy}{dx}\right] + r(x)y + \lambda p(x)y = 0
+$$
+donde:
+$$
+q(x) = p(x)a_2(x), \quad r(x) = p(x)a_0(x)
+$$
+
+Esta forma es crucial porque garantiza que el operador diferencial sea autoadjunto, lo que implica que los autovalores son reales y las autofunciones correspondientes a autovalores distintos son ortogonales (Sección 6.3.2 del libro de Alonso Sepúlveda).
+
+\subsubsection{Caso (a): $(1 - x^2)\ddot{y} + 2ax\dot{y} + \lambda y = 0$}
+
+Identificamos los coeficientes:
+$$
+a_2(x) = 1 - x^2, \quad a_1(x) = 2ax, \quad a_0(x) = 0
+$$
+
+Calculamos el factor integrante:
+$$
+p(x) = \frac{1}{1 - x^2} \exp\left(\int \frac{2ax}{1 - x^2} dx\right)
+$$
+
+Para evaluar la integral, hacemos el cambio $u = 1 - x^2$, $du = -2x dx$:
+$$
+\int \frac{2ax}{1 - x^2} dx = -a \int \frac{du}{u} = -a \ln|1 - x^2| = \ln(1 - x^2)^{-a}
+$$
+
+Por lo tanto:
+$$
+p(x) = \frac{1}{1 - x^2} \cdot (1 - x^2)^{-a} = (1 - x^2)^{-(a+1)}
+$$
+
+Ahora calculamos $q(x)$ y $r(x)$:
+$$
+q(x) = p(x)a_2(x) = (1 - x^2)^{-(a+1)} \cdot (1 - x^2) = (1 - x^2)^{-a}
+$$
+$$
+r(x) = p(x)a_0(x) = 0
+$$
+
+La forma autoadjunta es:
+$$
+\boxed{\frac{d}{dx}\left[(1 - x^2)^{-a}\frac{dy}{dx}\right] + \lambda(1 - x^2)^{-(a+1)}y = 0}
+$$
+
+\textbf{Nota:} Para $a = -1$, recuperamos la ecuación de Legendre ordinaria en forma autoadjunta. $\checkmark$
+
+\subsubsection{Caso (b): $(1 - x^3)\ddot{y} + x^2\dot{y} + \lambda y = 0$}
+
+Identificamos los coeficientes:
+$$
+a_2(x) = 1 - x^3, \quad a_1(x) = x^2, \quad a_0(x) = 0
+$$
+
+Calculamos el factor integrante:
+$$
+p(x) = \frac{1}{1 - x^3} \exp\left(\int \frac{x^2}{1 - x^3} dx\right)
+$$
+
+Para la integral, hacemos $u = 1 - x^3$, $du = -3x^2 dx$:
+$$
+\int \frac{x^2}{1 - x^3} dx = -\frac{1}{3} \int \frac{du}{u} = -\frac{1}{3} \ln|1 - x^3| = \ln(1 - x^3)^{-1/3}
+$$
+
+Por lo tanto:
+$$
+p(x) = \frac{1}{1 - x^3} \cdot (1 - x^3)^{-1/3} = (1 - x^3)^{-4/3}
+$$
+
+Calculamos $q(x)$ y $r(x)$:
+$$
+q(x) = p(x)a_2(x) = (1 - x^3)^{-4/3} \cdot (1 - x^3) = (1 - x^3)^{-1/3}
+$$
+$$
+r(x) = p(x)a_0(x) = 0
+$$
+
+La forma autoadjunta es:
+$$
+\boxed{\frac{d}{dx}\left[(1 - x^3)^{-1/3}\frac{dy}{dx}\right] + \lambda(1 - x^3)^{-4/3}y = 0}
+$$
+
+\subsubsection{Caso (c): $x\ddot{y} + 2(1 - x^2)\dot{y} + \lambda y = 0$}
+
+Identificamos los coeficientes:
+$$
+a_2(x) = x, \quad a_1(x) = 2(1 - x^2), \quad a_0(x) = 0
+$$
+
+Calculamos el factor integrante:
+$$
+p(x) = \frac{1}{x} \exp\left(\int \frac{2(1 - x^2)}{x} dx\right) = \frac{1}{x} \exp\left(\int \left(\frac{2}{x} - 2x\right) dx\right)
+$$
+
+Evaluando la integral:
+$$
+\int \left(\frac{2}{x} - 2x\right) dx = 2\ln|x| - x^2 = \ln(x^2) - x^2
+$$
+
+Por lo tanto:
+$$
+p(x) = \frac{1}{x} \cdot e^{\ln(x^2) - x^2} = \frac{1}{x} \cdot x^2 e^{-x^2} = x e^{-x^2}
+$$
+
+Calculamos $q(x)$ y $r(x)$:
+$$
+q(x) = p(x)a_2(x) = x e^{-x^2} \cdot x = x^2 e^{-x^2}
+$$
+$$
+r(x) = p(x)a_0(x) = 0
+$$
+
+La forma autoadjunta es:
+$$
+\boxed{\frac{d}{dx}\left[x^2 e^{-x^2}\frac{dy}{dx}\right] + \lambda x e^{-x^2}y = 0}
+$$
+
+\subsubsection{Caso (d): $x\ddot{y} + (3 - 2x^2)\dot{y} + \lambda xy = 0$}
+
+Identificamos los coeficientes:
+$$
+a_2(x) = x, \quad a_1(x) = 3 - 2x^2, \quad a_0(x) = \lambda x \text{ (el término con $\lambda$)}
+$$
+
+Para la forma estándar, escribimos:
+$$
+x\ddot{y} + (3 - 2x^2)\dot{y} + \lambda xy = 0
+$$
+
+Calculamos el factor integrante:
+$$
+p(x) = \frac{1}{x} \exp\left(\int \frac{3 - 2x^2}{x} dx\right) = \frac{1}{x} \exp\left(\int \left(\frac{3}{x} - 2x\right) dx\right)
+$$
+
+Evaluando la integral:
+$$
+\int \left(\frac{3}{x} - 2x\right) dx = 3\ln|x| - x^2 = \ln(x^3) - x^2
+$$
+
+Por lo tanto:
+$$
+p(x) = \frac{1}{x} \cdot e^{\ln(x^3) - x^2} = \frac{1}{x} \cdot x^3 e^{-x^2} = x^2 e^{-x^2}
+$$
+
+Calculamos $q(x)$ y $r(x)$:
+$$
+q(x) = p(x)a_2(x) = x^2 e^{-x^2} \cdot x = x^3 e^{-x^2}
+$$
+$$
+r(x) = 0 \quad \text{(el término con $\lambda$ va en el factor de peso)}
+$$
+
+El factor de peso es:
+$$
+w(x) = p(x) \cdot x = x^3 e^{-x^2}
+$$
+
+La forma autoadjunta es:
+$$
+\boxed{\frac{d}{dx}\left[x^3 e^{-x^2}\frac{dy}{dx}\right] + \lambda x^3 e^{-x^2}y = 0}
+$$
+
+\subsubsection{Caso (e): $x^2\ddot{y} + 2x(1 - x^2)\dot{y} + \lambda y = 0$}
+
+Identificamos los coeficientes:
+$$
+a_2(x) = x^2, \quad a_1(x) = 2x(1 - x^2) = 2x - 2x^3, \quad a_0(x) = 0
+$$
+
+Calculamos el factor integrante:
+$$
+p(x) = \frac{1}{x^2} \exp\left(\int \frac{2x - 2x^3}{x^2} dx\right) = \frac{1}{x^2} \exp\left(\int \left(\frac{2}{x} - 2x\right) dx\right)
+$$
+
+Evaluando la integral:
+$$
+\int \left(\frac{2}{x} - 2x\right) dx = 2\ln|x| - x^2 = \ln(x^2) - x^2
+$$
+
+Por lo tanto:
+$$
+p(x) = \frac{1}{x^2} \cdot e^{\ln(x^2) - x^2} = \frac{1}{x^2} \cdot x^2 e^{-x^2} = e^{-x^2}
+$$
+
+Calculamos $q(x)$ y $r(x)$:
+$$
+q(x) = p(x)a_2(x) = e^{-x^2} \cdot x^2 = x^2 e^{-x^2}
+$$
+$$
+r(x) = p(x)a_0(x) = 0
+$$
+
+La forma autoadjunta es:
+$$
+\boxed{\frac{d}{dx}\left[x^2 e^{-x^2}\frac{dy}{dx}\right] + \lambda e^{-x^2}y = 0}
+$$
+
+\subsubsection{Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Caso} & \textbf{$q(x)$} & \textbf{Factor de Peso $p(x)$} \\
+\hline
+(a) & $(1 - x^2)^{-a}$ & $(1 - x^2)^{-(a+1)}$ \\
+\hline
+(b) & $(1 - x^3)^{-1/3}$ & $(1 - x^3)^{-4/3}$ \\
+\hline
+(c) & $x^2 e^{-x^2}$ & $x e^{-x^2}$ \\
+\hline
+(d) & $x^3 e^{-x^2}$ & $x^3 e^{-x^2}$ \\
+\hline
+(e) & $x^2 e^{-x^2}$ & $e^{-x^2}$ \\
+\hline
+\end{tabular}
+\caption{Factores $q(x)$ y de peso $p(x)$ para cada ecuación en forma autoadjunta}
+\end{table}
+
+\subsubsection{Análisis Físico y Matemático}
+
+Basados en la teoría de Sturm-Liouville presentada en el Capítulo 6 de Alonso Sepúlveda:
+
+\begin{enumerate}
+    \item \textbf{Existencia del Factor Integrante:} Como demuestra el teorema de la Sección 6.2.3, toda ecuación diferencial lineal de segundo orden con coeficientes reales puede convertirse a forma autoadjunta. Esto se verificó explícitamente para los cinco casos propuestos. $\checkmark$
+    
+    \item \textbf{Ortogonalidad de las Soluciones:} Una vez en forma autoadjunta, si las condiciones de frontera son apropiadas (homogéneas de Dirichlet, Neumann o mixtas), las autofunciones correspondientes a autovalores distintos serán ortogonales con respecto al factor de peso $p(x)$:
+    $$
+    \int_a^b p(x) y_m(x) y_n(x) dx = 0, \quad m \neq n
+    $$
+    
+    \item \textbf{Autovalores Reales:} La forma autoadjunta garantiza que el operador diferencial es hermítico (bajo condiciones de frontera apropiadas), lo que implica que todos los autovalores $\lambda$ son reales (Sección 6.3.2 del libro de referencia). $\checkmark$
+    
+    \item \textbf{Puntos Singulares:} Obsérvese que en varios casos los coeficientes $q(x)$ se anulan en los extremos del dominio (por ejemplo, $x = \pm 1$ en el caso (a)), lo que indica puntos singulares regulares de la ecuación de Sturm-Liouville. Esto es característico de ecuaciones que generan polinomios ortogonales clásicos (Legendre, Chebyshev, etc.).
+    
+    \item \textbf{Conexión con Funciones Especiales:} El caso (a) con $a = -1$ corresponde a la ecuación de Legendre. Los casos (c), (d) y (e) involucran factores exponenciales $e^{-x^2}$ similares a los que aparecen en la ecuación de Hermite (Sección 8.5 del texto de Alonso Sepúlveda).
+\end{enumerate}
+
+\subsubsection{Verificación de la Autoadjunción}
+
+Para verificar que las ecuaciones obtenidas están efectivamente en forma autoadjunta, podemos expandir la derivada:
+$$
+\frac{d}{dx}\left[q(x)\frac{dy}{dx}\right] = q(x)\ddot{y} + \dot{q}(x)\dot{y}
+$$
+
+Para el caso (a), por ejemplo:
+$$
+\frac{d}{dx}\left[(1 - x^2)^{-a}\frac{dy}{dx}\right] = (1 - x^2)^{-a}\ddot{y} + (-a)(1 - x^2)^{-a-1}(-2x)\dot{y}
+$$
+$$
+= (1 - x^2)^{-a}\ddot{y} + 2ax(1 - x^2)^{-a-1}\dot{y}
+$$
+
+Multiplicando toda la ecuación por $(1 - x^2)^{a+1}$ para recuperar la forma original:
+$$
+(1 - x^2)\ddot{y} + 2ax\dot{y} + \lambda y = 0
+$$
+
+Lo cual confirma que la transformación es correcta. $\checkmark$
+
+Este mismo procedimiento de verificación puede aplicarse a todos los demás casos, confirmando la validez de las formas autoadjuntas obtenidas para el Taller 5.
+
+
+
+\section{Problema 4}
+Encuentre el conjunto de autofunciones y autovalores para los siguientes problemas:
+\begin{enumerate}
+    \item[(a)] $x^2y'' + 5xy' + \lambda y = 0$, con $1 \leq x \leq e$, $y(1) = 0 = y(e)$.
+    \item[(b)] $x^2y'' + axy' + \lambda y = 0$, con $1 \leq x \leq e$, $y(1) = y(e) = 0$.
+    \item[(c)] $xy'' + y' + \frac{\lambda}{x}y = 0$, con $1 \leq x \leq 2$, $y(1) = y(2) = 0$.
+    \item[(d)] $(3+x)^2y'' + 2(3+x)y' + \lambda y = 0$, con $-2 \leq x \leq 1$, $y(-2) = y(1) = 0$.
+    \item[(e)] $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y'(0) = 0 = y(L)$.
+    \item[(f)] $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y(0) = 0 = y(L)$.
+    \item[(g)] $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y'(0) = 0 = y'(L)$.
+\end{enumerate}
+
+\subsection{Solución}
+
+Este problema aborda la determinación de \textbf{autovalores y autofunciones} en el contexto de la teoría de Sturm-Liouville, desarrollada en el \textbf{Capítulo 6 (Teoría de Sturm-Liouville)} del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda. Específicamente, las Secciones 6.3.1 (\textit{Ecuación de Sturm-Liouville}) y 6.3.2 (\textit{El problema de autovalores}) proporcionan el marco teórico necesario para resolver estos problemas de valores en la frontera.
+
+\subsubsection{Marco Teórico}
+
+Según la Sección 6.3 del texto de referencia, un problema de Sturm-Liouville regular tiene la forma:
+$$
+\frac{d}{dx}\left[q(x)\frac{dy}{dx}\right] + r(x)y + \lambda p(x)y = 0
+$$
+con condiciones de frontera homogéneas en los extremos del intervalo $(a, b)$. Las propiedades fundamentales son:
+\begin{itemize}
+    \item Los autovalores $\lambda_n$ son reales y forman un conjunto discreto infinito.
+    \item Las autofunciones correspondientes a autovalores distintos son ortogonales con respecto al factor de peso $p(x)$.
+    \item La autofunción $y_n(x)$ correspondiente al $n$-ésimo autovalor tiene exactamente $n$ ceros en el intervalo $(a, b)$.
+\end{itemize}
+
+Para ecuaciones del tipo Euler-Cauchy (como los casos a, b, d), la sustitución $x = e^t$ o $y = x^m$ permite transformar la ecuación en una de coeficientes constantes.
+
+\subsubsection{Caso (a): $x^2y'' + 5xy' + \lambda y = 0$, con $1 \leq x \leq e$, $y(1) = 0 = y(e)$}
+
+Esta es una ecuación de Euler-Cauchy. Proponemos la solución $y = x^m$. Sustituyendo:
+$$
+m(m-1) + 5m + \lambda = 0 \quad \Rightarrow \quad m^2 + 4m + \lambda = 0
+$$
+Las raíces son:
+$$
+m = -2 \pm \sqrt{4 - \lambda}
+$$
+
+\textbf{Análisis de los casos:}
+
+\begin{itemize}
+    \item \textbf{Caso $\lambda < 4$:} Las raíces son reales y distintas. La solución general es:
+    $$
+    y(x) = x^{-2}\left[A x^{\sqrt{4-\lambda}} + B x^{-\sqrt{4-\lambda}}\right]
+    $$
+    Aplicando $y(1) = 0$: $A + B = 0 \Rightarrow B = -A$.
+    $$
+    y(x) = A x^{-2}\left[x^{\sqrt{4-\lambda}} - x^{-\sqrt{4-\lambda}}\right] = 2A x^{-2} \sinh\left(\sqrt{4-\lambda} \ln x\right)
+    $$
+    Aplicando $y(e) = 0$: $\sinh\left(\sqrt{4-\lambda}\right) = 0 \Rightarrow \sqrt{4-\lambda} = 0 \Rightarrow \lambda = 4$.
+    Esto contradice $\lambda < 4$, por lo tanto no hay soluciones en este caso.
+    
+    \item \textbf{Caso $\lambda = 4$:} Raíces repetidas $m = -2$. La solución es:
+    $$
+    y(x) = x^{-2}(A + B \ln x)
+    $$
+    Aplicando $y(1) = 0$: $A = 0$.
+    Aplicando $y(e) = 0$: $B = 0$. Solo solución trivial.
+    
+    \item \textbf{Caso $\lambda > 4$:} Las raíces son complejas conjugadas. Escribimos $\sqrt{4-\lambda} = i\sqrt{\lambda-4} = i\mu$ con $\mu = \sqrt{\lambda-4}$.
+    $$
+    y(x) = x^{-2}\left[A \cos(\mu \ln x) + B \sin(\mu \ln x)\right]
+    $$
+    Aplicando $y(1) = 0$: $A = 0$.
+    $$
+    y(x) = B x^{-2} \sin(\mu \ln x)
+    $$
+    Aplicando $y(e) = 0$: $\sin(\mu) = 0 \Rightarrow \mu = n\pi$, $n = 1, 2, 3, \dots$
+\end{itemize}
+
+Por lo tanto, los autovalores y autofunciones son:
+$$
+\boxed{\lambda_n = 4 + n^2\pi^2, \quad y_n(x) = \frac{1}{x^2} \sin(n\pi \ln x), \quad n = 1, 2, 3, \dots}
+$$
+
+\textbf{Verificación de ortogonalidad:} El factor de peso se obtiene poniendo la ecuación en forma autoadjunta. Multiplicando por $p(x) = x^3$ (según la fórmula $p = \frac{1}{a_2}e^{\int \frac{a_1}{a_2}dx}$):
+$$
+\frac{d}{dx}\left[x^5 \frac{dy}{dx}\right] + \lambda x^3 y = 0
+$$
+El factor de peso es $p(x) = x^3$. La ortogonalidad se verifica:
+$$
+\int_1^e x^3 y_n(x) y_m(x) dx = \int_1^e \sin(n\pi \ln x) \sin(m\pi \ln x) \frac{dx}{x} = 0, \quad n \neq m \quad \checkmark
+$$
+
+\subsubsection{Caso (b): $x^2y'' + axy' + \lambda y = 0$, con $1 \leq x \leq e$, $y(1) = y(e) = 0$}
+
+Ecuación de Euler-Cauchy con parámetro $a$. La ecuación característica es:
+$$
+m(m-1) + am + \lambda = 0 \quad \Rightarrow \quad m^2 + (a-1)m + \lambda = 0
+$$
+Las raíces son:
+$$
+m = \frac{1-a \pm \sqrt{(a-1)^2 - 4\lambda}}{2}
+$$
+
+Para obtener soluciones oscilatorias (necesarias para satisfacer las condiciones de frontera), necesitamos raíces complejas, lo que requiere:
+$$
+(a-1)^2 - 4\lambda < 0 \quad \Rightarrow \quad \lambda > \frac{(a-1)^2}{4}
+$$
+
+Escribimos $m = \frac{1-a}{2} \pm i\mu$ donde $\mu = \sqrt{\lambda - \frac{(a-1)^2}{4}}$. La solución general es:
+$$
+y(x) = x^{\frac{1-a}{2}}\left[A \cos(\mu \ln x) + B \sin(\mu \ln x)\right]
+$$
+
+Aplicando $y(1) = 0$: $A = 0$.
+$$
+y(x) = B x^{\frac{1-a}{2}} \sin(\mu \ln x)
+$$
+
+Aplicando $y(e) = 0$: $\sin(\mu) = 0 \Rightarrow \mu = n\pi$, $n = 1, 2, 3, \dots$
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \frac{(a-1)^2}{4} + n^2\pi^2, \quad y_n(x) = x^{\frac{1-a}{2}} \sin(n\pi \ln x), \quad n = 1, 2, 3, \dots}
+$$
+
+\textbf{Nota:} Para $a = 5$, recuperamos el caso (a). $\checkmark$
+
+\subsubsection{Caso (c): $xy'' + y' + \frac{\lambda}{x}y = 0$, con $1 \leq x \leq 2$, $y(1) = y(2) = 0$}
+
+Multiplicando por $x$, obtenemos:
+$$
+x^2y'' + xy' + \lambda y = 0
+$$
+Esta es una ecuación de Euler-Cauchy. La ecuación característica es:
+$$
+m(m-1) + m + \lambda = 0 \quad \Rightarrow \quad m^2 + \lambda = 0 \quad \Rightarrow \quad m = \pm i\sqrt{\lambda}
+$$
+
+Para $\lambda > 0$, escribimos $\sqrt{\lambda} = \mu$. La solución general es:
+$$
+y(x) = A \cos(\mu \ln x) + B \sin(\mu \ln x)
+$$
+
+Aplicando $y(1) = 0$: $A = 0$.
+$$
+y(x) = B \sin(\mu \ln x)
+$$
+
+Aplicando $y(2) = 0$: $\sin(\mu \ln 2) = 0 \Rightarrow \mu \ln 2 = n\pi$, $n = 1, 2, 3, \dots$
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \left(\frac{n\pi}{\ln 2}\right)^2, \quad y_n(x) = \sin\left(\frac{n\pi \ln x}{\ln 2}\right), \quad n = 1, 2, 3, \dots}
+$$
+
+\textbf{Forma autoadjunta:} La ecuación original ya está en forma autoadjunta con $q(x) = x$, $p(x) = \frac{1}{x}$:
+$$
+\frac{d}{dx}\left[x \frac{dy}{dx}\right] + \frac{\lambda}{x} y = 0
+$$
+El factor de peso es $p(x) = \frac{1}{x}$. $\checkmark$
+
+\subsubsection{Caso (d): $(3+x)^2y'' + 2(3+x)y' + \lambda y = 0$, con $-2 \leq x \leq 1$, $y(-2) = y(1) = 0$}
+
+Hacemos el cambio de variable $u = 3+x$, con $1 \leq u \leq 4$. La ecuación se transforma en:
+$$
+u^2 \frac{d^2y}{du^2} + 2u \frac{dy}{du} + \lambda y = 0
+$$
+
+Esta es una ecuación de Euler-Cauchy. La ecuación característica es:
+$$
+m(m-1) + 2m + \lambda = 0 \quad \Rightarrow \quad m^2 + m + \lambda = 0
+$$
+Las raíces son:
+$$
+m = \frac{-1 \pm \sqrt{1 - 4\lambda}}{2}
+$$
+
+Para soluciones oscilatorias, necesitamos $\lambda > \frac{1}{4}$. Escribimos $\sqrt{4\lambda - 1} = \mu$. La solución general es:
+$$
+y(u) = u^{-1/2}\left[A \cos\left(\frac{\mu}{2} \ln u\right) + B \sin\left(\frac{\mu}{2} \ln u\right)\right]
+$$
+
+Volviendo a $x$:
+$$
+y(x) = (3+x)^{-1/2}\left[A \cos\left(\frac{\mu}{2} \ln(3+x)\right) + B \sin\left(\frac{\mu}{2} \ln(3+x)\right)\right]
+$$
+
+Aplicando $y(-2) = 0$: $(1)^{-1/2}[A \cos(0) + B \sin(0)] = 0 \Rightarrow A = 0$.
+$$
+y(x) = B (3+x)^{-1/2} \sin\left(\frac{\mu}{2} \ln(3+x)\right)
+$$
+
+Aplicando $y(1) = 0$: $\sin\left(\frac{\mu}{2} \ln 4\right) = 0 \Rightarrow \frac{\mu}{2} \ln 4 = n\pi$, $n = 1, 2, 3, \dots$
+
+Como $\ln 4 = 2\ln 2$:
+$$
+\mu \ln 2 = n\pi \quad \Rightarrow \quad \mu = \frac{n\pi}{\ln 2}
+$$
+
+Recordando que $\mu = \sqrt{4\lambda - 1}$:
+$$
+4\lambda - 1 = \left(\frac{n\pi}{\ln 2}\right)^2 \quad \Rightarrow \quad \lambda_n = \frac{1}{4}\left[1 + \left(\frac{n\pi}{\ln 2}\right)^2\right]
+$$
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \frac{1}{4}\left[1 + \left(\frac{n\pi}{\ln 2}\right)^2\right], \quad y_n(x) = \frac{1}{\sqrt{3+x}} \sin\left(\frac{n\pi \ln(3+x)}{2\ln 2}\right), \quad n = 1, 2, 3, \dots}
+$$
+
+\subsubsection{Caso (e): $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y'(0) = 0 = y(L)$}
+
+Esta es una ecuación de coeficientes constantes. La solución general es:
+$$
+y(x) = A \cos(\lambda x) + B \sin(\lambda x)
+$$
+
+La derivada es:
+$$
+y'(x) = -A\lambda \sin(\lambda x) + B\lambda \cos(\lambda x)
+$$
+
+Aplicando $y'(0) = 0$: $B\lambda = 0 \Rightarrow B = 0$ (asumiendo $\lambda \neq 0$).
+$$
+y(x) = A \cos(\lambda x)
+$$
+
+Aplicando $y(L) = 0$: $\cos(\lambda L) = 0 \Rightarrow \lambda L = \left(n + \frac{1}{2}\right)\pi$, $n = 0, 1, 2, \dots$
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \frac{(2n+1)\pi}{2L}, \quad y_n(x) = \cos\left(\frac{(2n+1)\pi x}{2L}\right), \quad n = 0, 1, 2, \dots}
+$$
+
+\textbf{Nota:} Este es un problema de Sturm-Liouville con condiciones mixtas (Neumann en $x=0$, Dirichlet en $x=L$). El factor de peso es $p(x) = 1$. $\checkmark$
+
+\subsubsection{Caso (f): $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y(0) = 0 = y(L)$}
+
+Este es el problema clásico de la cuerda vibrante con extremos fijos, discutido en la Sección 3.4 del libro de Alonso Sepúlveda.
+
+La solución general es:
+$$
+y(x) = A \cos(\lambda x) + B \sin(\lambda x)
+$$
+
+Aplicando $y(0) = 0$: $A = 0$.
+$$
+y(x) = B \sin(\lambda x)
+$$
+
+Aplicando $y(L) = 0$: $\sin(\lambda L) = 0 \Rightarrow \lambda L = n\pi$, $n = 1, 2, 3, \dots$
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \frac{n\pi}{L}, \quad y_n(x) = \sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, \dots}
+$$
+
+\textbf{Ortogonalidad:} Las autofunciones forman una base ortogonal en $[0, L]$:
+$$
+\int_0^L \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx = \frac{L}{2} \delta_{nm} \quad \checkmark
+$$
+
+\subsubsection{Caso (g): $y'' + \lambda^2 y = 0$, con $0 \leq x \leq L$, $y'(0) = 0 = y'(L)$}
+
+Este es un problema con condiciones de Neumann homogéneas en ambos extremos, correspondiente a una varilla con extremos aislados (Sección 6.2.4 del texto de referencia).
+
+La solución general es:
+$$
+y(x) = A \cos(\lambda x) + B \sin(\lambda x)
+$$
+
+La derivada es:
+$$
+y'(x) = -A\lambda \sin(\lambda x) + B\lambda \cos(\lambda x)
+$$
+
+Aplicando $y'(0) = 0$: $B\lambda = 0$.
+
+\begin{itemize}
+    \item \textbf{Caso $\lambda = 0$:} La solución es $y(x) = A + Bx$. Con $y'(0) = 0$: $B = 0$. Con $y'(L) = 0$: satisfecho automáticamente.
+    $$
+    y_0(x) = A \quad (\text{constante}), \quad \lambda_0 = 0
+    $$
+    
+    \item \textbf{Caso $\lambda \neq 0$:} $B = 0$, entonces $y(x) = A \cos(\lambda x)$.
+    Aplicando $y'(L) = 0$: $-A\lambda \sin(\lambda L) = 0 \Rightarrow \sin(\lambda L) = 0 \Rightarrow \lambda L = n\pi$, $n = 1, 2, 3, \dots$
+\end{itemize}
+
+Por lo tanto:
+$$
+\boxed{\lambda_n = \frac{n\pi}{L}, \quad y_n(x) = \cos\left(\frac{n\pi x}{L}\right), \quad n = 0, 1, 2, \dots}
+$$
+
+\textbf{Nota importante:} A diferencia del caso (f), aquí $n = 0$ está incluido, correspondiendo al autovalor $\lambda_0 = 0$ con autofunción constante. Esto es característico de problemas con condiciones de Neumann puras. $\checkmark$
+
+\subsubsection{Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Caso} & \textbf{Autovalores $\lambda_n$} & \textbf{Autofunciones $y_n(x)$} & \textbf{$n$} \\
+\hline
+(a) & $4 + n^2\pi^2$ & $x^{-2} \sin(n\pi \ln x)$ & $1, 2, 3, \dots$ \\
+\hline
+(b) & $\frac{(a-1)^2}{4} + n^2\pi^2$ & $x^{\frac{1-a}{2}} \sin(n\pi \ln x)$ & $1, 2, 3, \dots$ \\
+\hline
+(c) & $\left(\frac{n\pi}{\ln 2}\right)^2$ & $\sin\left(\frac{n\pi \ln x}{\ln 2}\right)$ & $1, 2, 3, \dots$ \\
+\hline
+(d) & $\frac{1}{4}\left[1 + \left(\frac{n\pi}{\ln 2}\right)^2\right]$ & $\frac{1}{\sqrt{3+x}} \sin\left(\frac{n\pi \ln(3+x)}{2\ln 2}\right)$ & $1, 2, 3, \dots$ \\
+\hline
+(e) & $\frac{(2n+1)\pi}{2L}$ & $\cos\left(\frac{(2n+1)\pi x}{2L}\right)$ & $0, 1, 2, \dots$ \\
+\hline
+(f) & $\frac{n\pi}{L}$ & $\sin\left(\frac{n\pi x}{L}\right)$ & $1, 2, 3, \dots$ \\
+\hline
+(g) & $\frac{n\pi}{L}$ & $\cos\left(\frac{n\pi x}{L}\right)$ & $0, 1, 2, \dots$ \\
+\hline
+\end{tabular}
+\caption{Autovalores y autofunciones para los siete problemas del Problema 4}
+\end{table}
+
+\subsubsection{Análisis Físico y Matemático}
+
+Basados en la teoría de Sturm-Liouville presentada en el Capítulo 6 de Alonso Sepúlveda:
+
+\begin{enumerate}
+    \item \textbf{Existencia de Autovalores Discretos:} Todos los problemas presentan un espectro discreto infinito de autovalores, característico de problemas de Sturm-Liouville regulares en dominios finitos (Sección 6.3.2). $\checkmark$
+    
+    \item \textbf{Ortogonalidad:} Las autofunciones de cada problema son ortogonales con respecto a su factor de peso correspondiente $p(x)$, como se demostró explícitamente para el caso (a).
+    
+    \item \textbf{Condiciones de Frontera:} 
+    \begin{itemize}
+        \item Las condiciones de Dirichlet ($y=0$) eliminan el término en coseno.
+        \item Las condiciones de Neumann ($y'=0$) eliminan el término en seno.
+        \item Las condiciones mixtas producen espectros intermedios (caso e).
+    \end{itemize}
+    
+    \item \textbf{Autovalor Cero:} Solo el caso (g) con condiciones de Neumann puras admite $\lambda_0 = 0$, correspondiendo a una solución constante. Esto es consistente con la discusión en la Sección 6.2.4 sobre hermiticidad y fronteras. $\checkmark$
+    
+    \item \textbf{Ecuaciones de Euler-Cauchy:} Los casos (a), (b), (c) y (d) son ecuaciones de Euler-Cauchy que se transforman en ecuaciones de coeficientes constantes mediante el cambio $x = e^t$ o $u = \ln x$, como se discute en el Ejercicio de la Sección 6.5 del texto de referencia.
+    
+    \item \textbf{Completitud:} Cada conjunto de autofunciones forma una base completa en su respectivo espacio de Hilbert, permitiendo expandir cualquier función de cuadrado integrable que satisfaga las condiciones de frontera (Teorema de la Sección 6.3.2).
+\end{enumerate}
+
+\subsubsection{Verificación de la Teoría de Sturm-Liouville}
+
+Para cada caso, podemos verificar que se cumplen las propiedades fundamentales establecidas en el Capítulo 6:
+
+\begin{itemize}
+    \item \textbf{Realidad de autovalores:} Todos los $\lambda_n$ son reales y positivos (excepto $\lambda_0 = 0$ en el caso g). $\checkmark$
+    
+    \item \textbf{Ortogonalidad:} Para el caso (a), con factor de peso $p(x) = x^3$:
+    $$
+    \int_1^e x^3 y_n(x) y_m(x) dx = \int_1^e \sin(n\pi \ln x) \sin(m\pi \ln x) \frac{dx}{x} = \frac{1}{2} \delta_{nm}
+    $$
+    
+    \item \textbf{Nodos:} La autofunción $y_n(x)$ tiene exactamente $n-1$ ceros en el intervalo abierto, consistente con el Teorema de la Sección 6.5. $\checkmark$
+\end{itemize}
+
+Esta solución confirma que todos los problemas propuestos son problemas regulares de Sturm-Liouville con espectros discretos, autofunciones ortogonales y autovalores reales, tal como se establece en la teoría desarrollada en el Capítulo 6 del libro de Alonso Sepúlveda. $\checkmark$
+
+
+
+\section{Problema 5}
+La ecuación diferencial
+$$
+\rho^2 \ddot{R}(\rho) + \rho \dot{R}(\rho) - \nu^2 R(\rho) = 0,
+$$
+en la que $\nu$ es real, tiene como soluciones (su forma es la de Euler) $R_\nu = \rho^\nu$ y $R_{-\nu} = \rho^{-\nu}$. Muestre que $[qW]_a^b$ no puede ser cero para ninguna elección de $a, b, W(a)$ o $W(b)$. En consecuencia, esta ecuación no genera una base ortogonal. Pruebe que, en efecto, la integral
+$$
+\int_a^b R_\nu R_{\nu'} \, d\rho
+$$
+no se anula para $\nu \neq \nu'$.
+
+\subsection{Solución}
+
+Este problema aborda las condiciones de hermiticidad y ortogonalidad en el contexto de la \textbf{Teoría de Sturm-Liouville}, desarrollada en el \textbf{Capítulo 6} del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda. Específicamente, se relaciona con la Sección 6.2.4 (\textit{Hermiticidad y fronteras}) y el problema discutido al final de la Sección 6.5 (página 222 del texto de referencia).
+
+Para que un operador diferencial genere una base ortogonal de autofunciones, debe ser \textbf{hermítico}. Esto requiere no solo que el operador sea autoadjunto en su forma diferencial, sino también que los términos de frontera se anulen para cualquier par de autofunciones correspondientes a autovalores distintos.
+
+\subsubsection{1. Forma Autoadjunta y Coeficiente $q(\rho)$}
+
+La ecuación dada es una ecuación de Euler-Cauchy:
+$$
+\rho^2 \frac{d^2R}{d\rho^2} + \rho \frac{dR}{d\rho} - \nu^2 R = 0.
+$$
+Para llevarla a la forma de Sturm-Liouville $\frac{d}{d\rho}\left[q(\rho) \frac{dR}{d\rho}\right] + \left[r(\rho) + \lambda p(\rho)\right]R = 0$, dividimos la ecuación por $\rho$:
+$$
+\rho \frac{d^2R}{d\rho^2} + \frac{dR}{d\rho} - \frac{\nu^2}{\rho} R = 0.
+$$
+Observamos que los dos primeros términos forman una derivada exacta:
+$$
+\frac{d}{d\rho}\left(\rho \frac{dR}{d\rho}\right) - \frac{\nu^2}{\rho} R = 0.
+$$
+Identificamos los coeficientes de Sturm-Liouville:
+\begin{itemize}
+    \item $q(\rho) = \rho$
+    \item $r(\rho) = 0$
+    \item El parámetro es $\lambda = \nu^2$, asociado a la función de peso $p(\rho) = -\frac{1}{\rho}$ (o $\frac{1}{\rho}$ si movemos el signo al operador).
+\end{itemize}
+El coeficiente relevante para el término de frontera es $q(\rho) = \rho$. $\checkmark$
+
+\subsubsection{2. Cálculo del Wronskiano}
+
+Las soluciones para dos valores distintos del parámetro $\nu$ y $\nu'$ son:
+$$
+R_\nu(\rho) = \rho^\nu, \quad R_{\nu'}(\rho) = \rho^{\nu'}.
+$$
+El Wronskiano de estas dos soluciones se define como:
+$$
+W(R_\nu, R_{\nu'}) = R_\nu \dot{R}_{\nu'} - \dot{R}_\nu R_{\nu'}.
+$$
+Calculamos las derivadas:
+$$
+\dot{R}_\nu = \nu \rho^{\nu-1}, \quad \dot{R}_{\nu'} = \nu' \rho^{\nu'-1}.
+$$
+Sustituyendo en el Wronskiano:
+\begin{align}
+W(R_\nu, R_{\nu'}) &= \rho^\nu (\nu' \rho^{\nu'-1}) - (\nu \rho^{\nu-1}) \rho^{\nu'} \nonumber \\
+&= \nu' \rho^{\nu+\nu'-1} - \nu \rho^{\nu+\nu'-1} \nonumber \\
+&= (\nu' - \nu) \rho^{\nu+\nu'-1}.
+\end{align}
+
+\subsubsection{3. Análisis del Término de Frontera $[qW]_a^b$}
+
+La condición de hermiticidad para el operador de Sturm-Liouville requiere que el término de frontera se anule:
+$$
+\left[ q(\rho) W(R_\nu, R_{\nu'}) \right]_a^b = 0.
+$$
+Sustituimos $q(\rho) = \rho$ y el Wronskiano calculado:
+\begin{align}
+q(\rho) W(R_\nu, R_{\nu'}) &= \rho \cdot (\nu' - \nu) \rho^{\nu+\nu'-1} \nonumber \\
+&= (\nu' - \nu) \rho^{\nu+\nu'}.
+\end{align}
+Evaluamos en los límites del intervalo $[a, b]$:
+$$
+\left[ qW \right]_a^b = (\nu' - \nu) \left( b^{\nu+\nu'} - a^{\nu+\nu'} \right).
+$$
+Para que el problema sea hermítico, esta expresión debe ser cero para cualesquiera dos autofunciones correspondientes a autovalores distintos. Los autovalores son $\lambda = \nu^2$ y $\lambda' = \nu'^2$. Si los autovalores son distintos ($\nu^2 \neq \nu'^2$), entonces $\nu \neq \nu'$ y $\nu \neq -\nu'$.
+
+\begin{itemize}
+    \item Como $\nu \neq \nu'$, el factor $(\nu' - \nu) \neq 0$.
+    \item Como $\nu \neq -\nu'$, la suma $\nu + \nu' \neq 0$.
+    \item Para un intervalo no trivial con $0 < a < b$, tenemos que $b^{\nu+\nu'} \neq a^{\nu+\nu'}$ (ya que la función potencia es monótona para exponentes reales no nulos).
+\end{itemize}
+
+Por lo tanto:
+$$
+\left[ qW \right]_a^b \neq 0.
+$$
+Esto demuestra que \textbf{no es posible elegir condiciones de frontera $a, b$ que anulen este término para todo el espectro de $\nu$}. En consecuencia, el operador no es hermítico en este dominio y no se garantiza la ortogonalidad de las soluciones. $\checkmark$
+
+\subsubsection{4. Verificación de la No Ortogonalidad}
+
+Para confirmar la consecuencia anterior, calculamos explícitamente la integral del producto de dos soluciones distintas en el intervalo $[a, b]$. El problema solicita probar que la integral sin peso (o con peso unidad, según la redacción) no se anula:
+$$
+I = \int_a^b R_\nu(\rho) R_{\nu'}(\rho) \, d\rho.
+$$
+Sustituimos las soluciones:
+\begin{align}
+I &= \int_a^b \rho^\nu \rho^{\nu'} \, d\rho \nonumber \\
+&= \int_a^b \rho^{\nu+\nu'} \, d\rho.
+\end{align}
+Integrando (asumiendo $\nu + \nu' \neq -1$):
+$$
+I = \left[ \frac{\rho^{\nu+\nu'+1}}{\nu+\nu'+1} \right]_a^b = \frac{b^{\nu+\nu'+1} - a^{\nu+\nu'+1}}{\nu+\nu'+1}.
+$$
+Dado que $\nu$ y $\nu'$ son reales y corresponden a autovalores distintos ($\nu^2 \neq \nu'^2$), el exponente $\nu+\nu'+1$ es generalmente distinto de cero, y para $b > a > 0$, el numerador es no nulo.
+
+Por lo tanto:
+$$
+\int_a^b R_\nu R_{\nu'} \, d\rho \neq 0 \quad \text{para } \nu \neq \nu'.
+$$
+Esto confirma que las soluciones \textbf{no forman una base ortogonal} en el intervalo $[a, b]$ con la medida estándar. $\checkmark$
+
+\textit{Nota:} Incluso si consideráramos la función de peso correcta de Sturm-Liouville $p(\rho) = 1/\rho$, la integral sería:
+$$
+\int_a^b \frac{1}{\rho} \rho^\nu \rho^{\nu'} \, d\rho = \int_a^b \rho^{\nu+\nu'-1} \, d\rho = \frac{b^{\nu+\nu'} - a^{\nu+\nu'}}{\nu+\nu'}.
+$$
+Como $\nu + \nu' \neq 0$ para autovalores distintos ($\nu \neq -\nu'$), esta integral tampocose anula. Esto refuerza la conclusión de que la ecuación de Euler con estas soluciones no genera un sistema ortogonal en un intervalo finito estándar, a diferencia de las ecuaciones de Bessel o Legendre donde las condiciones de frontera o los puntos singulares aseguran la anulación del término $[qW]_a^b$.
+
+\subsubsection{5. Conclusión}
+
+Basados en la teoría del Capítulo 6 de Alonso Sepúlveda:
+\begin{enumerate}
+    \item La ecuación puede escribirse en forma autoadjunta con $q(\rho) = \rho$.
+    \item El término de frontera $[qW]_a^b = (\nu' - \nu)(b^{\nu+\nu'} - a^{\nu+\nu'})$ no se anula para autovalores distintos en un intervalo general $[a, b]$.
+    \item Por lo tanto, el operador no es hermítico bajo estas condiciones.
+    \item La integral de producto $\int_a^b R_\nu R_{\nu'} \, d\rho$ es no nula, confirmando la falta de ortogonalidad. $\checkmark$
+\end{enumerate}
+
+Este resultado ilustra la importancia de las condiciones de frontera y la naturaleza de los puntos singulares (como en $x=0$ para Bessel o $x=\pm 1$ para Legendre) para garantizar la ortogonalidad en problemas de Sturm-Liouville. En este caso de Euler, las soluciones de potencia simple no satisfacen las condiciones necesarias para la ortogonalidad en un intervalo arbitrario.
+
+
+\section{Problema 6}
+Escriba las ecuaciones de funciones especiales en su forma autoadjunta:
+\begin{enumerate}
+    \item[(a)] Bessel: $x^2 y'' + xy' + (k^2 x^2 - n^2)y = 0$
+    \item[(b)] Legendre: $(1 - x^2)y'' - 2xy' + l(l+1)y = 0$
+    \item[(c)] Legendre asociada: $(1 - x^2)y'' - 2xy' + [l(l+1) - \frac{m^2}{1-x^2}]y = 0$
+    \item[(d)] Hermite: $y'' - 2xy' + 2ny = 0$
+    \item[(e)] Laguerre: $xy'' + (1 - x)y' + ny = 0$
+    \item[(f)] Laguerre asociada: $xy'' + (k+1 - x)y' + ny = 0$
+    \item[(g)] Chebyshev (1ª especie): $(1 - x^2)y'' - xy' + n^2y = 0$
+    \item[(h)] Chebyshev (2ª especie): $(1 - x^2)y'' - 3xy' + n(n+2)y = 0$
+    \item[(i)] Hipergeométrica: $x(1 - x)y'' + [c - (a+b+1)x]y' - aby = 0$
+    \item[(j)] Hipergeométrica confluente: $xy'' + (c - x)y' - ay = 0$
+    \item[(k)] Gegenbauer: $(1 - x^2)y'' - 2(1+\beta)xy' + n(n+2\beta+1)y = 0$
+\end{enumerate}
+
+\subsection{Solución}
+
+Este problema aborda la conversión de ecuaciones diferenciales que definen funciones especiales a su \textbf{forma autoadjunta} (o forma de Sturm-Liouville). La teoría subyacente se encuentra desarrollada en el \textbf{Capítulo 6 (Teoría de Sturm-Liouville)}, específicamente en la Sección 6.2.3 (\textit{Teorema}) y la Sección 6.4 (\textit{Funciones especiales}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda (páginas 209-219).
+
+\subsubsection{Marco Teórico}
+
+Una ecuación diferencial lineal de segundo orden de la forma:
+$$
+a_2(x)y'' + a_1(x)y' + a_0(x)y + \lambda y = 0
+$$
+puede convertirse a la forma autoadjunta de Sturm-Liouville:
+$$
+\frac{d}{dx}\left[ q(x) \frac{dy}{dx} \right] + r(x)y + \lambda p(x)y = 0
+$$
+multiplicando por un factor integrante $p(x)$ dado por (Sección 6.2.3, ecuación 6.8):
+$$
+p(x) = \frac{1}{a_2(x)} \exp\left( \int \frac{a_1(x)}{a_2(x)} dx \right)
+$$
+donde $q(x) = p(x)a_2(x)$. A continuación, aplicamos este procedimiento a cada caso, verificando con la tabla resumen de la página 219 del texto de referencia. $\checkmark$
+
+\subsubsection{Desarrollo de los Casos}
+
+\textbf{(a) Ecuación de Bessel}
+$$ x^2 y'' + xy' + (k^2 x^2 - n^2)y = 0 $$
+Identificamos $a_2 = x^2$, $a_1 = x$. El factor integrante es:
+$$ p(x) = \frac{1}{x^2} \exp\left( \int \frac{x}{x^2} dx \right) = \frac{1}{x^2} e^{\ln x} = \frac{1}{x} $$
+Multiplicando la ecuación por $1/x$:
+$$ x y'' + y' + \left( k^2 x - \frac{n^2}{x} \right)y = 0 $$
+Forma autoadjunta:
+$$ \boxed{\frac{d}{dx}\left[ x \frac{dy}{dx} \right] + \left( k^2 x - \frac{n^2}{x} \right)y = 0} $$
+Donde $q(x)=x$, $p(x)=x$, $r(x)=-n^2/x$ y $\lambda = k^2$. $\checkmark$
+
+\textbf{(b) Ecuación de Legendre}
+$$ (1 - x^2)y'' - 2xy' + l(l+1)y = 0 $$
+Identificamos $a_2 = 1 - x^2$, $a_1 = -2x$. Notamos que $a_1 = a_2'$, por lo que ya está en forma autoadjunta con $p(x)=1$.
+Forma autoadjunta:
+$$ \boxed{\frac{d}{dx}\left[ (1 - x^2) \frac{dy}{dx} \right] + l(l+1)y = 0} $$
+Donde $q(x)=1-x^2$, $p(x)=1$, $r(x)=0$ y $\lambda = l(l+1)$. $\checkmark$
+
+\textbf{(c) Ecuación de Legendre Asociada}
+$$ (1 - x^2)y'' - 2xy' + \left[ l(l+1) - \frac{m^2}{1-x^2} \right]y = 0 $$
+Similar al caso anterior, $a_2 = 1 - x^2$, $a_1 = -2x$. Ya está en forma autoadjunta con $p(x)=1$.
+Forma autoadjunta:
+$$ \boxed{\frac{d}{dx}\left[ (1 - x^2) \frac{dy}{dx} \right] + \left[ l(l+1) - \frac{m^2}{1-x^2} \right]y = 0} $$
+Donde $q(x)=1-x^2$, $p(x)=1$, $r(x)=-m^2/(1-x^2)$ y $\lambda = l(l+1)$. $\checkmark$
+
+\textbf{(d) Ecuación de Hermite}
+$$ y'' - 2xy' + 2ny = 0 $$
+Identificamos $a_2 = 1$, $a_1 = -2x$. El factor integrante es:
+$$ p(x) = \frac{1}{1} \exp\left( \int -2x \, dx \right) = e^{-x^2} $$
+Multiplicando por $e^{-x^2}$:
+$$ \boxed{\frac{d}{dx}\left[ e^{-x^2} \frac{dy}{dx} \right] + 2n e^{-x^2} y = 0} $$
+Donde $q(x)=e^{-x^2}$, $p(x)=e^{-x^2}$, $r(x)=0$ y $\lambda = 2n$. $\checkmark$
+
+\textbf{(e) Ecuación de Laguerre}
+$$ xy'' + (1 - x)y' + ny = 0 $$
+Identificamos $a_2 = x$, $a_1 = 1 - x$. El factor integrante es:
+$$ p(x) = \frac{1}{x} \exp\left( \int \frac{1-x}{x} dx \right) = \frac{1}{x} e^{\ln x - x} = e^{-x} $$
+Multiplicando por $e^{-x}$:
+$$ \boxed{\frac{d}{dx}\left[ x e^{-x} \frac{dy}{dx} \right] + n e^{-x} y = 0} $$
+Donde $q(x)=xe^{-x}$, $p(x)=e^{-x}$, $r(x)=0$ y $\lambda = n$. $\checkmark$
+
+\textbf{(f) Ecuación de Laguerre Asociada}
+$$ xy'' + (k+1 - x)y' + ny = 0 $$
+Identificamos $a_2 = x$, $a_1 = k+1 - x$. El factor integrante es:
+$$ p(x) = \frac{1}{x} \exp\left( \int \frac{k+1-x}{x} dx \right) = \frac{1}{x} e^{(k+1)\ln x - x} = x^k e^{-x} $$
+Multiplicando por $x^k e^{-x}$:
+$$ \boxed{\frac{d}{dx}\left[ x^{k+1} e^{-x} \frac{dy}{dx} \right] + n x^k e^{-x} y = 0} $$
+Donde $q(x)=x^{k+1}e^{-x}$, $p(x)=x^k e^{-x}$, $r(x)=0$ y $\lambda = n$. $\checkmark$
+
+\textbf{(g) Ecuación de Chebyshev (1ª especie)}
+$$ (1 - x^2)y'' - xy' + n^2y = 0 $$
+Identificamos $a_2 = 1 - x^2$, $a_1 = -x$. El factor integrante es:
+$$ p(x) = \frac{1}{1-x^2} \exp\left( \int \frac{-x}{1-x^2} dx \right) = \frac{1}{1-x^2} (1-x^2)^{1/2} = (1-x^2)^{-1/2} $$
+Multiplicando por $(1-x^2)^{-1/2}$:
+$$ \boxed{\frac{d}{dx}\left[ (1 - x^2)^{1/2} \frac{dy}{dx} \right] + n^2 (1 - x^2)^{-1/2} y = 0} $$
+Donde $q(x)=(1-x^2)^{1/2}$, $p(x)=(1-x^2)^{-1/2}$, $r(x)=0$ y $\lambda = n^2$. $\checkmark$
+
+\textbf{(h) Ecuación de Chebyshev (2ª especie)}
+$$ (1 - x^2)y'' - 3xy' + n(n+2)y = 0 $$
+Identificamos $a_2 = 1 - x^2$, $a_1 = -3x$. El factor integrante es:
+$$ p(x) = \frac{1}{1-x^2} \exp\left( \int \frac{-3x}{1-x^2} dx \right) = \frac{1}{1-x^2} (1-x^2)^{3/2} = (1-x^2)^{1/2} $$
+Multiplicando por $(1-x^2)^{1/2}$:
+$$ \boxed{\frac{d}{dx}\left[ (1 - x^2)^{3/2} \frac{dy}{dx} \right] + n(n+2) (1 - x^2)^{1/2} y = 0} $$
+Donde $q(x)=(1-x^2)^{3/2}$, $p(x)=(1-x^2)^{1/2}$, $r(x)=0$ y $\lambda = n(n+2)$. $\checkmark$
+
+\textbf{(i) Ecuación Hipergeométrica}
+$$ x(1 - x)y'' + [c - (a+b+1)x]y' - aby = 0 $$
+Identificamos $a_2 = x(1-x)$, $a_1 = c - (a+b+1)x$. El factor integrante es:
+$$ p(x) = \frac{1}{x(1-x)} \exp\left( \int \frac{c - (a+b+1)x}{x(1-x)} dx \right) = x^{c-1} (1-x)^{a+b-c} $$
+Multiplicando por $p(x)$ y notando que $q(x) = p(x)a_2(x) = x^c (1-x)^{a+b-c+1}$:
+$$ \boxed{\frac{d}{dx}\left[ x^c (1 - x)^{a+b-c+1} \frac{dy}{dx} \right] - ab \, x^{c-1} (1 - x)^{a+b-c} y = 0} $$
+$\checkmark$
+
+\textbf{(j) Ecuación Hipergeométrica Confluente}
+$$ xy'' + (c - x)y' - ay = 0 $$
+Identificamos $a_2 = x$, $a_1 = c - x$. El factor integrante es:
+$$ p(x) = \frac{1}{x} \exp\left( \int \frac{c-x}{x} dx \right) = x^{c-1} e^{-x} $$
+Multiplicando por $p(x)$ y notando que $q(x) = x^c e^{-x}$:
+$$ \boxed{\frac{d}{dx}\left[ x^c e^{-x} \frac{dy}{dx} \right] - a \, x^{c-1} e^{-x} y = 0} $$
+Este resultado coincide con la Sección 6.4 del libro de Alonso Sepúlveda (página 218). $\checkmark$
+
+\textbf{(k) Ecuación de Gegenbauer}
+$$ (1 - x^2)y'' - 2(1+\beta)xy' + n(n+2\beta+1)y = 0 $$
+Identificamos $a_2 = 1 - x^2$, $a_1 = -2(1+\beta)x$. El factor integrante es:
+$$ p(x) = \frac{1}{1-x^2} \exp\left( \int \frac{-2(1+\beta)x}{1-x^2} dx \right) = (1-x^2)^{\beta} $$
+Multiplicando por $p(x)$ y notando que $q(x) = (1-x^2)^{\beta+1}$:
+$$ \boxed{\frac{d}{dx}\left[ (1 - x^2)^{\beta+1} \frac{dy}{dx} \right] + n(n+2\beta+1) (1 - x^2)^{\beta} y = 0} $$
+$\checkmark$
+
+\subsubsection{Resumen de Resultados}
+
+La siguiente tabla resume los factores $q(x)$ y de peso $p(x)$ para cada ecuación en forma autoadjunta, de acuerdo con la tabla de la página 219 del texto de referencia:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Ecuación} & \textbf{$q(x)$} & \textbf{Factor de Peso $p(x)$} \\
+\hline
+Bessel & $x$ & $x$ \\
+\hline
+Legendre & $1 - x^2$ & $1$ \\
+\hline
+Legendre Asociada & $1 - x^2$ & $1$ \\
+\hline
+Hermite & $e^{-x^2}$ & $e^{-x^2}$ \\
+\hline
+Laguerre & $x e^{-x}$ & $e^{-x}$ \\
+\hline
+Laguerre Asociada & $x^{k+1} e^{-x}$ & $x^k e^{-x}$ \\
+\hline
+Chebyshev (1ª) & $(1 - x^2)^{1/2}$ & $(1 - x^2)^{-1/2}$ \\
+\hline
+Chebyshev (2ª) & $(1 - x^2)^{3/2}$ & $(1 - x^2)^{1/2}$ \\
+\hline
+Gegenbauer & $(1 - x^2)^{\beta+1}$ & $(1 - x^2)^{\beta}$ \\
+\hline
+\end{tabular}
+\caption{Factores $q(x)$ y de peso $p(x)$ para funciones especiales en forma autoadjunta}
+\end{table}
+
+\subsubsection{Conclusión}
+
+Hemos demostrado que todas las ecuaciones diferenciales que definen las funciones especiales clásicas pueden escribirse en la forma autoadjunta de Sturm-Liouville. Esto garantiza que, bajo las condiciones de frontera apropiadas (discutidas en la Sección 6.2.4 del libro), sus soluciones forman conjuntos ortogonales completos con respecto a sus respectivos factores de peso $p(x)$. Esta propiedad es fundamental para la expansión de funciones en series de funciones especiales, tal como se estudia en el Capítulo 6 de Alonso Sepúlveda. $\checkmark$
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
