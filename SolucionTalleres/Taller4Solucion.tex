@@ -1,0 +1,1462 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 4}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 4 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Problema 1}
+Estudie los dominios de las siguientes ecuaciones diferenciales:
+\begin{enumerate}
+    \item $(x - l)u_{xx} + 2xyu_{xy} - y^2u_{yy} = 0$
+    \item $4y^2u_{xx} - e^{2x}u_{yy} - 4y^2x = 0$
+    \item $x^2u_{xx} + 2xyu_{xy} + y^2u_{yy} = 0$
+    \item $xu_{xx} + yu_{yy} = 0$
+\end{enumerate}
+
+\subsection{Solución}
+
+Para clasificar las ecuaciones diferenciales parciales de segundo orden, utilizamos el discriminante $D = B^2 - 4AC$, donde la ecuación general tiene la forma:
+\begin{equation}
+A\frac{\partial^2 u}{\partial x^2} + B\frac{\partial^2 u}{\partial x \partial y} + C\frac{\partial^2 u}{\partial y^2} + D\frac{\partial u}{\partial x} + E\frac{\partial u}{\partial y} + Fu = G
+\end{equation}
+
+La clasificación es:
+\begin{itemize}
+    \item \textbf{Elíptica:} $D < 0$
+    \item \textbf{Parabólica:} $D = 0$
+    \item \textbf{Hiperbólica:} $D > 0$
+\end{itemize}
+
+\subsubsection{Ecuación 1: $(x - l)u_{xx} + 2xyu_{xy} - y^2u_{yy} = 0$}
+
+Identificamos los coeficientes:
+\begin{align}
+A &= x - l \\
+B &= 2xy \\
+C &= -y^2
+\end{align}
+
+Calculamos el discriminante:
+\begin{align}
+D &= B^2 - 4AC \\
+&= (2xy)^2 - 4(x-l)(-y^2) \\
+&= 4x^2y^2 + 4y^2(x-l) \\
+&= 4y^2[x^2 + x - l]
+\end{align}
+
+\textbf{Análisis del dominio:}
+\begin{itemize}
+    \item \textbf{Región hiperbólica} ($D > 0$): Cuando $y \neq 0$ y $x^2 + x - l > 0$
+    \item \textbf{Región parabólica} ($D = 0$): Cuando $y = 0$ o $x^2 + x - l = 0$
+    \item \textbf{Región elíptica} ($D < 0$): Cuando $y \neq 0$ y $x^2 + x - l < 0$
+\end{itemize}
+
+Las raíces de $x^2 + x - l = 0$ son: $x = \frac{-1 \pm \sqrt{1 + 4l}}{2}$
+
+\subsubsection{Ecuación 2: $4y^2u_{xx} - e^{2x}u_{yy} - 4y^2x = 0$}
+
+Identificamos los coeficientes:
+\begin{align}
+A &= 4y^2 \\
+B &= 0 \\
+C &= -e^{2x}
+\end{align}
+
+Calculamos el discriminante:
+\begin{align}
+D &= B^2 - 4AC \\
+&= 0 - 4(4y^2)(-e^{2x}) \\
+&= 16y^2e^{2x}
+\end{align}
+
+\textbf{Análisis del dominio:}
+\begin{itemize}
+    \item \textbf{Región hiperbólica} ($D > 0$): Para todo $y \neq 0$ (ya que $e^{2x} > 0$ para todo $x$)
+    \item \textbf{Región parabólica} ($D = 0$): Cuando $y = 0$
+    \item \textbf{Región elíptica} ($D < 0$): No existe (el discriminante nunca es negativo)
+\end{itemize}
+
+\subsubsection{Ecuación 3: $x^2u_{xx} + 2xyu_{xy} + y^2u_{yy} = 0$}
+
+Identificamos los coeficientes:
+\begin{align}
+A &= x^2 \\
+B &= 2xy \\
+C &= y^2
+\end{align}
+
+Calculamos el discriminante:
+\begin{align}
+D &= B^2 - 4AC \\
+&= (2xy)^2 - 4(x^2)(y^2) \\
+&= 4x^2y^2 - 4x^2y^2 \\
+&= 0
+\end{align}
+
+\textbf{Análisis del dominio:}
+\begin{itemize}
+    \item \textbf{Región parabólica} ($D = 0$): En todo el dominio $(x, y) \in \mathbb{R}^2$
+    \item Esta ecuación es \textbf{parabólica en todas partes}
+\end{itemize}
+
+\subsubsection{Ecuación 4: $xu_{xx} + yu_{yy} = 0$}
+
+Identificamos los coeficientes:
+\begin{align}
+A &= x \\
+B &= 0 \\
+C &= y
+\end{align}
+
+Calculamos el discriminante:
+\begin{align}
+D &= B^2 - 4AC \\
+&= 0 - 4(x)(y) \\
+&= -4xy
+\end{align}
+
+\textbf{Análisis del dominio:}
+\begin{itemize}
+    \item \textbf{Región hiperbólica} ($D > 0$): Cuando $-4xy > 0$, es decir, cuando $xy < 0$ (segundo y cuarto cuadrantes)
+    \item \textbf{Región parabólica} ($D = 0$): Cuando $x = 0$ o $y = 0$ (sobre los ejes coordenados)
+    \item \textbf{Región elíptica} ($D < 0$): Cuando $-4xy < 0$, es decir, cuando $xy > 0$ (primer y tercer cuadrantes)
+\end{itemize}
+
+\subsubsection{Resumen}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Ecuación} & \textbf{Elíptica} & \textbf{Parabólica} & \textbf{Hiperbólica} \\
+\hline
+1 & $y \neq 0, \, x^2+x-l < 0$ & $y = 0$ o $x^2+x-l = 0$ & $y \neq 0, \, x^2+x-l > 0$ \\
+\hline
+2 & No existe & $y = 0$ & $y \neq 0$ \\
+\hline
+3 & No existe & Todo $\mathbb{R}^2$ & No existe \\
+\hline
+4 & $xy > 0$ & $x = 0$ o $y = 0$ & $xy < 0$ \\
+\hline
+\end{tabular}
+\caption{Clasificación de las ecuaciones diferenciales por dominio}
+\end{table}
+
+\section{Problema 2}
+Determine el potencial electrostático de una placa rectangular semi-infinita, $0 \leq x \leq L$, $0 \leq y < \infty$, con las condiciones $\phi(0, y) = 0 = \phi(L, y)$, $\phi(x, 0) = f(x)$ y $\lim_{y \to \infty} \phi(x, y) = 0$. Además, considere $f(x) = \sin(5\pi x/L)$ y encuentre el campo eléctrico.
+
+\subsection{Solución}
+
+\subsubsection{Planteamiento del problema}
+
+La ecuación que gobierna el potencial electrostático en una región sin cargas es la \textbf{ecuación de Laplace}:
+\begin{equation}
+\nabla^2 \phi(x,y) = \frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = 0
+\end{equation}
+
+Las condiciones de frontera son:
+\begin{enumerate}
+    \item $\phi(0, y) = 0$ (borde izquierdo)
+    \item $\phi(L, y) = 0$ (borde derecho)
+    \item $\phi(x, 0) = f(x)$ (borde inferior)
+    \item $\lim_{y \to \infty} \phi(x, y) = 0$ (comportamiento en el infinito)
+\end{enumerate}
+
+\subsubsection{Método de separación de variables}
+
+Proponemos una solución de la forma:
+\begin{equation}
+\phi(x, y) = X(x)Y(y)
+\end{equation}
+
+Sustituyendo en la ecuación de Laplace:
+\begin{equation}
+X''(x)Y(y) + X(x)Y''(y) = 0
+\end{equation}
+
+Dividiendo por $X(x)Y(y)$:
+\begin{equation}
+\frac{X''(x)}{X(x)} + \frac{Y''(y)}{Y(y)} = 0
+\end{equation}
+
+Como el primer término depende solo de $x$ y el segundo solo de $y$, ambos deben ser iguales a constantes separadas. Definimos la constante de separación $-k^2$:
+\begin{equation}
+\frac{X''(x)}{X(x)} = -k^2 \quad \text{y} \quad \frac{Y''(y)}{Y(y)} = k^2
+\end{equation}
+
+Esto nos da dos ecuaciones diferenciales ordinarias:
+\begin{align}
+X''(x) + k^2 X(x) &= 0 \label{eq:X} \\
+Y''(y) - k^2 Y(y) &= 0 \label{eq:Y}
+\end{align}
+
+\subsubsection{Solución de la ecuación en x}
+
+La ecuación (\ref{eq:X}) tiene solución general:
+\begin{equation}
+X(x) = A \cos(kx) + B \sin(kx)
+\end{equation}
+
+Aplicando las condiciones de frontera en $x$:
+
+\textbf{Condición 1:} $\phi(0, y) = 0 \Rightarrow X(0) = 0$
+\begin{equation}
+X(0) = A \cos(0) + B \sin(0) = A = 0
+\end{equation}
+Por lo tanto, $A = 0$ y $X(x) = B \sin(kx)$.
+
+\textbf{Condición 2:} $\phi(L, y) = 0 \Rightarrow X(L) = 0$
+\begin{equation}
+X(L) = B \sin(kL) = 0
+\end{equation}
+
+Para tener solución no trivial ($B \neq 0$), debemos tener:
+\begin{equation}
+\sin(kL) = 0 \Rightarrow kL = n\pi, \quad n = 1, 2, 3, \ldots
+\end{equation}
+
+Los valores permitidos de $k$ son:
+\begin{equation}
+k_n = \frac{n\pi}{L}, \quad n = 1, 2, 3, \ldots
+\end{equation}
+
+Las autofunciones en $x$ son:
+\begin{equation}
+X_n(x) = \sin\left(\frac{n\pi x}{L}\right)
+\end{equation}
+
+\subsubsection{Solución de la ecuación en y}
+
+La ecuación (\ref{eq:Y}) tiene solución general:
+\begin{equation}
+Y(y) = C e^{ky} + D e^{-ky}
+\end{equation}
+
+O equivalentemente en términos de funciones hiperbólicas:
+\begin{equation}
+Y(y) = C' \cosh(ky) + D' \sinh(ky)
+\end{equation}
+
+\textbf{Condición 4:} $\lim_{y \to \infty} \phi(x, y) = 0$
+
+Para que el potencial se anule en el infinito, debemos eliminar el término que crece exponencialmente. Por lo tanto, $C = 0$ y:
+\begin{equation}
+Y_n(y) = D_n e^{-k_n y} = D_n e^{-n\pi y/L}
+\end{equation}
+
+\subsubsection{Solución general}
+
+La solución general es una superposición lineal de todas las soluciones posibles:
+\begin{equation}
+\phi(x, y) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi x}{L}\right) e^{-n\pi y/L}
+\end{equation}
+
+donde $A_n = B_n D_n$ son coeficientes a determinar.
+
+\subsubsection{Aplicación de la condición en y = 0}
+
+\textbf{Condición 3:} $\phi(x, 0) = f(x)$
+\begin{equation}
+\phi(x, 0) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi x}{L}\right) = f(x)
+\end{equation}
+
+Esta es una serie de Fourier en senos. Los coeficientes $A_n$ se determinan mediante:
+\begin{equation}
+A_n = \frac{2}{L} \int_0^L f(x) \sin\left(\frac{n\pi x}{L}\right) dx
+\end{equation}
+
+\subsubsection{Caso específico: $f(x) = \sin(5\pi x/L)$}
+
+Para este caso particular, sustituimos $f(x)$:
+\begin{equation}
+\sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi x}{L}\right) = \sin\left(\frac{5\pi x}{L}\right)
+\end{equation}
+
+Por ortogonalidad de las funciones seno, podemos identificar directamente los coeficientes. Usando la relación de ortogonalidad:
+\begin{equation}
+\int_0^L \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx = \frac{L}{2} \delta_{nm}
+\end{equation}
+
+Calculamos $A_n$:
+\begin{align}
+A_n &= \frac{2}{L} \int_0^L \sin\left(\frac{5\pi x}{L}\right) \sin\left(\frac{n\pi x}{L}\right) dx \\
+&= \frac{2}{L} \cdot \frac{L}{2} \delta_{n,5} \\
+&= \delta_{n,5}
+\end{align}
+
+Por lo tanto, \textbf{solo el término $n=5$ es no nulo}:
+\begin{equation}
+A_n = \begin{cases}
+1 & \text{si } n = 5 \\
+0 & \text{si } n \neq 5
+\end{cases}
+\end{equation}
+
+\subsubsection{Potencial electrostático}
+
+El potencial electrostático es:
+\begin{equation}
+\boxed{\phi(x, y) = \sin\left(\frac{5\pi x}{L}\right) e^{-5\pi y/L}}
+\end{equation}
+
+\subsubsection{Cálculo del campo eléctrico}
+
+El campo eléctrico se obtiene del gradiente del potencial:
+\begin{equation}
+\vec{E} = -\nabla \phi = -\left(\frac{\partial \phi}{\partial x} \hat{i} + \frac{\partial \phi}{\partial y} \hat{j}\right)
+\end{equation}
+
+\textbf{Componente en x:}
+\begin{align}
+E_x &= -\frac{\partial \phi}{\partial x} \\
+&= -\frac{\partial}{\partial x}\left[\sin\left(\frac{5\pi x}{L}\right) e^{-5\pi y/L}\right] \\
+&= -\frac{5\pi}{L} \cos\left(\frac{5\pi x}{L}\right) e^{-5\pi y/L}
+\end{align}
+
+\textbf{Componente en y:}
+\begin{align}
+E_y &= -\frac{\partial \phi}{\partial y} \\
+&= -\frac{\partial}{\partial y}\left[\sin\left(\frac{5\pi x}{L}\right) e^{-5\pi y/L}\right] \\
+&= -\sin\left(\frac{5\pi x}{L}\right) \left(-\frac{5\pi}{L}\right) e^{-5\pi y/L} \\
+&= \frac{5\pi}{L} \sin\left(\frac{5\pi x}{L}\right) e^{-5\pi y/L}
+\end{align}
+
+\subsubsection{Resultado final del campo eléctrico}
+
+\begin{equation}
+\boxed{\vec{E}(x, y) = \frac{5\pi}{L} e^{-5\pi y/L} \left[-\cos\left(\frac{5\pi x}{L}\right) \hat{i} + \sin\left(\frac{5\pi x}{L}\right) \hat{j}\right]}
+\end{equation}
+
+\subsubsection{Análisis físico}
+
+\begin{itemize}
+    \item \textbf{Comportamiento espacial:} El potencial y el campo decaen exponencialmente con $y$, lo que es consistente con la condición de frontera en el infinito.
+    
+    \item \textbf{Nodos del potencial:} El potencial se anula en $x = 0, L/5, 2L/5, 3L/5, 4L/5, L$ para cualquier $y$.
+    
+    \item \textbf{Magnitud del campo:} En $y = 0$:
+    \begin{equation}
+    |\vec{E}(x, 0)| = \frac{5\pi}{L} \sqrt{\cos^2\left(\frac{5\pi x}{L}\right) + \sin^2\left(\frac{5\pi x}{L}\right)} = \frac{5\pi}{L}
+    \end{equation}
+    
+    \item \textbf{Líneas de campo:} Las líneas de campo eléctrico son perpendiculares a las superficies equipotenciales y apuntan en la dirección de máximo decrecimiento del potencial.
+\end{itemize}
+
+\subsubsection{Verificación de las condiciones de frontera}
+
+\begin{enumerate}
+    \item $\phi(0, y) = \sin(0) e^{-5\pi y/L} = 0$ $\checkmark$
+    \item $\phi(L, y) = \sin(5\pi) e^{-5\pi y/L} = 0$ $\checkmark$ 
+    \item $\phi(x, 0) = \sin(5\pi x/L) e^{0} = \sin(5\pi x/L) = f(x)$ $\checkmark$
+    \item $\lim_{y \to \infty} \phi(x, y) = \sin(5\pi x/L) \cdot 0 = 0$ $\checkmark$
+\end{enumerate}
+
+
+\section{Problema 3}
+Determine los modos normales de oscilación de una membrana rectangular de lados $a$ y $b$, cuyos extremos están fijos.
+
+\subsection{Solución}
+
+Para resolver este problema, nos basamos en la teoría de ondas en membranas presentada en el Capítulo 4, Sección 4.2.2 del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda. Una membrana tensa es un sistema bidimensional que obeyce la ecuación de ondas en dos dimensiones espaciales.
+
+\subsubsection{1. Ecuación Gobernante}
+
+La ecuación diferencial parcial que describe las pequeñas oscilaciones transversales $u(x, y, t)$ de una membrana homogénea, bajo una tensión $T$ y con una densidad superficial de masa $\sigma$, en ausencia de fuerzas externas, es la ecuación de ondas bidimensional:
+
+\begin{equation}
+\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}
+\label{eq:onda2d}
+\end{equation}
+
+donde $v = \sqrt{T/\sigma}$ es la velocidad de propagación de las ondas en la membrana. Esta es una ecuación hiperbólica, tal como se clasifica en la Sección 3.2.1 del texto de referencia.
+
+\subsubsection{2. Condiciones de Frontera}
+
+Dado que los extremos de la membrana rectangular están fijos, el desplazamiento debe ser cero en los bordes del rectángulo definido por $0 \leq x \leq a$ y $0 \leq y \leq b$. Las condiciones de frontera de Dirichlet homogéneas son:
+
+\begin{align}
+u(0, y, t) &= 0, \quad u(a, y, t) = 0 \label{eq:bc_x} \\
+u(x, 0, t) &= 0, \quad u(x, b, t) = 0 \label{eq:bc_y}
+\end{align}
+
+\subsubsection{3. Método de Separación de Variables}
+
+Siguiendo el método expuesto en la Sección 3.2.3 y aplicado específicamente en el Ejercicio de la Sección 4.2.2 (página 143) del libro de Alonso Sepúlveda, proponemos una solución separable de la forma:
+
+\begin{equation}
+u(x, y, t) = X(x) Y(y) T(t)
+\end{equation}
+
+Sustituyendo esta propuesta en la ecuación (\ref{eq:onda2d}) y dividiendo por $X Y T$, obtenemos:
+
+\begin{equation}
+\frac{1}{X} \frac{d^2 X}{d x^2} + \frac{1}{Y} \frac{d^2 Y}{d y^2} = \frac{1}{v^2 T} \frac{d^2 T}{d t^2}
+\end{equation}
+
+El lado izquierdo depende solo de las coordenadas espaciales y el derecho solo del tiempo. Para que la igualdad se cumpla para todo $x, y, t$, ambos lados deben ser iguales a una constante de separación. Para obtener soluciones oscilatorias en el tiempo (modos normales), elegimos una constante negativa $-\omega^2$:
+
+\begin{equation}
+\frac{1}{v^2 T} \frac{d^2 T}{d t^2} = -\omega^2 \quad \Rightarrow \quad \frac{d^2 T}{d t^2} + \omega^2 T = 0
+\end{equation}
+
+La parte espacial queda como:
+
+\begin{equation}
+\frac{1}{X} \frac{d^2 X}{d x^2} + \frac{1}{Y} \frac{d^2 Y}{d y^2} = -\frac{\omega^2}{v^2} = -k^2
+\end{equation}
+
+donde $k = \omega/v$ es el número de onda. Separamos nuevamente las variables espaciales introduciendo constantes $-k_x^2$ y $-k_y^2$ tales que $k^2 = k_x^2 + k_y^2$:
+
+\begin{align}
+\frac{d^2 X}{d x^2} + k_x^2 X &= 0 \label{eq:X} \\
+\frac{d^2 Y}{d y^2} + k_y^2 Y &= 0 \label{eq:Y}
+\end{align}
+
+\subsubsection{4. Solución de las Ecuaciones Espaciales}
+
+Las ecuaciones (\ref{eq:X}) y (\ref{eq:Y}) son ecuaciones diferenciales ordinarias de segundo orden con coeficientes constantes. Sus soluciones generales son combinaciones lineales de senos y cosenos.
+
+\textbf{Para $X(x)$:}
+\begin{equation}
+X(x) = A \cos(k_x x) + B \sin(k_x x)
+\end{equation}
+Aplicando las condiciones de frontera (\ref{eq:bc_x}):
+\begin{itemize}
+    \item $X(0) = 0 \Rightarrow A = 0$.
+    \item $X(a) = 0 \Rightarrow B \sin(k_x a) = 0$. Para solución no trivial ($B \neq 0$), requerimos $\sin(k_x a) = 0$, lo que implica:
+    \begin{equation}
+    k_x a = m \pi \quad \Rightarrow \quad k_x = \frac{m \pi}{a}, \quad m = 1, 2, 3, \dots
+    \end{equation}
+    Las autofunciones son $X_m(x) = \sin\left(\frac{m \pi x}{a}\right)$.
+\end{itemize}
+
+\textbf{Para $Y(y)$:}
+\begin{equation}
+Y(y) = C \cos(k_y y) + D \sin(k_y y)
+\end{equation}
+Aplicando las condiciones de frontera (\ref{eq:bc_y}):
+\begin{itemize}
+    \item $Y(0) = 0 \Rightarrow C = 0$.
+    \item $Y(b) = 0 \Rightarrow D \sin(k_y b) = 0$. Para solución no trivial, $\sin(k_y b) = 0$, lo que implica:
+    \begin{equation}
+    k_y b = n \pi \quad \Rightarrow \quad k_y = \frac{n \pi}{b}, \quad n = 1, 2, 3, \dots
+    \end{equation}
+    Las autofunciones son $Y_n(y) = \sin\left(\frac{n \pi y}{b}\right)$.
+\end{itemize}
+
+\subsubsection{5. Frecuencias Normales y Modos de Oscilación}
+
+La relación de dispersión conecta las constantes de separación con la frecuencia temporal:
+\begin{equation}
+k^2 = k_x^2 + k_y^2 = \frac{\omega^2}{v^2}
+\end{equation}
+Sustituyendo los valores permitidos de $k_x$ y $k_y$, obtenemos las \textbf{frecuencias normales} (autovalores) del sistema:
+
+\begin{equation}
+\omega_{mn} = v \pi \sqrt{\left(\frac{m}{a}\right)^2 + \left(\frac{n}{b}\right)^2}, \quad m, n = 1, 2, 3, \dots
+\end{equation}
+
+La solución temporal correspondiente es $T_{mn}(t) = E_{mn} \cos(\omega_{mn} t) + F_{mn} \sin(\omega_{mn} t)$. Para describir los modos normales, generalmente nos enfocamos en la dependencia espacial y la frecuencia característica.
+
+Los \textbf{modos normales de oscilación} (autofunciones) están dados por:
+
+\begin{equation}
+u_{mn}(x, y, t) = A_{mn} \sin\left(\frac{m \pi x}{a}\right) \sin\left(\frac{n \pi y}{b}\right) \cos(\omega_{mn} t + \phi_{mn})
+\end{equation}
+
+donde $A_{mn}$ y $\phi_{mn}$ son constantes determinadas por las condiciones iniciales (desplazamiento y velocidad inicial de la membrana).
+
+\subsubsection{6. Análisis Físico y Degeneración}
+
+De acuerdo con el análisis presentado en la Sección 4.2.2 del libro de Alonso Sepúlveda (páginas 144-145), podemos extraer las siguientes conclusiones físicas:
+
+\begin{itemize}
+    \item \textbf{Líneas Nodales:} Cada modo $(m, n)$ presenta líneas donde la membrana permanece en reposo ($u=0$) en todo momento. Estas ocurren cuando $\sin(m \pi x/a) = 0$ o $\sin(n \pi y/b) = 0$. Además de los bordes, hay $(m-1)$ líneas nodales paralelas al eje $y$ y $(n-1)$ líneas nodales paralelas al eje $x$.
+    
+    \item \textbf{Modo Fundamental:} Corresponde a $m=1, n=1$. Tiene la frecuencia más baja $\omega_{11}$ y no presenta líneas nodales internas.
+    
+    \item \textbf{Degeneración:} Si la membrana es cuadrada ($a = b$), las frecuencias dependen de $\sqrt{m^2 + n^2}$. Diferentes pares $(m, n)$ pueden producir la misma frecuencia. Por ejemplo, los modos $(1, 2)$ y $(2, 1)$ tienen la misma frecuencia $\omega_{12} = \omega_{21}$. Esto se conoce como degeneración. En este caso, cualquier combinación lineal de las autofunciones degeneradas es también un modo normal con esa frecuencia:
+    \begin{equation}
+    u(x, y, t) = [A \sin\left(\frac{\pi x}{a}\right) \sin\left(\frac{2\pi y}{a}\right) + B \sin\left(\frac{2\pi x}{a}\right) \sin\left(\frac{\pi y}{a}\right)] \cos(\omega_{12} t)
+    \end{equation}
+    Esto puede dar lugar a líneas nodales diagonales o curvas, dependiendo de la razón $B/A$, como se ilustra en las figuras de la sección 4.2.2 del texto de referencia.
+\end{itemize}
+
+\subsubsection{7. Solución General}
+
+Por el principio de superposición (válido para ecuaciones lineales), el movimiento general de la membrana es una suma sobre todos los modos normales posibles:
+
+\begin{equation}
+u(x, y, t) = \sum_{m=1}^{\infty} \sum_{n=1}^{\infty} \sin\left(\frac{m \pi x}{a}\right) \sin\left(\frac{n \pi y}{b}\right) \left[ C_{mn} \cos(\omega_{mn} t) + D_{mn} \sin(\omega_{mn} t) \right]
+\end{equation}
+
+donde los coeficientes $C_{mn}$ y $D_{mn}$ se determinan proyectando las condiciones iniciales $u(x, y, 0)$ y $\dot{u}(x, y, 0)$ sobre la base ortogonal de senos, utilizando la ortogonalidad discutida en el Capítulo 5 del libro de Alonso Sepúlveda.
+
+\subsubsection{Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Cantidad} & \textbf{Expresión} \\
+\hline
+Frecuencias Normales & $\omega_{mn} = \pi v \sqrt{\frac{m^2}{a^2} + \frac{n^2}{b^2}}$ \\
+\hline
+Modos Espaciales & $\psi_{mn}(x, y) = \sin\left(\frac{m \pi x}{a}\right) \sin\left(\frac{n \pi y}{b}\right)$ \\
+\hline
+Números Cuánticos & $m, n \in \{1, 2, 3, \dots\}$ \\
+\hline
+Velocidad de Onda & $v = \sqrt{T/\sigma}$ \\
+\hline
+\end{tabular}
+\caption{Parámetros característicos de los modos normales de una membrana rectangular}
+\end{table}
+
+Esta solución confirma que el espectro de frecuencias es discreto debido a las condiciones de frontera confinantes, un resultado típico de problemas de Sturm-Liouville en dominios finitos, como se estudia en el Capítulo 6 del texto de referencia.
+
+
+\section{Problema 4}
+Se pierde calor desde la superficie lateral de una varilla delgada de longitud $L$ dentro de un medio circundante a temperatura cero. La temperatura inicial de la varilla es $f(x)$ y los extremos están aislados. Si la ecuación de difusión está dada por $\kappa \frac{\partial^2 T}{\partial x^2} - hT = \frac{\partial T}{\partial t}$, con $\kappa, h > 0$, encuentre la distribución de temperatura en la varilla.
+
+\subsection{Solución}
+
+Este problema corresponde a un caso de la \textbf{ecuación de difusión del calor} (o ecuación de Fourier) modificada para incluir pérdidas de calor laterales, tal como se discute en el Capítulo 4, Sección 4.4.1 del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda. La presencia del término $-hT$ modela la ley de enfriamiento de Newton hacia un medio a temperatura cero. Dado que el dominio es finito ($0 \leq x \leq L$) y las condiciones de frontera son homogéneas, utilizaremos el \textbf{método de separación de variables}, detallado en el Capítulo 3, Sección 3.2.3 y aplicado a la ecuación del calor en la Sección 6.7.4.
+
+\subsubsection{1. Planteamiento Matemático}
+
+La ecuación diferencial parcial que gobierna el sistema es:
+\begin{equation}
+\frac{\partial T}{\partial t} = \kappa \frac{\partial^2 T}{\partial x^2} - hT, \quad 0 < x < L, \quad t > 0
+\label{eq:pde}
+\end{equation}
+donde $T(x,t)$ es la temperatura, $\kappa$ es la difusividad térmica y $h$ es el coeficiente de pérdida de calor lateral.
+
+\textbf{Condiciones de Frontera (Neumann Homogéneas):}
+Los extremos están aislados, lo que implica que el flujo de calor a través de los extremos es cero. Según la ley de Fourier, el flujo es proporcional al gradiente de temperatura. Por lo tanto:
+\begin{equation}
+\frac{\partial T}{\partial x}(0, t) = 0, \quad \frac{\partial T}{\partial x}(L, t) = 0, \quad t > 0
+\label{eq:bc}
+\end{equation}
+
+\textbf{Condición Inicial:}
+\begin{equation}
+T(x, 0) = f(x), \quad 0 \leq x \leq L
+\label{eq:ic}
+\end{equation}
+
+\subsubsection{2. Separación de Variables}
+
+Proponemos una solución de la forma producto:
+\begin{equation}
+T(x, t) = X(x)\Theta(t)
+\end{equation}
+Sustituyendo en la ecuación (\ref{eq:pde}):
+\begin{equation}
+X(x)\Theta'(t) = \kappa X''(x)\Theta(t) - hX(x)\Theta(t)
+\end{equation}
+Dividiendo por $X(x)\Theta(t)$ y reorganizando los términos para separar las variables espaciales y temporales:
+\begin{equation}
+\frac{\Theta'(t)}{\Theta(t)} + h = \kappa \frac{X''(x)}{X(x)}
+\end{equation}
+Dado que el lado izquierdo depende solo de $t$ y el derecho solo de $x$, ambos deben ser iguales a una constante de separación. Para asegurar que la temperatura no diverga cuando $t \to \infty$ (comportamiento físico esperado en difusión), elegimos una constante negativa $-\lambda$ (con $\lambda \geq 0$):
+\begin{equation}
+\kappa \frac{X''}{X} = -\lambda \quad \Rightarrow \quad X'' + \frac{\lambda}{\kappa}X = 0
+\label{eq:ode_x}
+\end{equation}
+\begin{equation}
+\frac{\Theta'}{\Theta} + h = -\lambda \quad \Rightarrow \quad \Theta' + (h + \lambda)\Theta = 0
+\label{eq:ode_t}
+\end{equation}
+
+\subsubsection{3. Problema de Sturm-Liouville Espacial}
+
+La ecuación (\ref{eq:ode_x}) junto con las condiciones de frontera derivadas de (\ref{eq:bc}) ($X'(0)=0, X'(L)=0$) constituye un problema de Sturm-Liouville regular, como se estudia en el Capítulo 6 del texto de referencia.
+
+Definimos $k^2 = \lambda/\kappa$. La ecuación es $X'' + k^2 X = 0$.
+
+\textbf{Caso 1: $\lambda < 0$ ($k^2 < 0$)}
+Las soluciones son exponenciales reales. Las condiciones de frontera imponen la solución trivial $X(x)=0$.
+
+\textbf{Caso 2: $\lambda = 0$ ($k = 0$)}
+La ecuación es $X'' = 0$, con solución general $X(x) = Ax + B$.
+\begin{itemize}
+    \item $X'(x) = A$.
+    \item $X'(0) = 0 \Rightarrow A = 0$.
+    \item $X'(L) = 0$ se satisface automáticamente.
+    \item Solución: $X_0(x) = B$ (constante no nula).
+    \item Autovalor: $\lambda_0 = 0$.
+\end{itemize}
+
+\textbf{Caso 3: $\lambda > 0$ ($k^2 > 0$)}
+La solución general es $X(x) = A \cos(kx) + B \sin(kx)$.
+\begin{itemize}
+    \item $X'(x) = -Ak \sin(kx) + Bk \cos(kx)$.
+    \item $X'(0) = 0 \Rightarrow Bk = 0 \Rightarrow B = 0$ (pues $k \neq 0$).
+    \item $X'(L) = -Ak \sin(kL) = 0$. Para solución no trivial ($A \neq 0$), requerimos $\sin(kL) = 0$.
+    \item Esto implica $kL = n\pi$ para $n = 1, 2, 3, \dots$.
+    \item Autovalores: $k_n = \frac{n\pi}{L} \Rightarrow \lambda_n = \kappa \left(\frac{n\pi}{L}\right)^2$.
+    \item Autofunciones: $X_n(x) = \cos\left(\frac{n\pi x}{L}\right)$.
+\end{itemize}
+
+Unificando los casos $n=0$ y $n \geq 1$, los autovalores y autofunciones son:
+\begin{equation}
+\lambda_n = \kappa \left(\frac{n\pi}{L}\right)^2, \quad X_n(x) = \cos\left(\frac{n\pi x}{L}\right), \quad n = 0, 1, 2, \dots
+\end{equation}
+Estas funciones forman una base ortogonal completa en el intervalo $[0, L]$ con peso $p(x)=1$, conforme a la teoría del Capítulo 5 y 6 de Alonso Sepúlveda.
+
+\subsubsection{4. Solución Temporal}
+
+Para cada $\lambda_n$, resolvemos la ecuación (\ref{eq:ode_t}):
+\begin{equation}
+\Theta_n'(t) + (h + \lambda_n)\Theta_n(t) = 0
+\end{equation}
+Cuya solución es:
+\begin{equation}
+\Theta_n(t) = C_n e^{-(h + \lambda_n)t} = C_n e^{-\left[h + \kappa \left(\frac{n\pi}{L}\right)^2\right]t}
+\end{equation}
+Observamos que el término $h$ acelera el decaimiento exponencial de la temperatura debido a las pérdidas laterales.
+
+\subsubsection{5. Solución General y Coeficientes}
+
+Por el principio de superposición (válido para ecuaciones lineales), la solución general es la suma sobre todos los modos normales:
+\begin{equation}
+T(x, t) = \sum_{n=0}^{\infty} A_n \cos\left(\frac{n\pi x}{L}\right) e^{-\left[h + \kappa \left(\frac{n\pi}{L}\right)^2\right]t}
+\end{equation}
+Para determinar los coeficientes $A_n$, aplicamos la condición inicial (\ref{eq:ic}) en $t=0$:
+\begin{equation}
+f(x) = \sum_{n=0}^{\infty} A_n \cos\left(\frac{n\pi x}{L}\right)
+\end{equation}
+Esta es una \textbf{Serie de Fourier de Cosenos}. Utilizando la ortogonalidad de las funciones coseno en $[0, L]$:
+\begin{equation}
+\int_0^L \cos\left(\frac{n\pi x}{L}\right) \cos\left(\frac{m\pi x}{L}\right) dx = \begin{cases} L & \text{si } n=m=0 \\ L/2 & \text{si } n=m \neq 0 \\ 0 & \text{si } n \neq m \end{cases}
+\end{equation}
+
+Los coeficientes se calculan como:
+\begin{itemize}
+    \item Para $n=0$ (temperatura promedio inicial):
+    \begin{equation}
+    A_0 = \frac{1}{L} \int_0^L f(x) dx
+    \end{equation}
+    \item Para $n \geq 1$:
+    \begin{equation}
+    A_n = \frac{2}{L} \int_0^L f(x) \cos\left(\frac{n\pi x}{L}\right) dx
+    \end{equation}
+\end{itemize}
+
+\subsubsection{6. Resultado Final y Análisis Físico}
+
+La distribución de temperatura en la varilla está dada por:
+\begin{equation}
+\boxed{T(x, t) = A_0 e^{-ht} + \sum_{n=1}^{\infty} A_n \cos\left(\frac{n\pi x}{L}\right) e^{-\left[h + \kappa \left(\frac{n\pi}{L}\right)^2\right]t}}
+\end{equation}
+con los coeficientes $A_n$ definidos anteriormente.
+
+\textbf{Análisis físico basado en la teoría de Alonso Sepúlveda:}
+\begin{enumerate}
+    \item \textbf{Decaimiento Exponencial:} A diferencia de la ecuación de calor estándar donde el modo $n=0$ es constante en el tiempo (conservación de energía en extremos aislados), aquí el término $-hT$ provoca que incluso el modo fundamental ($n=0$) decaiga como $e^{-ht}$. Esto refleja la pérdida de energía hacia el medio circundante.
+    \item \textbf{Condiciones de Neumann:} El hecho de que los extremos estén aislados ($\partial T/\partial x = 0$) selecciona naturalmente la base de cosenos, asegurando que el flujo de calor en los bordes sea nulo en todo momento.
+    \item \textbf{Unicidad:} De acuerdo con el Teorema de Unicidad para la ecuación de difusión (Capítulo 2, Sección 2.3.2 del libro), la solución es única dado que se han especificado condiciones de frontera de Neumann homogéneas y una condición inicial bien definida.
+    \item \textbf{Transformación Alternativa:} Nótese que si se hubiera realizado el cambio de variable $T(x,t) = e^{-ht}u(x,t)$, el problema se reduciría a la ecuación de calor estándar $\kappa u_{xx} = u_t$ con las mismas condiciones de frontera. La solución obtenida aquí es consistente con ese enfoque, donde $u(x,t)$ sería la solución de la serie de cosenos estándar y el factor $e^{-ht}$ modula globalmente la temperatura.
+\end{enumerate}
+
+Esta solución describe completamente la evolución térmica de la varilla bajo las condiciones físicas especificadas.
+
+
+\section{Problema 5}
+Considere una cuerda de longitud $L$ con extremos anclados. Se libera desde el reposo con una amplitud de desplazamiento $x(x- L)$. Encuentre la función de onda asociada a dicha configuración.
+
+\subsection{Solución}
+
+Este problema corresponde a la solución de la \textbf{ecuación de ondas unidimensional} para una cuerda vibrante con condiciones de frontera de Dirichlet homogéneas y condiciones iniciales específicas. La teoría subyacente se encuentra desarrollada en el Capítulo 3, Sección 3.4 (\textit{La ecuación de onda unidimensional}) y el Capítulo 4, Sección 4.2.1 (\textit{Ondas en cuerdas}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda.
+
+\subsubsection{1. Planteamiento del Problema}
+
+La ecuación diferencial parcial que gobierna las pequeñas oscilaciones transversales $u(x,t)$ de una cuerda tensa es la ecuación de ondas:
+\begin{equation}
+\frac{\partial^2 u}{\partial x^2} = \frac{1}{v^2} \frac{\partial^2 u}{\partial t^2}, \quad 0 < x < L, \quad t > 0
+\label{eq:onda}
+\end{equation}
+donde $v = \sqrt{T/\mu}$ es la velocidad de propagación de la onda, determinada por la tensión $T$ y la densidad lineal de masa $\mu$ de la cuerda.
+
+\textbf{Condiciones de Frontera (Extremos Anclados):}
+\begin{equation}
+u(0, t) = 0, \quad u(L, t) = 0, \quad t \geq 0
+\label{eq:bc}
+\end{equation}
+
+\textbf{Condiciones Iniciales:}
+\begin{enumerate}
+    \item \textbf{Desplazamiento Inicial:} La cuerda se libera con una forma dada por $f(x) = x(x-L)$.
+    \begin{equation}
+    u(x, 0) = x(x - L), \quad 0 \leq x \leq L
+    \label{eq:ic_u}
+    \end{equation}
+    \item \textbf{Velocidad Inicial:} La cuerda se libera desde el reposo.
+    \begin{equation}
+    \frac{\partial u}{\partial t}(x, 0) = 0, \quad 0 \leq x \leq L
+    \label{eq:ic_v}
+    \end{equation}
+\end{enumerate}
+
+\subsubsection{2. Método de Separación de Variables}
+
+Siguiendo el procedimiento estándar descrito en la Sección 3.2.3 y aplicado en la Sección 3.4 del texto de referencia, proponemos una solución separable de la forma:
+\begin{equation}
+u(x, t) = X(x)T(t)
+\end{equation}
+Sustituyendo en la ecuación (\ref{eq:onda}) y separando variables, obtenemos dos ecuaciones diferenciales ordinarias ligadas por una constante de separación $-k^2$ (elegida negativa para obtener soluciones oscilatorias):
+\begin{align}
+X''(x) + k^2 X(x) &= 0 \label{eq:X_ode} \\
+T''(t) + \omega^2 T(t) &= 0 \label{eq:T_ode}
+\end{align}
+donde $\omega = vk$.
+
+\textbf{Solución Espacial:}
+La solución general de (\ref{eq:X_ode}) es $X(x) = A \cos(kx) + B \sin(kx)$. Aplicando las condiciones de frontera (\ref{eq:bc}):
+\begin{itemize}
+    \item $X(0) = 0 \Rightarrow A = 0$.
+    \item $X(L) = 0 \Rightarrow B \sin(kL) = 0$. Para solución no trivial ($B \neq 0$), requerimos $\sin(kL) = 0$, lo que implica:
+    \begin{equation}
+    k_n = \frac{n\pi}{L}, \quad n = 1, 2, 3, \dots
+    \end{equation}
+    Las autofunciones espaciales (modos normales) son:
+    \begin{equation}
+    X_n(x) = \sin\left(\frac{n\pi x}{L}\right)
+    \end{equation}
+\end{itemize}
+
+\textbf{Solución Temporal:}
+Para cada $k_n$, la frecuencia angular es $\omega_n = v k_n = \frac{n\pi v}{L}$. La solución de (\ref{eq:T_ode}) es:
+\begin{equation}
+T_n(t) = C_n \cos(\omega_n t) + D_n \sin(\omega_n t)
+\end{equation}
+
+\textbf{Solución General por Superposición:}
+Dado que la ecuación de ondas es lineal, la solución general es la suma sobre todos los modos normales posibles (Principio de Superposición, Capítulo 3):
+\begin{equation}
+u(x, t) = \sum_{n=1}^{\infty} \sin\left(\frac{n\pi x}{L}\right) \left[ A_n \cos(\omega_n t) + B_n \sin(\omega_n t) \right]
+\label{eq:general}
+\end{equation}
+donde $A_n$ y $B_n$ son coeficientes constantes a determinar.
+
+\subsubsection{3. Aplicación de las Condiciones Iniciales}
+
+\textbf{Condición de Velocidad Inicial:}
+Derivamos (\ref{eq:general}) respecto al tiempo:
+\begin{equation}
+\frac{\partial u}{\partial t} = \sum_{n=1}^{\infty} \omega_n \sin\left(\frac{n\pi x}{L}\right) \left[ -A_n \sin(\omega_n t) + B_n \cos(\omega_n t) \right]
+\end{equation}
+Evaluando en $t=0$ e igualando a cero (ecuación \ref{eq:ic_v}):
+\begin{equation}
+\frac{\partial u}{\partial t}(x, 0) = \sum_{n=1}^{\infty} \omega_n B_n \sin\left(\frac{n\pi x}{L}\right) = 0
+\end{equation}
+Por la ortogonalidad de las funciones seno, esto implica que $B_n = 0$ para todo $n$. La solución se simplifica a:
+\begin{equation}
+u(x, t) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi x}{L}\right) \cos(\omega_n t)
+\end{equation}
+
+\textbf{Condición de Desplazamiento Inicial:}
+Evaluando en $t=0$ e igualando a $f(x) = x(x-L)$ (ecuación \ref{eq:ic_u}):
+\begin{equation}
+u(x, 0) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi x}{L}\right) = x(x - L)
+\end{equation}
+Esta es una \textbf{Serie de Fourier de Senos}. Los coeficientes $A_n$ se calculan utilizando la ortogonalidad de la base $\{\sin(n\pi x/L)\}$ en el intervalo $[0, L]$ (Capítulo 5, Sección 5.5.1):
+\begin{equation}
+A_n = \frac{2}{L} \int_0^L x(x - L) \sin\left(\frac{n\pi x}{L}\right) dx
+\label{eq:An_integral}
+\end{equation}
+
+\subsubsection{4. Cálculo de los Coeficientes de Fourier}
+
+Desarrollamos la integral en (\ref{eq:An_integral}). Sea $k_n = \frac{n\pi}{L}$.
+\begin{equation}
+I_n = \int_0^L (x^2 - Lx) \sin(k_n x) dx
+\end{equation}
+Utilizamos integración por partes. Sea $u = x^2 - Lx$ y $dv = \sin(k_n x) dx$. Entonces $du = (2x - L)dx$ y $v = -\frac{1}{k_n}\cos(k_n x)$.
+\begin{align}
+I_n &= \left[ -\frac{x^2 - Lx}{k_n} \cos(k_n x) \right]_0^L + \frac{1}{k_n} \int_0^L (2x - L) \cos(k_n x) dx
+\end{align}
+El término evaluado es cero porque $(x^2 - Lx)$ se anula en $x=0$ y $x=L$. Continuamos con la integral restante usando integración por partes nuevamente. Sea $u = 2x - L$ y $dv = \cos(k_n x) dx$. Entonces $du = 2dx$ y $v = \frac{1}{k_n}\sin(k_n x)$.
+\begin{align}
+I_n &= \frac{1}{k_n} \left( \left[ \frac{2x - L}{k_n} \sin(k_n x) \right]_0^L - \frac{2}{k_n} \int_0^L \sin(k_n x) dx \right)
+\end{align}
+El término evaluado es cero porque $\sin(k_n L) = \sin(n\pi) = 0$ y $\sin(0) = 0$. Queda:
+\begin{align}
+I_n &= -\frac{2}{k_n^2} \int_0^L \sin(k_n x) dx = -\frac{2}{k_n^2} \left[ -\frac{1}{k_n} \cos(k_n x) \right]_0^L \\
+&= \frac{2}{k_n^3} [\cos(n\pi) - \cos(0)] = \frac{2}{k_n^3} [(-1)^n - 1]
+\end{align}
+Sustituyendo $k_n = \frac{n\pi}{L}$ en la expresión para $A_n$:
+\begin{align}
+A_n &= \frac{2}{L} I_n = \frac{2}{L} \cdot \frac{2 L^3}{n^3 \pi^3} [(-1)^n - 1] \\
+A_n &= \frac{4 L^2}{n^3 \pi^3} [(-1)^n - 1]
+\end{align}
+
+\textbf{Análisis de los coeficientes:}
+\begin{itemize}
+    \item Si $n$ es \textbf{par}: $(-1)^n - 1 = 1 - 1 = 0 \Rightarrow A_n = 0$.
+    \item Si $n$ es \textbf{impar}: $(-1)^n - 1 = -1 - 1 = -2 \Rightarrow A_n = -\frac{8 L^2}{n^3 \pi^3}$.
+\end{itemize}
+Podemos reindexar la suma usando solo números impares. Sea $n = 2m - 1$ para $m = 1, 2, 3, \dots$.
+
+\subsubsection{5. Resultado Final y Análisis Físico}
+
+La función de onda $u(x,t)$ que describe el desplazamiento de la cuerda es:
+\begin{equation}
+\boxed{u(x, t) = -\frac{8 L^2}{\pi^3} \sum_{m=1}^{\infty} \frac{1}{(2m-1)^3} \sin\left(\frac{(2m-1)\pi x}{L}\right) \cos\left(\frac{(2m-1)\pi v t}{L}\right)}
+\end{equation}
+
+\textbf{Interpretación Física basada en Alonso Sepúlveda (Cap. 3 y 4):}
+\begin{enumerate}
+    \item \textbf{Ondas Estacionarias:} La solución representa una superposición de modos normales de oscilación (ondas estacionarias). Cada término de la suma corresponde a un armónico impar de la frecuencia fundamental $\omega_1 = \frac{\pi v}{L}$.
+    
+    \item \textbf{Simetría:} La ausencia de modos pares ($n=2, 4, \dots$) se debe a la simetría de la condición inicial $f(x) = x(x-L)$ respecto al centro de la cuerda $x=L/2$. La función inicial es simétrica respecto al punto medio (paridad negativa respecto al centro), lo que selecciona solo los modos senoidales que comparten esta simetría (impares).
+    
+    \item \textbf{Convergencia:} Los coeficientes decaen como $1/n^3$. Esto indica una convergencia muy rápida de la serie, lo cual es consistente con el hecho de que la función inicial $f(x)$ es continua y su primera derivada es continua, pero la segunda derivada es constante (no hay discontinuidades en la forma inicial).
+    
+    \item \textbf{Signo Negativo:} El signo global negativo refleja que el desplazamiento inicial $x(x-L)$ es negativo en el intervalo $(0, L)$ (la cuerda se desplaza hacia abajo si definimos positivo hacia arriba), alcanzando un máximo desplazamiento negativo en el centro $x=L/2$.
+    
+    \item \textbf{Unicidad:} De acuerdo con el Teorema de Unicidad para la ecuación de ondas (Capítulo 2, Sección 2.3.3 del libro), esta solución es única dado que se han especificado correctamente las condiciones de frontera de Dirichlet y las condiciones iniciales de Cauchy (desplazamiento y velocidad). $\checkmark$
+\end{enumerate}
+
+Esta solución describe completamente la evolución temporal de la cuerda bajo las condiciones físicas especificadas en el enunciado del Taller 4.
+
+
+\section{Problema 6}
+La ecuación de Schrödinger independiente del tiempo asociada a una partícula sin espín y de masa $m$ está dada por $-\frac{\hbar^2}{2m} \nabla^2\psi + V \psi = E\psi$, donde $V$ es el potencial de interacción y $E$ la energía de la partícula. Resuelva la ecuación de Schrödinger para una partícula libre en una caja de lados $a, b, c$. Discuta su resultado cuando $a = b = c = L$.
+
+\subsection{Solución}
+
+Este problema corresponde a la aplicación de la \textbf{ecuación de Schrödinger independiente del tiempo} para un sistema confinado, un caso fundamental en mecánica cuántica que ilustra la cuantización de la energía debido a condiciones de frontera. La teoría subyacente se encuentra desarrollada en el Capítulo 4, Sección 4.7 (\textit{Ecuación de Schrödinger}) y el Capítulo 3, Sección 3.4 (\textit{La ecuación de onda unidimensional}), así como en el Capítulo 6, Sección 6.3.2 (\textit{El problema de autovalores}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda.
+
+\subsubsection{1. Planteamiento del Problema}
+
+La ecuación de Schrödinger independiente del tiempo para una partícula de masa $m$ en un potencial $V(\mathbf{r})$ es:
+\begin{equation}
+-\frac{\hbar^2}{2m} \nabla^2\psi(\mathbf{r}) + V(\mathbf{r}) \psi(\mathbf{r}) = E\psi(\mathbf{r})
+\label{eq:schrodinger}
+\end{equation}
+donde $\hbar$ es la constante de Planck reducida, $E$ es la energía total (autovalor) y $\psi(\mathbf{r})$ es la función de onda (autofunción).
+
+Para una \textbf{partícula libre en una caja rectangular} de dimensiones $a, b, c$, el potencial se define como:
+\begin{equation}
+V(x, y, z) = \begin{cases} 
+0 & \text{si } 0 < x < a, \, 0 < y < b, \, 0 < z < c \\
+\infty & \text{en cualquier otro caso}
+\end{cases}
+\end{equation}
+Dado que la partícula no puede existir donde el potencial es infinito, la función de onda debe anularse en las paredes y fuera de la caja. Esto impone \textbf{condiciones de frontera de Dirichlet homogéneas}:
+\begin{align}
+\psi(0, y, z) = \psi(a, y, z) &= 0 \label{eq:bc_x} \\
+\psi(x, 0, z) = \psi(x, b, z) &= 0 \label{eq:bc_y} \\
+\psi(x, y, 0) = \psi(x, y, c) &= 0 \label{eq:bc_z}
+\end{align}
+Dentro de la caja ($V=0$), la ecuación (\ref{eq:schrodinger}) se reduce a la \textbf{ecuación de Helmholtz}:
+\begin{equation}
+\nabla^2\psi + k^2\psi = 0, \quad \text{con } k^2 = \frac{2mE}{\hbar^2}
+\label{eq:helmholtz}
+\end{equation}
+
+\subsubsection{2. Separación de Variables}
+
+Siguiendo el método expuesto en el Capítulo 3, Sección 3.3.2 (página 124) de Alonso Sepúlveda, proponemos una solución separable en coordenadas cartesianas:
+\begin{equation}
+\psi(x, y, z) = X(x)Y(y)Z(z)
+\end{equation}
+Sustituyendo en (\ref{eq:helmholtz}) y dividiendo por $\psi = XYZ$:
+\begin{equation}
+\frac{1}{X}\frac{d^2X}{dx^2} + \frac{1}{Y}\frac{d^2Y}{dy^2} + \frac{1}{Z}\frac{d^2Z}{dz^2} = -k^2
+\end{equation}
+Cada término depende de una variable independiente diferente, por lo que cada uno debe ser igual a una constante de separación. Definimos $-k_x^2, -k_y^2, -k_z^2$ tales que $k^2 = k_x^2 + k_y^2 + k_z^2$. Esto genera tres ecuaciones diferenciales ordinarias:
+\begin{align}
+\frac{d^2X}{dx^2} + k_x^2 X &= 0 \label{eq:ode_x} \\
+\frac{d^2Y}{dy^2} + k_y^2 Y &= 0 \label{eq:ode_y} \\
+\frac{d^2Z}{dz^2} + k_z^2 Z &= 0 \label{eq:ode_z}
+\end{align}
+
+\subsubsection{3. Solución de las Ecuaciones Espaciales}
+
+La solución general para la ecuación (\ref{eq:ode_x}) es $X(x) = A \sin(k_x x) + B \cos(k_x x)$. Aplicamos las condiciones de frontera (\ref{eq:bc_x}):
+\begin{itemize}
+    \item $X(0) = 0 \Rightarrow B = 0$.
+    \item $X(a) = 0 \Rightarrow A \sin(k_x a) = 0$. Para solución no trivial ($A \neq 0$), requerimos $\sin(k_x a) = 0$, lo que implica:
+    \begin{equation}
+    k_x a = l\pi \quad \Rightarrow \quad k_x = \frac{l\pi}{a}, \quad l = 1, 2, 3, \dots
+    \end{equation}
+\end{itemize}
+Análogamente para $Y(y)$ y $Z(z)$ con las condiciones (\ref{eq:bc_y}) y (\ref{eq:bc_z}):
+\begin{equation}
+k_y = \frac{n\pi}{b}, \quad n = 1, 2, 3, \dots \quad \text{y} \quad k_z = \frac{p\pi}{c}, \quad p = 1, 2, 3, \dots
+\end{equation}
+Las autofunciones normalizadas (usando la ortogonalidad de senos discutida en el Capítulo 5, Sección 5.5.1) son:
+\begin{equation}
+\psi_{lnp}(x, y, z) = \sqrt{\frac{8}{abc}} \sin\left(\frac{l\pi x}{a}\right) \sin\left(\frac{n\pi y}{b}\right) \sin\left(\frac{p\pi z}{c}\right)
+\end{equation}
+La normalización asegura que $\int_0^a \int_0^b \int_0^c |\psi|^2 dx dy dz = 1$. $\checkmark$
+
+\subsubsection{4. Cuantización de la Energía}
+
+Sustituimos los valores permitidos de $k_x, k_y, k_z$ en la relación de dispersión $k^2 = k_x^2 + k_y^2 + k_z^2 = \frac{2mE}{\hbar^2}$:
+\begin{equation}
+\frac{2mE}{\hbar^2} = \pi^2 \left( \frac{l^2}{a^2} + \frac{n^2}{b^2} + \frac{p^2}{c^2} \right)
+\end{equation}
+Despejando la energía, obtenemos los \textbf{niveles de energía cuantizados}:
+\begin{equation}
+\boxed{E_{lnp} = \frac{\pi^2 \hbar^2}{2m} \left( \frac{l^2}{a^2} + \frac{n^2}{b^2} + \frac{p^2}{c^2} \right)}, \quad l, n, p \in \mathbb{Z}^+
+\end{equation}
+Este resultado coincide exactamente con el problema propuesto al final de la Sección 3.4 (página 135) del texto de Alonso Sepúlveda.
+
+\subsubsection{5. Caso Especial: Caja Cúbica ($a = b = c = L$)}
+
+Cuando la caja es un cubo de lado $L$, la expresión para la energía se simplifica a:
+\begin{equation}
+E_{lnp} = \frac{\pi^2 \hbar^2}{2mL^2} \left( l^2 + n^2 + p^2 \right)
+\label{eq:energy_cube}
+\end{equation}
+La función de onda correspondiente es:
+\begin{equation}
+\psi_{lnp}(x, y, z) = \sqrt{\frac{8}{L^3}} \sin\left(\frac{l\pi x}{L}\right) \sin\left(\frac{n\pi y}{L}\right) \sin\left(\frac{p\pi z}{L}\right)
+\end{equation}
+
+\subsubsection{6. Discusión: Degeneración de Niveles}
+
+Un fenómeno físico crucial que surge en el caso cúbico es la \textbf{degeneración}, discutida en el Capítulo 6, Sección 6.3.2 (página 216) de Alonso Sepúlveda.
+
+\begin{itemize}
+    \item \textbf{Definición:} Decimos que un nivel de energía está degenerado si diferentes estados cuánticos (diferentes tripletas $(l, n, p)$) corresponden al mismo valor de energía.
+    
+    \item \textbf{Análisis:} En la ecuación (\ref{eq:energy_cube}), la energía depende de la suma $S = l^2 + n^2 + p^2$. Diferentes combinaciones de enteros pueden producir la misma suma.
+    \begin{itemize}
+        \item \textbf{Estado Fundamental:} $(l, n, p) = (1, 1, 1)$. Suma $S = 3$. Energía $E_{111} = \frac{3\pi^2 \hbar^2}{2mL^2}$. No hay otra combinación de enteros positivos que sume 3. El estado fundamental es \textbf{no degenerado}.
+        
+        \item \textbf{Primer Estado Excitado:} Consideremos las tripletas $(2, 1, 1)$, $(1, 2, 1)$ y $(1, 1, 2)$.
+        \begin{align}
+        S_{211} &= 2^2 + 1^2 + 1^2 = 6 \\
+        S_{121} &= 1^2 + 2^2 + 1^2 = 6 \\
+        S_{112} &= 1^2 + 1^2 + 2^2 = 6
+        \end{align}
+        Todas producen la misma energía $E = \frac{6\pi^2 \hbar^2}{2mL^2}$. Sin embargo, las funciones de onda $\psi_{211}, \psi_{121}, \psi_{112}$ son distintas (tienen orientaciones espaciales diferentes). Por lo tanto, este nivel de energía tiene una \textbf{degeneración de orden 3}.
+    \end{itemize}
+    
+    \item \textbf{Ruptura de Degeneración:} Si perturbamos el sistema cambiando ligeramente las dimensiones (haciendo $a \neq b \neq c$), los términos $\frac{l^2}{a^2}, \frac{n^2}{b^2}, \frac{p^2}{c^2}$ ya no serán intercambiables sin cambiar el valor total. La degeneración se \textit{rompe} y el nivel único se divide en varios niveles cercanos. Esto es análogo al efecto Zeeman mencionado en la Sección 6.3.2 (página 217) para el átomo de hidrógeno.
+\end{itemize}
+
+\subsubsection{7. Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Cantidad} & \textbf{Caja Rectangular} & \textbf{Caja Cúbica} \\
+\hline
+Energía & $\frac{\pi^2 \hbar^2}{2m} \left( \frac{l^2}{a^2} + \frac{n^2}{b^2} + \frac{p^2}{c^2} \right)$ & $\frac{\pi^2 \hbar^2}{2mL^2} (l^2 + n^2 + p^2)$ \\
+\hline
+Números Cuánticos & $l, n, p \in \{1, 2, 3, \dots\}$ & $l, n, p \in \{1, 2, 3, \dots\}$ \\
+\hline
+Degeneración & Generalmente no degenerado & Frecuentemente degenerado \\
+\hline
+\end{tabular}
+\caption{Comparación de niveles de energía para partícula en caja}
+\end{table}
+
+Esta solución confirma que el confinamiento espacial en un dominio finito (condiciones de frontera homogéneas) conduce naturalmente a un espectro discreto de autovalores de energía, un resultado central de la teoría de Sturm-Liouville aplicada a la mecánica cuántica (Capítulo 6, Alonso Sepúlveda). $\checkmark$
+
+
+
+\section{Problema 7}
+Considere una placa conductora de calor semi-infinita de ancho $b$ que se extiende a lo largo del eje $x$ positivo, con una esquina en $(0, 0)$ y la otra en $(0, b)$. El lado de ancho $b$ se mantiene a una temperatura $T = f(y)$, y los dos lados largos se mantienen a temperatura $T = 0$. Las dos caras planas están aisladas y la placa se encuentra en equilibrio térmico.
+
+\begin{enumerate}
+    \item[(a)] Encuentre la distribución de temperatura en la placa para todo punto $(x, y)$.
+    \item[(b)] Especialice al caso en que el lado de ancho $b$ se mantiene a temperatura constante $T_0$.
+\end{enumerate}
+
+\subsection{Solución}
+
+Este problema corresponde a la solución de la \textbf{ecuación de Laplace} en dos dimensiones para un dominio semi-infinito con condiciones de frontera de Dirichlet. La teoría subyacente se encuentra desarrollada en el Capítulo 3, Sección 3.3.1 (\textit{Coordenadas cartesianas en 2D}) y el Capítulo 4, Sección 4.4.1 (\textit{Ley de Fourier de difusión del calor}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda.
+
+\subsubsection{1. Planteamiento del Problema}
+
+Dado que la placa está en \textbf{equilibrio térmico}, la temperatura no depende del tiempo ($\partial T/\partial t = 0$). La ecuación de difusión del calor se reduce a la ecuación de Laplace:
+
+\begin{equation}
+\nabla^2 T(x,y) = \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} = 0, \quad 0 < x < \infty, \quad 0 < y < b
+\label{eq:laplace}
+\end{equation}
+
+\textbf{Condiciones de Frontera:}
+\begin{enumerate}
+    \item $T(0, y) = f(y)$ (borde en $x = 0$)
+    \item $T(x, 0) = 0$ (borde inferior en $y = 0$)
+    \item $T(x, b) = 0$ (borde superior en $y = b$)
+    \item $\lim_{x \to \infty} T(x, y) = 0$ (comportamiento en el infinito)
+\end{enumerate}
+
+\subsubsection{2. Método de Separación de Variables}
+
+Siguiendo el procedimiento expuesto en la Sección 3.3.1 del texto de referencia (páginas 119-122), proponemos una solución separable de la forma:
+
+\begin{equation}
+T(x, y) = X(x)Y(y)
+\end{equation}
+
+Sustituyendo en la ecuación (\ref{eq:laplace}) y dividiendo por $XY$:
+
+\begin{equation}
+\frac{1}{X}\frac{d^2X}{dx^2} + \frac{1}{Y}\frac{d^2Y}{dy^2} = 0
+\end{equation}
+
+Cada término debe ser igual a una constante de separación. Para obtener soluciones que satisfagan las condiciones de frontera en $y$ (que son homogéneas), elegimos $-k^2$:
+
+\begin{align}
+\frac{1}{Y}\frac{d^2Y}{dy^2} &= -k^2 \quad \Rightarrow \quad Y'' + k^2 Y = 0 \label{eq:Y_ode} \\
+\frac{1}{X}\frac{d^2X}{dx^2} &= k^2 \quad \Rightarrow \quad X'' - k^2 X = 0 \label{eq:X_ode}
+\end{align}
+
+\subsubsection{3. Solución de la Ecuación en $y$}
+
+La ecuación (\ref{eq:Y_ode}) tiene solución general:
+
+\begin{equation}
+Y(y) = A \cos(ky) + B \sin(ky)
+\end{equation}
+
+Aplicando las condiciones de frontera en $y$:
+
+\textbf{Condición 2:} $T(x, 0) = 0 \Rightarrow Y(0) = 0$
+\begin{equation}
+Y(0) = A \cos(0) + B \sin(0) = A = 0
+\end{equation}
+Por lo tanto, $A = 0$ y $Y(y) = B \sin(ky)$.
+
+\textbf{Condición 3:} $T(x, b) = 0 \Rightarrow Y(b) = 0$
+\begin{equation}
+Y(b) = B \sin(kb) = 0
+\end{equation}
+
+Para tener solución no trivial ($B \neq 0$), debemos tener:
+\begin{equation}
+\sin(kb) = 0 \quad \Rightarrow \quad kb = n\pi, \quad n = 1, 2, 3, \ldots
+\end{equation}
+
+Los valores permitidos de $k$ son:
+\begin{equation}
+k_n = \frac{n\pi}{b}, \quad n = 1, 2, 3, \ldots
+\end{equation}
+
+Las autofunciones en $y$ son:
+\begin{equation}
+Y_n(y) = \sin\left(\frac{n\pi y}{b}\right)
+\end{equation}
+
+\subsubsection{4. Solución de la Ecuación en $x$}
+
+Para cada $k_n$, la ecuación (\ref{eq:X_ode}) tiene solución general:
+
+\begin{equation}
+X_n(x) = C_n e^{k_n x} + D_n e^{-k_n x} = C_n e^{n\pi x/b} + D_n e^{-n\pi x/b}
+\end{equation}
+
+\textbf{Condición 4:} $\lim_{x \to \infty} T(x, y) = 0$
+
+Para que la temperatura se anule en el infinito, debemos eliminar el término que crece exponencialmente. Por lo tanto, $C_n = 0$ y:
+
+\begin{equation}
+X_n(x) = D_n e^{-n\pi x/b}
+\end{equation}
+
+\subsubsection{5. Solución General}
+
+Por el principio de superposición (válido para ecuaciones lineales), la solución general es una suma sobre todos los modos normales posibles:
+
+\begin{equation}
+T(x, y) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}
+\label{eq:general}
+\end{equation}
+
+donde $A_n$ son coeficientes constantes a determinar.
+
+\subsubsection{6. Aplicación de la Condición en $x = 0$}
+
+\textbf{Condición 1:} $T(0, y) = f(y)$
+
+Evaluando (\ref{eq:general}) en $x = 0$:
+
+\begin{equation}
+T(0, y) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi y}{b}\right) = f(y)
+\end{equation}
+
+Esta es una \textbf{Serie de Fourier de Senos}. Los coeficientes $A_n$ se determinan mediante la ortogonalidad de las funciones seno en el intervalo $[0, b]$ (Capítulo 5, Sección 5.5.1):
+
+\begin{equation}
+A_n = \frac{2}{b} \int_0^b f(y) \sin\left(\frac{n\pi y}{b}\right) dy
+\label{eq:An}
+\end{equation}
+
+\subsubsection{7. Resultado para el Caso General (Parte a)}
+
+La distribución de temperatura en la placa está dada por:
+
+\begin{equation}
+\boxed{T(x, y) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}}
+\end{equation}
+
+con los coeficientes:
+
+\begin{equation}
+\boxed{A_n = \frac{2}{b} \int_0^b f(y) \sin\left(\frac{n\pi y}{b}\right) dy}
+\end{equation}
+
+\subsubsection{8. Caso Especial: $f(y) = T_0$ (Parte b)}
+
+Para el caso en que el borde en $x = 0$ se mantiene a temperatura constante $T_0$, sustituimos $f(y) = T_0$ en la ecuación (\ref{eq:An}):
+
+\begin{align}
+A_n &= \frac{2}{b} \int_0^b T_0 \sin\left(\frac{n\pi y}{b}\right) dy \\
+&= \frac{2T_0}{b} \left[-\frac{b}{n\pi} \cos\left(\frac{n\pi y}{b}\right)\right]_0^b \\
+&= \frac{2T_0}{n\pi} \left[-\cos(n\pi) + \cos(0)\right] \\
+&= \frac{2T_0}{n\pi} \left[1 - (-1)^n\right]
+\end{align}
+
+\textbf{Análisis de los coeficientes:}
+\begin{itemize}
+    \item Si $n$ es \textbf{par}: $1 - (-1)^n = 1 - 1 = 0 \Rightarrow A_n = 0$
+    \item Si $n$ es \textbf{impar}: $1 - (-1)^n = 1 - (-1) = 2 \Rightarrow A_n = \frac{4T_0}{n\pi}$
+\end{itemize}
+
+Podemos reindexar la suma usando solo números impares. Sea $n = 2m - 1$ para $m = 1, 2, 3, \ldots$:
+
+\begin{equation}
+A_{2m-1} = \frac{4T_0}{(2m-1)\pi}
+\end{equation}
+
+\subsubsection{9. Resultado Final para Temperatura Constante}
+
+La distribución de temperatura cuando $f(y) = T_0$ es:
+
+\begin{equation}
+\boxed{T(x, y) = \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin\left(\frac{(2m-1)\pi y}{b}\right) e^{-(2m-1)\pi x/b}}
+\end{equation}
+
+\subsubsection{10. Análisis Físico}
+
+\begin{itemize}
+    \item \textbf{Decaimiento Exponencial:} La temperatura decae exponencialmente con $x$, lo que es consistente con la condición de frontera en el infinito. Los modos de mayor $n$ decaen más rápidamente.
+    
+    \item \textbf{Simetría:} Solo aparecen los modos impares debido a la simetría de la condición inicial $f(y) = T_0$ respecto al centro de la placa $y = b/2$.
+    
+    \item \textbf{Líneas Isotermas:} Las líneas de temperatura constante son curvas que se acercan a $y = 0$ y $y = b$ a medida que $x$ aumenta, reflejando el enfriamiento de la placa.
+    
+    \item \textbf{Flujo de Calor:} El flujo de calor $\vec{J} = -k\nabla T$ (Ley de Fourier) apunta principalmente en la dirección $+x$, alejándose del borde caliente hacia el infinito frío.
+    
+    \item \textbf{Convergencia:} La serie converge rápidamente para $x > 0$ debido al factor exponencial. En $x = 0$, la convergencia es más lenta (como $1/n$), característico de la discontinuidad en las esquinas $(0,0)$ y $(0,b)$.
+\end{itemize}
+
+\subsubsection{11. Verificación de las Condiciones de Frontera}
+
+\begin{enumerate}
+    \item $T(0, y) = \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin\left(\frac{(2m-1)\pi y}{b}\right) = T_0$ $\checkmark$ (Serie de Fourier de una constante)
+    
+    \item $T(x, 0) = \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin(0) e^{-(2m-1)\pi x/b} = 0$ $\checkmark$
+    
+    \item $T(x, b) = \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin((2m-1)\pi) e^{-(2m-1)\pi x/b} = 0$ $\checkmark$
+    
+    \item $\lim_{x \to \infty} T(x, y) = \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin\left(\frac{(2m-1)\pi y}{b}\right) \cdot 0 = 0$ $\checkmark$
+\end{enumerate}
+
+Todas las condiciones de frontera están satisfechas, confirmando la validez de la solución obtenida.
+
+\subsubsection{12. Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Caso} & \textbf{Distribución de Temperatura} \\
+\hline
+General $f(y)$ & $\displaystyle \sum_{n=1}^{\infty} \left[\frac{2}{b}\int_0^b f(y')\sin\left(\frac{n\pi y'}{b}\right)dy'\right] \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}$ \\
+\hline
+Constante $T_0$ & $\displaystyle \frac{4T_0}{\pi} \sum_{m=1}^{\infty} \frac{1}{2m-1} \sin\left(\frac{(2m-1)\pi y}{b}\right) e^{-(2m-1)\pi x/b}$ \\
+\hline
+\end{tabular}
+\caption{Soluciones para la placa semi-infinita}
+\end{table}
+
+Esta solución confirma que el problema de Laplace en un dominio semi-infinito con condiciones de Dirichlet homogéneas en los bordes laterales tiene una solución única, como se discute en el Capítulo 2, Sección 2.3.1 del texto de Alonso Sepúlveda. $\checkmark$
+
+\section{Problema 8}
+Repita el problema anterior con la temperatura del lado corto mantenida en cada uno de los siguientes casos:
+\begin{enumerate}
+    \item[(a)] $T = \begin{cases} 0 & \text{si } 0 < y < b/2 \\ T_0 & \text{si } b/2 < y < b \end{cases}$
+    \item[(b)] $T = \frac{T_0}{b} y, \quad 0 \leq y \leq b$
+    \item[(c)] $T = T_0 \cos\left(\frac{\pi y}{b}\right), \quad 0 \leq y \leq b$
+    \item[(d)] $T = T_0 \sin\left(\frac{\pi y}{b}\right), \quad 0 \leq y \leq b$
+\end{enumerate}
+
+\subsection{Solución}
+
+Este problema corresponde a una variación del \textbf{Problema 7} del Taller 4, donde estudiamos la distribución de temperatura en una placa semi-infinita en equilibrio térmico. La teoría subyacente se encuentra en el Capítulo 3, Sección 3.3.1 (\textit{Coordenadas cartesianas en 2D}) y el Capítulo 4, Sección 4.4.1 (\textit{Ley de Fourier de difusión del calor}) del libro \textit{Lecciones de Física Matemática} de Alonso Sepúlveda.
+
+\subsubsection{1. Solución General del Problema 7}
+
+Para una placa semi-infinita de ancho $b$ que se extiende a lo largo del eje $x$ positivo, con las condiciones de frontera:
+\begin{itemize}
+    \item $T(x, 0) = 0$ (borde inferior)
+    \item $T(x, b) = 0$ (borde superior)
+    \item $\lim_{x \to \infty} T(x, y) = 0$ (comportamiento en el infinito)
+    \item $T(0, y) = f(y)$ (borde en $x = 0$)
+\end{itemize}
+
+La solución general obtenida en el Problema 7 es:
+\begin{equation}
+T(x, y) = \sum_{n=1}^{\infty} A_n \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}
+\label{eq:solucion_general}
+\end{equation}
+
+donde los coeficientes $A_n$ se determinan mediante la serie de Fourier de senos:
+\begin{equation}
+A_n = \frac{2}{b} \int_0^b f(y) \sin\left(\frac{n\pi y}{b}\right) dy
+\label{eq:coeficientes}
+\end{equation}
+
+Ahora calcularemos los coeficientes $A_n$ para cada uno de los cuatro casos propuestos.
+
+\subsubsection{2. Caso (a): Temperatura Escalón}
+
+\begin{equation}
+f(y) = \begin{cases} 0 & \text{si } 0 < y < b/2 \\ T_0 & \text{si } b/2 < y < b \end{cases}
+\end{equation}
+
+Sustituyendo en la ecuación (\ref{eq:coeficientes}):
+\begin{align}
+A_n &= \frac{2}{b} \left[ \int_0^{b/2} 0 \cdot \sin\left(\frac{n\pi y}{b}\right) dy + \int_{b/2}^b T_0 \sin\left(\frac{n\pi y}{b}\right) dy \right] \\
+&= \frac{2T_0}{b} \int_{b/2}^b \sin\left(\frac{n\pi y}{b}\right) dy \\
+&= \frac{2T_0}{b} \left[ -\frac{b}{n\pi} \cos\left(\frac{n\pi y}{b}\right) \right]_{b/2}^b \\
+&= \frac{2T_0}{n\pi} \left[ -\cos(n\pi) + \cos\left(\frac{n\pi}{2}\right) \right] \\
+&= \frac{2T_0}{n\pi} \left[ -(-1)^n + \cos\left(\frac{n\pi}{2}\right) \right]
+\end{align}
+
+\textbf{Análisis de los coeficientes:}
+\begin{itemize}
+    \item Para $n = 1$: $A_1 = \frac{2T_0}{\pi} [1 + 0] = \frac{2T_0}{\pi}$
+    \item Para $n = 2$: $A_2 = \frac{2T_0}{2\pi} [-1 + (-1)] = -\frac{2T_0}{\pi}$
+    \item Para $n = 3$: $A_3 = \frac{2T_0}{3\pi} [1 + 0] = \frac{2T_0}{3\pi}$
+    \item Para $n = 4$: $A_4 = \frac{2T_0}{4\pi} [-1 + 1] = 0$
+\end{itemize}
+
+En general:
+\begin{equation}
+A_n = \begin{cases}
+\frac{2T_0}{n\pi} & \text{si } n = 1, 3, 5, \ldots \text{ (impar)} \\
+-\frac{2T_0}{n\pi} & \text{si } n = 2, 6, 10, \ldots \text{ ($n = 4k-2$)} \\
+0 & \text{si } n = 4, 8, 12, \ldots \text{ ($n = 4k$)}
+\end{cases}
+\end{equation}
+
+La distribución de temperatura es:
+\begin{equation}
+\boxed{T(x, y) = \frac{2T_0}{\pi} \sum_{n=1}^{\infty} \frac{1}{n} \left[ \cos\left(\frac{n\pi}{2}\right) - (-1)^n \right] \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}}
+\end{equation}
+
+\subsubsection{3. Caso (b): Temperatura Lineal}
+
+\begin{equation}
+f(y) = \frac{T_0}{b} y, \quad 0 \leq y \leq b
+\end{equation}
+
+Sustituyendo en la ecuación (\ref{eq:coeficientes}):
+\begin{align}
+A_n &= \frac{2}{b} \int_0^b \frac{T_0}{b} y \sin\left(\frac{n\pi y}{b}\right) dy \\
+&= \frac{2T_0}{b^2} \int_0^b y \sin\left(\frac{n\pi y}{b}\right) dy
+\end{align}
+
+Usando integración por partes con $u = y$ y $dv = \sin\left(\frac{n\pi y}{b}\right) dy$:
+\begin{align}
+\int_0^b y \sin\left(\frac{n\pi y}{b}\right) dy &= \left[ -\frac{b}{n\pi} y \cos\left(\frac{n\pi y}{b}\right) \right]_0^b + \frac{b}{n\pi} \int_0^b \cos\left(\frac{n\pi y}{b}\right) dy \\
+&= -\frac{b^2}{n\pi} \cos(n\pi) + \frac{b}{n\pi} \left[ \frac{b}{n\pi} \sin\left(\frac{n\pi y}{b}\right) \right]_0^b \\
+&= -\frac{b^2}{n\pi} (-1)^n + 0 \\
+&= \frac{b^2}{n\pi} (-1)^{n+1}
+\end{align}
+
+Por lo tanto:
+\begin{equation}
+A_n = \frac{2T_0}{b^2} \cdot \frac{b^2}{n\pi} (-1)^{n+1} = \frac{2T_0}{n\pi} (-1)^{n+1}
+\end{equation}
+
+La distribución de temperatura es:
+\begin{equation}
+\boxed{T(x, y) = \frac{2T_0}{\pi} \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}}
+\end{equation}
+
+\subsubsection{4. Caso (c): Temperatura Coseno}
+
+\begin{equation}
+f(y) = T_0 \cos\left(\frac{\pi y}{b}\right), \quad 0 \leq y \leq b
+\end{equation}
+
+Sustituyendo en la ecuación (\ref{eq:coeficientes}):
+\begin{align}
+A_n &= \frac{2}{b} \int_0^b T_0 \cos\left(\frac{\pi y}{b}\right) \sin\left(\frac{n\pi y}{b}\right) dy \\
+&= \frac{2T_0}{b} \int_0^b \cos\left(\frac{\pi y}{b}\right) \sin\left(\frac{n\pi y}{b}\right) dy
+\end{align}
+
+Usando la identidad trigonométrica $\cos A \sin B = \frac{1}{2}[\sin(A+B) - \sin(A-B)]$:
+\begin{align}
+A_n &= \frac{T_0}{b} \int_0^b \left[ \sin\left(\frac{(n+1)\pi y}{b}\right) - \sin\left(\frac{(n-1)\pi y}{b}\right) \right] dy
+\end{align}
+
+\textbf{Caso $n = 1$:}
+\begin{align}
+A_1 &= \frac{T_0}{b} \int_0^b \left[ \sin\left(\frac{2\pi y}{b}\right) - \sin(0) \right] dy \\
+&= \frac{T_0}{b} \left[ -\frac{b}{2\pi} \cos\left(\frac{2\pi y}{b}\right) \right]_0^b \\
+&= \frac{T_0}{2\pi} [-\cos(2\pi) + \cos(0)] = 0
+\end{align}
+
+\textbf{Caso $n \neq 1$:}
+\begin{align}
+A_n &= \frac{T_0}{b} \left[ -\frac{b}{(n+1)\pi} \cos\left(\frac{(n+1)\pi y}{b}\right) + \frac{b}{(n-1)\pi} \cos\left(\frac{(n-1)\pi y}{b}\right) \right]_0^b \\
+&= \frac{T_0}{\pi} \left[ -\frac{\cos((n+1)\pi) - 1}{n+1} + \frac{\cos((n-1)\pi) - 1}{n-1} \right] \\
+&= \frac{T_0}{\pi} \left[ -\frac{(-1)^{n+1} - 1}{n+1} + \frac{(-1)^{n-1} - 1}{n-1} \right]
+\end{align}
+
+Dado que $(-1)^{n+1} = (-1)^{n-1} = -(-1)^n$:
+\begin{align}
+A_n &= \frac{T_0}{\pi} \left[ \frac{1 + (-1)^n}{n+1} + \frac{-1 + (-1)^n}{n-1} \right] \\
+&= \frac{T_0}{\pi} \left[ \frac{(1 + (-1)^n)(n-1) + (-1 + (-1)^n)(n+1)}{(n+1)(n-1)} \right] \\
+&= \frac{T_0}{\pi} \left[ \frac{n - 1 + n(-1)^n - (-1)^n - n - 1 + n(-1)^n + (-1)^n}{n^2 - 1} \right] \\
+&= \frac{T_0}{\pi} \left[ \frac{-2 + 2n(-1)^n}{n^2 - 1} \right] \\
+&= \frac{2T_0}{\pi} \frac{n(-1)^n - 1}{n^2 - 1}
+\end{align}
+
+\textbf{Análisis de los coeficientes:}
+\begin{itemize}
+    \item Para $n$ impar ($n \neq 1$): $A_n = \frac{2T_0}{\pi} \frac{-n - 1}{n^2 - 1} = -\frac{2T_0}{\pi(n-1)}$
+    \item Para $n$ par: $A_n = \frac{2T_0}{\pi} \frac{n - 1}{n^2 - 1} = \frac{2T_0}{\pi(n+1)}$
+\end{itemize}
+
+La distribución de temperatura es:
+\begin{equation}
+\boxed{T(x, y) = \frac{2T_0}{\pi} \sum_{\substack{n=2 \\ n \neq 1}}^{\infty} \frac{n(-1)^n - 1}{n^2 - 1} \sin\left(\frac{n\pi y}{b}\right) e^{-n\pi x/b}}
+\end{equation}
+
+\subsubsection{5. Caso (d): Temperatura Seno}
+
+\begin{equation}
+f(y) = T_0 \sin\left(\frac{\pi y}{b}\right), \quad 0 \leq y \leq b
+\end{equation}
+
+Sustituyendo en la ecuación (\ref{eq:coeficientes}):
+\begin{align}
+A_n &= \frac{2}{b} \int_0^b T_0 \sin\left(\frac{\pi y}{b}\right) \sin\left(\frac{n\pi y}{b}\right) dy \\
+&= \frac{2T_0}{b} \int_0^b \sin\left(\frac{\pi y}{b}\right) \sin\left(\frac{n\pi y}{b}\right) dy
+\end{align}
+
+Por la ortogonalidad de las funciones seno (Capítulo 5, Sección 5.5.1 del libro de Alonso Sepúlveda):
+\begin{equation}
+\int_0^b \sin\left(\frac{m\pi y}{b}\right) \sin\left(\frac{n\pi y}{b}\right) dy = \frac{b}{2} \delta_{mn}
+\end{equation}
+
+Por lo tanto:
+\begin{itemize}
+    \item Para $n = 1$: $A_1 = \frac{2T_0}{b} \cdot \frac{b}{2} = T_0$
+    \item Para $n \neq 1$: $A_n = 0$
+\end{itemize}
+
+Este es un caso especial donde la condición de frontera ya está en la forma de un solo modo de la serie de Fourier. La distribución de temperatura es:
+\begin{equation}
+\boxed{T(x, y) = T_0 \sin\left(\frac{\pi y}{b}\right) e^{-\pi x/b}}
+\end{equation}
+
+\subsubsection{6. Resumen de Resultados}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Caso} & \textbf{$f(y)$} & \textbf{Coeficientes $A_n$} \\
+\hline
+(a) Escalón & $\begin{cases} 0, & 0 < y < b/2 \\ T_0, & b/2 < y < b \end{cases}$ & $\frac{2T_0}{n\pi} \left[ \cos\left(\frac{n\pi}{2}\right) - (-1)^n \right]$ \\
+\hline
+(b) Lineal & $\frac{T_0}{b} y$ & $\frac{2T_0}{n\pi} (-1)^{n+1}$ \\
+\hline
+(c) Coseno & $T_0 \cos\left(\frac{\pi y}{b}\right)$ & $\begin{cases} 0, & n = 1 \\ \frac{2T_0}{\pi} \frac{n(-1)^n - 1}{n^2 - 1}, & n \neq 1 \end{cases}$ \\
+\hline
+(d) Seno & $T_0 \sin\left(\frac{\pi y}{b}\right)$ & $\begin{cases} T_0, & n = 1 \\ 0, & n \neq 1 \end{cases}$ \\
+\hline
+\end{tabular}
+\caption{Coeficientes de Fourier para los cuatro casos del Problema 8}
+\end{table}
+
+\subsubsection{7. Análisis Físico}
+
+\begin{itemize}
+    \item \textbf{Caso (a) - Escalón:} La discontinuidad en $y = b/2$ produce una convergencia más lenta de la serie (los coeficientes decaen como $1/n$). Esto es característico de funciones con discontinuidades (fenómeno de Gibbs).
+    
+    \item \textbf{Caso (b) - Lineal:} La función es continua pero tiene una discontinuidad en la derivada en los bordes. Los coeficientes también decaen como $1/n$.
+    
+    \item \textbf{Caso (c) - Coseno:} La función es continua y suave. Los coeficientes decaen más rápidamente (como $1/n^2$ para $n$ grande), lo que indica una convergencia más rápida de la serie.
+    
+    \item \textbf{Caso (d) - Seno:} Este es el caso más simple, donde la condición de frontera coincide exactamente con el primer modo normal de la serie. Solo un término es necesario, lo que refleja la ortogonalidad de la base de senos discutida en el Capítulo 5 del texto de Alonso Sepúlveda. $\checkmark$
+    
+    \item \textbf{Decaimiento Exponencial:} En todos los casos, la temperatura decae exponencialmente con $x$, con una tasa de decaimiento que aumenta con $n$. Los modos de mayor orden se atenúan más rápidamente a medida que nos alejamos del borde caliente.
+    
+    \item \textbf{Unicidad:} De acuerdo con el Teorema de Unicidad para la ecuación de Laplace (Capítulo 2, Sección 2.3.1 del libro), cada una de estas soluciones es única para las condiciones de frontera especificadas. $\checkmark$
+\end{itemize}
+
+\subsubsection{8. Verificación de las Condiciones de Frontera}
+
+Para todos los casos, podemos verificar que:
+\begin{enumerate}
+    \item $T(x, 0) = 0$ $\checkmark$ (todos los términos contienen $\sin(n\pi y/b)$)
+    \item $T(x, b) = 0$ $\checkmark$ ($\sin(n\pi) = 0$ para todo $n$ entero)
+    \item $\lim_{x \to \infty} T(x, y) = 0$ $\checkmark$ (todos los términos contienen $e^{-n\pi x/b}$)
+    \item $T(0, y) = f(y)$ $\checkmark$ (por construcción de la serie de Fourier)
+\end{enumerate}
+
+Todas las condiciones de frontera están satisfechas, confirmando la validez de las soluciones obtenidas para cada caso del Problema 8 del Taller 4.
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
