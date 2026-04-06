@@ -1,0 +1,543 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2cm]{geometry}
+
+\begin{document}
+
+
+\section{Problema 1}
+Muestre la siguiente identidad (puede usar coordenadas cartesianas):
+$$
+\nabla^2 \vec{A} = \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})
+$$
+
+\subsection{Solución}
+La identidad solicitada es una de las relaciones fundamentales del análisis vectorial tridimensional. Como se establece en el texto de referencia (Alonso Sepúlveda, \textit{Lecciones de Física Matemática}, Sección 1.6, Identidades Vectoriales), esta expresión permite descomponer el laplaciano vectorial en una parte longitudinal (irrotacional) y otra transversal (solenoidal). A continuación, presentamos una demostración rigurosa y extensa, desarrollada primero mediante el método explícito en coordenadas cartesianas y posteriormente complementada con el formalismo de notación indicial (símbolo de Levi-Civita), el cual proporciona una prueba más compacta y general.
+
+\vspace{0.3cm}
+\noindent\textbf{1. Demostración por componentes en coordenadas cartesianas}
+
+Consideremos un campo vectorial arbitrario $\vec{A}(\vec{r})$ definido en el espacio euclidiano tridimensional. En coordenadas cartesianas $(x, y, z)$, este campo se expresa como:
+$$
+\vec{A} = A_x(x,y,z)\,\hat{e}_x + A_y(x,y,z)\,\hat{e}_y + A_z(x,y,z)\,\hat{e}_z.
+$$
+En este sistema coordenado, los vectores unitarios son constantes en todo el espacio, lo que simplifica enormemente el cálculo de operadores diferenciales compuestos. Definimos el operador nabla como:
+$$
+\nabla = \hat{e}_x \frac{\partial}{\partial x} + \hat{e}_y \frac{\partial}{\partial y} + \hat{e}_z \frac{\partial}{\partial z}.
+$$
+
+\noindent\textit{Paso 1: Cálculo del lado izquierdo $\nabla^2 \vec{A}$}
+
+En coordenadas cartesianas, el laplaciano de un campo vectorial se define componente a componente, ya que los vectores base conmutan con las derivadas parciales:
+$$
+\nabla^2 \vec{A} = (\nabla^2 A_x)\,\hat{e}_x + (\nabla^2 A_y)\,\hat{e}_y + (\nabla^2 A_z)\,\hat{e}_z,
+$$
+donde el operador escalar $\nabla^2$ actúa sobre cada componente como:
+$$
+\nabla^2 = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}.
+$$
+Por lo tanto, la componente $x$ del lado izquierdo es:
+$$
+(\nabla^2 \vec{A})_x = \frac{\partial^2 A_x}{\partial x^2} + \frac{\partial^2 A_x}{\partial y^2} + \frac{\partial^2 A_x}{\partial z^2}.
+$$
+
+\noindent\textit{Paso 2: Cálculo del primer término del lado derecho $\nabla(\nabla \cdot \vec{A})$}
+
+Primero evaluamos la divergencia de $\vec{A}$:
+$$
+\nabla \cdot \vec{A} = \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z}.
+$$
+Ahora aplicamos el gradiente a este escalar:
+$$
+\nabla(\nabla \cdot \vec{A}) = \hat{e}_x \frac{\partial}{\partial x}(\nabla \cdot \vec{A}) + \hat{e}_y \frac{\partial}{\partial y}(\nabla \cdot \vec{A}) + \hat{e}_z \frac{\partial}{\partial z}(\nabla \cdot \vec{A}).
+$$
+Extraemos la componente $x$:
+$$
+[\nabla(\nabla \cdot \vec{A})]_x = \frac{\partial}{\partial x}\left( \frac{\partial A_x}{\partial x} + \frac{\partial A_y}{\partial y} + \frac{\partial A_z}{\partial z} \right) = \frac{\partial^2 A_x}{\partial x^2} + \frac{\partial^2 A_y}{\partial x \partial y} + \frac{\partial^2 A_z}{\partial x \partial z}.
+$$
+
+\noindent\textit{Paso 3: Cálculo del segundo término del lado derecho $\nabla \times (\nabla \times \vec{A})$}
+
+Calculamos primero el rotacional de $\vec{A}$:
+$$
+\nabla \times \vec{A} = \hat{e}_x\left( \frac{\partial A_z}{\partial y} - \frac{\partial A_y}{\partial z} \right) + \hat{e}_y\left( \frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x} \right) + \hat{e}_z\left( \frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y} \right).
+$$
+Denotemos este campo intermedio como $\vec{B} = \nabla \times \vec{A}$, con componentes $B_x, B_y, B_z$. Ahora calculamos $\nabla \times \vec{B}$ y nos enfocamos en su componente $x$:
+$$
+[\nabla \times (\nabla \times \vec{A})]_x = \frac{\partial B_z}{\partial y} - \frac{\partial B_y}{\partial z}.
+$$
+Sustituyendo las expresiones de $B_z$ y $B_y$:
+$$
+[\nabla \times (\nabla \times \vec{A})]_x = \frac{\partial}{\partial y}\left( \frac{\partial A_y}{\partial x} - \frac{\partial A_x}{\partial y} \right) - \frac{\partial}{\partial z}\left( \frac{\partial A_x}{\partial z} - \frac{\partial A_z}{\partial x} \right).
+$$
+Aplicando las derivadas y reordenando términos (asumiendo que las funciones son suficientemente regulares para que las derivadas cruzadas conmuten, $\partial_i \partial_j = \partial_j \partial_i$):
+$$
+[\nabla \times (\nabla \times \vec{A})]_x = \frac{\partial^2 A_y}{\partial y \partial x} - \frac{\partial^2 A_x}{\partial y^2} - \frac{\partial^2 A_x}{\partial z^2} + \frac{\partial^2 A_z}{\partial z \partial x}.
+$$
+
+\noindent\textit{Paso 4: Combinación y verificación}
+
+Restamos el resultado del Paso 3 al del Paso 2 para obtener la componente $x$ de la expresión completa del lado derecho:
+$$
+[\nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})]_x = \left( \frac{\partial^2 A_x}{\partial x^2} + \frac{\partial^2 A_y}{\partial x \partial y} + \frac{\partial^2 A_z}{\partial x \partial z} \right) - \left( \frac{\partial^2 A_y}{\partial x \partial y} - \frac{\partial^2 A_x}{\partial y^2} - \frac{\partial^2 A_x}{\partial z^2} + \frac{\partial^2 A_z}{\partial x \partial z} \right).
+$$
+Los términos cruzados $\frac{\partial^2 A_y}{\partial x \partial y}$ y $\frac{\partial^2 A_z}{\partial x \partial z}$ se cancelan exactamente. Lo que permanece es:
+$$
+[\nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})]_x = \frac{\partial^2 A_x}{\partial x^2} + \frac{\partial^2 A_x}{\partial y^2} + \frac{\partial^2 A_x}{\partial z^2} = \nabla^2 A_x.
+$$
+Dado que el sistema cartesiano es isotrópico y ortogonal, el mismo procedimiento algebraico se aplica idénticamente a las componentes $y$ y $z$. Por tanto, vectorialmente:
+$$
+\nabla^2 \vec{A} = \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A}).
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{2. Demostración mediante notación indicial (Levi-Civita)}
+
+Para una demostración más elegante y compacta, utilizamos la notación de índices y las propiedades del símbolo de Levi-Civita $\varepsilon_{ijk}$. La componente $i$-ésima del rotacional doble se escribe como:
+$$
+[\nabla \times (\nabla \times \vec{A})]_i = \varepsilon_{ijk} \partial_j [\nabla \times \vec{A}]_k = \varepsilon_{ijk} \partial_j (\varepsilon_{klm} \partial_l A_m).
+$$
+Donde $\partial_j \equiv \frac{\partial}{\partial x_j}$. Dado que $\varepsilon_{klm}$ es constante y las derivadas conmutan, podemos reordenar:
+$$
+[\nabla \times (\nabla \times \vec{A})]_i = \varepsilon_{ijk} \varepsilon_{klm} \partial_j \partial_l A_m.
+$$
+Utilizamos la propiedad cíclica $\varepsilon_{ijk} = \varepsilon_{kij}$ y la identidad de contracción de dos símbolos de Levi-Civita (Sección 1.3 del libro de Alonso Sepúlveda):
+$$
+\varepsilon_{kij} \varepsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl},
+$$
+donde $\delta_{ij}$ es la delta de Kronecker. Sustituyendo:
+$$
+[\nabla \times (\nabla \times \vec{A})]_i = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) \partial_j \partial_l A_m.
+$$
+Distribuyendo y aplicando la propiedad de filtrado de la delta de Kronecker ($\delta_{il} \partial_l = \partial_i$):
+$$
+[\nabla \times (\nabla \times \vec{A})]_i = \delta_{il}\delta_{jm} \partial_j \partial_l A_m - \delta_{im}\delta_{jl} \partial_j \partial_l A_m = \partial_j \partial_i A_j - \partial_j \partial_j A_i.
+$$
+Reconocemos cada término:
+$$
+\partial_j \partial_i A_j = \partial_i (\partial_j A_j) = [\nabla(\nabla \cdot \vec{A})]_i,
+$$
+$$
+\partial_j \partial_j A_i = (\partial_x^2 + \partial_y^2 + \partial_z^2) A_i = [\nabla^2 \vec{A}]_i.
+$$
+Por lo tanto:
+$$
+[\nabla \times (\nabla \times \vec{A})]_i = [\nabla(\nabla \cdot \vec{A})]_i - [\nabla^2 \vec{A}]_i.
+$$
+Reordenando los términos para despejar el laplaciano vectorial, obtenemos directamente la identidad deseada:
+$$
+\nabla^2 \vec{A} = \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A}).
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{3. Observaciones finales y validez}
+
+Esta identidad es de importancia capital en la física matemática. Permite separar cualquier campo vectorial suave en una parte irrotacional (longitudinal), dada por el gradiente de un potencial escalar, y una parte solenoidal (transversal), dada por el rotacional de un potencial vectorial (Teorema de Helmholtz, Sección 1.8.3 del libro). 
+
+Es crucial notar que la expresión $\nabla^2 \vec{A} = \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})$ es estrictamente válida en coordenadas cartesianas. En sistemas curvilíneos ortogonales (cilíndricas, esféricas, etc.), los vectores base dependen de la posición, por lo que el laplaciano vectorial adquiere términos geométricos adicionales y no se reduce simplemente a aplicar el laplaciano escalar componente a componente. No obstante, la forma operacional del lado derecho $\nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})$ sí mantiene su validez general en cualquier sistema coordenado, lo que la convierte en la definición intrínseca y covariante del laplaciano vectorial en variedades planas.
+
+\section{Problema 2.a}
+Use la notación de Levi-Civita y pruebe las siguientes identidades vectoriales:
+\begin{itemize}
+\item $\vec{D} = -\nabla \phi \Rightarrow \nabla \times \vec{D} = 0$
+\item $\vec{D} = \nabla \times \vec{A} \Rightarrow \nabla \cdot \vec{D} = 0$
+\item $\nabla \times (\nabla \times \vec{D}) - \nabla(\nabla \cdot \vec{D}) + \nabla^2 \vec{D} = 0$
+\end{itemize}
+
+\subsection{Solución}
+La demostración rigurosa de identidades del cálculo vectorial se simplifica enormemente al adoptar el formalismo de notación indicial (o notación de Einstein), tal como se desarrolla en la Sección 1.3 y 1.6 del texto de Alonso Sepúlveda, \textit{Lecciones de Física Matemática}. En este enfoque, reemplazamos las operaciones vectoriales explícitas por contracciones de índices utilizando el símbolo de Levi-Civita $\varepsilon_{ijk}$ y la delta de Kronecker $\delta_{ij}$.
+
+\noindent\textbf{Preliminares notacionales y propiedades clave:}
+Definimos el operador derivada parcial como $\partial_i \equiv \frac{\partial}{\partial x_i}$. En este formalismo:
+$$
+(\nabla \phi)_i = \partial_i \phi, \quad (\nabla \cdot \vec{D}) = \partial_i D_i, \quad (\nabla \times \vec{D})_i = \varepsilon_{ijk} \partial_j D_k, \quad (\nabla^2 \vec{D})_i = \partial_j \partial_j D_i.
+$$
+Utilizaremos las siguientes propiedades fundamentales (Alonso Sepúlveda, Ec. 1.23-1.25):
+1) Antisimetría de Levi-Civita: $\varepsilon_{ijk} = -\varepsilon_{ikj} = -\varepsilon_{jik}$.
+2) Simetría de derivadas parciales cruzadas (para campos suficientemente regulares): $\partial_i \partial_j = \partial_j \partial_i$.
+3) Identidad de contracción de dos símbolos de Levi-Civita:
+$$
+\varepsilon_{kij} \varepsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Identidad 1: $\vec{D} = -\nabla \phi \Rightarrow \nabla \times \vec{D} = 0$}
+
+Calculamos la componente $i$-ésima del rotacional de $\vec{D}$:
+$$
+(\nabla \times \vec{D})_i = \varepsilon_{ijk} \partial_j D_k.
+$$
+Sustituimos la definición $D_k = -\partial_k \phi$:
+$$
+(\nabla \times \vec{D})_i = \varepsilon_{ijk} \partial_j (-\partial_k \phi) = -\varepsilon_{ijk} \partial_j \partial_k \phi.
+$$
+Analizamos la simetría del término contraído. El símbolo $\varepsilon_{ijk}$ es antisimétrico bajo el intercambio de los índices $j \leftrightarrow k$, es decir, $\varepsilon_{ijk} = -\varepsilon_{ikj}$. Por otro lado, las derivadas parciales conmutan, por lo que el tensor $\partial_j \partial_k \phi$ es simétrico bajo $j \leftrightarrow k$: $\partial_j \partial_k \phi = \partial_k \partial_j \phi$.
+
+La contracción de un tensor antisimétrico con uno simétrico es siempre nula. Para verlo explícitamente, renombramos los índices mudos $j \leftrightarrow k$ en la expresión:
+$$
+-\varepsilon_{ijk} \partial_j \partial_k \phi = -\varepsilon_{ikj} \partial_k \partial_j \phi = -(-\varepsilon_{ijk}) \partial_j \partial_k \phi = +\varepsilon_{ijk} \partial_j \partial_k \phi.
+$$
+Hemos demostrado que la cantidad es igual a su propio negativo, lo cual solo es posible si es cero:
+$$
+(\nabla \times \vec{D})_i = 0 \quad \forall i \quad \Rightarrow \quad \nabla \times \vec{D} = \vec{0}.
+$$
+Este resultado establece matemáticamente que el gradiente de cualquier campo escalar es un campo irrotacional.
+
+\vspace{0.3cm}
+\noindent\textbf{Identidad 2: $\vec{D} = \nabla \times \vec{A} \Rightarrow \nabla \cdot \vec{D} = 0$}
+
+Calculamos la divergencia de $\vec{D}$ usando notación indicial:
+$$
+\nabla \cdot \vec{D} = \partial_i D_i.
+$$
+Sustituimos $D_i = (\nabla \times \vec{A})_i = \varepsilon_{ijk} \partial_j A_k$:
+$$
+\nabla \cdot \vec{D} = \partial_i (\varepsilon_{ijk} \partial_j A_k) = \varepsilon_{ijk} \partial_i \partial_j A_k.
+$$
+Nuevamente, observamos la estructura de la contracción. El símbolo $\varepsilon_{ijk}$ es antisimétrico respecto al par de índices $i \leftrightarrow j$, mientras que el operador diferencial compuesto $\partial_i \partial_j A_k$ es simétrico en $i$ y $j$ debido a la conmutatividad de las derivadas parciales. La contracción entre simetría y antisimetría se anula idénticamente:
+$$
+\varepsilon_{ijk} \partial_i \partial_j A_k = 0 \quad \Rightarrow \quad \nabla \cdot \vec{D} = 0.
+$$
+Esta identidad prueba que el rotacional de cualquier campo vectorial es un campo solenoidal (divergencia nula), lo cual tiene implicaciones profundas en magnetostática y dinámica de fluidos.
+
+\vspace{0.3cm}
+\noindent\textbf{Identidad 3: $\nabla \times (\nabla \times \vec{D}) - \nabla(\nabla \cdot \vec{D}) + \nabla^2 \vec{D} = 0$}
+
+Esta es la conocida identidad del laplaciano vectorial. Demostraremos que la componente $i$-ésima de la expresión completa se anula. Evaluemos por separado el rotacional doble:
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = \varepsilon_{ijk} \partial_j (\nabla \times \vec{D})_k.
+$$
+Sustituimos la componente $k$ del rotacional:
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = \varepsilon_{ijk} \partial_j (\varepsilon_{klm} \partial_l D_m).
+$$
+Dado que $\varepsilon_{klm}$ es constante y las derivadas conmutan, podemos reordenar los factores. Utilizamos la propiedad cíclica $\varepsilon_{ijk} = \varepsilon_{kij}$ para agrupar los dos símbolos de Levi-Civita con el mismo primer índice:
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = \varepsilon_{kij} \varepsilon_{klm} \partial_j \partial_l D_m.
+$$
+Aplicamos la identidad de contracción de Levi-Civita mencionada en los preliminares:
+$$
+\varepsilon_{kij} \varepsilon_{klm} = \delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}.
+$$
+Sustituyendo en la expresión:
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = (\delta_{il}\delta_{jm} - \delta_{im}\delta_{jl}) \partial_j \partial_l D_m.
+$$
+Distribuimos los términos y aplicamos la propiedad de filtrado de la delta de Kronecker ($\delta_{il} \partial_l = \partial_i$, $\delta_{jm} D_m = D_j$, etc.):
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = \delta_{il}\delta_{jm} \partial_j \partial_l D_m - \delta_{im}\delta_{jl} \partial_j \partial_l D_m = \partial_j \partial_i D_j - \partial_j \partial_j D_i.
+$$
+Reordenamos las derivadas en el primer término ($\partial_j \partial_i = \partial_i \partial_j$) y factorizamos:
+$$
+\partial_j \partial_i D_j = \partial_i (\partial_j D_j) = [\nabla(\nabla \cdot \vec{D})]_i,
+$$
+mientras que el segundo término es directamente el laplaciano escalar actuando sobre la componente $i$-ésima:
+$$
+\partial_j \partial_j D_i = \nabla^2 D_i = [\nabla^2 \vec{D}]_i.
+$$
+Por lo tanto, hemos demostrado que:
+$$
+[\nabla \times (\nabla \times \vec{D})]_i = [\nabla(\nabla \cdot \vec{D})]_i - [\nabla^2 \vec{D}]_i.
+$$
+Reordenando los términos para igualar a cero:
+$$
+[\nabla \times (\nabla \times \vec{D}) - \nabla(\nabla \cdot \vec{D}) + \nabla^2 \vec{D}]_i = 0.
+$$
+Dado que esta relación es válida para cada componente $i = 1, 2, 3$, la identidad vectorial completa queda rigurosamente probada:
+$$
+\nabla \times (\nabla \times \vec{D}) - \nabla(\nabla \cdot \vec{D}) + \nabla^2 \vec{D} = \vec{0}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Observaciones finales:}
+Estas tres identidades constituyen la columna vertebral del análisis vectorial en física teórica. Las dos primeras garantizan la existencia de potenciales: la irrotacionalidad ($\nabla \times \vec{D}=0$) asegura que $\vec{D}$ puede escribirse como gradiente de un escalar, mientras que la solenoidalidad ($\nabla \cdot \vec{D}=0$) asegura que puede escribirse como rotacional de un vector. La tercera identidad descompone el laplaciano vectorial en sus partes longitudinal y transversal, fundamento matemático directo del Teorema de Helmholtz (Sección 1.8.3 de Alonso Sepúlveda), el cual permite separar cualquier campo vectorial suave en componentes conservativas y solenoidales. El uso de la notación de Levi-Civita no solo compacta las demostraciones, sino que revela de manera transparente cómo las simetrías intrínsecas del espacio euclidiano dictan la estructura de las ecuaciones de campo.
+
+
+\section{Problema 2.b}
+Utilice el resultado anterior y las ecuaciones de Maxwell,
+\begin{align*}
+\nabla \cdot \vec{E}(\vec{r},t) &= \frac{\rho(\vec{r},t)}{\varepsilon_0}, \\
+\nabla \cdot \vec{B}(\vec{r},t) &= 0, \\
+\nabla \times \vec{E}(\vec{r},t) &= -\frac{\partial \vec{B}(\vec{r},t)}{\partial t}, \\
+\nabla \times \vec{B}(\vec{r},t) &= \mu_0 \vec{J}(\vec{r},t) + \mu_0\varepsilon_0 \frac{\partial \vec{E}(\vec{r},t)}{\partial t},
+\end{align*}
+para mostrar que los campos $\vec{E}(\vec{r},t)$ y $\vec{B}(\vec{r},t)$ son derivables de un potencial escalar $\phi(\vec{r},t)$ y de un potencial vectorial $\vec{A}(\vec{r},t)$ en la forma
+$$
+\vec{B}(\vec{r},t)=\nabla \times \vec{A}(\vec{r},t), \qquad \vec{E}(\vec{r},t)=-\nabla\phi(\vec{r},t)-\frac{\partial \vec{A}(\vec{r},t)}{\partial t}.
+$$
+
+\subsection{Solución}
+La demostración de que los campos electromagnéticos pueden expresarse mediante potenciales se basa directamente en las identidades vectoriales fundamentales del análisis matemático, las cuales fueron verificadas rigurosamente en el punto 2.a mediante el formalismo de Levi-Civita. En particular, utilizaremos dos resultados cruciales (Alonso Sepúlveda, Sección 1.5 y 1.6):
+\begin{itemize}
+\item El rotacional de un gradiente es idénticamente nulo: $\nabla \times (\nabla \phi) = \vec{0}$.
+\item La divergencia de un rotacional es idénticamente nula: $\nabla \cdot (\nabla \times \vec{A}) = 0$.
+\end{itemize}
+Estas identidades, combinadas con el Teorema de Helmholtz (Sección 1.8.3 del texto de referencia), garantizan que cualquier campo vectorial suficientemente regular definido en un dominio simplemente conexo puede descomponerse en una componente irrotacional (longitudinal) y otra solenoidal (transversal). A continuación, desarrollamos la deducción paso a paso para cada campo.
+
+\vspace{0.3cm}
+\noindent\textbf{1. Existencia del potencial vectorial magnético $\vec{A}$}
+
+Partimos de la segunda ecuación de Maxwell, conocida como la ley de Gauss para el magnetismo:
+$$
+\nabla \cdot \vec{B}(\vec{r},t) = 0.
+$$
+Esta ecuación establece que el campo de inducción magnética $\vec{B}$ es solenoidal (o de divergencia nula) en todo el espacio. Matemáticamente, esto implica que $\vec{B}$ no posee fuentes ni sumideros escalares; sus líneas de campo se cierran sobre sí mismas o se extienden hasta el infinito.
+
+Del punto 2.a sabemos que la divergencia del rotacional de cualquier campo vectorial diferenciable es idénticamente cero:
+$$
+\nabla \cdot (\nabla \times \vec{A}) = 0.
+$$
+El recíproco local de esta propiedad está garantizado por el Lema de Poincaré y, globalmente, por la descomposición de Helmholtz: todo campo vectorial de divergencia nula puede escribirse como el rotacional de otro campo vectorial. Por tanto, existe un campo vectorial $\vec{A}(\vec{r},t)$, llamado \textbf{potencial vectorial magnético}, tal que:
+$$
+\vec{B}(\vec{r},t) = \nabla \times \vec{A}(\vec{r},t).
+$$
+Esta definición satisface automáticamente la ley de Gauss magnética, independientemente de la forma específica de $\vec{A}$. Es importante notar que $\vec{A}$ no es único; puede modificarse añadiéndole el gradiente de una función escalar arbitraria sin alterar $\vec{B}$, propiedad que constituye la base de la invarianza de gauge (ver punto 2.c).
+
+\vspace{0.3cm}
+\noindent\textbf{2. Existencia del potencial escalar eléctrico $\phi$}
+
+Ahora consideramos la tercera ecuación de Maxwell, la ley de Faraday de inducción electromagnética:
+$$
+\nabla \times \vec{E}(\vec{r},t) = -\frac{\partial \vec{B}(\vec{r},t)}{\partial t}.
+$$
+Sustituimos la expresión recién obtenida para $\vec{B}$ en términos de $\vec{A}$:
+$$
+\nabla \times \vec{E} = -\frac{\partial}{\partial t}(\nabla \times \vec{A}).
+$$
+Asumiendo que los campos son funciones suaves (clase $C^2$ al menos), las derivadas parciales espaciales y temporales conmutan. Esta propiedad es fundamental en la física matemática clásica y permite reordenar los operadores diferenciales:
+$$
+\frac{\partial}{\partial t}(\nabla \times \vec{A}) = \nabla \times \left(\frac{\partial \vec{A}}{\partial t}\right).
+$$
+Sustituyendo esto en la ley de Faraday y agrupando términos bajo el mismo operador rotacional, obtenemos:
+$$
+\nabla \times \vec{E} + \nabla \times \left(\frac{\partial \vec{A}}{\partial t}\right) = \vec{0} \quad \Rightarrow \quad \nabla \times \left( \vec{E} + \frac{\partial \vec{A}}{\partial t} \right) = \vec{0}.
+$$
+La expresión entre paréntesis define un nuevo campo vectorial cuyo rotacional es nulo en todo el espacio. Decimos que este campo es \textbf{irrotacional} (o conservativo en el sentido local). Nuevamente, apelamos al resultado demostrado en 2.a: el rotacional del gradiente de cualquier campo escalar es idénticamente cero:
+$$
+\nabla \times (\nabla \phi) = \vec{0}.
+$$
+El teorema recíproco (también consecuencia de la descomposición de Helmholtz) asegura que cualquier campo irrotacional puede escribirse como el gradiente de un campo escalar. Por consiguiente, existe una función escalar $\phi(\vec{r},t)$, denominada \textbf{potencial escalar eléctrico}, tal que:
+$$
+\vec{E} + \frac{\partial \vec{A}}{\partial t} = -\nabla \phi.
+$$
+El signo negativo es una convención histórica y física ampliamente adoptada en electromagnetismo y mecánica clásica. Su propósito es garantizar que, en el caso estático ($\partial \vec{A}/\partial t = 0$), la fuerza sobre una carga $q$ sea $\vec{F} = q\vec{E} = -q\nabla \phi$, recuperando la relación estándar entre fuerza conservativa y energía potencial ($\vec{F} = -\nabla U$). Despejando $\vec{E}$, obtenemos la expresión deseada:
+$$
+\vec{E}(\vec{r},t) = -\nabla \phi(\vec{r},t) - \frac{\partial \vec{A}(\vec{r},t)}{\partial t}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{3. Síntesis y observaciones finales}
+
+Hemos demostrado que las dos ecuaciones de Maxwell homogéneas ($\nabla \cdot \vec{B}=0$ y $\nabla \times \vec{E} = -\partial_t \vec{B}$) se satisfacen \textit{identicamente} si introducimos los potenciales $\phi$ y $\vec{A}$ mediante las relaciones:
+$$
+\vec{B} = \nabla \times \vec{A}, \qquad \vec{E} = -\nabla \phi - \frac{\partial \vec{A}}{\partial t}.
+$$
+Esta parametrización reduce el número de incógnitas independientes de seis (tres componentes de $\vec{E}$ y tres de $\vec{B}$) a cuatro (una componente escalar $\phi$ y tres vectoriales $\vec{A}$), simplificando drásticamente la resolución de problemas en electrodinámica. 
+
+Cabe destacar que la existencia de estos potenciales no viola ninguna ley física, sino que revela una estructura matemática subyacente: las ecuaciones homogéneas de Maxwell son identidades geométricas en el espacio-tiempo (en el lenguaje del cálculo diferencial exterior, corresponden a $dF=0$, donde $F$ es el tensor de campo electromagnético). Las ecuaciones inhomogéneas ($\nabla \cdot \vec{E} = \rho/\varepsilon_0$ y $\nabla \times \vec{B} = \mu_0 \vec{J} + \mu_0\varepsilon_0 \partial_t \vec{E}$) no se anulan automáticamente y serán las que gobiernen la dinámica de los potenciales $\phi$ y $\vec{A}$, como se explorará en el siguiente punto del cuestionario. La libertad para elegir $\phi$ y $\vec{A}$ sin alterar los campos físicos observables $\vec{E}$ y $\vec{B}$ constituye la invarianza de gauge, un principio fundamental que se extiende a todas las teorías de campo modernas.
+
+
+
+\section{Problema 2.c}
+Reemplace las expresiones encontradas para $\vec{A}(\vec{r},t)$ y $\phi(\vec{r},t)$ en las ecuaciones de Maxwell y muestre que los potenciales electromagnéticos satisfacen las siguientes ecuaciones
+\begin{align}
+\nabla^2\phi(\vec{r},t) + \frac{\partial}{\partial t}\big(\nabla \cdot \vec{A}(\vec{r},t)\big)
+&= -\frac{\rho(\vec{r},t)}{\varepsilon_0}, \\
+\nabla\left(\nabla \cdot \vec{A}(\vec{r},t) + \mu_0\varepsilon_0\frac{\partial \phi(\vec{r},t)}{\partial t}\right)
++
+\nabla^2\vec{A}(\vec{r},t)
+- \mu_0\varepsilon_0\frac{\partial^2 \vec{A}(\vec{r},t)}{\partial t^2}
+&= -\mu_0\vec{J}(\vec{r},t).
+\end{align}
+¿Qué condición matemática deben satisfacer los potenciales para que las ecuaciones anteriores se desacoplen? Reescriba de nuevo dichas ecuaciones pero en su forma desacoplada. ¿Qué puede concluir de su resultado?
+
+\subsection{Solución}
+En esta sección completamos el análisis de la formulación potencial del electromagnetismo clásico. Como demostramos en el punto 2.b, los campos electromagnéticos pueden expresarse en términos de un potencial escalar $\phi(\vec{r},t)$ y un potencial vectorial $\vec{A}(\vec{r},t)$ mediante las relaciones:
+$$
+\vec{B}(\vec{r},t) = \nabla \times \vec{A}(\vec{r},t), \qquad \vec{E}(\vec{r},t) = -\nabla\phi(\vec{r},t) - \frac{\partial \vec{A}(\vec{r},t)}{\partial t}.
+$$
+Estas expresiones satisfacen automáticamente las dos ecuaciones de Maxwell homogéneas ($\nabla \cdot \vec{B} = 0$ y $\nabla \times \vec{E} = -\partial_t \vec{B}$). Sin embargo, las dos ecuaciones inhomogéneas (ley de Gauss y ley de Ampère-Maxwell) no se satisfacen automáticamente y nos proporcionarán las ecuaciones diferenciales que gobiernan la dinámica de los potenciales. Este desarrollo sigue la exposición del Capítulo 4, Sección 4.6 del texto de Alonso Sepúlveda, \textit{Lecciones de Física Matemática}, donde se discuten las ecuaciones de Maxwell y su formulación en términos de potenciales.
+
+\vspace{0.3cm}
+\noindent\textbf{1. Sustitución en la ley de Gauss}
+
+La primera ecuación de Maxwell inhomogénea es la ley de Gauss para el campo eléctrico:
+$$
+\nabla \cdot \vec{E}(\vec{r},t) = \frac{\rho(\vec{r},t)}{\varepsilon_0}.
+$$
+Sustituimos la expresión del campo eléctrico en términos de los potenciales:
+$$
+\nabla \cdot \left(-\nabla\phi(\vec{r},t) - \frac{\partial \vec{A}(\vec{r},t)}{\partial t}\right) = \frac{\rho(\vec{r},t)}{\varepsilon_0}.
+$$
+Utilizando la linealidad del operador divergencia y el hecho de que las derivadas espaciales y temporales conmutan (para campos suficientemente regulares), podemos escribir:
+$$
+-\nabla \cdot (\nabla\phi) - \nabla \cdot \left(\frac{\partial \vec{A}}{\partial t}\right) = -\nabla^2\phi - \frac{\partial}{\partial t}(\nabla \cdot \vec{A}) = \frac{\rho}{\varepsilon_0}.
+$$
+Multiplicando por $-1$ y reordenando, obtenemos la primera ecuación para los potenciales:
+$$
+\boxed{\nabla^2\phi(\vec{r},t) + \frac{\partial}{\partial t}\big(\nabla \cdot \vec{A}(\vec{r},t)\big) = -\frac{\rho(\vec{r},t)}{\varepsilon_0}}.
+$$
+Esta ecuación muestra que el potencial escalar $\phi$ no satisface simplemente la ecuación de Poisson (como en electrostática), sino que está acoplado al potencial vectorial $\vec{A}$ a través del término $\partial_t(\nabla \cdot \vec{A})$. En el límite estático ($\partial_t = 0$), recuperamos la ecuación de Poisson $\nabla^2\phi = -\rho/\varepsilon_0$.
+
+\vspace{0.3cm}
+\noindent\textbf{2. Sustitución en la ley de Ampère-Maxwell}
+
+La segunda ecuación de Maxwell inhomogénea es la ley de Ampère-Maxwell:
+$$
+\nabla \times \vec{B}(\vec{r},t) = \mu_0 \vec{J}(\vec{r},t) + \mu_0\varepsilon_0 \frac{\partial \vec{E}(\vec{r},t)}{\partial t}.
+$$
+Sustituimos las expresiones de $\vec{B}$ y $\vec{E}$ en términos de los potenciales:
+$$
+\nabla \times (\nabla \times \vec{A}) = \mu_0 \vec{J} + \mu_0\varepsilon_0 \frac{\partial}{\partial t}\left(-\nabla\phi - \frac{\partial \vec{A}}{\partial t}\right).
+$$
+Desarrollamos el lado derecho:
+$$
+\nabla \times (\nabla \times \vec{A}) = \mu_0 \vec{J} - \mu_0\varepsilon_0 \nabla\left(\frac{\partial \phi}{\partial t}\right) - \mu_0\varepsilon_0 \frac{\partial^2 \vec{A}}{\partial t^2}.
+$$
+Ahora utilizamos la identidad vectorial fundamental demostrada en el punto 2.a (Alonso Sepúlveda, Sección 1.6, Identidades Vectoriales):
+$$
+\nabla \times (\nabla \times \vec{A}) = \nabla(\nabla \cdot \vec{A}) - \nabla^2 \vec{A}.
+$$
+Sustituyendo esta identidad en la ecuación anterior:
+$$
+\nabla(\nabla \cdot \vec{A}) - \nabla^2 \vec{A} = \mu_0 \vec{J} - \mu_0\varepsilon_0 \nabla\left(\frac{\partial \phi}{\partial t}\right) - \mu_0\varepsilon_0 \frac{\partial^2 \vec{A}}{\partial t^2}.
+$$
+Reorganizamos todos los términos que involucran los potenciales en el lado izquierdo:
+$$
+\nabla(\nabla \cdot \vec{A}) + \mu_0\varepsilon_0 \nabla\left(\frac{\partial \phi}{\partial t}\right) - \nabla^2 \vec{A} + \mu_0\varepsilon_0 \frac{\partial^2 \vec{A}}{\partial t^2} = \mu_0 \vec{J}.
+$$
+Factorizamos el gradiente en los dos primeros términos:
+$$
+\nabla\left(\nabla \cdot \vec{A} + \mu_0\varepsilon_0 \frac{\partial \phi}{\partial t}\right) - \nabla^2 \vec{A} + \mu_0\varepsilon_0 \frac{\partial^2 \vec{A}}{\partial t^2} = \mu_0 \vec{J}.
+$$
+Multiplicando por $-1$ y reordenando para obtener la forma estándar del laplaciano vectorial:
+$$
+\boxed{\nabla\left(\nabla \cdot \vec{A} + \mu_0\varepsilon_0\frac{\partial \phi}{\partial t}\right) + \nabla^2\vec{A} - \mu_0\varepsilon_0\frac{\partial^2 \vec{A}}{\partial t^2} = -\mu_0\vec{J}}.
+$$
+Esta es la segunda ecuación acoplada para los potenciales. Notemos que el potencial vectorial $\vec{A}$ está acoplado al potencial escalar $\phi$ a través del término gradiente que contiene $\partial_t \phi$.
+
+\vspace{0.3cm}
+\noindent\textbf{3. Análisis del acoplamiento y condición de gauge}
+
+Las dos ecuaciones obtenidas forman un sistema de ecuaciones diferenciales parciales acopladas:
+\begin{align}
+\nabla^2\phi + \frac{\partial}{\partial t}(\nabla \cdot \vec{A}) &= -\frac{\rho}{\varepsilon_0}, \label{eq:acoplada1} \\
+\nabla^2\vec{A} - \mu_0\varepsilon_0\frac{\partial^2 \vec{A}}{\partial t^2} + \nabla\left(\nabla \cdot \vec{A} + \mu_0\varepsilon_0\frac{\partial \phi}{\partial t}\right) &= -\mu_0\vec{J}. \label{eq:acoplada2}
+\end{align}
+El acoplamiento entre $\phi$ y $\vec{A}$ se manifiesta en los términos:
+\begin{itemize}
+\item En la ecuación (\ref{eq:acoplada1}): $\frac{\partial}{\partial t}(\nabla \cdot \vec{A})$
+\item En la ecuación (\ref{eq:acoplada2}): $\nabla\left(\nabla \cdot \vec{A} + \mu_0\varepsilon_0\frac{\partial \phi}{\partial t}\right)$
+\end{itemize}
+Para \textbf{desacoplar} estas ecuaciones, debemos imponer una condición adicional sobre los potenciales. Esta libertad existe porque los campos físicos $\vec{E}$ y $\vec{B}$ son invariantes bajo transformaciones de gauge. Recordemos que si realizamos la transformación:
+$$
+\vec{A}' = \vec{A} + \nabla\Lambda, \qquad \phi' = \phi - \frac{\partial \Lambda}{\partial t},
+$$
+donde $\Lambda(\vec{r},t)$ es una función escalar arbitraria, los campos permanecen inalterados:
+$$
+\vec{B}' = \nabla \times \vec{A}' = \nabla \times \vec{A} = \vec{B}, \qquad \vec{E}' = -\nabla\phi' - \frac{\partial \vec{A}'}{\partial t} = \vec{E}.
+$$
+Esta invarianza de gauge (discutida en Alonso Sepúlveda, Sección 1.8.3, Segundo Teorema de Helmholtz) nos permite elegir $\Lambda$ de tal manera que los potenciales satisfagan una condición conveniente.
+
+La condición que desacopla las ecuaciones (\ref{eq:acoplada1}) y (\ref{eq:acoplada2}) es la \textbf{condición de gauge de Lorenz}:
+$$
+\boxed{\nabla \cdot \vec{A} + \mu_0\varepsilon_0 \frac{\partial \phi}{\partial t} = 0}.
+$$
+Esta condición es particularmente elegante porque es covariante bajo transformaciones de Lorentz, lo que la hace natural en el contexto de la relatividad especial.
+
+\vspace{0.3cm}
+\noindent\textbf{4. Ecuaciones desacopladas en el gauge de Lorenz}
+
+Imponiendo la condición de Lorenz $\nabla \cdot \vec{A} = -\mu_0\varepsilon_0 \frac{\partial \phi}{\partial t}$, las ecuaciones se simplifican drásticamente:
+
+\noindent\textit{Para el potencial escalar:}
+Sustituyendo $\nabla \cdot \vec{A} = -\mu_0\varepsilon_0 \frac{\partial \phi}{\partial t}$ en la ecuación (\ref{eq:acoplada1}):
+$$
+\nabla^2\phi + \frac{\partial}{\partial t}\left(-\mu_0\varepsilon_0 \frac{\partial \phi}{\partial t}\right) = -\frac{\rho}{\varepsilon_0},
+$$
+$$
+\nabla^2\phi - \mu_0\varepsilon_0 \frac{\partial^2 \phi}{\partial t^2} = -\frac{\rho}{\varepsilon_0}.
+$$
+
+\noindent\textit{Para el potencial vectorial:}
+La condición de Lorenz hace que el término gradiente en la ecuación (\ref{eq:acoplada2}) se anule idénticamente:
+$$
+\nabla\left(\nabla \cdot \vec{A} + \mu_0\varepsilon_0\frac{\partial \phi}{\partial t}\right) = \nabla(0) = 0.
+$$
+Por lo tanto:
+$$
+\nabla^2\vec{A} - \mu_0\varepsilon_0 \frac{\partial^2 \vec{A}}{\partial t^2} = -\mu_0 \vec{J}.
+$$
+
+\noindent\textit{Forma final desacoplada:}
+Definiendo la velocidad de la luz en el vacío como $c = 1/\sqrt{\mu_0\varepsilon_0}$, podemos escribir $\mu_0\varepsilon_0 = 1/c^2$. Las ecuaciones desacopladas toman la forma de \textbf{ecuaciones de onda inhomogéneas}:
+$$
+\boxed{\nabla^2\phi(\vec{r},t) - \frac{1}{c^2}\frac{\partial^2 \phi(\vec{r},t)}{\partial t^2} = -\frac{\rho(\vec{r},t)}{\varepsilon_0}},
+$$
+$$
+\boxed{\nabla^2\vec{A}(\vec{r},t) - \frac{1}{c^2}\frac{\partial^2 \vec{A}(\vec{r},t)}{\partial t^2} = -\mu_0\vec{J}(\vec{r},t)}.
+$$
+Estas son las ecuaciones de onda con fuentes, también conocidas como ecuaciones de d'Alembert inhomogéneas. El operador diferencial que aparece se denota como el \textbf{d'alembertiano}:
+$$
+\Box \equiv \nabla^2 - \frac{1}{c^2}\frac{\partial^2}{\partial t^2}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{5. Conclusiones físicas y matemáticas}
+
+De este análisis podemos extraer varias conclusiones fundamentales:
+
+\begin{enumerate}
+\item \textbf{Propagación ondulatoria:} En el gauge de Lorenz, tanto el potencial escalar como el vectorial satisfacen ecuaciones de onda que se propagan a la velocidad de la luz $c = 1/\sqrt{\mu_0\varepsilon_0}$. Esto revela que los potenciales electromagnéticos no son meros artificios matemáticos, sino que tienen realidad física propia y se propagan como ondas.
+
+\item \textbf{Causalidad y retardación:} Las soluciones a estas ecuaciones de onda son los \textbf{potenciales retardados de Liénard-Wiechert}:
+$$
+\phi(\vec{r},t) = \frac{1}{4\pi\varepsilon_0} \int \frac{\rho(\vec{r}', t - |\vec{r}-\vec{r}'|/c)}{|\vec{r}-\vec{r}'|} d^3r',
+$$
+$$
+\vec{A}(\vec{r},t) = \frac{\mu_0}{4\pi} \int \frac{\vec{J}(\vec{r}', t - |\vec{r}-\vec{r}'|/c)}{|\vec{r}-\vec{r}'|} d^3r'.
+$$
+El argumento $t - |\vec{r}-\vec{r}'|/c$ muestra que los efectos de las fuentes se sienten en el punto de observación con un retardo igual al tiempo que tarda la luz en viajar desde la fuente hasta el observador. Esto garantiza la causalidad relativista.
+
+\item \textbf{Simetría y covarianza:} En el gauge de Lorenz, las ecuaciones para $\phi$ y $\vec{A}$ tienen exactamente la misma forma matemática. Esto refleja la simetría subyacente del electromagnetismo y permite escribir las cuatro ecuaciones de Maxwell en una forma manifiestamente covariante usando el cuadripotencial $A^\mu = (\phi/c, \vec{A})$ y la cuadricorriente $J^\mu = (c\rho, \vec{J})$:
+$$
+\Box A^\mu = -\mu_0 J^\mu.
+$$
+
+\item \textbf{Libertad de gauge residual:} Incluso después de imponer la condición de Lorenz, todavía queda libertad de gauge. Podemos realizar transformaciones con funciones $\Lambda$ que satisfagan la ecuación de onda homogénea $\Box \Lambda = 0$, sin violar la condición de Lorenz. Esta libertad residual puede usarse para imponer condiciones adicionales según conveniencia del problema.
+
+\item \textbf{Límite estático:} En el límite de campos estáticos ($\partial_t = 0$), la condición de Lorenz se reduce a $\nabla \cdot \vec{A} = 0$ (gauge de Coulomb), y las ecuaciones se reducen a:
+$$
+\nabla^2\phi = -\frac{\rho}{\varepsilon_0} \quad \text{(Poisson)}, \qquad \nabla^2\vec{A} = -\mu_0\vec{J} \quad \text{(Poisson vectorial)}.
+$$
+Esto recupera los resultados de magnetostática y electrostática como casos particulares de la teoría dinámica completa.
+
+\item \textbf{Consistencia con la conservación de carga:} La condición de Lorenz es consistente con la ecuación de continuidad para la carga eléctrica. Aplicando el operador $\nabla \cdot$ a la ecuación de $\vec{A}$ y $\partial_t$ a la ecuación de $\phi$, y usando la condición de Lorenz, se obtiene:
+$$
+\nabla \cdot \vec{J} + \frac{\partial \rho}{\partial t} = 0,
+$$
+que es precisamente la ecuación de continuidad. Esto muestra que la conservación de la carga está íntimamente ligada a la invarianza de gauge del electromagnetismo.
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent\textbf{6. Comparación con otros gauges}
+
+Es instructivo mencionar que existen otras elecciones de gauge posibles:
+
+\begin{itemize}
+\item \textbf{Gauge de Coulomb:} $\nabla \cdot \vec{A} = 0$. En este gauge, la ecuación para $\phi$ se reduce a la ecuación de Poisson instantánea $\nabla^2\phi = -\rho/\varepsilon_0$, pero la ecuación para $\vec{A}$ permanece acoplada y más compleja. Este gauge es útil en problemas de electrostática y en teoría cuántica de campos no relativista, pero rompe la covarianza de Lorentz explícita.
+
+\item \textbf{Gauge temporal:} $\phi = 0$. Útil en ciertos problemas de teoría cuántica de campos, pero menos común en electromagnetismo clásico.
+
+\item \textbf{Gauge de Lorenz:} Como hemos demostrado, es el único que desacopla completamente las ecuaciones manteniendo la simetría relativista explícita, por lo que es el más natural para problemas de radiación y propagación de ondas electromagnéticas.
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Resumen final}
+
+Hemos demostrado que los potenciales electromagnéticos $\phi$ y $\vec{A}$ satisfacen un sistema de ecuaciones diferenciales acopladas derivadas directamente de las ecuaciones de Maxwell. La libertad de gauge inherente a la teoría nos permite imponer la condición de Lorenz $\nabla \cdot \vec{A} + \mu_0\varepsilon_0 \partial_t \phi = 0$, que desacopla las ecuaciones y las transforma en ecuaciones de onda inhomogéneas que se propagan a la velocidad de la luz. Este resultado es fundamental para entender la naturaleza ondulatoria del campo electromagnético, la causalidad en la interacción electromagnética, y sienta las bases para la formulación covariante del electromagnetismo en el marco de la relatividad especial.
+
+\end{document}

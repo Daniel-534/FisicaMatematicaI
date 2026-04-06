@@ -13,6 +13,8 @@
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{mathrsfs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,decorations.pathreplacing}
 
 
 % cabecera
@@ -32,7 +34,7 @@ En coordenadas polares $(r'=ra_0,\theta)$ el potencial eléctrico de un electró
 
 $$V(r) = \frac{1}{4\pi\varepsilon_0}\frac{q}{a_0}\left(\frac{1}{2r} \gamma(3,2r) + \Gamma(2,2r)\right)$$ 
 
-donde $r$ es un número en términos del radio de Bohr $a_0$ y $\gamma(x, y)$, $\Gamma(x, y)$ son las funciones gamma incompletas. Determine el potencial eléctrico para $r<<1$ a orden $\mathcal{O}(r^2)$.
+donde $r$ es un número en términos del radio de Bohr $a_0$ y $\gamma(x, y)$, $\Gamma(x, y)$ son las funciones gamma incompletas. Determine el potencial eléctrico para $r\ll 1$ a orden $\mathcal{O}(r^2)$.
 
 \textit{Ayuda:}
 
@@ -238,6 +240,37 @@ $$
 \subsection{Solución}
 
 El problema requiere realizar el análisis de Fourier para un pulso de sonido de ancho $2T$ y amplitud constante igual a 1, definido matemáticamente como $f(t) = 1$ para $-T < t \leq T$ y $f(t) = 0$ en cualquier otro caso. Para ello, se utiliza la base ortogonal de funciones del espacio $L^2$ dada por $\{\phi(\omega, t)\} = \{ \frac{1}{\sqrt{2\pi}} e^{i\omega t} \}$.
+
+\begin{figure}[H]
+\centering
+\shorthandoff{<>}
+\begin{tikzpicture}[font=\small]
+  \begin{scope}[xshift=0cm]
+    \draw[->] (-3.0,0) -- (3.2,0) node[below right] {$t$};
+    \draw[->] (0,-0.2) -- (0,1.6) node[left] {$f(t)$};
+    \draw[very thick, blue!75!black] (-3,0) -- (-1,0) -- (-1,1) -- (1,1) -- (1,0) -- (3,0);
+    \draw[dashed] (-1,0) node[below] {$-T$} -- (-1,1);
+    \draw[dashed] (1,0) node[below] {$T$} -- (1,1);
+    \node[left] at (0,1) {$1$};
+    \node at (0,-0.95) {Pulso rectangular en tiempo ($\Delta t = 2T$)};
+  \end{scope}
+
+  \begin{scope}[xshift=9.0cm]
+    \draw[->] (-3.2,0) -- (3.4,0) node[below right] {$\omega$};
+    \draw[->] (0,-0.2) -- (0,1.7) node[left] {$|F(\omega)|$};
+    \draw[very thick, red!75!black, smooth, domain=-3:3, samples=400] plot (\x,{abs(sin(180*\x)/(3.14159*\x + 0.00001))});
+    \draw[dashed] (-1,0) -- (-1,0.07);
+    \node[below=2pt] at (-1,0) {$-\pi/T$};
+    \draw[dashed] (1,0) -- (1,0.07);
+    \node[below=2pt] at (1,0) {$\pi/T$};
+    \draw[decorate,decoration={brace,mirror,amplitude=5pt}] (-1,-0.55) -- (1,-0.55)
+      node[midway,below=7pt] {$\Delta\omega \approx 2\pi/T$};
+    \node at (0,-1.50) {Espectro continuo (envolvente tipo sinc)};
+  \end{scope}
+\end{tikzpicture}
+\shorthandon{<>}
+\caption{Visualización tiempo-frecuencia del pulso: la duración temporal finita produce un espectro continuo con lóbulo central y ancho de banda mínimo inversamente proporcional a $T$.}
+\end{figure}
 
 \textbf{a. Estimación del ancho de banda $\Delta\omega$}
 

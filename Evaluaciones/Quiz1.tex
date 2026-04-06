@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2cm]{geometry}
+
+\begin{document}
+
+\begin{enumerate}
+    \item \textbf{(30\%)} Muestre la siguiente identidad (puede usar coordenadas cartesianas):
+    \[
+    \nabla^2 \vec{A} = \nabla(\nabla \cdot \vec{A}) - \nabla \times (\nabla \times \vec{A})
+    \]
+
+    \item Las ecuaciones para el campo electromagnético pueden escribirse en términos de potenciales, el potencial escalar $\phi$ y el potencial vectorial $\vec{A}$. Conociendo estos potenciales y una condición adicional (llamada condición de Gauge), podemos conocer el campo electromagnético.
+
+    \begin{enumerate}
+        \item[(a)] \textbf{(20\%)} Use la notación de Levi-Civita y pruebe las siguientes identidades vectoriales:
+        \begin{itemize}
+            \item
+            \[
+            \vec{D} = -\nabla \phi \Rightarrow \nabla \times \vec{D} = 0
+            \]
+            \item
+            \[
+            \vec{D} = \nabla \times \vec{A} \Rightarrow \nabla \cdot \vec{D} = 0
+            \]
+            \item
+            \[
+            \nabla \times (\nabla \times \vec{D}) - \nabla(\nabla \cdot \vec{D}) + \nabla^2 \vec{D} = 0
+            \]
+        \end{itemize}
+
+        \item[(b)] \textbf{(20\%)} Utilice el resultado anterior y las ecuaciones de Maxwell,
+        \begin{align}
+        \nabla \cdot \vec{E}(\vec{r},t) &= \frac{\rho(\vec{r},t)}{\varepsilon_0}, \\
+        \nabla \cdot \vec{B}(\vec{r},t) &= 0, \\
+        \nabla \times \vec{E}(\vec{r},t) &= -\frac{\partial \vec{B}(\vec{r},t)}{\partial t}, \\
+        \nabla \times \vec{B}(\vec{r},t) &= \mu_0 \vec{J}(\vec{r},t) + \mu_0\varepsilon_0 \frac{\partial \vec{E}(\vec{r},t)}{\partial t},
+        \end{align}
+        para mostrar que los campos $\vec{E}(\vec{r},t)$ y $\vec{B}(\vec{r},t)$ son derivables de un potencial escalar $\phi(\vec{r},t)$ y de un potencial vectorial $\vec{A}(\vec{r},t)$ en la forma
+        \[
+        \vec{B}(\vec{r},t)=\nabla \times \vec{A}(\vec{r},t),
+        \qquad
+        \vec{E}(\vec{r},t)=-\nabla\phi(\vec{r},t)-\frac{\partial \vec{A}(\vec{r},t)}{\partial t}.
+        \]
+
+        \item[(c)] \textbf{(30\%)} Reemplace las expresiones encontradas para $\vec{A}(\vec{r},t)$ y $\phi(\vec{r},t)$ en las ecuaciones de Maxwell y muestre que los potenciales electromagnéticos satisfacen las siguientes ecuaciones
+        \begin{align}
+        \nabla^2\phi(\vec{r},t) + \frac{\partial}{\partial t}\big(\nabla \cdot \vec{A}(\vec{r},t)\big)
+        &= -\frac{\rho(\vec{r},t)}{\varepsilon_0}, \\
+        \nabla\left(\nabla \cdot \vec{A}(\vec{r},t) + \mu_0\varepsilon_0\frac{\partial \phi(\vec{r},t)}{\partial t}\right)
+        + \nabla^2\vec{A}(\vec{r},t)
+        - \mu_0\varepsilon_0\frac{\partial^2 \vec{A}(\vec{r},t)}{\partial t^2}
+        &= -\mu_0\vec{J}(\vec{r},t).
+        \end{align}
+
+        ¿Qué condición matemática deben satisfacer los potenciales para que las ecuaciones anteriores se desacoplen? Reescriba de nuevo dichas ecuaciones pero en su forma desacoplada. ¿Qué puede concluir de su resultado?
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
