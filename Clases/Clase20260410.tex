@@ -1,0 +1,262 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica Matemática I}
+\fancyhead[c]{Notas de Clase 20260410}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Clase 20260410\par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Repaso}
+
+\textbf{Recuerde:}
+
+$$\nabla^2 \phi = \frac{1}{h_1 h_2 h_3} \left[ \frac{\partial}{\partial u_1} \left( \frac{h_2 h_3}{h_1} \frac{\partial \phi}{\partial u_1} \right) + \frac{\partial}{\partial u_2} \left( \frac{h_3 h_1}{h_2} \frac{\partial \phi}{\partial u_2} \right) + \frac{\partial}{\partial u_3} \left( \frac{h_1 h_2}{h_3} \frac{\partial \phi}{\partial u_3} \right) \right]$$
+
+Utilizando la notación $h \equiv h_1 h_2 h_3$, la fórmula se representa como:
+
+$$\nabla^2 \phi = \frac{1}{h} \sum_{i=1}^{3} \frac{\partial}{\partial u_i} \left( \frac{h}{h_i^2} \frac{\partial \phi}{\partial u_i} \right)$$
+
+
+\section{Solución general a la ecuación de Laplace}
+
+Para $\nabla^2 u(x, y) = 0$, la solución con $\alpha^2 > 0$ y $\beta^2 = -\alpha^2 > 0$ es
+
+$$u(x,y) = (C_1e^{\alpha x}+C_2e^{-\alpha x})(C_4e^{i \alpha y}+C_4 e^{-i\alpha y})+ (C_5e^{i\beta x}+C_6e^{-i\beta x})(C_7e^{\beta y}+C_8 e^{-\beta y}) + (C_9x+C_10)(C_11y+C_12)$$
+
+\section{Ejemplo 1: Ecuación de Laplace bajo condiciones de frontera de Dirichlet}
+
+Para el dominio $0 \le x \le L$ y $0 \le y < \infty$, con condiciones de frontera de Dirichlet:
+
+\begin{itemize}
+	\item $u(0, y) = 0$
+	\item $u(L, y) = 0$
+	\item $u(x, 0) = f(x)$
+	\item $\lim_{y \to \infty} u(x, y) = 0$
+\end{itemize}
+
+\subsection{Solución General}
+
+Si 
+
+\begin{itemize}
+	\item $u_1(x,y) = (C_1e^{\alpha x}+C_2e^{-\alpha x})(C_4e^{i \alpha y}+C_4 e^{-i\alpha y})$
+	\item $u_2(x,y) = (C_5e^{i\beta x}+C_6e^{-i\beta x})(C_7e^{\beta y}+C_8 e^{-\beta y})$
+	\item $u_3(x,y) = (C_9x+C_10)(C_11y+C_12)$ 
+\end{itemize}
+
+Entonces, debido a la condición límite, nos damos cuenta que la solución que debemos analizar es únicamente $u_2(x,y)$ porque necesitamos que el modelo decrezca en $y$ y que oscile en $x$.
+
+
+$$ u(x,y) = \sum_{\beta>0}(C_5e^{i\beta x}+C_6e^{-i\beta x})(C_7e^{\beta y}+C_8 e^{-\beta y})$$
+
+Aplicamos $\lim_{y \to \infty} u(x, y) = 0$ lo cual implica que $C_7 = 0$ y nos queda
+
+$$ u = \sum_{\beta>0}(C_5e^{i\beta x}+C_6e^{-i\beta x})(e^{-\beta y})$$
+
+Aplicamos $u(0, y) = 0$
+
+$$u(0, y) =\sum_{\beta>0} (C_5+C_6) e^{-\beta y} = 0$$
+
+$$u=\sum_{\beta>0} 2iC_5 \sin(\beta x)e^{-\beta y}= 0$$
+
+Aplicación de la condición $u(L, y) = 0$. Al sustituir $x = L$ en la expresión que obtuvo para $u(x, y)$, se llega a:
+
+$$u(L, y) = \sum_{\beta>0} 2i C_5 \sin(\beta L) e^{-\beta y} = 0$$
+
+Para que esta igualdad se cumpla para cualquier valor de $y$, cada término de la sumatoria debe anularse individualmente. Dado que la función exponencial $e^{-\beta y}$ es siempre distinta de cero, la condición necesaria es que el factor trigonométrico se anule:
+
+$$\sin(\beta L) = 0$$
+
+Esto implica que el argumento $\beta L$ debe ser un múltiplo entero de $\pi$:
+
+$$\beta L = n\pi \implies \beta_n = \frac{n\pi}{L} \quad \text{para } n = 1, 2, 3, \dots$$
+
+$\beta$ está discretizado.
+
+La aplicación de esta condición de frontera en un \textit{dominio finito} ($x=L$) restringe el parámetro de separación $\beta$ a un conjunto discreto de valores (autovalores). Definiendo una nueva constante $c_n = 2i C_5$, la solución general se escribe como una superposición de estos modos permitidos:
+
+$$u(x, y) = \sum_{n=1}^{\infty} c_n \sin\left(\frac{n\pi x}{L}\right) e^{-\frac{n\pi y}{L}}$$
+
+Finalmente, el coeficiente $c_n$ se determinaría utilizando la condición de frontera restante en la base, $u(x, 0) = f(x)$, mediante la \textbf{ortogonalidad de la base de senos} en el intervalo $(0, L)$.
+
+Hallemos $c_n$ usando la condición de frontera $u(x, 0) = f(x)$
+
+$$u(x, 0) = f(x) = \sum_{n=1}^{\infty} c_n \sin\left(\frac{n\pi x}{L}\right)$$
+
+Para hallar el coeficiente $c_n$ utilizando la condición de frontera $u(x, 0) = f(x)$, debemos aprovechar la **ortogonalidad de la base de senos** en el intervalo $(0, L)$.
+
+El procedimiento analítico es el siguiente:
+
+\begin{enumerate}[a.]
+	\item Partimos de la expansión en serie de senos:
+    $$f(x) = \sum_{n=1}^{\infty} c_n \sin\left(\frac{n\pi x}{L}\right)$$
+
+	\item Aplicamos la propiedad de ortogonalidad:
+    Multiplicamos ambos lados de la igualdad por $\sin\left(\frac{m\pi x}{L}\right)$ e integramos respecto a $x$ desde $0$ hasta $L$:
+    $$\int_0^L f(x) \sin\left(\frac{m\pi x}{L}\right) dx = \sum_{n=1}^{\infty} c_n \int_0^L \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx$$
+
+	\item Evaluamos la integral del lado derecho:
+    La integral de los productos de senos genera una delta de Kronecker ($\delta_{nm}$):
+    $$\int_0^L \sin\left(\frac{n\pi x}{L}\right) \sin\left(\frac{m\pi x}{L}\right) dx = \frac{L}{2} \delta_{nm}$$
+
+	\item Colapsamos la sumatoria:
+    Debido a la propiedad de la delta de Kronecker, todos los términos de la suma se anulan excepto aquel donde $n = m$. Por lo tanto, la expresión se reduce a:
+    $$\int_0^L f(x) \sin\left(\frac{m\pi x}{L}\right) dx = c_m \left( \frac{L}{2} \right)$$
+
+	\item Resultado final para $c_n$:
+    Despejando la constante (y volviendo a usar $n$ como índice), obtenemos la fórmula para los coeficientes de la serie:
+    $$c_n = \frac{2}{L} \int_0^L f(x) \sin\left(\frac{n\pi x}{L}\right) dx$$
+\end{enumerate}
+
+Este coeficiente representa la amplitud de cada modo normal de oscilación o componente del potencial, determinada por la forma específica de la función de distribución inicial $f(x)$.
+
+La expresión final para $u$ es:
+
+$$u(x, y) = \frac{2}{L} \sum_{n=1}^{\infty} \left[ \int_0^L f(x') \sin\left(\frac{n\pi x'}{L}\right) dx' \right] \sin\left(\frac{n\pi x}{L}\right) e^{-\frac{n\pi y}{L}}$$.
+
+\textbf{Análisis de la Expresión}
+\begin{itemize}
+	\item $f(x')$: Representa el valor del potencial (o condición de Dirichlet) impuesto en la frontera inferior $y=0$.
+	\item $\sin\left(\frac{n\pi x}{L}\right)$: Asegura que se cumplan las condiciones de contorno laterales, donde el potencial debe ser nulo en $x=0$ y $x=L$.
+	\item $e^{-\frac{n\pi y}{L}}$: Garantiza que el potencial se desvanezca conforme nos alejamos de la base hacia el infinito ($y \to \infty$).
+	\item La integral: Actúa como un filtro que determina cuánta 'influencia' tiene la forma de la función de frontera $f(x')$ sobre cada uno de los modos armónicos del sistema.
+\end{itemize}
+
+\subsection{Solución para $f(x) = u_0$}
+
+Para analizar el caso donde la función de frontera es constante, $f(x) = u_0$, debemos evaluar el término integral que define los coeficientes de la serie de Fourier en la solución general de la ecuación de Laplace.
+
+
+\textbf{Cálculo de los coeficientes $c_n$}
+
+Partiendo de la definición de los coeficientes para una expansión en serie de senos en el intervalo $[0, L]$:
+$$c_n = \frac{2}{L} \int_0^L u_0 \sin\left(\frac{n\pi x'}{L}\right) dx'$$
+
+Al realizar la integración de la función constante $u_0$:
+$$c_n = \frac{2u_0}{L} \left[ -\frac{L}{n\pi} \cos\left(\frac{n\pi x'}{L}\right) \right]_0^L = -\frac{2u_0}{n\pi} \left[ \cos(n\pi) - \cos(0) \right]$$
+
+Sustituyendo los valores de la función coseno para enteros $n$ ($\cos(n\pi) = (-1)^n$ y $\cos(0) = 1$):
+$$c_n = -\frac{2u_0}{n\pi} [(-1)^n - 1] = \frac{2u_0}{n\pi} [1 - (-1)^n]$$
+
+\textbf{Análisis de paridad}
+
+El valor de los coeficientes depende de si $n$ es un número par o impar:
+
+\begin{itemize}
+	\item $n$ es par ($n = 2, 4, 6, \dots$): el término $[1 - (-1)^n]$ se convierte en $ = 0$. Por lo tanto, $c_n = 0$ para todos los armónicos pares.
+	\item Si $n$ es impar ($n = 1, 3, 5, \dots$): el término $[1 - (-1)^n]$ se convierte en $[1 - (-1)] = 2$. Así, los coeficientes para armónicos impares son $c_n = \frac{4u_0}{n\pi}$.
+\end{itemize}
+
+\textbf{Expresión final para $u(x, y)$}
+
+Sustituyendo estos coeficientes en la sumatoria original, la solución se simplifica para incluir solo los términos impares:
+
+$$u(x, y) = \frac{4u_0}{\pi} \sum_{n=1,3,5,\dots}^{\infty} \frac{1}{n} \sin\left(\frac{n\pi x}{L}\right) e^{-\frac{n\pi y}{L}}$$
+
+\textbf{Interpretación Física}
+\begin{itemize}
+	\item Comportamiento en la base ($y=0$): Al evaluar la solución en $y=0$, se obtiene la serie de Fourier de una onda cuadrada de amplitud $u_0$. Aunque $f(x)=u_0$ es constante, la serie de senos fuerza a que el potencial caiga a cero en los bordes $x=0$ y $x=L$, creando discontinuidades que la serie promedia en esos puntos.
+	\item Decaimiento espacial: El término exponencial $e^{-\frac{n\pi y}{L}}$ asegura que el potencial se desvanezca rápidamente a medida que nos alejamos de la base ($y \to \infty$). Los términos de mayor frecuencia (valores altos de $n$) decaen más rápido, dejando que el término fundamental ($n=1$) domine la solución a grandes distancias.
+\end{itemize}
+
+\subsection{Tarea} 
+
+Consulte sobre el fenómeno de Gibbs
+
+\subsection{Solución para $f(x) = u_0\sin\left(\frac{m\pi x}{L}\right)$}
+
+Para analizar el caso donde la función de frontera en la base ($y=0$) es una distribución senoidal específica dada por $f(x) = u_0 \sin\left(\frac{m\pi x}{L}\right)$, seguimos un procedimiento análogo al anterior, utilizando la propiedad de ortogonalidad de las funciones base.
+
+\textbf{Cálculo de los coeficientes $c_n$}
+
+Partimos de la condición de frontera en la base para la serie general de la solución de Laplace:
+$$u(x, 0) = \sum_{n=1}^{\infty} c_n \sin\left(\frac{n\pi x}{L}\right) = u_0 \sin\left(\frac{m\pi x}{L}\right)$$
+
+Para hallar el coeficiente $c_n$, aplicamos la integral de ortogonalidad en el intervalo $[0, L]$:
+$$c_n = \frac{2}{L} \int_0^L \left[ u_0 \sin\left(\frac{m\pi x'}{L}\right) \right] \sin\left(\frac{n\pi x'}{L}\right) dx'$$
+
+Factorizando la constante $u_0$:
+$$c_n = \frac{2u_0}{L} \int_0^L \sin\left(\frac{m\pi x'}{L}\right) \sin\left(\frac{n\pi x'}{L}\right) dx'$$
+
+\textbf{Análisis de la Delta de Kronecker}
+La integral del producto de dos funciones seno con diferentes armónicos en este intervalo genera una delta de Kronecker ($\delta_{nm}$) multiplicada por $L/2$:
+$$\int_0^L \sin\left(\frac{m\pi x'}{L}\right) \sin\left(\frac{n\pi x'}{L}\right) dx' = \frac{L}{2} \delta_{nm}$$
+
+Sustituyendo este resultado en la expresión para $c_n$:
+$$c_n = \frac{2u_0}{L} \left( \frac{L}{2} \delta_{nm} \right) = u_0 \delta_{nm}$$
+
+Esto significa que:
+\begin{itemize}
+	\item Si $n \neq m$: El coeficiente $c_n = 0$
+	\item Sii $n = m$: El coeficiente $c_m = u_0$
+\end{itemize}
+
+\textbf{Expresión final para $u(x, y)$}
+Al sustituir estos coeficientes en la sumatoria original de la solución general, todos los términos de la serie desaparecen excepto aquel donde el índice de la serie coincide con el índice de la función de frontera ($n = m$):
+
+$$u(x, y) = u_0 \sin\left(\frac{m\pi x}{L}\right) e^{-\frac{m\pi y}{L}}$$
+
+\textbf{Interpretación Física}
+\begin{itemize}
+	\item Filtrado de armónicos: A diferencia del caso con una constante $u_0$ (que requería infinitos armónicos para formarse), una base senoidal pura solo 'excita' el modo correspondiente en el interior de la placa. La solución es, por lo tanto, un solo término en lugar de una suma infinita.
+	\item Relación entre frecuencia y decaimiento: El término exponencial $e^{-\frac{m\pi y}{L}}$ muestra que cuanto mayor sea el valor de $m$ (es decir, cuanto más oscilatoria sea la condición en la base), más rápido decaerá el potencial a medida que nos alejamos de la frontera $y=0$.
+	\item Consistencia de frontera: La solución satisface de forma natural que $u=0$ en los bordes laterales $x=0$ y $x=L$, y que tiende a cero cuando $y \to \infty$. Al evaluar en $y=0$, recuperamos exactamente la función $u_0 \sin(m\pi x / L)$ impuesta originalmente.
+\end{itemize}
+
+\section{Tarea}
+
+Considere dos barras idénticas unidas. Inicialmente una está a $0°C$ y la otra está a $100°C$. Ambas barras se unen, una al lado de la otra, y se aislan térmicamente. La temperatura $T(x, y)$ cumple la ecuación de difusión.
+
+$$\partial_x^2 T(x, t) = \frac{1}{\kappa}\partial_t T(x, t)$$
+
+Las condiciones de frontera son
+
+\begin{itemize}
+	\item $\partial_x T(\pm a,t)$ (aislada)
+	\item $\kappa>0$
+\end{itemize}
+
+Hallar $T(x,t)$.
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
