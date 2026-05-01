@@ -1,0 +1,183 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 6}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 6 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\textbf{Problemas resueltos}
+
+\textbf{1. En el taller anterior estudiamos el espectro asociado al operador $\mathscr{L} = \frac{d^2}{dx^2}$ con las condiciones de frontera $\phi(0) = \phi(\pi) = 0$, resolviendo el problema de autovalores:}
+
+$$ \mathscr{L}\phi = \lambda\phi \implies \frac{d^2\phi}{dx^2} = \lambda\phi \quad (1) $$
+
+\textit{Se encontró el conjunto infinito discreto de autovalores y autofunciones:}
+
+$$ \left\{ \phi_n(x) = \sqrt{\frac{2}{\pi}} \sin(\sqrt{\lambda_n} x) ; \lambda_n = n^2, n = 1, 2, 3, 4\dots \right\} $$
+
+\textbf{Ahora queremos encontrar la solución de la ecuación diferencial $\frac{d^2\phi(x)}{dx^2} = f(x)$, es decir $\mathscr{L}\phi(x) = f(x)$. Para esto, usamos el método de Green.} \textit{Note que $\mathscr{L} = \mathscr{H}$ ya es autoadjunto. Cuando el problema es hermítico, podemos utilizar las autofunciones para construir la función de Green. Como es sabido, la función de Green satisface la ecuación con el operador $\mathscr{H}$ y una fuente puntual:}
+
+$$ \mathscr{H}_x G(x, y) = \delta(x - y) \quad (2) $$
+
+\textit{Suponemos que $G(x, y) = \sum_n a_n(y)\phi_n(x)$ se puede expandir en términos de las autofunciones de $\mathscr{H}$. Reemplazando esta expresión en la ecuación (2) tenemos:}
+
+$$ \sum_n \mathscr{H}_x a_n(y)\phi_n(x) = \sum_n a_n(y) \mathscr{H}_x \phi_n(x) = \sum_n a_n(y) \lambda_n \phi_n(x) = \delta(x - y) $$
+
+\textit{Si reemplazamos la \textbf{condición de clausura} de la base, $\delta(x - y) = \sum_n \phi_n^*(y)\phi_n(x)$, tenemos que:}
+
+$$ \sum_n a_n(y) \lambda_n \phi_n(x) = \sum_n \phi_n^*(y) \phi_n(x) \implies a_n(y) = \frac{\phi_n^*(y)}{\lambda_n} $$
+
+\textit{De donde, $G(x, y) = \sum_n \frac{\phi_n^*(y)\phi_n(x)}{\lambda_n}$, tal que la solución está dada por:}
+
+$$ \phi(x) = \int_a^b G(x, y) f(y) dy $$
+
+\textbf{Con este marco, la función de Green asociada al operador $\mathscr{L} = \frac{d^2}{dx^2}$ y con condiciones de frontera homogéneas, puede escribirse en la forma:}
+
+$$ G(x, y) = \frac{2}{\pi} \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} \quad (6) $$
+
+\textit{De tal forma que la solución a la ecuación diferencial es:}
+
+$$ \phi(x) = \frac{2}{\pi} \int_0^\pi dy \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} f(y) $$
+
+\textbf{Por otro lado, siempre podemos utilizar el método directo:}
+
+$$ \mathscr{H}_y G(x, y) = \delta(x - y) \implies \frac{d^2G(x, y)}{dy^2} = \delta(x - y) $$
+
+\textit{Para $x \neq y$ se tiene entonces que resolver $\frac{d^2G(x, y)}{dy^2} = 0$, lo que implica:}
+
+$$ G(x, y) = \begin{cases} A(x)y + B(x) & \text{si } y < x \\ C(x)y + D(x) & \text{si } y > x \end{cases} \quad (9) $$
+
+\textit{Como en este caso se tienen condiciones de Dirichlet, se debe elegir $G(x, 0) = 0 \implies B(x) = 0$ y $G(x, \pi) = 0 \implies C(x)\pi + D(x) = 0 \implies D(x) = -C(x)\pi$. La ecuación (9) queda como:}
+
+$$ G(x, y) = \begin{cases} A(x)y & \text{si } y < x \\ C(x)(y - \pi) & \text{si } y > x \end{cases} \quad (10) $$
+
+\textit{Las propiedades de la función exigen continuidad, $\lim_{\epsilon \to 0} G(x, y)|_{x-\epsilon} = \lim_{\epsilon \to 0} G(x, y)|_{x+\epsilon}$, y el salto en la primera derivada $\frac{\partial G(x, y)}{\partial y}|_{x+\epsilon} - \frac{\partial G(x, y)}{\partial y}|_{x-\epsilon} = \frac{1}{q(x)}$:}
+
+$$ A(x)x = C(x)(x - \pi) $$
+$$ C(x) - A(x) = 1 $$
+
+\textit{Resolviendo el sistema se obtiene $A(x) = \frac{x - \pi}{\pi}$ y $C(x) = \frac{x}{\pi}$. Obtenemos la función de Green por el método directo:}
+
+$$ G(x, y) = \begin{cases} \frac{x - \pi}{\pi} y & \text{si } y < x \\ \frac{x}{\pi} (y - \pi) & \text{si } y > x \end{cases} $$
+
+\textit{Tal que la solución está dada por:}
+
+$$ \phi(x) = \int_0^x \frac{x - \pi}{\pi} y f(y) dy + \int_x^\pi \frac{x}{\pi} (y - \pi) f(y) dy $$
+
+\textbf{Equivalencia entre ambos métodos:}
+
+\textit{Partimos de $G(x, y) = \sum_n a_n(y)\phi_n(x)$ con $a_n(y) = \int \phi_n^*(x) G(x, y) dx$:}
+
+$$ a_n(y) = \sqrt{\frac{2}{\pi}} \int_0^\pi \sin(nx) G(x, y) dx $$
+
+$$ a_n(y) = \sqrt{\frac{2}{\pi}} \left[ \int_0^y \sin(nx) \frac{y - \pi}{\pi} x dx + \int_y^\pi \sin(nx) \frac{y}{\pi} (x - \pi) dx \right] $$
+
+\textit{Tras realizar la integración y simplificar, se obtiene:}
+
+$$ a_n(y) = \sqrt{\frac{2}{\pi}} \frac{\sin(ny)}{-n^2} $$
+
+\textit{Note el signo negativo en el autovalor $\lambda_n = -n^2$, debido a la convención de Sturm-Liouville $\mathscr{L}\phi - \lambda\phi = 0$. Al reemplazar en la expansión, obtenemos finalmente:}
+
+$$ G(x, y) = \frac{2}{\pi} \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} $$
+
+\textit{La cual coincide con la ecuación (6).}
+
+
+\textbf{2. Solución de la ecuación de Poisson en el espacio infinito.}
+
+\textit{Usualmente en el curso básico de Física II se define el campo electrostático generado por una distribución de carga en un punto $P$ como:}
+
+$$ \phi(\vec{r}) = \frac{1}{4\pi\epsilon_0} \int \frac{dq}{||\vec{r} - \vec{r}'||} $$
+
+\textit{Donde $dq$ está relacionado con la distribución de carga $dq = \rho(\vec{r}')d^3r'$ y la expresión es válida sólo si la distribución de carga no cambia con el tiempo. Además, note dos cosas: primero, en el caso de distribuciones en una y dos dimensiones, podemos escribirla en tres con ayuda de la delta de Dirac. Segundo, en realidad los textos básicos definen el sistema de coordenadas en $\vec{r}'$ de la forma $\phi(\vec{r}) = \frac{1}{4\pi\epsilon_0} \int \frac{dq}{||\vec{r} - \vec{r}'||}$.}
+
+\textbf{Por otro lado, la ecuación de Poisson:}
+
+$$ \nabla^2\phi = -\frac{\rho(\vec{r})}{\epsilon_0} \quad (17) $$
+
+\textit{describe el potencial electrostático generado por la fuente $\rho(\vec{r})$. Normalmente, en este curso la resolvemos con condiciones de frontera apropiadas. Supongamos ahora que la queremos resolver en el espacio infinito, sin condiciones de frontera. Para ello, debemos encontrar la función de Green asociada a la ecuación (17), tal que $\mathscr{H}G(x, y) = \delta(x - y)$ con $\mathscr{H} = \nabla^2$. En este caso es mejor entonces utilizar la transformada de Fourier:}
+
+$$ G(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) \quad (18) $$
+$$ \delta(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} $$
+
+\textit{tal que:}
+
+$$ \nabla^2_{r} G(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \nabla^2_{r} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) = \frac{1}{(2\pi)^3} \int i^2 \vec{k} \cdot \vec{k} d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) $$
+
+\textbf{Reemplazamos en la ecuación para la función de Green:}
+
+$$ -\frac{1}{(2\pi)^3} \int \vec{k}^2 d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} $$
+$$ \implies \frac{1}{(2\pi)^3} \int d^3k (\vec{k}^2 f(\vec{k}) + 1) e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} = 0 $$
+$$ \implies \vec{k}^2 f(\vec{k}) + 1 = 0 \implies f(\vec{k}) = -\frac{1}{||\vec{k}||^2} \equiv -\frac{1}{k^2} $$
+
+\textit{Ahora podemos reconstruir la función de Green. Para ello, debemos realizar la integral:}
+
+$$ G(\vec{r}, \vec{r}') = -\frac{1}{(2\pi)^3} \int \frac{1}{k^2} e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} d^3k \quad (24) $$
+
+\textit{Tomamos coordenadas esféricas para el espacio de momentos $\vec{k}$, tal que $d^3k = k^2 \sin \theta_k dk d\theta_k d\phi_k$. Si definimos $\vec{R} = \vec{r} - \vec{r}'$, la integral de la exponencial puede escribirse como $\int e^{ikR\cos\theta_k} d^3k$. El término angular se integra como:}
+
+$$ \int_0^\pi d\theta_k \sin \theta_k e^{ikR\cos\theta_k} = -\frac{1}{ikR} e^{ikR\cos\theta_k} \Big|_0^\pi = -\frac{1}{ikR} [e^{-ikR} - e^{ikR}] = \frac{2 \sin(kR)}{kR} $$
+
+\textbf{Reemplazamos este resultado en la ecuación (24):}
+
+$$ G(\vec{r}, \vec{r}') = -\frac{1}{(2\pi)^3} \int_0^\infty dk k^2 \frac{1}{k^2} (2\pi) \frac{2 \sin(kR)}{kR} = -\frac{1}{2\pi^2 R} \int_0^\infty dk \frac{\sin(kR)}{k} \quad (25) $$
+
+\textit{Solo falta realizar la integral impropia. La analizaremos en el plano complejo. Primero note que si hacemos el cambio $x \to -x$, tenemos que $\int_0^\infty \frac{\sin x}{x} dx = \int_{-\infty}^0 \frac{\sin x}{x} dx$. Luego, podemos escribir:}
+
+$$ \int_0^\infty dk \frac{\sin(kR)}{k} = \frac{1}{2} \int_{-\infty}^\infty dk \frac{\sin(kR)}{k} = \frac{1}{2} \frac{1}{2i} \int_{-\infty}^\infty dk \left[ \frac{e^{ikR}}{k} - \frac{e^{-ikR}}{k} \right] = \frac{1}{4i} (2\pi i) = \frac{\pi}{2} $$
+
+\textbf{Con esto, se tiene que la función de Green para el problema de Poisson en el espacio infinito está dada por:}
+
+$$ G(\vec{r}, \vec{r}') = -\frac{1}{2\pi^2 R} \frac{\pi}{2} = -\frac{1}{4\pi} \frac{1}{||\vec{r} - \vec{r}'||} $$
+
+\textit{y la solución de la ecuación de Poisson:}
+
+$$ \phi(\vec{x}) = \int d^3r' G(\vec{r}, \vec{r}') \left( -\frac{\rho(\vec{r}')}{\epsilon_0} \right) = \frac{1}{4\pi\epsilon_0} \int d^3r' \frac{\rho(\vec{r}')}{||\vec{r} - \vec{r}'||} \quad (28) $$
+
+\textit{expresión que coincide con la definición estándar dada en los cursos de Física básica.}
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
