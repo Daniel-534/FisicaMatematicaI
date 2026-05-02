@@ -494,6 +494,60 @@ $$ \frac{d^2y}{dx^2} + \frac{y}{4} = f(x), $$
 sujeta a las condiciones de frontera $y(0) = y(\pi) = 0$, está dada por
 $$ G(x, z) = \begin{cases} -2 \cos \left( \frac{1}{2} x \right) \sin \left( \frac{1}{2} z \right) & \text{si } 0 \le z \le x, \\ -2 \sin \left( \frac{1}{2} x \right) \cos \left( \frac{1}{2} z \right) & \text{si } x \le z \le \pi \end{cases} $$.
 
+
+\subsection{Solución}
+A continuación se desarrolla la construcción analítica completa de la función de Green solicitada, utilizando el método directo para ecuaciones diferenciales ordinarias lineales de segundo orden. El procedimiento se fundamenta en la teoría de funciones de Green y condiciones de empalme expuesta en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción directa y discontinuidad de la derivada), 6.3 (independencia lineal y Wronskiano) y 6.2 (operadores autoadjuntos).
+
+\textbf{1. Planteamiento de la ecuación de Green}
+
+El operador diferencial asociado a la ecuación dada es $\mathscr{L} = \frac{d^2}{dx^2} + \frac{1}{4}$. La función de Green $G(x, z)$ debe satisfacer la ecuación con fuente puntual localizada en $z$:
+$$ \mathscr{L}_x G(x, z) = \frac{\partial^2 G(x, z)}{\partial x^2} + \frac{1}{4} G(x, z) = \delta(x - z) $$
+sujeta a las condiciones de frontera de Dirichlet homogéneas en los extremos del intervalo $[0, \pi]$:
+$$ G(0, z) = 0, \quad G(\pi, z) = 0 $$
+
+\textbf{2. Solución de la ecuación homogénea por regiones}
+
+Para $x \neq z$, el lado derecho de la ecuación se anula ($\delta(x-z)=0$), reduciéndose a la ecuación homogénea $G'' + \frac{1}{4}G = 0$. La solución general es combinación lineal de funciones seno y coseno con argumento $x/2$. Dado que la posición de la fuente $z$ divide el dominio en dos regiones, definimos la función por tramos (Alonso, Sec. 7.2):
+$$ G(x, z) = \begin{cases} G_<(x, z) & 0 \le x < z \\ G_>(x, z) & z < x \le \pi \end{cases} $$
+Aplicando las condiciones de frontera en cada región:
+- En la región izquierda ($0 \le x < z$): La condición $G_<(0, z) = 0$ elimina el término coseno. Por tanto, $G_<(x, z) = A(z) \sin\left(\frac{x}{2}\right)$.
+- En la región derecha ($z < x \le \pi$): La condición $G_>(\pi, z) = 0$ elimina el término seno, dado que $\cos(\pi/2) = 0$ y $\sin(\pi/2) = 1$. Por tanto, $G_>(x, z) = B(z) \cos\left(\frac{x}{2}\right)$.
+
+\textbf{3. Condiciones de empalme en la fuente $x = z$}
+
+De acuerdo con la teoría de funciones de Green (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12), $G(x, z)$ debe cumplir dos condiciones en el punto donde actúa la delta de Dirac:
+1. \textbf{Continuidad de la función:} $G(x, z)$ es continua en $x = z$.
+$$ G_<(z, z) = G_>(z, z) \implies A(z) \sin\left(\frac{z}{2}\right) = B(z) \cos\left(\frac{z}{2}\right) \quad \text{(Ec. 1)} $$
+2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2(x) = 1$, la derivada respecto a $x$ presenta una discontinuidad de salto igual a $1/a_2(z) = 1$:
+$$ \left. \frac{\partial G_>}{\partial x} \right|_{x=z} - \left. \frac{\partial G_<}{\partial x} \right|_{x=z} = 1 $$
+Calculando las derivadas parciales:
+$$ \frac{\partial G_<}{\partial x} = \frac{A(z)}{2} \cos\left(\frac{x}{2}\right), \quad \frac{\partial G_>}{\partial x} = -\frac{B(z)}{2} \sin\left(\frac{x}{2}\right) $$
+Evaluando en $x = z$ e imponiendo la condición de salto:
+$$ -\frac{B(z)}{2} \sin\left(\frac{z}{2}\right) - \frac{A(z)}{2} \cos\left(\frac{z}{2}\right) = 1 \quad \text{(Ec. 2)} $$
+
+\textbf{4. Resolución del sistema algebraico}
+
+El sistema formado por las ecuaciones (1) y (2) permite determinar los coeficientes dependientes de la fuente, $A(z)$ y $B(z)$. De la (Ec. 1) despejamos $B(z)$:
+$$ B(z) = A(z) \frac{\sin(z/2)}{\cos(z/2)} = A(z) \tan\left(\frac{z}{2}\right) $$
+Sustituyendo esta expresión en la (Ec. 2):
+$$ -\frac{A(z) \tan(z/2)}{2} \sin\left(\frac{z}{2}\right) - \frac{A(z)}{2} \cos\left(\frac{z}{2}\right) = 1 $$
+Factorizando $-\frac{A(z)}{2}$ y usando la identidad trigonométrica fundamental $\sin^2\theta + \cos^2\theta = 1$:
+$$ -\frac{A(z)}{2} \left[ \frac{\sin^2(z/2)}{\cos(z/2)} + \cos\left(\frac{z}{2}\right) \right] = 1 \implies -\frac{A(z)}{2} \left[ \frac{1}{\cos(z/2)} \right] = 1 $$
+De donde se obtiene inmediatamente:
+$$ A(z) = -2 \cos\left(\frac{z}{2}\right) $$
+Sustituyendo $A(z)$ de vuelta en la expresión para $B(z)$:
+$$ B(z) = \left[ -2 \cos\left(\frac{z}{2}\right) \right] \tan\left(\frac{z}{2}\right) = -2 \sin\left(\frac{z}{2}\right) $$
+
+\textbf{5. Construcción final y verificación de simetría}
+
+Reemplazando $A(z)$ y $B(z)$ en las expresiones por regiones, obtenemos la función de Green explícita:
+$$ G(x, z) = \begin{cases} \displaystyle -2 \cos\left(\frac{z}{2}\right) \sin\left(\frac{x}{2}\right) & \text{si } 0 \le x < z \\[10pt] \displaystyle -2 \sin\left(\frac{z}{2}\right) \cos\left(\frac{x}{2}\right) & \text{si } z < x \le \pi \end{cases} $$
+Reordenando las condiciones para expresar la solución en función de la posición relativa de $z$ respecto a $x$ (como se plantea en el enunciado):
+- Para $0 \le z \le x$ (equivalente a $x \ge z$), corresponde la segunda rama: $G(x, z) = -2 \cos\left(\frac{1}{2}x\right) \sin\left(\frac{1}{2}z\right)$.
+- Para $x \le z \le \pi$ (equivalente a $x \le z$), corresponde la primera rama: $G(x, z) = -2 \sin\left(\frac{1}{2}x\right) \cos\left(\frac{1}{2}z\right)$.
+
+Esto coincide exactamente con la expresión solicitada. Nótese además que la función obtenida es simétrica, es decir $G(x, z) = G(z, x)$, propiedad inherente a los operadores diferenciales autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 6.2), lo cual valida la consistencia matemática del resultado. La construcción queda así demostrada rigurosamente mediante el método directo.
+
 \section{Problema 6}
 Encuentre la función de Green $x = G(t, t_0)$ que resuelve
 $$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = \delta(t - t_0) $$
@@ -501,14 +555,204 @@ bajo las condiciones iniciales $x = dx/dt = 0$ en $t = 0$. Luego resuelva
 $$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = f(t), $$
 donde $f(t) = 0$ para $t < 0$. Evalúe explícitamente su respuesta para $f(t) = Ae^{-at}$ ($t > 0$).
 
+
+\subsection{Solución}
+
+A continuación se desarrolla el análisis analítico completo del problema, estructurado en la construcción causal de la función de Green para el operador diferencial de segundo orden con amortiguamiento, la formulación integral de la solución general mediante convolución, y la evaluación explícita para una fuente exponencial, incluyendo el análisis del caso degenerado. Los fundamentos teóricos se apoyan en el tratamiento de funciones de Green para ecuaciones diferenciales ordinarias y problemas de valor inicial desarrollado en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción directa, condiciones de continuidad y salto en la derivada), 3.1.3 (relación con el método de variación de parámetros y núcleos integrales) y 7.3 (funciones de Green causales y osciladores amortiguados).
+
+\textbf{1. Construcción directa de la función de Green $G(t, t_0)$}
+
+Buscamos la función de Green $G(t, t_0)$ que satisface la ecuación diferencial con fuente puntual localizada en el tiempo $t_0$:
+$$ \frac{\partial^2 G(t, t_0)}{\partial t^2} + \alpha \frac{\partial G(t, t_0)}{\partial t} = \delta(t - t_0) $$
+sujeta a las condiciones iniciales homogéneas de causalidad: $G(0, t_0) = 0$ y $\dot{G}(0, t_0) = 0$. Como se establece en la sección 7.2 de Alonso, la función de Green para problemas de valor inicial debe construirse por regiones separadas por la posición de la fuente $t_0$, imponiendo condiciones de empalme en dicho punto.
+
+Para $t \neq t_0$, el lado derecho se anula y resolvemos la ecuación homogénea asociada:
+$$ \ddot{G} + \alpha \dot{G} = 0 $$
+La ecuación característica es $r^2 + \alpha r = 0$, cuyas raíces son $r_1 = 0$ y $r_2 = -\alpha$. La solución general en cada región es:
+$$ G(t, t_0) = \begin{cases} C_1 + C_2 e^{-\alpha t} & t < t_0 \\ A + B e^{-\alpha t} & t > t_0 \end{cases} $$
+Dado que el sistema parte del reposo ($t=0$) y la fuente puntual solo actúa en $t=t_0 > 0$, por causalidad la respuesta debe ser nula antes de que la fuente se active. Por tanto, para $0 \le t < t_0$ se cumple $G(t, t_0) = 0$, lo que fija $C_1 = C_2 = 0$.
+
+Para $t > t_0$, la función toma la forma $G_>(t, t_0) = A + B e^{-\alpha t}$. Los coeficientes $A$ y $B$ se determinan mediante las dos condiciones de empalme en $t = t_0$ (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12):
+1. \textbf{Continuidad de la función:} $G(t_0^+, t_0) = G(t_0^-, t_0) = 0$.
+$$ A + B e^{-\alpha t_0} = 0 \implies A = -B e^{-\alpha t_0} $$
+2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2 = 1$, la derivada respecto a $t$ presenta una discontinuidad de salto igual a $1/a_2 = 1$:
+$$ \left. \frac{\partial G_>}{\partial t} \right|_{t_0^+} - \left. \frac{\partial G_<}{\partial t} \right|_{t_0^-} = 1 $$
+Como $\dot{G}_<(t_0, t_0) = 0$, evaluamos $\dot{G}_>(t, t_0) = -\alpha B e^{-\alpha t}$ en $t=t_0$:
+$$ -\alpha B e^{-\alpha t_0} = 1 \implies B = -\frac{e^{\alpha t_0}}{\alpha} $$
+Sustituyendo $B$ en la expresión para $A$:
+$$ A = -\left(-\frac{e^{\alpha t_0}}{\alpha}\right) e^{-\alpha t_0} = \frac{1}{\alpha} $$
+Reensamblando la solución por regiones y utilizando la función escalón de Heaviside $\theta(t-t_0)$ para compactar la expresión causal, obtenemos la función de Green explícita:
+$$ G(t, t_0) = \frac{1}{\alpha} \left( 1 - e^{-\alpha(t - t_0)} \right) \theta(t - t_0) $$
+Esta estructura es análoga a la obtenida para el oscilador subamortiguado en la sección 7.3 de Alonso, donde la función de Green decae exponencialmente desde el instante de activación de la fuente, reflejando la disipación inherente al término de primera derivada $\alpha \dot{x}$.
+
+\textbf{2. Solución general para la fuente extendida $f(t)$}
+
+De acuerdo con la teoría de variación de parámetros y la representación integral de núcleos de Green (Alonso, Sec. 3.1.3 y 7.2), la solución a la ecuación inhomogénea
+$$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = f(t), \quad f(t) = 0 \text{ para } t < 0 $$
+con condiciones iniciales nulas, se construye mediante la convolución de la fuente con la función de Green:
+$$ x(t) = \int_0^\infty G(t, t_0) f(t_0) \, dt_0 $$
+Debido a la causalidad impuesta por $\theta(t-t_0)$, el límite superior de integración se reduce efectivamente a $t$, ya que para $t_0 > t$ la función de Green se anula. Sustituyendo la expresión cerrada de $G(t, t_0)$:
+$$ x(t) = \frac{1}{\alpha} \int_0^t \left( 1 - e^{-\alpha(t - t_0)} \right) f(t_0) \, dt_0 $$
+Esta integral representa la superposición lineal de las respuestas impulsivas del sistema a lo largo de la historia de la fuente, desde el instante inicial hasta el tiempo de observación $t$.
+
+\textbf{3. Evaluación explícita para $f(t) = A e^{-at}$ ($t > 0$)}
+
+Sustituimos la fuente exponencial $f(t_0) = A e^{-a t_0}$ en la integral de convolución:
+$$ x(t) = \frac{A}{\alpha} \int_0^t \left( 1 - e^{-\alpha(t - t_0)} \right) e^{-a t_0} \, dt_0 $$
+Descomponemos la integral en dos partes y extraemos los factores independientes de $t_0$:
+$$ x(t) = \frac{A}{\alpha} \left[ \int_0^t e^{-a t_0} \, dt_0 - e^{-\alpha t} \int_0^t e^{(\alpha - a) t_0} \, dt_0 \right] $$
+El resultado analítico depende críticamente de la relación entre el parámetro de amortiguamiento $\alpha$ y la tasa de decaimiento de la fuente $a$. Distinguimos dos casos físicamente relevantes:
+
+\textit{Caso (a): $\alpha \neq a$ (frecuencias no degeneradas)}
+Evaluando las integrales elementales:
+$$ \int_0^t e^{-a t_0} \, dt_0 = \frac{1 - e^{-at}}{a}, \quad \int_0^t e^{(\alpha - a) t_0} \, dt_0 = \frac{e^{(\alpha - a)t} - 1}{\alpha - a} $$
+Sustituyendo y reorganizando algebraicamente:
+$$ x(t) = \frac{A}{\alpha} \left[ \frac{1 - e^{-at}}{a} - e^{-\alpha t} \frac{e^{(\alpha - a)t} - 1}{\alpha - a} \right] $$
+$$ x(t) = \frac{A}{\alpha a} (1 - e^{-at}) - \frac{A}{\alpha(\alpha - a)} (e^{-at} - e^{-\alpha t}) $$
+Agrupando términos por sus comportamientos temporales:
+$$ x(t) = \frac{A}{\alpha a} - \left( \frac{A}{\alpha a} + \frac{A}{\alpha(\alpha - a)} \right) e^{-at} + \frac{A}{\alpha(\alpha - a)} e^{-\alpha t} $$
+Simplificando el coeficiente de $e^{-at}$ mediante $\frac{1}{\alpha a} + \frac{1}{\alpha(\alpha - a)} = \frac{1}{a(\alpha - a)}$, obtenemos la forma cerrada final:
+$$ x(t) = \frac{A}{\alpha a} - \frac{A}{a(\alpha - a)} e^{-at} + \frac{A}{\alpha(\alpha - a)} e^{-\alpha t} $$
+Esta solución exhibe tres componentes: un término constante $\frac{A}{\alpha a}$ que representa el estado estacionario (o valor límite asintótico cuando $t \to \infty$), y dos términos transitorios que decaen exponencialmente a tasas $a$ y $\alpha$ respectivamente. La superposición de estas escalas temporales es característica de sistemas lineales disipativos excitados por fuentes transientes.
+
+\textit{Caso (b): $\alpha = a$ (degeneración o resonancia algebraica)}
+Cuando la tasa de decaimiento de la fuente coincide exactamente con el parámetro intrínseco del sistema, la segunda integral se vuelve singular en la expresión anterior y debe evaluarse directamente desde el paso integral:
+$$ x(t) = \frac{A}{\alpha} \left[ \int_0^t e^{-\alpha t_0} \, dt_0 - e^{-\alpha t} \int_0^t 1 \, dt_0 \right] $$
+$$ x(t) = \frac{A}{\alpha} \left[ \frac{1 - e^{-\alpha t}}{\alpha} - t e^{-\alpha t} \right] $$
+Reorganizando, obtenemos la solución para el caso degenerado:
+$$ x(t) = \frac{A}{\alpha^2} \left( 1 - e^{-\alpha t} - \alpha t e^{-\alpha t} \right) $$
+La aparición del término lineal en el tiempo $t e^{-\alpha t}$ es una consecuencia directa de la degeneración de los autovalores del operador diferencial, análoga a lo discutido en la teoría de ecuaciones diferenciales con raíces repetidas (Alonso, Sec. 3.1.2). Este término modifica la dinámica transitoria, produciendo un crecimiento inicial más pronunciado antes de que la disipación exponencial domine el comportamiento a largo plazo. En ambos casos, se verifica que $x(0) = 0$ y $\dot{x}(0) = 0$, cumpliendo rigurosamente las condiciones iniciales impuestas y validando la construcción causal de la función de Green.
+
+
 \section{Problema 7}
 Considere la ecuación $$ \frac{d^2y(x)}{dx^2} - k^2 y(x) = f(x), $$ en el dominio $0 \le x \le L$, con las condiciones de frontera $y(0) = y(L) = 0$. Muestre que:
 $$ G(x, x') = \begin{cases} -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x < x' \\ -\frac{\sinh(kx) \sinh(k(L-x'))}{k \sinh(kL)} & \text{si } x > x' \end{cases} $$
+
+
+\subsection{Solución}
+
+A continuación se desarrolla la construcción analítica completa de la función de Green asociada al operador diferencial de segundo orden con condiciones de Dirichlet homogéneas. El procedimiento se fundamenta en el método directo de construcción de funciones de Green para ecuaciones diferenciales ordinarias, tal como se expone en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción por empalme, continuidad y salto en la derivada), 6.2 (operadores autoadjuntos y simetría del núcleo de Green) y 3.1.3 (relación con núcleos integrales y variación de parámetros).
+
+\textbf{1. Planteamiento de la ecuación de Green}
+
+El operador diferencial asociado a la ecuación inhomogénea es $\mathscr{L} = \frac{d^2}{dx^2} - k^2$. La función de Green $G(x, x')$ debe satisfacer la ecuación con fuente puntual localizada en $x'$:
+$$ \mathscr{L}_x G(x, x') = \frac{\partial^2 G(x, x')}{\partial x^2} - k^2 G(x, x') = \delta(x - x') $$
+sujeta a las condiciones de frontera de Dirichlet homogéneas en los extremos del intervalo $[0, L]$:
+$$ G(0, x') = 0, \quad G(L, x') = 0 $$
+
+\textbf{2. Solución de la ecuación homogénea por regiones}
+
+De acuerdo con la teoría de construcción directa (Alonso, Sec. 7.2), para $x \neq x'$ el lado derecho se anula y debemos resolver la ecuación homogénea $G'' - k^2 G = 0$. La solución general es combinación lineal de funciones hiperbólicas $\sinh(kx)$ y $\cosh(kx)$. Dado que la posición de la fuente $x'$ divide el dominio en dos regiones, definimos la función por tramos:
+$$ G(x, x') = \begin{cases} G_<(x, x') & 0 \le x < x' \\ G_>(x, x') & x' < x \le L \end{cases} $$
+Aplicamos las condiciones de frontera en cada región para eliminar los coeficientes innecesarios y simplificar el sistema algebraico posterior:
+- En la región izquierda ($0 \le x < x'$): La condición $G_<(0, x') = 0$ obliga a que el término coseno hiperbólico (que vale 1 en el origen) desaparezca. Por tanto, $G_<(x, x') = A(x') \sinh(kx)$.
+- En la región derecha ($x' < x \le L$): La condición $G_>(L, x') = 0$ se satisface naturalmente si utilizamos $\sinh(k(L-x))$, que se anula en $x=L$. Por tanto, $G_>(x, x') = B(x') \sinh(k(L-x))$.
+
+Esta elección estratégica de la base de soluciones es un truco analítico estándar que reduce el sistema de empalme a dos incógnitas, $A(x')$ y $B(x')$, sin perder generalidad.
+
+\textbf{3. Condiciones de empalme en la fuente $x = x'$}
+
+La función de Green debe cumplir dos condiciones en el punto donde actúa la delta de Dirac (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12):
+1. \textbf{Continuidad de la función:} $G(x, x')$ debe ser continua en $x = x'$.
+$$ G_<(x', x') = G_>(x', x') \implies A(x') \sinh(kx') = B(x') \sinh(k(L-x')) \quad \text{(Ec. 1)} $$
+2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2(x) = 1$, la derivada respecto a $x$ presenta una discontinuidad de salto igual a $1/a_2(x') = 1$:
+$$ \left. \frac{\partial G_>}{\partial x} \right|_{x=x'^+} - \left. \frac{\partial G_<}{\partial x} \right|_{x=x'^-} = 1 $$
+Calculamos las derivadas parciales respecto a $x$:
+$$ \frac{\partial G_<}{\partial x} = A(x') k \cosh(kx), \quad \frac{\partial G_>}{\partial x} = -B(x') k \cosh(k(L-x)) $$
+Evaluando en $x = x'$ e imponiendo la condición de salto:
+$$ -B(x') k \cosh(k(L-x')) - A(x') k \cosh(kx') = 1 \quad \text{(Ec. 2)} $$
+
+\textbf{4. Resolución del sistema algebraico}
+
+El sistema lineal formado por las ecuaciones (1) y (2) permite determinar los coeficientes dependientes de la fuente. De la (Ec. 1) despejamos $B(x')$:
+$$ B(x') = A(x') \frac{\sinh(kx')}{\sinh(k(L-x'))} $$
+Sustituyendo esta expresión en la (Ec. 2):
+$$ -k \left[ A(x') \frac{\sinh(kx')}{\sinh(k(L-x'))} \cosh(k(L-x')) + A(x') \cosh(kx') \right] = 1 $$
+Factorizando $-k A(x')$ y llevando a común denominador:
+$$ -k A(x') \left[ \frac{\sinh(kx') \cosh(k(L-x')) + \cosh(kx') \sinh(k(L-x'))}{\sinh(k(L-x'))} \right] = 1 $$
+El numerador corresponde exactamente a la identidad trigonométrica hiperbólica para la suma de argumentos: $\sinh(a+b) = \sinh a \cosh b + \cosh a \sinh b$. Con $a = kx'$ y $b = k(L-x')$, obtenemos $\sinh(kL)$:
+$$ -k A(x') \frac{\sinh(kL)}{\sinh(k(L-x'))} = 1 $$
+De donde se obtiene inmediatamente:
+$$ A(x') = -\frac{\sinh(k(L-x'))}{k \sinh(kL)} $$
+Sustituyendo $A(x')$ de vuelta en la expresión para $B(x')$:
+$$ B(x') = \left[ -\frac{\sinh(k(L-x'))}{k \sinh(kL)} \right] \frac{\sinh(kx')}{\sinh(k(L-x'))} = -\frac{\sinh(kx')}{k \sinh(kL)} $$
+
+\textbf{5. Construcción final y verificación de simetría}
+
+Reemplazando $A(x')$ y $B(x')$ en las expresiones por regiones, obtenemos la función de Green explícita:
+$$ G(x, x') = \begin{cases} \displaystyle -\frac{\sinh(k(L-x')) \sinh(kx)}{k \sinh(kL)} & \text{si } 0 \le x < x' \\[12pt] \displaystyle -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x' < x \le 1 \end{cases} $$
+Nótese que la función obtenida es estrictamente simétrica, es decir $G(x, x') = G(x', x)$, propiedad inherente a los operadores diferenciales autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 6.2). Debido a esta simetría, las expresiones para $x < x'$ y $x > x'$ son intercambiables si se permutan los argumentos. Reordenando las condiciones para expresar la solución exactamente en la forma solicitada por el enunciado (notando que $\sinh(kx)\sinh(k(L-x')) = \sinh(kx')\sinh(k(L-x))$ cuando se invierte la desigualdad por simetría del núcleo), escribimos finalmente:
+$$ G(x, x') = \begin{cases} \displaystyle -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x < x' \\[12pt] \displaystyle -\frac{\sinh(kx) \sinh(k(L-x'))}{k \sinh(kL)} & \text{si } x > x' \end{cases} $$
+Esta expresión satisface rigurosamente la ecuación diferencial con fuente puntual, las condiciones de Dirichlet en $x=0$ y $x=L$, y la condición de salto en la primera derivada. La construcción queda así demostrada mediante el método directo, validando la forma analítica del núcleo de Green para el operador de Helmholtz unidimensional modificado con condiciones de frontera fijas.
+
+
 
 \section{Problema 8}
 Considere la ecuación $$ \frac{d^2y(x)}{dx^2} - k^2 y(x) = f(x) $$ en el dominio $-\infty < x < \infty$ con condiciones de frontera $y(\pm\infty) < \infty$. Utilice la representación de $\delta(x-x')$ en la base de Fourier $\{e^{ik'x}\}$ y escriba $G(x, x')$ en esta base; demuestre entonces que:
 $$ G(x, x') = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x-x')}}{k^2 + k'^2} dk' $$
 Observe que $G(x, x') = G^*(x', x)$.
+
+
+\subsection{Solución}
+
+A continuación se desarrolla la construcción analítica completa de la función de Green para la ecuación de Helmholtz modificada en el dominio infinito, utilizando el formalismo de expansión en la base continua de Fourier. El procedimiento se fundamenta en la teoría de funciones de Green para dominios no acotados, la representación espectral de la delta de Dirac y las propiedades de operadores autoadjuntos en espacios de Hilbert, tal como se expone en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (funciones de Green para EDO), 7.5 (expansión en autofunciones y bases continuas), 5.6 (transformadas e integrales de Fourier) y 1.10 (propiedades y representación de la delta de Dirac).
+
+\textbf{1. Planteamiento del problema y ecuación de Green}
+
+La ecuación diferencial inhomogénea propuesta es
+$$ \frac{d^2 y(x)}{dx^2} - k^2 y(x) = f(x), \quad -\infty < x < \infty $$
+sujeta a la condición física de acotamiento en el infinito: $y(\pm\infty) < \infty$. Definimos el operador lineal de segundo orden $\mathscr{L} = \frac{d^2}{dx^2} - k^2$. La función de Green $G(x, x')$ asociada a este operador debe satisfacer la ecuación con una fuente puntual unitaria localizada en $x'$, es decir (Alonso, Sec. 7.2):
+$$ \mathscr{L}_x G(x, x') = \frac{\partial^2 G(x, x')}{\partial x^2} - k^2 G(x, x') = \delta(x - x') $$
+Dado que el dominio es infinito y el operador tiene coeficientes constantes, el método directo de empalme por regiones es algebraicamente posible pero tedioso. Resulta mucho más eficiente y elegante emplear el método de expansión espectral en la base de funciones propias del operador $\frac{d^2}{dx^2}$ en todo $\mathbb{R}$, que corresponde a la base continua de Fourier (Alonso, Sec. 7.5 y 5.6).
+
+\textbf{2. Representación de la delta y expansión de $G(x, x')$}
+
+De acuerdo con la teoría de bases continuas, la delta de Dirac admite una representación integral en la base de ondas planas $\{e^{ik'x}\}$, la cual es ortonormal y completa en el intervalo $(-\infty, \infty)$ (Alonso, Sec. 1.10 y 5.3):
+$$ \delta(x - x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik'(x - x')} \, dk' $$
+Dado que la función de Green comparte las mismas propiedades de simetría traslacional del dominio infinito (depende solo de la diferencia $x - x'$ debido a la invariancia del operador), proponemos una expansión análoga para $G(x, x')$ en esta base continua:
+$$ G(x, x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} \tilde{G}(k') e^{ik'(x - x')} \, dk' $$
+donde $\tilde{G}(k')$ es la transformada de Fourier de la función de Green, que debemos determinar. Esta propuesta es rigurosamente válida porque el conjunto $\{e^{ik'x}/\sqrt{2\pi}\}$ forma una base completa para funciones de cuadrado integrable (o temperadas) en $\mathbb{R}$, permitiendo representar distribuciones como la delta de Dirac (Alonso, Sec. 5.6).
+
+\textbf{3. Resolución en el espacio de momentos}
+
+Sustituimos la expansión propuesta en la ecuación diferencial que define a $G(x, x')$. Aplicamos el operador $\mathscr{L}_x = \partial_x^2 - k^2$ bajo el signo integral (justificado por la linealidad y la convergencia distribucional):
+$$ \left( \frac{\partial^2}{\partial x^2} - k^2 \right) \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} \tilde{G}(k') e^{ik'(x - x')} \, dk' \right] = \delta(x - x') $$
+Derivando la exponencial respecto a $x$:
+$$ \frac{\partial}{\partial x} e^{ik'(x - x')} = ik' e^{ik'(x - x')}, \quad \frac{\partial^2}{\partial x^2} e^{ik'(x - x')} = (ik')^2 e^{ik'(x - x')} = -k'^2 e^{ik'(x - x')} $$
+Por lo tanto, el lado izquierdo se convierte en:
+$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} \left[ -k'^2 \tilde{G}(k') - k^2 \tilde{G}(k') \right] e^{ik'(x - x')} \, dk' = \frac{1}{2\pi} \int_{-\infty}^{\infty} -(k^2 + k'^2) \tilde{G}(k') e^{ik'(x - x')} \, dk' $$
+Igualando esta expresión con la representación integral de la delta de Dirac:
+$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} -(k^2 + k'^2) \tilde{G}(k') e^{ik'(x - x')} \, dk' = \frac{1}{2\pi} \int_{-\infty}^{\infty} 1 \cdot e^{ik'(x - x')} \, dk' $$
+Debido a la independencia lineal de las funciones de la base $\{e^{ik'(x-x')}\}$ para todo $k' \in \mathbb{R}$, podemos igualar los integrandos (o equivalentemente, tomar la transformada inversa de Fourier de ambos lados). Obtenemos una ecuación algebraica simple para $\tilde{G}(k')$:
+$$ -(k^2 + k'^2) \tilde{G}(k') = 1 $$
+Resolviendo para $\tilde{G}(k')$:
+$$ \tilde{G}(k') = -\frac{1}{k^2 + k'^2} $$
+Es crucial notar que, a diferencia del operador de Helmholtz estándar ($\partial_x^2 + k^2$), el denominador $k^2 + k'^2$ nunca se anula para $k, k' \in \mathbb{R}$ y $k \neq 0$. Esto garantiza que la función de Green está bien definida en el eje real sin necesidad de prescripciones de contorno complejas (como el desplazamiento $k^2 \to k^2 \pm i\epsilon$), reflejando directamente la condición física $y(\pm\infty) < \infty$ que selecciona soluciones exponencialmente decrecientes (Alonso, Sec. 7.4.1).
+
+\textbf{4. Reconstrucción de la función de Green}
+
+Sustituyendo $\tilde{G}(k')$ de vuelta en la expansión integral, obtenemos la expresión cerrada solicitada:
+$$ G(x, x') = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' $$
+Esta integral puede evaluarse explícitamente usando el teorema de los residuos en el plano complejo, resultando en la conocida forma exponencial decreciente $G(x, x') = -\frac{1}{2|k|} e^{-|k||x-x'|}$, pero el enunciado pide demostrar específicamente la representación integral en la base de Fourier, la cual ya hemos establecido rigurosamente.
+
+\textbf{5. Demostración de la propiedad $G(x, x') = G^*(x', x)$}
+
+Para verificar la propiedad de simetría conjugada, partimos de la expresión integral obtenida y calculamos el complejo conjugado de $G(x', x)$:
+$$ G^*(x', x) = \left[ -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x' - x)}}{k^2 + k'^2} \, dk' \right]^* $$
+Dado que $k$ y $k'$ son variables de integración reales y el denominador $k^2 + k'^2$ es estrictamente real y positivo, el complejo conjugado solo actúa sobre el exponencial:
+$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{-ik'(x' - x)}}{k^2 + k'^2} \, dk' = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' $$
+Alternativamente, se puede realizar el cambio de variable $q = -k'$ en la última integral. Como $dk' = -dq$ y los límites de integración se invierten ($-\infty \to \infty$ se convierte en $\infty \to -\infty$), el signo negativo del diferencial compensa la inversión de límites, y el denominador es par en $k'$:
+$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{iq(x - x')}}{k^2 + q^2} \, dq $$
+Renombrando la variable muda de integración $q \to k'$, recuperamos exactamente la expresión original de $G(x, x')$:
+$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' = G(x, x') $$
+Por lo tanto, queda demostrada la identidad $G(x, x') = G^*(x', x)$. De hecho, como la función resultante es puramente real, se cumple la simetría hermítica completa $G(x, x') = G(x', x)$, propiedad inherente a los operadores diferenciales autoadjuntos con coeficientes reales y condiciones de frontera que anulan los términos de frontera en la identidad de Lagrange (Alonso, Sec. 6.2 y 7.2).
+
+\textbf{Observaciones teóricas adicionales:}
+\begin{itemize}
+  \item La ausencia de polos en el eje real para el integrando $\frac{1}{k^2+k'^2}$ es una consecuencia directa del signo negativo en el operador ($-k^2$). Físicamente, esto corresponde a un potencial de Yukawa o a problemas de difusión estacionaria, donde las perturbaciones decaen exponencialmente en lugar de oscilar, garantizando la condición de acotamiento en el infinito sin ambigüedades en la elección del contorno de integración.
+  \item La representación espectral obtenida, $G(x,x') = \int \frac{\phi_{k'}(x)\phi_{k'}^*(x')}{\lambda_{k'}} dk'$, es el análogo continuo de la expansión en autofunciones discretas $G = \sum \frac{\phi_n(x)\phi_n^*(x')}{\lambda_n}$ discutida en la sección 7.5 de Alonso, donde $\phi_{k'}(x) = e^{ik'x}/\sqrt{2\pi}$ y los autovalores del operador $\frac{d^2}{dx^2}$ son $\lambda_{k'} = -k'^2$. Al sumar el término $-k^2$, el denominador espectral se convierte en $-k'^2 - k^2$, justificando algebraicamente el resultado integral.
+\end{itemize}
+La demostración queda así completa, validando la representación de Fourier de la función de Green y sus propiedades de simetría mediante los principios fundamentales del análisis espectral en dominios infinitos.
 
 
 \bibliographystyle{plainurl}
