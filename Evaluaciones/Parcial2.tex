@@ -1,0 +1,323 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 2}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+\section{Problema 1}
+
+Se tiene una varilla delgada semi-infinita a lo largo del eje $x$ cuyo extremo izquierdo se encuentra en la posición $x=0$ y está aislado. Sea $u(x, t)$ la temperatura de la varilla. La ecuación de difusión para este sistema es:
+
+$$\partial_{x}^{2}u = \frac{1}{\kappa} \partial_t u$$
+
+con
+
+\begin{itemize}
+	\item $\kappa > 0$
+	\item $0\leq x < \infty$
+	\item $t\geq 0$
+\end{itemize}
+
+Donde $u(x,t)$ está sujeta a las conficiones de frontera:
+
+\begin{itemize}
+	\item $\partial_x u(0,t) = 0$
+	\item $\displaystyle\lim_{x\to\infty}u(x, t)$ es finito
+	\item $u(x, 0) = f(x)$ es la distribución inicial de temperastura.
+\end{itemize}
+
+Determinar la temperastura de la varilla para $t>0$
+
+
+\subsection{Solución}
+
+\textbf{1. Separación de variables}
+
+Proponemos una solución separable de la forma $u(x, t) = A(x)B(t)$. Sustituyendo en la ecuación de difusión:
+$$ A''(x)B(t) = \frac{1}{\kappa} A(x)B'(t) $$
+Dividiendo ambos lados por $A(x)B(t)$ obtenemos:
+$$ \frac{A''(x)}{A(x)} = \frac{1}{\kappa} \frac{B'(t)}{B(t)} $$
+Como el lado izquierdo depende únicamente de $x$ y el derecho únicamente de $t$, ambos deben ser iguales a una constante de separación. Siguiendo la indicación, elegimos esta constante como $-\beta^2$ (con $\beta \in \mathbb{R}$), lo cual garantiza soluciones oscilatorias en el espacio y decaimiento temporal, coherente con la física de la difusión:
+$$ \frac{A''}{A} = -\beta^2, \quad \frac{B'}{\kappa B} = -\beta^2 $$
+
+\textbf{2. Resolución de las ecuaciones ordinarias}
+
+La ecuación espacial es $A'' + \beta^2 A = 0$, cuya solución general en términos de exponenciales complejas es:
+$$ A(x) = c_1 e^{i\beta x} + c_2 e^{-i\beta x} $$
+La ecuación temporal es $B' + \kappa \beta^2 B = 0$, que es de primer orden y separable. Su solución es:
+$$ B(t) = C e^{-\kappa \beta^2 t} $$
+donde $C$ es una constante de integración. Combinando ambas, la solución separada toma la forma:
+$$ u_\beta(x, t) = \left( c_1 e^{i\beta x} + c_2 e^{-i\beta x} \right) e^{-\kappa \beta^2 t} $$
+
+\textbf{3. Aplicación de la condición de frontera en $x=0$}
+
+La condición de extremo aislado establece $\partial_x u(0, t) = 0$. Derivando la solución respecto a $x$ y evaluando en $x=0$:
+$$ \partial_x u_\beta(x, t) = i\beta \left( c_1 e^{i\beta x} - c_2 e^{-i\beta x} \right) e^{-\kappa \beta^2 t} \implies \partial_x u_\beta(0, t) = i\beta (c_1 - c_2) e^{-\kappa \beta^2 t} = 0 $$
+Dado que $\beta \neq 0$ y el exponencial temporal no se anula, se requiere $c_1 = c_2$. Sustituyendo en $A(x)$ y usando la identidad de Euler $e^{i\beta x} + e^{-i\beta x} = 2\cos(\beta x)$, obtenemos:
+$$ A(x) = c_1 (e^{i\beta x} + e^{-i\beta x}) = 2c_1 \cos(\beta x) \equiv \tilde{c}_1 \cos(\beta x) $$
+
+
+\textbf{4. Superposición en el espectro continuo}
+
+Dado que el dominio es infinito ($0 \leq x < \infty$), el parámetro $\beta$ no está cuantizado a valores discretos, sino que forma un espectro continuo. La solución general se construye integrando sobre todos los modos posibles $\beta \in [0, \infty)$:
+$$ u(x, t) = \int_0^\infty C(\beta) \cos(\beta x) e^{-\kappa \beta^2 t} \, d\beta $$
+donde $C(\beta)$ es una función de peso que incorpora la constante $\tilde{c}_1$ y la normalización de la base.
+
+\textbf{5. Aplicación de la condición inicial y transformada inversa}
+
+En $t=0$, la condición inicial es $u(x, 0) = f(x)$. Evaluando la integral en $t=0$:
+$$ f(x) = \int_0^\infty C(\beta) \cos(\beta x) \, d\beta $$
+Esta expresión corresponde exactamente a la \textbf{Transformada Coseno de Fourier inversa}. Como se demuestra en la Sección 5.6.3 de Alonso, la transformada coseno directa que permite recuperar $C(\beta)$ a partir de $f(x)$ es:
+$$ C(\beta) = \frac{2}{\pi} \int_0^\infty f(x') \cos(\beta x') \, dx' $$
+Sustituyendo $C(\beta)$ en la expresión general de $u(x, t)$:
+$$ u(x, t) = \frac{2}{\pi} \int_0^\infty \left[ \int_0^\infty f(x') \cos(\beta x') \, dx' \right] \cos(\beta x) e^{-\kappa \beta^2 t} \, d\beta $$
+
+
+\section{Problema 2}
+
+Considere un plato rectangular de lados $a,b$ que conduce el calor. Los bordes tienen temperatura $T=0° C$ (aislados térmicamente) y la tapa superior está a una temperastura $f(x) = T_0 \sin\left(\frac{m\pi x}{a}\right)$ con $m\in \mathbb{Z}^+$. Para un tiempo fijo (condición estática), la distribución de la temperatura cumple la ecuación de Laplace $\nabla^2T(x, y) = 0$ (aproximación a la ecuación de difusión). Usar la separación de variables y  las condiciones de frontera (Dirichlet) para determinar la temperatura $T(x, y)$ del sistema.
+
+
+\subsection{Solución}
+
+
+\textbf{1. Separación de variables y elección de la constante}
+
+Proponemos una solución separable de la forma $T(x, y) = A(x)B(y)$. Sustituyendo en la ecuación de Laplace:
+$$ A''(x)B(y) + A(x)B''(y) = 0 $$
+Dividiendo ambos lados por el producto $A(x)B(y)$ obtenemos:
+$$ \frac{A''(x)}{A(x)} = -\frac{B''(y)}{B(y)} $$
+Como el lado izquierdo depende únicamente de $x$ y el derecho únicamente de $y$, ambos deben ser iguales a una constante de separación. Siguiendo la indicación, elegimos esta constante como $-\beta^2$ (con $\beta \in \mathbb{R}$), lo cual garantiza soluciones oscilatorias en la dirección $x$ para satisfacer las condiciones homogéneas en $x=0$ y $x=a$:
+$$ \frac{A''}{A} = -\beta^2, \quad \frac{B''}{B} = +\beta^2 $$
+
+\textbf{2. Resolución de las ecuaciones ordinarias}
+
+La ecuación para la coordenada horizontal es $A'' + \beta^2 A = 0$. Su solución general en términos de exponenciales complejas es:
+$$ A(x) = c_1 e^{i\beta x} + c_2 e^{-i\beta x} $$
+La ecuación para la coordenada vertical es $B'' - \beta^2 B = 0$, cuya solución general combina exponenciales reales:
+$$ B(y) = c_3 e^{\beta y} + c_4 e^{-\beta y} $$
+Combinando ambas, la solución separada toma la forma $T_\beta(x, y) = A(x)B(y)$.
+
+\textbf{3. Aplicación de las condiciones de frontera homogéneas}
+
+Aplicamos las condiciones de Dirichlet en los bordes izquierdo, derecho e inferior:
+- $T(0, y) = 0 \implies A(0) = 0 \implies c_1 + c_2 = 0 \implies c_2 = -c_1$.
+Sustituyendo en $A(x)$ y usando la identidad de Euler $e^{i\beta x} - e^{-i\beta x} = 2i\sin(\beta x)$, obtenemos:
+$$ A(x) = 2ic_1 \sin(\beta x) \equiv \tilde{c}_1 \sin(\beta x) $$
+- $T(a, y) = 0 \implies A(a) = 0 \implies \sin(\beta a) = 0$.
+Para evitar la solución trivial, requerimos $\beta a = n\pi$, lo que cuantiza el parámetro de separación:
+$$ \beta_n = \frac{n\pi}{a}, \quad n = 1, 2, 3, \dots $$
+- $T(x, 0) = 0 \implies B(0) = 0 \implies c_3 + c_4 = 0 \implies c_4 = -c_3$.
+Sustituyendo en $B(y)$ y usando la definición de seno hiperbólico $\sinh(z) = \frac{e^z - e^{-z}}{2}$:
+$$ B_n(y) = 2c_3 \sinh\left(\frac{n\pi y}{a}\right) \equiv \tilde{c}_3 \sinh\left(\frac{n\pi y}{a}\right) $$
+
+\textbf{4. Superposición y solución general}
+
+Dado que la ecuación de Laplace es lineal, el principio de superposición nos permite construir la solución general como una combinación lineal infinita de todos los modos permitidos $n$:
+$$ T(x, y) = \sum_{n=1}^\infty C_n \sin\left(\frac{n\pi x}{a}\right) \sinh\left(\frac{n\pi y}{a}\right) $$
+donde los coeficientes $C_n = \tilde{c}_1 \tilde{c}_3$ serán determinados exclusivamente por la condición de frontera inhomogénea en la tapa superior.
+
+\textbf{5. Aplicación de la condición de frontera en $y=b$}
+
+En $y=b$, la temperatura está prescrita por $T(x, b) = f(x) = T_0 \sin\left(\frac{m\pi x}{a}\right)$. Sustituyendo en la serie general:
+$$ \sum_{n=1}^\infty C_n \sinh\left(\frac{n\pi b}{a}\right) \sin\left(\frac{n\pi x}{a}\right) = T_0 \sin\left(\frac{m\pi x}{a}\right) $$
+Para determinar los coeficientes $C_n$, multiplicamos ambos lados por $\sin\left(\frac{n'\pi x}{a}\right)$ e integramos sobre $x \in [0, a]$, aprovechando la ortogonalidad de la base de Fourier seno (Alonso, Sec. 5.5.1):
+$$ \int_0^a \sin\left(\frac{n\pi x}{a}\right) \sin\left(\frac{n'\pi x}{a}\right) dx = \frac{a}{2} \delta_{nn'} $$
+Realizando la integración sobre el dominio:
+$$ C_n \frac{a}{2} \sinh\left(\frac{n\pi b}{a}\right) = \int_0^a T_0 \sin\left(\frac{m\pi x}{a}\right) \sin\left(\frac{n\pi x}{a}\right) dx $$
+La integral del lado derecho es no nula únicamente cuando $n=m$, gracias a la propiedad de ortogonalidad. Evaluando para $n=m$:
+$$ C_m \frac{a}{2} \sinh\left(\frac{m\pi b}{a}\right) = T_0 \frac{a}{2} \implies C_m = \frac{T_0}{\sinh\left(\frac{m\pi b}{a}\right)} $$
+Para todo $n \neq m$, el lado derecho se anula idénticamente, por lo que $C_n = 0$. Físicamente, esto significa que la distribución de temperatura impuesta en la tapa superior ya coincide exactamente con uno de los modos propios del operador Laplaciano bajo estas condiciones de contorno, colapsando la serie infinita a un único término.
+
+\textit{Nota sobre la forma general:} Si el perfil superior fuera una función arbitraria $g(x)$ en lugar de un seno puro, la solución requeriría explícitamente la evaluación de todos los coeficientes mediante la integral:
+$$ C_n = \frac{2}{a \sinh\left(\frac{n\pi b}{a}\right)} \int_0^a g(x) \sin\left(\frac{n\pi x}{a}\right) dx $$
+y la solución final mantendría la estructura de sumatoria $\sum_{n=1}^\infty$. En nuestro caso específico, la delta de Kronecker $\delta_{nm}$ selecciona automáticamente el modo $n=m$.
+
+\textbf{6. Solución final}
+
+Sustituyendo el coeficiente determinado, el perfil de temperatura estacionario queda expresado en forma cerrada:
+$$ T(x, y) = T_0 \frac{\sinh\left(\frac{m\pi y}{a}\right)}{\sinh\left(\frac{m\pi b}{a}\right)} \sin\left(\frac{m\pi x}{a}\right) $$
+
+
+\section{Problema 3}
+
+Considere la siguiente ecuación diferencial ordinaria. 
+
+$$\mathscr{L}f(x) = -\frac{d^2}{dx^2}f(x) = h(x)$$
+
+con las siguientes condiciones de frontera. $f(0)=f'(1)=0$ con $x\in[0,1]$
+
+\begin{enumerate}[a.]
+	\item Obtener las autofunciones normalizadas $f_m$ y autovalores $\lambda_m$ asociados al operador $\mathscr{L}$
+	\item Determinar la función de Green $G(x, x')$ para el operador $\mathscr{L}$ usando el método directo
+	\item Hallar la función de Green para el operdor $\mathscr{L}$ expandiendo en autofunciones del operador $\mathscr{L}$
+	\item Usar $G(x, x')$ para hallar la solución $f(x)$ (dejar indicado)
+\end{enumerate}
+
+
+\subsection{Solución}
+
+
+\textbf{a. Obtención de las autofunciones normalizadas $f_m$ y autovalores $\lambda_m$}
+
+El problema de autovalores asociado al operador $\mathscr{L}$ se plantea como $\mathscr{L}f_m(x) = \lambda_m f_m(x)$, lo que conduce a la ecuación diferencial ordinaria:
+$$ -\frac{d^2 f_m(x)}{dx^2} = \lambda_m f_m(x), \quad x \in [0, 1] $$
+sujeta a las condiciones de frontera $f_m(0) = 0$ y $f_m'(1) = 0$. Como se establece en la Sección 6.3 de Alonso, esta es una ecuación de Sturm-Liouville regular con coeficientes constantes. Para $\lambda_m \leq 0$ las condiciones de frontera homogéneas fuerzan la solución trivial $f_m(x) \equiv 0$. Para $\lambda_m > 0$, definimos $\lambda_m = \beta_m^2$ con $\beta_m \in \mathbb{R}^+$. La ecuación $f_m'' + \beta_m^2 f_m = 0$ admite como solución general la combinación lineal de exponenciales complejas:
+$$ f_m(x) = c_1(x') e^{i\beta_m x} + c_2(x') e^{-i\beta_m x} $$
+Aplicamos la condición de Dirichlet en $x=0$:
+$$ f_m(0) = c_1(x') + c_2(x') = 0 \implies c_2(x') = -c_1(x') $$
+Sustituyendo en la expresión general y utilizando la identidad de Euler $e^{i\theta} - e^{-i\theta} = 2i\sin(\theta)$, obtenemos:
+$$ f_m(x) = c_1(x') \left( e^{i\beta_m x} - e^{-i\beta_m x} \right) = 2i c_1(x') \sin(\beta_m x) \equiv A_m \sin(\beta_m x) $$
+donde $A_m$ es una constante de amplitud independiente de $x'$ en el contexto de autofunciones. Ahora aplicamos la condición de Neumann en $x=1$:
+$$ f_m'(1) = A_m \beta_m \cos(\beta_m) = 0 $$
+Para evitar la solución trivial $A_m = 0$, requerimos $\cos(\beta_m) = 0$, lo que cuantiza el espectro en:
+$$ \beta_m = \frac{(2m+1)\pi}{2}, \quad m = 0, 1, 2, \dots $$
+Por tanto, los autovalores son:
+$$ \lambda_m = \beta_m^2 = \left[ \frac{(2m+1)\pi}{2} \right]^2 $$
+Para normalizar las autofunciones, imponemos la condición de ortonormalidad en el espacio de Hilbert $L^2[0,1]$ (Alonso, Sec. 5.2.2 y 6.3):
+$$ \int_0^1 |f_m(x)|^2 \, dx = 1 \implies |A_m|^2 \int_0^1 \sin^2(\beta_m x) \, dx = 1 $$
+Utilizando la identidad $\sin^2\theta = \frac{1-\cos(2\theta)}{2}$ y evaluando la integral, se obtiene $\int_0^1 \sin^2(\beta_m x) dx = 1/2$. De aquí se sigue $|A_m|^2 = 2 \implies A_m = \sqrt{2}$. Las autofunciones normalizadas son:
+$$ f_m(x) = \sqrt{2} \sin\left( \frac{(2m+1)\pi x}{2} \right) $$
+Este conjunto forma una base completa y ortogonal en $[0,1]$, consistente con el teorema espectral de Sturm-Liouville (Alonso, Sec. 6.3).
+
+\textbf{b. Función de Green por el método directo}
+
+La función de Green $G(x, x')$ asociada a $\mathscr{L}$ se define mediante la ecuación con fuente puntual:
+$$ \mathscr{L}_x G(x, x') = -\frac{\partial^2 G(x, x')}{\partial x^2} = \delta(x - x') $$
+con las mismas condiciones de frontera: $G(0, x') = 0$ y $\partial_x G(1, x') = 0$. Para $x \neq x'$, la ecuación es homogénea $G'' = 0$, cuya solución general es lineal. Definimos la solución por regiones (Alonso, Sec. 7.2):
+$$ G(x, x') = \begin{cases} G_<(x, x') = A(x') x + B(x'), & 0 \le x < x' \\ G_>(x, x') = C(x') x + D(x'), & x' < x \le 1 \end{cases} $$
+Aplicando las condiciones de frontera:
+\begin{itemize}
+\item $G_<(0, x') = 0 \implies B(x') = 0 \implies G_<(x, x') = A(x') x$.
+\item $\partial_x G_>(1, x') = 0 \implies C(x') = 0 \implies G_>(x, x') = D(x')$.
+\end{itemize}
+En el punto fuente $x = x'$, la función de Green debe ser continua (Alonso, Sec. 7.2, Eq. 7.11):
+$$ G_<(x', x') = G_>(x', x') \implies A(x') x' = D(x') $$
+La primera derivada presenta una discontinuidad finita determinada por la integración de la ecuación diferencial en un entorno infinitesimal alrededor de $x'$:
+$$ \int_{x'-\epsilon}^{x'+\epsilon} \left( -\frac{\partial^2 G}{\partial x^2} \right) dx = \int_{x'-\epsilon}^{x'+\epsilon} \delta(x-x') \, dx \implies -\left[ \partial_x G_>(x') - \partial_x G_<(x') \right] = 1 $$
+Sustituyendo las derivadas $\partial_x G_< = A(x')$ y $\partial_x G_> = 0$:
+$$ -(0 - A(x')) = 1 \implies A(x') = 1 $$
+Por la condición de continuidad, $D(x') = x'$. Reemplazando en las expresiones por regiones, obtenemos la función de Green cerrada:
+$$ G(x, x') = \begin{cases} x, & 0 \le x < x' \\ x', & x' < x \le 1 \end{cases} $$
+Esta expresión puede escribirse compactamente como $G(x, x') = \min(x, x')$, evidenciando la simetría $G(x, x') = G(x', x)$ propia de operadores autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 7.2).
+
+\textbf{c. Función de Green por expansión en autofunciones}
+
+Según la teoría de expansión espectral (Alonso, Sec. 7.5), para un operador hermítico con autovalores no degenerados y autofunciones ortonormales $\{f_m(x)\}$, la función de Green se construye como:
+$$ G(x, x') = \sum_{m=0}^\infty \frac{f_m(x) f_m(x')}{\lambda_m} $$
+Sustituyendo las autofunciones y autovalores obtenidos en el inciso (a), y manteniendo la notación $\beta_m = \frac{(2m+1)\pi}{2}$:
+$$ G(x, x') = \sum_{m=0}^\infty \frac{\left[ \sqrt{2} \sin(\beta_m x) \right] \left[ \sqrt{2} \sin(\beta_m x') \right]}{\beta_m^2} $$
+Simplificando las constantes:
+$$ G(x, x') = 2 \sum_{m=0}^\infty \frac{\sin(\beta_m x) \sin(\beta_m x')}{\beta_m^2} $$
+Esta serie infinita converge uniformemente a la función lineal por tramos obtenida por el método directo en el inciso (b), validando la equivalencia entre ambos enfoques. Nótese que la estructura exponencial inicial $c_1(x')e^{i\beta_m x} + c_2(x')e^{-i\beta_m x}$, tras imponer las condiciones de frontera y normalizar, se proyecta naturalmente sobre la base trigonométrica real que diagonaliza el problema de Sturm-Liouville en el intervalo $[0,1]$.
+
+\textbf{d. Solución $f(x)$ mediante la función de Green}
+
+Para una ecuación lineal inhomogénea de la forma $\mathscr{L}f(x) = h(x)$, la solución general se expresa como la convolución de la función de Green con la fuente $h(x')$ (Alonso, Sec. 7.2, Eq. 7.4). Dado que las condiciones de frontera son homogéneas, los términos de superficie se anulan y la solución queda indicada por la integral:
+$$ f(x) = \int_0^1 G(x, x') h(x') \, dx' $$
+Sustituyendo la expresión explícita de $G(x, x') = \min(x, x')$ y particionando el dominio de integración en $x' < x$ y $x' > x$:
+$$ f(x) = \int_0^x x' \, h(x') \, dx' + \int_x^1 x \, h(x') \, dx' $$
+Esta forma integral deja indicada la solución para cualquier fuente $h(x)$ de cuadrado integrable. La primera integral representa la contribución de la fuente ubicada a la izquierda de $x$, ponderada linealmente por la distancia al origen, mientras que la segunda integral acumula la influencia de la fuente a la derecha de $x$, ponderada por la posición $x$ debido a la condición de Neumann en $x=1$. La unicidad de esta solución está garantizada por el teorema de unicidad para ecuaciones diferenciales ordinarias de segundo orden con condiciones de frontera homogéneas (Alonso, Sec. 2.2).
+
+
+\section{Problema 4}
+
+Considere la ecuación diferencial ordinaria para el oscilador armónico
+
+$$\mathscr{L} x(t) = m\frac{d^2 x}{dt^2} + b \frac{dx}{dt} + \omega_0^2x = f(x)$$
+
+con las siguientes condiciones de frontera
+
+\begin{itemize}
+	\item $x(t_0=0) = A$
+	\item $x'(0) = 0$
+\end{itemize}
+
+Determinar la función de Green $G(t, t')$ para $0\leq t\leq T$
+
+
+\subsection{Solución}
+
+Antes de desarrollar la solución, las condiciones $x(0)=A$ y $x'(0)=0$ son \textbf{condiciones iniciales}, lo que clasifica este problema como un problema de valor inicial (PVI). Como se detalla en la Sección 7.2 del texto de Alonso Sepúlveda, la función de Green para un PVI se construye imponiendo causalidad temporal, garantizando que el sistema no responda antes de que actúe la fuente puntual.
+
+\textbf{1. Definición del operador y ecuación para la función de Green}
+
+Definimos el operador lineal de segundo orden que actúa sobre la variable temporal $t$:
+$$ \mathscr{L}_t = m \frac{d^2}{dt^2} + b \frac{d}{dt} + \omega_0^2 $$
+La función de Green $G(t, t')$ asociada a este operador debe satisfacer la ecuación diferencial con fuente puntual localizada en el instante $t'$ (Alonso, Sec. 7.2):
+$$ \mathscr{L}_t G(t, t') = m \frac{\partial^2 G(t, t')}{\partial t^2} + b \frac{\partial G(t, t')}{\partial t} + \omega_0^2 G(t, t') = \delta(t - t') $$
+Para problemas de valor inicial en el intervalo $0 \leq t \leq T$, la función de Green obedece el principio de causalidad: $G(t, t') = 0$ para todo $t < t'$. Para $t > t'$, la delta de Dirac se anula y $G(t, t')$ debe satisfacer la ecuación homogénea correspondiente.
+
+\textbf{2. Resolución de la ecuación homogénea para $t > t'$}
+
+Para $t \neq t'$, la ecuación se reduce a la ecuación homogénea del oscilador:
+$$ m \frac{\partial^2 G}{\partial t^2} + b \frac{\partial G}{\partial t} + \omega_0^2 G = 0 $$
+Introduciendo el coeficiente de amortiguamiento por unidad de masa $\gamma = b/(2m)$ y la frecuencia natural al cuadrado $\omega^2 = \omega_0^2/m$, la ecuación característica $r^2 + 2\gamma r + \omega^2 = 0$ posee raíces:
+$$ r_{\pm} = -\gamma \pm \sqrt{\gamma^2 - \omega^2} $$
+Consideraremos el caso físico más general y representativo de \textbf{oscilador subamortiguado} ($b^2 < 4m\omega_0^2$, o $\gamma < \omega$), donde las raíces son complejas conjugadas. Definimos la frecuencia efectiva $\Omega = \sqrt{\omega^2 - \gamma^2} = \sqrt{\frac{\omega_0^2}{m} - \left(\frac{b}{2m}\right)^2}$. La solución general para $t > t'$ toma la forma:
+$$ G(t, t') = e^{-\gamma(t-t')} \left[ C_1 \cos\left( \Omega(t-t') \right) + C_2 \sin\left( \Omega(t-t') \right) \right] $$
+Las constantes $C_1$ y $C_2$ pueden depender de $t'$ pero no de $t$.
+
+\textbf{3. Condiciones de empalme en $t = t'$}
+
+De acuerdo con la teoría de construcción directa de funciones de Green para EDO (Alonso, Sec. 7.2, Eqs. 7.11 y 7.12), $G(t, t')$ debe cumplir dos condiciones en el punto de la fuente $t=t'$:
+\begin{itemize}
+\item \textbf{Continuidad de la función:} $\lim_{\epsilon \to 0^+} G(t'+\epsilon, t') = \lim_{\epsilon \to 0^+} G(t'-\epsilon, t')$. Dado que $G(t, t')=0$ para $t<t'$ por causalidad, esto implica:
+$$ G(t', t') = 0 $$
+\item \textbf{Salto unitario en la primera derivada:} La integración de la ecuación diferencial en un entorno infinitesimal alrededor de $t'$ produce:
+$$ \left. \frac{\partial G}{\partial t} \right|_{t=t'^+} - \left. \frac{\partial G}{\partial t} \right|_{t=t'^-} = \frac{1}{m} $$
+Como $\partial_t G|_{t=t'^-} = 0$, la condición se reduce a:
+$$ \frac{\partial G}{\partial t}\bigg|_{t=t'} = \frac{1}{m} $$
+\end{itemize}
+
+Aplicamos estas condiciones a la forma general obtenida en el paso 2:
+\begin{enumerate}
+\item Evaluando $G(t', t') = 0$:
+$$ e^{0} \left[ C_1 \cos(0) + C_2 \sin(0) \right] = 0 \implies C_1 = 0 $$
+\item Derivando $G(t, t')$ respecto a $t$ (usando ya $C_1=0$):
+$$ \frac{\partial G}{\partial t} = e^{-\gamma(t-t')} \left[ -\gamma C_2 \sin(\Omega(t-t')) + \Omega C_2 \cos(\Omega(t-t')) \right] $$
+Evaluando en $t=t'$:
+$$ \frac{\partial G}{\partial t}\bigg|_{t=t'} = \Omega C_2 = \frac{1}{m} \implies C_2 = \frac{1}{m\Omega} $$
+\end{enumerate}
+
+\textbf{4. Expresión analítica cerrada de $G(t, t')$}
+
+Sustituyendo los coeficientes determinados, la función de Green para $t > t'$ es:
+$$ G(t, t') = \frac{1}{m\Omega} e^{-\gamma(t-t')} \sin\left( \Omega(t-t') \right) $$
+Para incorporar formalmente la causalidad ($G=0$ para $t<t'$) en todo el dominio $0 \leq t \leq T$, multiplicamos por la función escalón de Heaviside $\Theta(t-t')$ (definida en Alonso, Sec. 1.10 como la integral de la delta de Dirac). Recordando las definiciones de $\gamma$ y $\Omega$, la solución completa es:
+$$ G(t, t') = \frac{1}{m \sqrt{\frac{\omega_0^2}{m} - \left(\frac{b}{2m}\right)^2}} \exp\left( -\frac{b}{2m}(t-t') \right) \sin\left( \sqrt{\frac{\omega_0^2}{m} - \left(\frac{b}{2m}\right)^2} (t-t') \right) \Theta(t-t') $$
+Esta expresión es válida para el régimen subamortiguado. En los casos críticamente amortiguado ($b^2=4m\omega_0^2$) o sobreamortiguado ($b^2>4m\omega_0^2$), la función trigonométrica se reemplaza por un polinomio lineal o funciones hiperbólicas, respectivamente, manteniendo la misma estructura exponencial y las condiciones de empalme en $t'$.
+
+\textbf{5. Observación sobre la solución completa $x(t)$}
+
+Aunque el problema solicita únicamente $G(t, t')$, es instructivo notar cómo se ensambla la solución física $x(t)$ con las condiciones iniciales dadas $x(0)=A$ y $\dot{x}(0)=0$. Según la ecuación (7.10) de Alonso (Sec. 7.2), la solución a una EDO inhomogénea con condiciones iniciales se escribe como la suma de la respuesta libre (que absorbe las condiciones iniciales) más la convolución causal con la fuente:
+$$ x(t) = x_{\text{hom}}(t) + \int_0^T G(t, t') f(t') \, dt' $$
+Donde $x_{\text{hom}}(t)$ satisface la ecuación homogénea $\mathscr{L}_t x_{\text{hom}} = 0$ con $x_{\text{hom}}(0)=A$ y $\dot{x}_{\text{hom}}(0)=0$. Gracias a la función escalón, el límite superior de la integral se reduce a $t$. La unicidad de esta solución está garantizada por el teorema de existencia y unicidad para EDO lineales de segundo orden con condiciones de Cauchy (Alonso, Sec. 2.2).
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
