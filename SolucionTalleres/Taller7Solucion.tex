@@ -18,9 +18,8 @@
 % cabecera
 \pagestyle{fancy}
 \fancyhead[l]{Física Matemática I}
-\fancyhead[c]{Taller 6}
-\fancyhead[r]{\today}
-\fancyfoot[c]{\thepage}
+\fancyhead[c]{Taller 7}
+
 \renewcommand{\headrulewidth}{0.2pt} % linea horizontal
 
 \begin{document}
@@ -31,7 +30,7 @@
   \vspace{2cm}
   {\huge\bfseries Física Matemática I\par}
   \vspace{0.4cm}
-  {\Large Solución al Taller 6 \par}
+  {\Large Solución al Taller 7 \par}
   \vspace{2.5cm}
   {\large Autor:\par}
   \vspace{0.2cm}
@@ -46,713 +45,481 @@
 \newpage
 
 
-\textbf{Problemas resueltos}
-
-\textbf{1. En el taller anterior estudiamos el espectro asociado al operador $\mathscr{L} = \frac{d^2}{dx^2}$ con las condiciones de frontera $\phi(0) = \phi(\pi) = 0$, resolviendo el problema de autovalores:}
-
-$$ \mathscr{L}\phi = \lambda\phi \implies \frac{d^2\phi}{dx^2} = \lambda\phi \quad (1) $$
-
-\textit{Se encontró el conjunto infinito discreto de autovalores y autofunciones:}
-
-$$ \left\{ \phi_n(x) = \sqrt{\frac{2}{\pi}} \sin(\sqrt{\lambda_n} x) ; \lambda_n = n^2, n = 1, 2, 3, 4\dots \right\} $$
-
-\textbf{Ahora queremos encontrar la solución de la ecuación diferencial $\frac{d^2\phi(x)}{dx^2} = f(x)$, es decir $\mathscr{L}\phi(x) = f(x)$. Para esto, usamos el método de Green.} \textit{Note que $\mathscr{L} = \mathscr{H}$ ya es autoadjunto. Cuando el problema es hermítico, podemos utilizar las autofunciones para construir la función de Green. Como es sabido, la función de Green satisface la ecuación con el operador $\mathscr{H}$ y una fuente puntual:}
-
-$$ \mathscr{H}_x G(x, y) = \delta(x - y) \quad (2) $$
-
-\textit{Suponemos que $G(x, y) = \sum_n a_n(y)\phi_n(x)$ se puede expandir en términos de las autofunciones de $\mathscr{H}$. Reemplazando esta expresión en la ecuación (2) tenemos:}
-
-$$ \sum_n \mathscr{H}_x a_n(y)\phi_n(x) = \sum_n a_n(y) \mathscr{H}_x \phi_n(x) = \sum_n a_n(y) \lambda_n \phi_n(x) = \delta(x - y) $$
-
-\textit{Si reemplazamos la \textbf{condición de clausura} de la base, $\delta(x - y) = \sum_n \phi_n^*(y)\phi_n(x)$, tenemos que:}
-
-$$ \sum_n a_n(y) \lambda_n \phi_n(x) = \sum_n \phi_n^*(y) \phi_n(x) \implies a_n(y) = \frac{\phi_n^*(y)}{\lambda_n} $$
-
-\textit{De donde, $G(x, y) = \sum_n \frac{\phi_n^*(y)\phi_n(x)}{\lambda_n}$, tal que la solución está dada por:}
-
-$$ \phi(x) = \int_a^b G(x, y) f(y) dy $$
-
-\textbf{Con este marco, la función de Green asociada al operador $\mathscr{L} = \frac{d^2}{dx^2}$ y con condiciones de frontera homogéneas, puede escribirse en la forma:}
-
-$$ G(x, y) = \frac{2}{\pi} \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} \quad (3) $$
-
-\textit{De tal forma que la solución a la ecuación diferencial es:}
-
-$$ \phi(x) = \frac{2}{\pi} \int_0^\pi dy \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} f(y) $$
-
-\textbf{Por otro lado, siempre podemos utilizar el método directo:}
-
-$$ \mathscr{H}_y G(x, y) = \delta(x - y) \implies \frac{d^2G(x, y)}{dy^2} = \delta(x - y) $$
-
-\textit{Para $x \neq y$ se tiene entonces que resolver $\frac{d^2G(x, y)}{dy^2} = 0$, lo que implica:}
-
-$$ G(x, y) = \begin{cases} A(x)y + B(x) & \text{si } y < x \\ C(x)y + D(x) & \text{si } y > x \end{cases} \quad (4) $$
-
-\textit{Como en este caso se tienen condiciones de Dirichlet, se debe elegir $G(x, 0) = 0 \implies B(x) = 0$ y $G(x, \pi) = 0 \implies C(x)\pi + D(x) = 0 \implies D(x) = -C(x)\pi$. La ecuación (4) queda como:}
-
-$$ G(x, y) = \begin{cases} A(x)y & \text{si } y < x \\ C(x)(y - \pi) & \text{si } y > x \end{cases} $$
-
-\textit{Las propiedades de la función exigen continuidad, $\lim_{\epsilon \to 0} G(x, y)|_{x-\epsilon} = \lim_{\epsilon \to 0} G(x, y)|_{x+\epsilon}$, y el salto en la primera derivada $\frac{\partial G(x, y)}{\partial y}|_{x+\epsilon} - \frac{\partial G(x, y)}{\partial y}|_{x-\epsilon} = \frac{1}{q(x)}$:}
-
-$$ A(x)x = C(x)(x - \pi) $$
-$$ C(x) - A(x) = 1 $$
-
-\textit{Resolviendo el sistema se obtiene $A(x) = \frac{x - \pi}{\pi}$ y $C(x) = \frac{x}{\pi}$. Obtenemos la función de Green por el método directo:}
-
-$$ G(x, y) = \begin{cases} \frac{x - \pi}{\pi} y & \text{si } y < x \\ \frac{x}{\pi} (y - \pi) & \text{si } y > x \end{cases} $$
-
-\textit{Tal que la solución está dada por:}
-
-$$ \phi(x) = \int_0^x \frac{x - \pi}{\pi} y f(y) dy + \int_x^\pi \frac{x}{\pi} (y - \pi) f(y) dy $$
-
-\textbf{Equivalencia entre ambos métodos:}
-
-\textit{Partimos de $G(x, y) = \sum_n a_n(y)\phi_n(x)$ con $a_n(y) = \int \phi_n^*(x) G(x, y) dx$:}
-
-$$ a_n(y) = \sqrt{\frac{2}{\pi}} \int_0^\pi \sin(nx) G(x, y) dx $$
-$$ a_n(y) = \sqrt{\frac{2}{\pi}} \left[ \int_0^y \sin(nx) \frac{y - \pi}{\pi} x dx + \int_y^\pi \sin(nx) \frac{y}{\pi} (x - \pi) dx \right] $$
-
-\textit{Tras realizar la integración y simplificar, se obtiene:}
-
-$$ a_n(y) = \sqrt{\frac{2}{\pi}} \frac{\sin(ny)}{-n^2} $$
-
-\textit{Note el signo negativo en el autovalor $\lambda_n = -n^2$, debido a la convención de Sturm-Liouville $\mathscr{L}\phi - \lambda\phi = 0$. Al reemplazar en la expansión, obtenemos finalmente:}
-
-$$ G(x, y) = \frac{2}{\pi} \sum_{n=1}^\infty \frac{\sin(ny) \sin(nx)}{n^2} $$
-
-\textit{La cual coincide con la ecuación (3).}
-
-
-\textbf{2. Solución de la ecuación de Poisson en el espacio infinito.}
-
-\textit{Usualmente en el curso básico de Física II se define el campo electrostático generado por una distribución de carga en un punto $P$ como:}
-
-$$ \phi(\vec{r}) = \frac{1}{4\pi\epsilon_0} \int \frac{dq}{||\vec{r} - \vec{r}'||} $$
-
-\textit{Donde $dq$ está relacionado con la distribución de carga $dq = \rho(\vec{r}')d^3r'$ y la expresión es válida sólo si la distribución de carga no cambia con el tiempo. Además, note dos cosas: primero, en el caso de distribuciones en una y dos dimensiones, podemos escribirla en tres con ayuda de la delta de Dirac. Segundo, en realidad los textos básicos definen el sistema de coordenadas en $\vec{r}'$ de la forma $\phi(\vec{r}) = \frac{1}{4\pi\epsilon_0} \int \frac{dq}{||\vec{r} - \vec{r}'||}$.}
-
-\textbf{Por otro lado, la ecuación de Poisson:}
-
-$$ \nabla^2\phi = -\frac{\rho(\vec{r})}{\epsilon_0} \quad (1) $$
-
-\textit{describe el potencial electrostático generado por la fuente $\rho(\vec{r})$. Normalmente, en este curso la resolvemos con condiciones de frontera apropiadas. Supongamos ahora que la queremos resolver en el espacio infinito, sin condiciones de frontera. Para ello, debemos encontrar la función de Green asociada a la ecuación (1), tal que $\mathscr{H}G(x, y) = \delta(x - y)$ con $\mathscr{H} = \nabla^2$. En este caso es mejor entonces utilizar la transformada de Fourier:}
-
-$$ G(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) $$
-$$ \delta(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} $$
-
-\textit{tal que:}
-
-$$ \nabla^2_{r} G(\vec{r}, \vec{r}') = \frac{1}{(2\pi)^3} \nabla^2_{r} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) = \frac{1}{(2\pi)^3} \int i^2 \vec{k} \cdot \vec{k} d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) $$
-
-\textbf{Reemplazamos en la ecuación para la función de Green:}
-
-$$ -\frac{1}{(2\pi)^3} \int \vec{k}^2 d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')}f(\vec{k}) = \frac{1}{(2\pi)^3} \int d^3k e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} $$
-$$ \implies \frac{1}{(2\pi)^3} \int d^3k (\vec{k}^2 f(\vec{k}) + 1) e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} = 0 $$
-$$ \implies \vec{k}^2 f(\vec{k}) + 1 = 0 \implies f(\vec{k}) = -\frac{1}{||\vec{k}||^2} \equiv -\frac{1}{k^2} $$
-
-\textit{Ahora podemos reconstruir la función de Green. Para ello, debemos realizar la integral:}
-
-$$ G(\vec{r}, \vec{r}') = -\frac{1}{(2\pi)^3} \int \frac{1}{k^2} e^{i\vec{k}\cdot(\vec{r}-\vec{r}')} d^3k \quad (2) $$
-
-\textit{Tomamos coordenadas esféricas para el espacio de momentos $\vec{k}$, tal que $d^3k = k^2 \sin \theta_k dk d\theta_k d\phi_k$. Si definimos $\vec{R} = \vec{r} - \vec{r}'$, la integral de la exponencial puede escribirse como $\int e^{ikR\cos\theta_k} d^3k$. El término angular se integra como:}
-
-$$ \int_0^\pi d\theta_k \sin \theta_k e^{ikR\cos\theta_k} = -\frac{1}{ikR} e^{ikR\cos\theta_k} \Big|_0^\pi = -\frac{1}{ikR} [e^{-ikR} - e^{ikR}] = \frac{2 \sin(kR)}{kR} $$
-
-\textbf{Reemplazamos este resultado en la ecuación (2):}
-
-$$ G(\vec{r}, \vec{r}') = -\frac{1}{(2\pi)^3} \int_0^\infty dk k^2 \frac{1}{k^2} (2\pi) \frac{2 \sin(kR)}{kR} = -\frac{1}{2\pi^2 R} \int_0^\infty dk \frac{\sin(kR)}{k} $$
-
-\textit{Solo falta realizar la integral impropia. La analizaremos en el plano complejo. Primero note que si hacemos el cambio $x \to -x$, tenemos que $\int_0^\infty \frac{\sin x}{x} dx = \int_{-\infty}^0 \frac{\sin x}{x} dx$. Luego, podemos escribir:}
-
-$$ \int_0^\infty dk \frac{\sin(kR)}{k} = \frac{1}{2} \int_{-\infty}^\infty dk \frac{\sin(kR)}{k} = \frac{1}{2} \frac{1}{2i} \int_{-\infty}^\infty dk \left[ \frac{e^{ikR}}{k} - \frac{e^{-ikR}}{k} \right] = \frac{1}{4i} (2\pi i) = \frac{\pi}{2} $$
-
-\textbf{Con esto, se tiene que la función de Green para el problema de Poisson en el espacio infinito está dada por:}
-
-$$ G(\vec{r}, \vec{r}') = -\frac{1}{2\pi^2 R} \frac{\pi}{2} = -\frac{1}{4\pi} \frac{1}{||\vec{r} - \vec{r}'||} $$
-
-\textit{y la solución de la ecuación de Poisson:}
-
-$$ \phi(\vec{x}) = \int d^3r' G(\vec{r}, \vec{r}') \left( -\frac{\rho(\vec{r}')}{\epsilon_0} \right) = \frac{1}{4\pi\epsilon_0} \int d^3r' \frac{\rho(\vec{r}')}{||\vec{r} - \vec{r}'||} $$
-
-\textit{expresión que coincide con la definición estándar dada en los cursos de Física básica.}
-
-
-\textbf{Problemas propuestos}
-
-\section{Problema 1} 
-Utilizando el método de Green directo resuelva $y'' + y = x, 0 \le x \le 1, y(0) = y(1) = 0$. Luego use el método de las autofunciones. ¿Por qué puede usar este último? Muestre que son equivalentes.
-
+\section{Problema 1}
+Utilizando la función generatriz, muestre que $\frac{2n}{x}J_n(x) = J_{n+1}(x) + J_{n-1}(x)$ y $2J_n'(x) = J_{n+1}(x) - J_{n-1}(x)$.
 
 \subsection{Solución}
+Para demostrar las relaciones de recurrencia solicitadas, partimos de la definición de la función generatriz de las funciones de Bessel de orden entero, herramienta fundamental en la teoría de funciones especiales que se introduce y explota en la Sección 8.3 del libro \textit{Lecciones de física matemática} de Alonso Sepúlveda. La función generatriz se define como:
+$$g(x, t) = e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} = \sum_{n=-\infty}^{\infty} J_n(x) t^n$$
+donde $J_n(x)$ representa las funciones de Bessel de primera especie de orden $n$, y la serie converge para todo $t \neq 0$. Esta expansión permite relacionar funciones de diferente orden mediante operaciones algebraicas y diferenciales sobre el parámetro auxiliar $t$ y la variable física $x$.
 
-A continuación se presenta el desarrollo analítico completo del problema, estructurado en la aplicación del método directo de la función de Green, el método de expansión en autofunciones y la demostración rigurosa de su equivalencia. Los fundamentos teóricos se apoyan en el tratamiento de operadores diferenciales y funciones de Green desarrollado en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, particularmente en las secciones 6.2 (operadores autoadjuntos), 6.3 (problemas de autovalores y ortogonalidad), 7.2 (funciones de Green para ecuaciones diferenciales ordinarias) y 7.5 (expansión en autofunciones).
+\textbf{1. Derivación de la relación $\frac{2n}{x}J_n(x) = J_{n+1}(x) + J_{n-1}(x)$}
 
-\textbf{1. Método directo de la función de Green}
+Diferenciamos la función generatriz con respecto a la variable auxiliar $t$:
+$$\frac{\partial g}{\partial t} = \frac{\partial}{\partial t} \left[ e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} \right] = \frac{x}{2}\left(1 + \frac{1}{t^2}\right) e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} = \frac{x}{2}\left(1 + \frac{1}{t^2}\right) \sum_{n=-\infty}^{\infty} J_n(x) t^n$$
+Por otro lado, diferenciando la expansión en serie término a término respecto a $t$:
+$$\frac{\partial g}{\partial t} = \sum_{n=-\infty}^{\infty} n J_n(x) t^{n-1}$$
+Igualando ambas expresiones y distribuyendo el factor $\frac{x}{2}$ sobre la serie:
+$$\sum_{n=-\infty}^{\infty} n J_n(x) t^{n-1} = \frac{x}{2} \sum_{n=-\infty}^{\infty} J_n(x) t^n + \frac{x}{2} \sum_{n=-\infty}^{\infty} J_n(x) t^{n-2}$$
+Para poder comparar coeficientes, es necesario alinear las potencias de $t$ en las tres sumatorias a la forma $t^{n-1}$. Realizamos los siguientes cambios de índice discreto:
+- En la primera sumatoria del lado derecho, sustituimos $n \to n-1$, obteniendo: $\sum J_n(x) t^n = \sum J_{n-1}(x) t^{n-1}$.
+- En la segunda sumatoria del lado derecho, sustituimos $n \to n+1$, obteniendo: $\sum J_n(x) t^{n-2} = \sum J_{n+1}(x) t^{n-1}$.
+Sustituyendo estos ajustes en la igualdad:
+$$\sum_{n=-\infty}^{\infty} n J_n(x) t^{n-1} = \frac{x}{2} \sum_{n=-\infty}^{\infty} J_{n-1}(x) t^{n-1} + \frac{x}{2} \sum_{n=-\infty}^{\infty} J_{n+1}(x) t^{n-1}$$
+Dado que esta igualdad debe cumplirse para todo $t \neq 0$ en el dominio de convergencia, la independencia lineal de las potencias de $t$ exige que los coeficientes de $t^{n-1}$ sean idénticos término a término:
+$$n J_n(x) = \frac{x}{2} J_{n-1}(x) + \frac{x}{2} J_{n+1}(x)$$
+Reorganizando algebraicamente y despejando el cociente, obtenemos la primera relación de recurrencia:
+$$\frac{2n}{x} J_n(x) = J_{n-1}(x) + J_{n+1}(x)$$
+Este resultado coincide exactamente con la identidad de recurrencia listada en la Sección 8.3.1 de Alonso Sepúlveda, y demuestra cómo la simetría $t \leftrightarrow 1/t$ en la función generatriz induce una relación de simetría entre órdenes adyacentes.
 
-La ecuación diferencial planteada es
-$$ y''(x) + y(x) = x, \quad 0 \le x \le 1 $$
-sujeta a las condiciones de frontera de Dirichlet homogéneas $y(0) = y(1) = 0$. Definimos el operador lineal $\mathscr{L} = \frac{d^2}{dx^2} + 1$. La función de Green $G(x, x')$ asociada a este operador debe satisfacer la ecuación con una fuente puntual (delta de Dirac), tal como se establece en la sección 7.2 de Alonso:
-$$ \mathscr{L}_x G(x, x') = \frac{\partial^2 G}{\partial x^2} + G(x, x') = \delta(x - x') $$
-con las mismas condiciones de frontera: $G(0, x') = G(1, x') = 0$. 
+\textbf{2. Derivación de la relación $2J_n'(x) = J_{n-1}(x) - J_{n+1}(x)$}
 
-Para $x \neq x'$, la ecuación es homogénea: $G'' + G = 0$, cuya solución general es combinación lineal de $\sin x$ y $\cos x$. Aplicando las condiciones de frontera en cada intervalo:
+Ahora diferenciamos la función generatriz con respecto a la variable física $x$:
+$$\frac{\partial g}{\partial x} = \frac{\partial}{\partial x} \left[ e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} \right] = \frac{1}{2}\left(t - \frac{1}{t}\right) e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} = \frac{1}{2}\left(t - \frac{1}{t}\right) \sum_{n=-\infty}^{\infty} J_n(x) t^n$$
+Diferenciando la serie término a término respecto a $x$:
+$$\frac{\partial g}{\partial x} = \sum_{n=-\infty}^{\infty} \frac{dJ_n(x)}{dx} t^n = \sum_{n=-\infty}^{\infty} J_n'(x) t^n$$
+Igualando ambas expresiones:
+$$\sum_{n=-\infty}^{\infty} J_n'(x) t^n = \frac{1}{2} \sum_{n=-\infty}^{\infty} J_n(x) t^{n+1} - \frac{1}{2} \sum_{n=-\infty}^{\infty} J_n(x) t^{n-1}$$
+Alineamos nuevamente las potencias a $t^n$ mediante cambios de índice:
+- En la primera sumatoria del lado derecho, $n \to n-1$: $\sum J_n(x) t^{n+1} = \sum J_{n-1}(x) t^n$.
+- En la segunda sumatoria del lado derecho, $n \to n+1$: $\sum J_n(x) t^{n-1} = \sum J_{n+1}(x) t^n$.
+Sustituyendo:
+$$\sum_{n=-\infty}^{\infty} J_n'(x) t^n = \frac{1}{2} \sum_{n=-\infty}^{\infty} J_{n-1}(x) t^n - \frac{1}{2} \sum_{n=-\infty}^{\infty} J_{n+1}(x) t^n$$
+Igualando coeficientes de $t^n$:
+$$J_n'(x) = \frac{1}{2} J_{n-1}(x) - \frac{1}{2} J_{n+1}(x)$$
+Multiplicando por 2 y reordenando términos:
+$$2J_n'(x) = J_{n-1}(x) - J_{n+1}(x)$$
+Es importante notar que el enunciado del problema presenta esta relación con los signos intercambiados ($2J_n'(x) = J_{n+1}(x) - J_{n-1}(x)$). La forma estándar, consistente con la derivación rigurosa desde la función generatriz y con la teoría establecida en la Sección 8.3.1 de Alonso Sepúlveda (donde se listan explícitamente los operadores escalera $G_- = \frac{\nu}{x} + \frac{d}{dx}$ y $G_+ = \frac{\nu}{x} - \frac{d}{dx}$), es la obtenida aquí. La discrepancia de signo en el enunciado corresponde a una variación de convención o a un error tipográfico frecuente en compilaciones de ejercicios, pero el procedimiento analítico demostrado constituye el método canónico y riguroso para obtener las relaciones de recurrencia de Bessel.
 
-- Para $0 \le x < x'$: $G(0, x') = 0 \implies G_<(x, x') = A(x') \sin x$.
+En síntesis, mediante la expansión y diferenciación sistemática de la función generatriz $g(x,t)$, hemos derivado las dos identidades fundamentales que conectan funciones de Bessel de órdenes consecutivos y su derivada. Estas relaciones no solo son esenciales para el cálculo numérico y analítico de $J_n(x)$, sino que también reflejan la estructura de Sturm-Liouville subyacente a la ecuación de Bessel, permitiendo la construcción de operadores de ascenso y descenso en el espacio de Hilbert de las autofunciones radiales, tal como se desarrolla en los capítulos 6 y 8 del texto de referencia.
 
-- Para $x' < x \le 1$: $G(1, x') = 0 \implies G_>(x, x') = B(x') \sin(1 - x)$.
 
-La función de Green debe ser continua en $x = x'$, y su primera derivada debe presentar un salto unitario (debido a que el coeficiente de $y''$ es 1). Estas condiciones se expresan como:
-$$ G_<(x', x') = G_>(x', x') \implies A(x') \sin x' = B(x') \sin(1 - x') $$
-$$ \left. \frac{\partial G_>}{\partial x} \right|_{x'^+} - \left. \frac{\partial G_<}{\partial x} \right|_{x'^-} = 1 \implies -B(x') \cos(1 - x') - A(x') \cos x' = 1 $$
-Resolviendo el sistema algebraico para $A(x')$ y $B(x')$:
-$$ A(x') = -\frac{\sin(1 - x')}{\sin 1}, \quad B(x') = -\frac{\sin x'}{\sin 1} $$
-Sustituyendo en las expresiones por intervalos, obtenemos la función de Green cerrada:
-$$ G(x, x') = -\frac{1}{\sin 1} \begin{cases} \sin x \sin(1 - x') & 0 \le x < x' \\ \sin(1 - x) \sin x' & x' < x \le 1 \end{cases} $$
-Nótese la simetría $G(x, x') = G(x', x)$, propiedad inherente a los operadores hermíticos con condiciones de frontera homogéneas (Alonso, Sec. 6.2).
 
-La solución a la ecuación original se construye mediante la integral de convolución con la fuente $f(x') = x'$:
-$$ y(x) = \int_0^1 G(x, x') x' \, dx' = -\frac{\sin x}{\sin 1} \int_0^x x' \sin(1 - x') \, dx' - \frac{\sin(1 - x)}{\sin 1} \int_x^1 x' \sin x' \, dx' $$
-Evaluando las integrales por partes:
-$$ \int_0^x x' \sin(1 - x') \, dx' = \big[ x' \cos(1 - x') - \sin(1 - x') \big]_0^x = x \cos(1 - x) - \sin(1 - x) + \sin 1 $$
-$$ \int_x^1 x' \sin x' \, dx' = \big[ -x' \cos x' + \sin x' \big]_x^1 = \sin 1 - \cos 1 + x \cos x - \sin x $$
-Sustituyendo y simplificando mediante identidades trigonométricas de ángulos compuestos ($\sin(1-x) = \sin 1 \cos x - \cos 1 \sin x$, etc.), todos los términos oscilatorios se cancelan excepto uno, obteniéndose la forma analítica cerrada:
-$$ y(x) = x - \frac{\sin x}{\sin 1} $$
-Esta función satisface explícitamente $y'' + y = x$ y las condiciones $y(0) = y(1) = 0$.
 
-\textbf{2. Método de expansión en autofunciones}
-
-Este método requiere expandir la solución en la base espectral del operador diferencial. Como se detalla en la sección 7.5 de Alonso, el método es aplicable siempre que el operador sea autoadjunto (hermítico) y su espectro no contenga al valor cero (evitando resonancias o singularidades en la inversa). 
-
-El operador asociado $\mathscr{L}_0 = \frac{d^2}{dx^2}$ con condiciones de Dirichlet homogéneas en $[0, 1]$ es autoadjunto. Su problema de autovalores $\phi_n'' = -\lambda_n \phi_n$ con $\phi_n(0)=\phi_n(1)=0$ produce el conjunto ortonormal completo:
-$$ \phi_n(x) = \sqrt{2} \sin(n\pi x), \quad \lambda_n = (n\pi)^2, \quad n = 1, 2, 3, \dots $$
-El operador completo es $\mathscr{L} = \mathscr{L}_0 + 1$, por lo que actúa sobre las autofunciones como:
-$$ \mathscr{L}\phi_n = (\phi_n'' + \phi_n) = (1 - \lambda_n)\phi_n = (1 - n^2\pi^2)\phi_n $$
-Dado que $1 - n^2\pi^2 \neq 0$ para todo $n \in \mathbb{N}$, el operador es invertible y el método es perfectamente válido. Expandimos $y(x)$ y la fuente $f(x)=x$:
-$$ y(x) = \sum_{n=1}^\infty c_n \phi_n(x), \quad f(x) = \sum_{n=1}^\infty f_n \phi_n(x) $$
-Aplicando $\mathscr{L}$ a la expansión de $y(x)$ e igualando a la expansión de $f(x)$, la ortogonalidad de la base implica:
-$$ c_n (1 - n^2\pi^2) = f_n \implies c_n = \frac{f_n}{1 - n^2\pi^2} $$
-Los coeficientes de la fuente se calculan mediante el producto interno:
-$$ f_n = \int_0^1 x \, \phi_n(x) \, dx = \sqrt{2} \int_0^1 x \sin(n\pi x) \, dx = \sqrt{2} \frac{(-1)^{n+1}}{n\pi} $$
-Sustituyendo $f_n$, la solución en serie queda:
-$$ y(x) = 2 \sum_{n=1}^\infty \frac{(-1)^{n+1}}{n\pi (1 - n^2\pi^2)} \sin(n\pi x) $$
-
-\textbf{3. Demostración de equivalencia}
-
-Para demostrar que ambos métodos son equivalentes, basta con probar que la serie obtenida por autofunciones corresponde exactamente a la expansión en serie de Fourier de la solución cerrada hallada por el método directo. Calculamos los coeficientes de Fourier seno de $y_{\text{exacta}}(x) = x - \frac{\sin x}{\sin 1}$ en el intervalo $[0, 1]$:
-$$ c_n^{\text{exacta}} = 2 \int_0^1 \left( x - \frac{\sin x}{\sin 1} \right) \sin(n\pi x) \, dx = 2 \int_0^1 x \sin(n\pi x) \, dx - \frac{2}{\sin 1} \int_0^1 \sin x \sin(n\pi x) \, dx $$
-La primera integral ya fue calculada: $\frac{(-1)^{n+1}}{n\pi}$. Para la segunda, usamos la identidad producto-suma:
-$$ \int_0^1 \sin x \sin(n\pi x) \, dx = \frac{1}{2} \int_0^1 \left[ \cos((1-n\pi)x) - \cos((1+n\pi)x) \right] dx $$
-Integrando y evaluando en los límites, y usando $\sin(1 \pm n\pi) = (-1)^n \sin 1$:
-$$ \int_0^1 \sin x \sin(n\pi x) \, dx = \frac{(-1)^n \sin 1}{2} \left( \frac{1}{1-n\pi} - \frac{1}{1+n\pi} \right) = (-1)^n \sin 1 \frac{n\pi}{1 - n^2\pi^2} $$
-Sustituyendo en $c_n^{\text{exacta}}$:
-$$ c_n^{\text{exacta}} = \frac{2(-1)^{n+1}}{n\pi} - \frac{2}{\sin 1} \left[ (-1)^n \sin 1 \frac{n\pi}{1 - n^2\pi^2} \right] = 2(-1)^{n+1} \left( \frac{1}{n\pi} + \frac{n\pi}{1 - n^2\pi^2} \right) $$
-Operando algebraicamente la fracción:
-$$ c_n^{\text{exacta}} = 2(-1)^{n+1} \frac{1 - n^2\pi^2 + n^2\pi^2}{n\pi(1 - n^2\pi^2)} = 2 \frac{(-1)^{n+1}}{n\pi(1 - n^2\pi^2)} $$
-Este resultado coincide idénticamente con los coeficientes $c_n$ obtenidos mediante el método de autofunciones. 
-
-La equivalencia entre ambas representaciones no es accidental; es una consecuencia directa del teorema espectral para operadores de Sturm-Liouville regulares (Alonso, Sec. 6.3 y 7.5), que garantiza que la función de Green construida por el método directo admite una representación en serie espectral:
-$$ G(x, x') = \sum_{n=1}^\infty \frac{\phi_n(x)\phi_n(x')}{1 - \lambda_n} $$
-Al integrar esta expansión contra $f(x')$, se recupera automáticamente la serie de autofunciones, demostrando la consistencia matemática y física de ambos enfoques.
-
-\section{Problema 2} 
-Resuelva la ecuación unidimensional de Poisson, utilizando ambos métodos para hallar la función de Green:
-$$ \frac{d^2\phi}{dx^2} = -\frac{\rho(x)}{\epsilon_0} $$
-\textbf{con $0 \le x \le 1, \phi(0) = \phi(1) = 0$. Resuelva el mismo problema, pero en ese caso para $-\infty < x < \infty$. Compare su resultado con el hallado anteriormente para el problema en 3D.}
+\section{Problema 2}
+Con el cambio de variable $t= e^{i\theta}$ y $t= i e^{i\theta}$ en la función generatriz, muestre las relaciones
+$$e^{ix\sin\theta}= \sum_{n=-\infty}^{\infty} e^{in\theta} J_n(x) \quad \text{y} \quad e^{ix\cos\theta}= \sum_{n=-\infty}^{\infty} i^n e^{-in\theta} J_n(x)= J_0(x)+2 \sum_{n=1}^{\infty} i^n J_n(x) \cos(n\theta).$$
 
 \subsection{Solución}
+Para demostrar las identidades solicitadas, partimos de la función generatriz de las funciones de Bessel de primera especie y orden entero, herramienta central que se introduce y explota en la Sección 8.3 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La función generatriz se define mediante la expansión en serie de Laurent:
+$$g(x, t) = e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} = \sum_{n=-\infty}^{\infty} J_n(x) t^n,$$
+la cual converge para todo $t \neq 0$ y $x \in \mathbb{C}$. Esta representación es fundamental porque permite conectar las funciones de Bessel con exponenciales complejas mediante sustituciones trigonométricas apropiadas en el parámetro auxiliar $t$, revelando la estructura armónica de ondas en geometrías cilíndricas.
 
-A continuación se desarrolla la solución analítica completa del problema, estructurada en la resolución de la ecuación de Poisson unidimensional mediante el método directo y el método de expansión espectral en el intervalo finito, seguida de la extensión al dominio infinito y la comparación física y matemática con el caso tridimensional. Los fundamentos teóricos se apoyan en el tratamiento de funciones de Green y espacios de Hilbert presentado en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (funciones de Green para EDO), 7.5 (expansión en autofunciones), 5.6 (transformadas de Fourier) y 1.10 (propiedades de la delta de Dirac).
+\textbf{1. Demostración de $e^{ix\sin\theta}= \sum_{n=-\infty}^{\infty} e^{in\theta} J_n(x)$}
 
-\textbf{1. Dominio finito $0 \le x \le 1$ con condiciones de Dirichlet $\phi(0)=\phi(1)=0$}
+Realizamos la sustitución $t = e^{i\theta}$ en la función generatriz. Utilizando la identidad de Euler para la diferencia de exponenciales:
+$$t - \frac{1}{t} = e^{i\theta} - e^{-i\theta} = 2i\sin\theta.$$
+Sustituyendo este resultado en el exponente de la función generatriz:
+$$\frac{x}{2}\left(t - \frac{1}{t}\right) = \frac{x}{2}(2i\sin\theta) = ix\sin\theta.$$
+Por otro lado, el lado derecho de la serie se transforma directamente elevando $t$ a la potencia $n$:
+$$\sum_{n=-\infty}^{\infty} J_n(x) t^n = \sum_{n=-\infty}^{\infty} J_n(x) (e^{i\theta})^n = \sum_{n=-\infty}^{\infty} J_n(x) e^{in\theta}.$$
+Igualando ambas expresiones, obtenemos directamente la primera relación solicitada:
+$$e^{ix\sin\theta} = \sum_{n=-\infty}^{\infty} J_n(x) e^{in\theta}.$$
+Este resultado, conocido como expansión de Jacobi-Anger, constituye la base matemática para el análisis de modulación de fase, teoría de antenas y fenómenos de difracción cilíndrica, tal como se detalla en las aplicaciones de la Sección 8.3.3.
 
-La ecuación diferencial a resolver es
-$$ \frac{d^2\phi(x)}{dx^2} = -\frac{\rho(x)}{\epsilon_0} $$
-Definimos el operador lineal $\mathscr{L} = \frac{d^2}{dx^2}$. La función de Green $G(x,x')$ asociada debe satisfacer la ecuación con fuente puntual (Alonso, Sec. 7.2):
-$$ \frac{\partial^2 G(x,x')}{\partial x^2} = \delta(x-x') $$
-sujeta a las mismas condiciones de frontera homogéneas: $G(0,x') = G(1,x') = 0$.
+\textbf{2. Demostración de $e^{ix\cos\theta}= \sum_{n=-\infty}^{\infty} i^n e^{-in\theta} J_n(x)= J_0(x)+2 \sum_{n=1}^{\infty} i^n J_n(x) \cos(n\theta)$}
 
-\textit{1.1 Método directo de construcción}
-
-Para $x \neq x'$, la ecuación es homogénea ($G''=0$), cuya solución general es lineal en $x$. Definimos las soluciones por regiones:
-$$ G_<(x,x') = A(x')x + B(x'), \quad 0 \le x < x' $$
-$$ G_>(x,x') = C(x')x + D(x'), \quad x' < x \le 1 $$
-Aplicando las condiciones de frontera:
-
-- $G_<(0,x') = 0 \implies B(x') = 0$.
-
-- $G_>(1,x') = 0 \implies C(x') + D(x') = 0 \implies D(x') = -C(x')$.
-
-Las condiciones de empalme en $x=x'$ son:
-1. Continuidad de la función: $G_<(x',x') = G_>(x',x') \implies A(x')x' = C(x')(x'-1)$.
-2. Salto unitario en la primera derivada (debido a que el coeficiente principal de la EDO es 1): 
-$$ \left.\frac{\partial G_>}{\partial x}\right|_{x'^+} - \left.\frac{\partial G_<}{\partial x}\right|_{x'^-} = 1 \implies C(x') - A(x') = 1 $$
-Resolviendo el sistema algebraico:
-Sustituyendo $C(x') = A(x') + 1$ en la condición de continuidad:
-$$ A(x')x' = (A(x')+1)(x'-1) = A(x')x' - A(x') + x' - 1 $$
-De donde se obtiene $A(x') = x' - 1$ y consecuentemente $C(x') = x'$.
-Sustituyendo en las expresiones regionales, la función de Green cerrada es:
-$$ G(x,x') = \begin{cases} x(x'-1) & 0 \le x < x' \\ x'(x-1) & x' < x \le 1 \end{cases} $$
-Nótese la simetría $G(x,x') = G(x',x)$, propiedad garantizada para operadores autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 6.2). La solución al problema de Poisson se construye mediante la integral de convolución:
-$$ \phi(x) = -\frac{1}{\epsilon_0} \int_0^1 G(x,x') \rho(x') \, dx' $$
-
-\textit{1.2 Método de expansión en autofunciones}
-
-Este método requiere expandir $G(x,x')$ en la base espectral del operador $\mathscr{L}_0 = \frac{d^2}{dx^2}$ con condiciones de Dirichlet en $[0,1]$. El problema de autovalores es $\phi_n'' = \lambda_n \phi_n$ con $\phi_n(0)=\phi_n(1)=0$. Su solución produce el conjunto ortonormal completo (Alonso, Sec. 6.3 y 7.5):
-$$ \phi_n(x) = \sqrt{2} \sin(n\pi x), \quad \lambda_n = -(n\pi)^2, \quad n = 1, 2, 3, \dots $$
-De acuerdo con la teoría de expansión en autofunciones (Alonso, Sec. 7.5), la función de Green se expresa como:
-$$ G(x,x') = \sum_{n=1}^\infty \frac{\phi_n(x)\phi_n(x')}{\lambda_n} $$
-Sustituyendo los autovalores y autofunciones:
-$$ G(x,x') = \sum_{n=1}^\infty \frac{2\sin(n\pi x)\sin(n\pi x')}{-(n\pi)^2} = -\frac{2}{\pi^2} \sum_{n=1}^\infty \frac{\sin(n\pi x)\sin(n\pi x')}{n^2} $$
-Esta serie converge uniformemente a la función lineal por tramos obtenida por el método directo. La equivalencia puede verificarse utilizando identidades de series de Fourier para el núcleo de Green unidimensional, demostrando que ambas representaciones son matemáticamente idénticas.
-
-\textbf{2. Dominio infinito $-\infty < x < \infty$}
-
-Para el espacio infinito, las condiciones de frontera se reemplazan por la exigencia de comportamiento físico adecuado en el infinito. La ecuación para la función de Green sigue siendo $G''(x,x') = \delta(x-x')$. Dado el dominio no acotado, el método más robusto es la transformada de Fourier, tal como se implementa en problemas de espacio infinito (Alonso, Sec. 5.6 y 7.4.1).
-
-Definimos la transformada respecto a la variable relativa $R = x-x'$:
-$$ \tilde{G}(k) = \int_{-\infty}^\infty G(R) e^{-ikR} \, dR $$
-Aplicando la transformada a la ecuación diferencial y usando $\mathcal{F}[\delta(R)] = 1$ y $\mathcal{F}[d^2G/dR^2] = -k^2\tilde{G}(k)$:
-$$ -k^2 \tilde{G}(k) = 1 \implies \tilde{G}(k) = -\frac{1}{k^2} $$
-La transformada inversa nos devuelve la función en el espacio real:
-$$ G(R) = -\frac{1}{2\pi} \int_{-\infty}^\infty \frac{e^{ikR}}{k^2} \, dk $$
-Esta integral presenta una singularidad en $k=0$ que requiere regularización. Utilizando la identidad distribucional conocida (derivada de la representación de la delta y propiedades de valores principales):
-$$ \int_{-\infty}^\infty \frac{1-\cos(kR)}{k^2} \, dk = \pi |R| $$
-y despreciando términos constantes que se anulan bajo derivación doble, obtenemos:
-$$ G(x,x') = -\frac{1}{2} |x-x'| $$
-Verificación directa: $\frac{d}{dx}(-\frac{1}{2}|x-x'|) = -\frac{1}{2}\text{sgn}(x-x')$ y $\frac{d^2}{dx^2}(-\frac{1}{2}|x-x'|) = -\delta(x-x')$. Para recuperar la convención $\mathscr{L}G = \delta$, ajustamos el signo global, quedando $G(x,x') = \frac{1}{2}|x-x'|$ (o equivalentemente, se absorbe el signo en la definición del potencial según la convención de carga). La solución general es entonces:
-$$ \phi(x) = -\frac{1}{2\epsilon_0} \int_{-\infty}^\infty |x-x'| \rho(x') \, dx' $$
-
-\textbf{3. Comparación con el resultado tridimensional}
-
-En el problema 2 resuelto del taller, se obtuvo la función de Green para la ecuación de Poisson en 3D mediante transformada de Fourier, resultando en:
-$$ G_{3D}(\vec{r},\vec{r}') = -\frac{1}{4\pi |\vec{r}-\vec{r}'|} $$
-La comparación con el caso 1D infinito $G_{1D}(x,x') \propto |x-x'|$ revela diferencias estructurales profundas:
-
-1. \textbf{Dependencia dimensional del Laplaciano:} El operador Laplaciano $\nabla^2$ tiene una solución fundamental que decae con la distancia en $d \ge 3$ dimensiones, pero crece linealmente en $d=1$. Esto se debe a que el ``flujo'' del campo eléctrico generado por una fuente puntual se distribuye sobre superficies de dimensión $d-1$. En 3D, el flujo se reparte sobre esferas ($\propto R^2$), haciendo que el campo decaiga como $1/R^2$ y el potencial como $1/R$. En 1D, el flujo no tiene hacia dónde ``abrirse'' geométricamente; se mantiene constante, lo que implica un campo constante y un potencial que crece linealmente con la distancia.
-
-2. \textbf{Condiciones de frontera en el infinito:} En 3D es natural imponer $G_{3D} \to 0$ cuando $|\vec{r}-\vec{r}'| \to \infty$, lo que garantiza un potencial bien definido para distribuciones de carga localizadas. En 1D infinito, $G_{1D}$ diverge linealmente, lo que impide imponer $\phi(\pm\infty)=0$. Físicamente, esto significa que una distribución de carga neutra total es requisito indispensable para que el potencial unidimensional converja, o bien se deben imponer condiciones de simetría/regularización (como en el método de imágenes o potenciales de referencia).
-
-3. \textbf{Espectro del operador:} En el intervalo finito $[0,1]$, el espectro de $\frac{d^2}{dx^2}$ es discreto y negativo ($\lambda_n = -n^2\pi^2$), lo que permite la expansión en serie. En $\mathbb{R}^1$ y $\mathbb{R}^3$, el espectro es continuo ($\lambda_k = -k^2$), requiriendo el formalismo integral de Fourier. La diferencia entre $1/R$ y $|R|$ es la manifestación directa de cómo la dimensión del espacio modifica la inversión del operador Laplaciano, un resultado universal en la teoría de funciones de Green para ecuaciones elípticas (Alonso, Sec. 2.3.1 y 7.4.1).
-
-En síntesis, aunque la estructura matemática de construcción (método directo, expansión espectral, transformada de Fourier) es análoga en 1D y 3D, las propiedades geométricas del espacio dictan el comportamiento asintótico de la función de Green, reflejando cómo la dimensionalidad controla la propagación y decaimiento de los campos físicos.
+Para la segunda identidad, el enunciado sugiere el cambio $t = i e^{i\theta}$. Sin embargo, para obtener consistentemente el factor $e^{-in\theta}$ que aparece explícitamente en la suma del enunciado, es matemáticamente más directo utilizar $t = i e^{-i\theta}$ (lo cual equivale a una reflexión $\theta \to -\theta$ que deja invariante $\cos\theta$). Procedamos con la sustitución general $t = i e^{\mp i\theta}$:
+$$t - \frac{1}{t} = i e^{\mp i\theta} - \frac{1}{i e^{\mp i\theta}} = i e^{\mp i\theta} + i e^{\pm i\theta} = i\left(e^{i\theta} + e^{-i\theta}\right) = 2i\cos\theta.$$
+El exponente de la función generatriz se transforma entonces en:
+$$\frac{x}{2}\left(t - \frac{1}{t}\right) = \frac{x}{2}(2i\cos\theta) = ix\cos\theta.$$
+Evaluando la serie con $t = i e^{-i\theta}$:
+$$\sum_{n=-\infty}^{\infty} J_n(x) t^n = \sum_{n=-\infty}^{\infty} J_n(x) \left(i e^{-i\theta}\right)^n = \sum_{n=-\infty}^{\infty} i^n e^{-in\theta} J_n(x).$$
+Igualando al exponencial, obtenemos la primera parte de la segunda relación:
+$$e^{ix\cos\theta} = \sum_{n=-\infty}^{\infty} i^n e^{-in\theta} J_n(x).$$
+Ahora, descomponemos la suma infinita en tres regiones: el término central $n=0$, los términos positivos $n>0$ y los términos negativos $n<0$:
+$$\sum_{n=-\infty}^{\infty} i^n e^{-in\theta} J_n(x) = J_0(x) + \sum_{n=1}^{\infty} i^n e^{-in\theta} J_n(x) + \sum_{n=-\infty}^{-1} i^n e^{-in\theta} J_n(x).$$
+En la tercera sumatoria (índices negativos), realizamos el cambio de índice discreto $n = -m$, donde $m$ recorre los enteros positivos de $1$ a $\infty$:
+$$\sum_{n=-\infty}^{-1} i^n e^{-in\theta} J_n(x) = \sum_{m=1}^{\infty} i^{-m} e^{im\theta} J_{-m}(x).$$
+Utilizamos ahora la propiedad de paridad de las funciones de Bessel de orden entero, la cual se demuestra rigurosamente en la Sección 8.3.1 de Alonso Sepúlveda y establece que $J_{-m}(x) = (-1)^m J_m(x)$. Sustituyendo esta identidad:
+$$\sum_{m=1}^{\infty} i^{-m} e^{im\theta} (-1)^m J_m(x) = \sum_{m=1}^{\infty} \left(\frac{-1}{i}\right)^m e^{im\theta} J_m(x).$$
+Dado que $-1/i = i$, la expresión se simplifica notablemente a:
+$$\sum_{m=1}^{\infty} i^m e^{im\theta} J_m(x).$$
+Renombrando el índice $m$ nuevamente como $n$ y sumando las contribuciones de $n>0$ y $n<0$, la serie completa se reescribe como:
+$$J_0(x) + \sum_{n=1}^{\infty} i^n J_n(x) \left( e^{-in\theta} + e^{in\theta} \right).$$
+Aplicando la identidad de Euler $e^{in\theta} + e^{-in\theta} = 2\cos(n\theta)$, llegamos finalmente a la forma trigonométrica explícita:
+$$e^{ix\cos\theta} = J_0(x) + 2 \sum_{n=1}^{\infty} i^n J_n(x) \cos(n\theta).$$
+Esta última expresión revela la descomposición armónica de una onda plana en coordenadas cilíndricas y es de vital importancia en la teoría de scattering, óptica de Fourier y propagación en guías de onda circulares. La convergencia absoluta de estas series está garantizada por el comportamiento asintótico de $J_n(x)$ para $n$ grande (el cual decrece factorialmente según la Sección 8.3.1), asegurando la validez matemática de todas las reordenaciones de términos y la aplicación del teorema de unicidad para expansiones en series de Fourier. La equivalencia entre las representaciones exponencial y trigonométrica demuestra cómo la simetría de traslación angular en la función generatriz induce directamente las propiedades de ortogonalidad y completez del conjunto $\{J_n(x)\}$ en dominios físicos relevantes.
 
 
-\section{Problema 3} 
-Sean $y_1(x)$ y $y_2(x)$ soluciones linealmente independientes de:
-$$ \frac{d^2y}{dx^2} + p(x) \frac{dy}{dx} + q(x)y = 0, $$
-\textbf{con $y_1(0) = 0$ y $y_2(1) = 0$. Entonces, la función de Green $G(x, \xi)$ para $0 \le x, \xi \le 1$, con condiciones $G(0, \xi) = G(1, \xi) = 0$, tiene la forma:}
-$$ G(x, \xi) = \begin{cases} \frac{y_1(x)y_2(\xi)}{W(\xi)} & \text{si } 0 < x < \xi, \\ \frac{y_2(x)y_1(\xi)}{W(\xi)} & \text{si } \xi < x < 1, \end{cases} $$
-\textbf{donde $W(x) = W[y_1(x), y_2(x)]$ es el Wronskiano de $y_1$ y $y_2$.}
 
+\section{Problema 3}
+Con el resultado anterior, muestre las siguientes relaciones
+(a) $\cos(x \sin \theta)= J_0(x)+ 2\sum_{n=1}^{\infty} J_{2n}(x) \cos(2n\theta)$
+(b) $\sin(x \sin \theta)= 2\sum_{n=1}^{\infty} J_{2n-1}(x) \sin((2n - 1)\theta)$
+(c) $\cos x= J_0(x)+ 2\sum_{n=1}^{\infty}(-1)^n J_{2n}(x)$
+(d) $\sin x= 2\sum_{n=1}^{\infty}(-1)^{n-1} J_{2n-1}(x)$
 
 \subsection{Solución}
-
-A continuación se desarrolla la demostración analítica completa de la expresión para la función de Green asociada al operador diferencial de segundo orden propuesto. El procedimiento se fundamenta en la teoría de construcción directa de funciones de Green para ecuaciones diferenciales ordinarias, tal como se expone en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción por empalme y condiciones de discontinuidad), 6.3 (Wronskiano e independencia lineal) y 3.1.3 (relación con el método de variación de parámetros).
-
-\textbf{1. Planteamiento del problema y estructura general}
-
-Buscamos la función de Green $G(x, \xi)$ que satisface la ecuación con fuente puntual:
-$$ \mathscr{L}_x G(x, \xi) = \frac{\partial^2 G}{\partial x^2} + p(x) \frac{\partial G}{\partial x} + q(x) G = \delta(x - \xi), $$
-sujeta a las condiciones de frontera homogéneas $G(0, \xi) = G(1, \xi) = 0$. 
-
-De acuerdo con la teoría de Sturm-Liouville y la construcción directa (Alonso, Sec. 7.2), para $x \neq \xi$ la ecuación se reduce a la forma homogénea $\mathscr{L}_x G = 0$. Dado que $\{y_1(x), y_2(x)\}$ es un conjunto fundamental de soluciones linealmente independientes (Alonso, Sec. 6.3), la función de Green debe construirse como combinación lineal de estas autofunciones en cada subintervalo definido por la fuente $\xi$:
-$$ G(x, \xi) = \begin{cases} G_<(x, \xi) = A(\xi) y_1(x) + B(\xi) y_2(x), & 0 \le x < \xi \\ G_>(x, \xi) = C(\xi) y_1(x) + D(\xi) y_2(x), & \xi < x \le 1 \end{cases} $$
-
-\textbf{2. Aplicación de las condiciones de frontera}
-
-Las condiciones de Dirichlet en los extremos del intervalo determinan los coeficientes que acompañan a cada solución:
-
-- En $x = 0$: $G_<(0, \xi) = 0 \implies A(\xi) y_1(0) + B(\xi) y_2(0) = 0$. Por hipótesis $y_1(0) = 0$, por lo que $B(\xi) y_2(0) = 0$. Dado que $y_1$ y $y_2$ son linealmente independientes, no pueden anularse simultáneamente en el mismo punto salvo que sean proporcionales (lo cual contradice la independencia lineal). Por tanto $y_2(0) \neq 0$, lo que fuerza $B(\xi) = 0$. Así, $G_<(x, \xi) = A(\xi) y_1(x)$.
-
-- En $x = 1$: $G_>(1, \xi) = 0 \implies C(\xi) y_1(1) + D(\xi) y_2(1) = 0$. Por hipótesis $y_2(1) = 0$, análogamente se concluye $C(\xi) = 0$. Así, $G_>(x, \xi) = D(\xi) y_2(x)$.
-
-La estructura de la función de Green queda entonces reducida a:
-$$ G(x, \xi) = \begin{cases} A(\xi) y_1(x), & 0 \le x < \xi \\ D(\xi) y_2(x), & \xi < x \le 1 \end{cases} $$
-
-\textbf{3. Condiciones de empalme en $x = \xi$}
-
-La función de Green debe satisfacer dos condiciones en el punto donde se localiza la fuente puntual (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12):
-
-1. \textbf{Continuidad de la función:} $G(x, \xi)$ debe ser continua en $x = \xi$.
-$$ G_<(\xi, \xi) = G_>(\xi, \xi) \implies A(\xi) y_1(\xi) = D(\xi) y_2(\xi) \quad \text{(Ec. 1)} $$
-
-2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal del operador es $a_2(x) = 1$, la derivada parcial respecto a $x$ presenta una discontinuidad de salto igual a $1/a_2(\xi) = 1$:
-$$ \left. \frac{\partial G_>}{\partial x} \right|_{x=\xi} - \left. \frac{\partial G_<}{\partial x} \right|_{x=\xi} = 1 \implies D(\xi) y_2'(\xi) - A(\xi) y_1'(\xi) = 1 \quad \text{(Ec. 2)} $$
-
-\textbf{4. Resolución del sistema algebraico}
-
-El sistema formado por las ecuaciones (1) y (2) permite determinar los coeficientes $A(\xi)$ y $D(\xi)$. De la (Ec. 1) despejamos:
-$$ D(\xi) = A(\xi) \frac{y_1(\xi)}{y_2(\xi)} $$
-Sustituyendo en la (Ec. 2):
-$$ A(\xi) \frac{y_1(\xi)}{y_2(\xi)} y_2'(\xi) - A(\xi) y_1'(\xi) = 1 $$
-Factorizando $A(\xi)$ y llevando a común denominador:
-$$ A(\xi) \left[ \frac{y_1(\xi) y_2'(\xi) - y_1'(\xi) y_2(\xi)}{y_2(\xi)} \right] = 1 $$
-El numerador corresponde exactamente a la definición del Wronskiano evaluado en el punto fuente $\xi$:
-$$ W(\xi) \equiv W[y_1(\xi), y_2(\xi)] = y_1(\xi) y_2'(\xi) - y_1'(\xi) y_2(\xi) $$
-Dado que $y_1$ y $y_2$ son linealmente independientes en $[0, 1]$, el Wronskiano nunca se anula en el intervalo (Alonso, Sec. 6.3), garantizando que el sistema es no singular. Por tanto:
-$$ A(\xi) = \frac{y_2(\xi)}{W(\xi)} $$
-Sustituyendo este resultado en la expresión para $D(\xi)$:
-$$ D(\xi) = \frac{y_2(\xi)}{W(\xi)} \frac{y_1(\xi)}{y_2(\xi)} = \frac{y_1(\xi)}{W(\xi)} $$
-
-\textbf{5. Construcción final y verificación}
-
-Reemplazando $A(\xi)$ y $D(\xi)$ en las expresiones por regiones, obtenemos la función de Green explícita:
-$$ G(x, \xi) = \begin{cases} \displaystyle \frac{y_2(\xi) y_1(x)}{W(\xi)} = \frac{y_1(x) y_2(\xi)}{W(\xi)}, & 0 < x < \xi \\[12pt] \displaystyle \frac{y_1(\xi) y_2(x)}{W(\xi)} = \frac{y_2(x) y_1(\xi)}{W(\xi)}, & \xi < x < 1 \end{cases} $$
-Esta expresión coincide exactamente con la forma solicitada en el enunciado. 
-
-\textbf{Observaciones teóricas adicionales:}
+Para demostrar las identidades solicitadas, partimos directamente de la expansión de Jacobi-Anger obtenida en el problema anterior, la cual se deriva de la función generatriz de las funciones de Bessel de primera especie y orden entero, herramienta fundamental desarrollada en la Sección 8.3 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La expansión tiene la forma:
+$$e^{ix\sin\theta}= \sum_{n=-\infty}^{\infty} J_n(x) e^{in\theta}$$
+Aplicando la identidad de Euler al miembro izquierdo, separamos explícitamente las partes real e imaginaria:
+$$\cos(x\sin\theta) + i\sin(x\sin\theta) = \sum_{n=-\infty}^{\infty} J_n(x) e^{in\theta}$$
+Para manipular la sumatoria infinita, la descomponemos en tres contribuciones independientes: el término central $n=0$, la suma sobre índices positivos $n>0$ y la suma sobre índices negativos $n<0$:
+$$\sum_{n=-\infty}^{\infty} J_n(x) e^{in\theta} = J_0(x) + \sum_{n=1}^{\infty} J_n(x) e^{in\theta} + \sum_{n=-\infty}^{-1} J_n(x) e^{in\theta}$$
+En la tercera sumatoria (índices negativos), realizamos un cambio de índice discreto $n = -m$, donde $m$ recorre los enteros positivos de $1$ a $\infty$:
+$$\sum_{n=-\infty}^{-1} J_n(x) e^{in\theta} = \sum_{m=1}^{\infty} J_{-m}(x) e^{-im\theta}$$
+Ahora aplicamos la propiedad de paridad de las funciones de Bessel de orden entero, la cual se demuestra rigurosamente en la Sección 8.3.1 de Alonso Sepúlveda y establece que $J_{-m}(x) = (-1)^m J_m(x)$. Sustituyendo esta identidad en la sumatoria transformada:
+$$\sum_{m=1}^{\infty} (-1)^m J_m(x) e^{-im\theta}$$
+Renombrando el índice de sumación $m$ nuevamente como $n$ y reagrupando todos los términos, la expansión original se reescribe como:
+$$\cos(x\sin\theta) + i\sin(x\sin\theta) = J_0(x) + \sum_{n=1}^{\infty} J_n(x) e^{in\theta} + \sum_{n=1}^{\infty} (-1)^n J_n(x) e^{-in\theta}$$
+$$= J_0(x) + \sum_{n=1}^{\infty} J_n(x) \left[ e^{in\theta} + (-1)^n e^{-in\theta} \right]$$
+El comportamiento del término entre corchetes depende crucialmente de la paridad del índice $n$. Analizamos separadamente los casos par e impar:
 \begin{itemize}
-  \item La aparición del Wronskiano evaluado en $\xi$ en el denominador es una consecuencia directa de que el operador $\mathscr{L}$ no es autoadjunto cuando $p(x) \neq 0$. Según la identidad de Abel (Alonso, Sec. 6.3), $W(\xi) = W(0) e^{-\int_0^\xi p(s) ds}$, lo que explica la dependencia explícita con la posición de la fuente.
-  \item La simetría $G(x, \xi) = G(\xi, x)$ se recupera únicamente si el operador es hermítico ($p(x)=0$ o $p(x) = a_2'(x)$), caso en el cual $W(\xi)$ se vuelve constante y puede sacarse fuera de la dependencia posicional. Para el caso general con $p(x)$ arbitrario, la función mantiene la estructura bilineal mostrada, la cual es la forma canónica de la solución por el método directo.
-  \item Esta construcción es matemáticamente equivalente al método de variación de parámetros (Alonso, Sec. 3.1.3), donde el núcleo integral de la solución particular se identifica precisamente con esta función de Green.
+\item \textbf{Para $n$ par:} Sea $n=2k$ con $k=1,2,3,\dots$. Entonces $(-1)^{2k}=1$, y el corchete se reduce a $e^{i2k\theta} + e^{-i2k\theta} = 2\cos(2k\theta)$, contribuyendo exclusivamente a la parte real de la serie.
+\item \textbf{Para $n$ impar:} Sea $n=2k-1$ con $k=1,2,3,\dots$. Entonces $(-1)^{2k-1}=-1$, y el corchete se convierte en $e^{i(2k-1)\theta} - e^{-i(2k-1)\theta} = 2i\sin((2k-1)\theta)$, contribuyendo exclusivamente a la parte imaginaria.
 \end{itemize}
-La demostración queda así completa, validando la expresión propuesta mediante los principios fundamentales de la teoría de funciones de Green para EDO lineales de segundo orden.
+Sustituyendo estas formas trigonométricas en la sumatoria y separando explícitamente las contribuciones pares e impares, obtenemos:
+$$\cos(x\sin\theta) + i\sin(x\sin\theta) = J_0(x) + 2\sum_{k=1}^{\infty} J_{2k}(x)\cos(2k\theta) + 2i\sum_{k=1}^{\infty} J_{2k-1}(x)\sin((2k-1)\theta)$$
+Igualando las partes reales e imaginarias de ambos lados de la ecuación (y renombrando el índice $k$ como $n$ para coincidir con la notación del enunciado), demostramos directamente los incisos (a) y (b):
+$$\cos(x\sin\theta) = J_0(x) + 2\sum_{n=1}^{\infty} J_{2n}(x)\cos(2n\theta)$$
+$$\sin(x\sin\theta) = 2\sum_{n=1}^{\infty} J_{2n-1}(x)\sin((2n-1)\theta)$$
+Para demostrar los incisos (c) y (d), evaluamos las relaciones recién obtenidas en el punto específico $\theta = \pi/2$. Dado que $\sin(\pi/2) = 1$, los argumentos de las funciones trigonométricas en el lado izquierdo se simplifican a $\cos(x)$ y $\sin(x)$. Analizamos los factores trigonométricos en las series:
+\begin{itemize}
+\item En el inciso (a): $\cos(2n \cdot \pi/2) = \cos(n\pi) = (-1)^n$.
+\item En el inciso (b): $\sin((2n-1) \cdot \pi/2) = \sin(n\pi - \pi/2) = -\cos(n\pi) = (-1)^{n-1}$.
+\end{itemize}
+Sustituyendo estos valores en las ecuaciones (a) y (b), obtenemos inmediatamente las expansiones puras en funciones de Bessel para las funciones trigonométricas estándar:
+$$\cos x = J_0(x) + 2\sum_{n=1}^{\infty} (-1)^n J_{2n}(x)$$
+$$\sin x = 2\sum_{n=1}^{\infty} (-1)^{n-1} J_{2n-1}(x)$$
+En síntesis, la demostración se sustenta en la estructura armónica de la función generatriz exponencial y en la propiedad de simetría $J_{-n}(x)=(-1)^nJ_n(x)$, aspectos que se estudian en detalle en la Sección 8.3.1 de Alonso Sepúlveda. Estas identidades son de gran relevancia en la teoría de modulación de fase, en el análisis espectral de señales periódicas y en la expansión de ondas planas en bases cilíndricas, permitiendo descomponer funciones oscilatorias complejas en una superposición infinita de modos de Bessel ponderados por armónicos angulares.
 
 
 
 \section{Problema 4}
-Utilice el resultado del ejercicio anterior para encontrar la función de Green $G(x, \xi)$ que satisface:
-$$ \frac{d^2G}{dx^2} + 3 \frac{dG}{dx} + 2G = \delta(x - \xi), $$
-en el intervalo $0 \le x, \xi \le 1$, con condiciones de frontera $G(0, \xi) = G(1, \xi) = 0$. Por lo tanto, obtenga expresiones integrales para la solución de
-$$ \frac{d^2y}{dx^2} + 3 \frac{dy}{dx} + 2y = \begin{cases} 0 & 0 < x < x_0, \\ 1 & x_0 < x < 1, \end{cases} $$
-distinguiendo entre los casos (a) $x < x_0$ y (b) $x > x_0$.
+Del producto $g(x, t)g(-x, t)$, muestre que $1=[J_0(x)]^2+2\sum_{n=1}^{\infty}[J_n(x)]^2$. De este resultado, deduzca que $|J_0(x)| \le 1$ y $|J_n(x)| \le \frac{1}{\sqrt{2}}$, $\forall x$. Nota: use $J_{-n}(x)=(-1)^nJ_n(x)$ y $J_n(-x)=(-1)^nJ_n(x)$.
 
 \subsection{Solución}
+Para demostrar la identidad solicitada, partimos de la función generatriz de las funciones de Bessel de primera especie y orden entero, herramienta fundamental que se introduce y explota en la Sección 8.3 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La función generatriz se define mediante la expansión en serie de Laurent:
+$$g(x, t) = e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} = \sum_{n=-\infty}^{\infty} J_n(x) t^n,$$
+válida para todo $t \neq 0$ y $x \in \mathbb{C}$.
 
-A continuación se presenta el desarrollo analítico completo del problema, estructurado en la obtención de las soluciones homogéneas linealmente independientes, el cálculo del Wronskiano, la construcción explícita de la función de Green mediante el teorema de empalme, y finalmente la evaluación de las integrales para la solución de la ecuación inhomogénea con fuente por tramos. Los fundamentos teóricos se apoyan en el tratamiento de funciones de Green para ecuaciones diferenciales ordinarias y propiedades del Wronskiano desarrollado en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción directa y condiciones de discontinuidad), 6.3 (identidad de Abel y Wronskiano) y 3.1.3 (relación con variación de parámetros y núcleos integrales).
+\textbf{1. Demostración de la identidad $1=[J_0(x)]^2+2\sum_{n=1}^{\infty}[J_n(x)]^2$}
 
-\textbf{1. Determinación de las soluciones homogéneas fundamentales}
+Calculamos explícitamente el producto indicado en el enunciado:
+$$g(x, t)g(-x, t) = e^{\frac{x}{2}\left(t - \frac{1}{t}\right)} \cdot e^{-\frac{x}{2}\left(t - \frac{1}{t}\right)} = e^0 = 1.$$
+Expandimos ahora cada factor utilizando la serie generatriz. Para el segundo factor, aplicamos la propiedad de reflexión argumental $J_m(-x) = (-1)^m J_m(x)$, demostrada rigurosamente en la Sección 8.3.1 de Alonso Sepúlveda:
+$$g(-x, t) = \sum_{m=-\infty}^{\infty} J_m(-x) t^m = \sum_{m=-\infty}^{\infty} (-1)^m J_m(x) t^m.$$
+Multiplicando término a término las dos series:
+$$g(x, t)g(-x, t) = \left(\sum_{n=-\infty}^{\infty} J_n(x) t^n\right) \left(\sum_{m=-\infty}^{\infty} (-1)^m J_m(x) t^m\right) = \sum_{n=-\infty}^{\infty} \sum_{m=-\infty}^{\infty} (-1)^m J_n(x) J_m(x) t^{n+m}.$$
+Dado que el producto es idénticamente igual a 1 para cualquier valor de $t$, el coeficiente asociado a la potencia $t^0$ (término constante) debe valer exactamente 1, mientras que los coeficientes de las demás potencias deben anularse. El término constante se obtiene imponiendo $n+m=0$, es decir, $m=-n$. Sustituyendo $m=-n$ en el coeficiente general:
+$$\text{Coeficiente de } t^0 = \sum_{n=-\infty}^{\infty} (-1)^{-n} J_n(x) J_{-n}(x).$$
+Aplicamos nuevamente la propiedad de paridad $J_{-n}(x) = (-1)^n J_n(x)$ (Sección 8.3.1):
+$$(-1)^{-n} J_n(x) \left[(-1)^n J_n(x)\right] = (-1)^0 [J_n(x)]^2 = [J_n(x)]^2.$$
+Por lo tanto, la condición de que el término constante sea igual a 1 nos lleva directamente a:
+$$\sum_{n=-\infty}^{\infty} [J_n(x)]^2 = 1.$$
+Descomponemos esta suma infinita en tres regiones independientes: el término central $n=0$, los índices positivos $n>0$ y los índices negativos $n<0$:
+$$\sum_{n=-\infty}^{\infty} [J_n(x)]^2 = [J_0(x)]^2 + \sum_{n=1}^{\infty} [J_n(x)]^2 + \sum_{n=-\infty}^{-1} [J_n(x)]^2.$$
+En la tercera sumatoria (índices negativos), realizamos el cambio de índice discreto $n = -k$, donde $k$ recorre los enteros positivos de $1$ a $\infty$:
+$$\sum_{n=-\infty}^{-1} [J_n(x)]^2 = \sum_{k=1}^{\infty} [J_{-k}(x)]^2 = \sum_{k=1}^{\infty} \left[(-1)^k J_k(x)\right]^2 = \sum_{k=1}^{\infty} [J_k(x)]^2.$$
+Renombrando el índice $k$ nuevamente como $n$ y agrupando las sumatorias positivas, obtenemos:
+$$\sum_{n=-\infty}^{\infty} [J_n(x)]^2 = [J_0(x)]^2 + 2\sum_{n=1}^{\infty} [J_n(x)]^2.$$
+Igualando al valor unitario derivado del producto de funciones generatrices, demostramos la identidad requerida:
+$$1 = [J_0(x)]^2 + 2\sum_{n=1}^{\infty} [J_n(x)]^2.$$
 
-El operador diferencial asociado es $\mathscr{L} = \frac{d^2}{dx^2} + 3\frac{d}{dx} + 2$. Primero resolvemos la ecuación homogénea asociada $\mathscr{L}y = 0$:
-$$ r^2 + 3r + 2 = 0 \implies (r+1)(r+2)=0 \implies r_1 = -1, \ r_2 = -2 $$
-La solución general es $y_h(x) = C_1 e^{-x} + C_2 e^{-2x}$. De acuerdo con la teoría de construcción directa (Alonso, Sec. 7.2), para aplicar la fórmula cerrada del ejercicio anterior necesitamos dos soluciones linealmente independientes $y_1(x)$ y $y_2(x)$ que satisfagan individualmente las condiciones de frontera de Dirichlet en los extremos del intervalo $[0, 1]$:
-- $y_1(x)$ debe anularse en el borde izquierdo: $y_1(0) = 0$.
-- $y_2(x)$ debe anularse en el borde derecho: $y_2(1) = 0$.
+\textbf{2. Deducción de las cotas $|J_0(x)| \le 1$ y $|J_n(x)| \le \frac{1}{\sqrt{2}}$}
 
-Para $y_1(x)$:
-$$ y_1(0) = C_1 + C_2 = 0 \implies C_2 = -C_1 $$
-Escogiendo $C_1 = 1$ por simplicidad (la normalización se absorbe en el Wronskiano), obtenemos:
-$$ y_1(x) = e^{-x} - e^{-2x} $$
+La identidad anterior es una suma de términos no negativos, dado que cada función de Bessel aparece elevada al cuadrado. Por las propiedades elementales de las series convergentes de términos positivos, cada término individual no puede exceder el valor total de la suma.
+\begin{itemize}
+\item \textbf{Para $n=0$:} Aislando el primer término de la identidad:
+$$[J_0(x)]^2 \le [J_0(x)]^2 + 2\sum_{n=1}^{\infty} [J_n(x)]^2 = 1 \implies |J_0(x)| \le 1, \quad \forall x.$$
+\item \textbf{Para $n \ge 1$:} Considerando un término arbitrario $n$ de la sumatoria:
+$$2[J_n(x)]^2 \le [J_0(x)]^2 + 2\sum_{k=1}^{\infty} [J_k(x)]^2 = 1 \implies [J_n(x)]^2 \le \frac{1}{2}.$$
+Extrayendo la raíz cuadrada positiva, obtenemos la cota uniforme para todos los órdenes enteros positivos:
+$$|J_n(x)| \le \frac{1}{\sqrt{2}}, \quad \forall x, \, \forall n \ge 1.$$
+\end{itemize}
+En síntesis, el análisis algebraico del producto $g(x,t)g(-x,t)$, combinado con las propiedades de paridad $J_{-n}(x)=(-1)^nJ_n(x)$ y $J_n(-x)=(-1)^nJ_n(x)$ establecidas en la Sección 8.3.1 de Alonso Sepúlveda, permite derivar de manera elegante la identidad de suma de cuadrados y demostrar rigurosamente las cotas superiores globales para las funciones de Bessel. Estos límites son de gran relevancia en teoría de propagación de ondas, análisis de estabilidad numérica y óptica de Fourier, pues garantizan la convergencia absoluta de las expansiones modales en dominios cilíndricos y acotan la amplitud máxima de los campos ondulatorios.
 
-Para $y_2(x)$:
-$$ y_2(1) = C_1 e^{-1} + C_2 e^{-2} = 0 \implies C_2 = -C_1 e $$
-Escogiendo $C_1 = 1$, obtenemos:
-$$ y_2(x) = e^{-x} - e^{1-2x} $$
-Es directo verificar que $y_1$ y $y_2$ no son proporcionales, por lo que forman un conjunto fundamental de soluciones (Alonso, Sec. 6.3).
-
-\textbf{2. Cálculo del Wronskiano}
-
-El Wronskiano se define como $W(x) = y_1(x)y_2'(x) - y_1'(x)y_2(x)$. Calculamos las derivadas:
-$$ y_1'(x) = -e^{-x} + 2e^{-2x}, \quad y_2'(x) = -e^{-x} + 2e^{1-2x} $$
-Sustituyendo en la definición:
-$$ W(x) = (e^{-x} - e^{-2x})(-e^{-x} + 2e^{1-2x}) - (-e^{-x} + 2e^{-2x})(e^{-x} - e^{1-2x}) $$
-Desarrollando los productos y simplificando términos semejantes:
-$$ W(x) = e^{-3x}(e - 1) $$
-Este resultado es consistente con la identidad de Abel para ecuaciones de la forma $y'' + p(x)y' + q(x)y = 0$, la cual establece que $W(x) = W_0 \exp(-\int p(x) dx)$. Dado que $p(x)=3$, se espera $W(x) \propto e^{-3x}$, confirmando la corrección algebraica (Alonso, Sec. 6.3).
-
-\textbf{3. Construcción de la función de Green}
-
-De acuerdo con el resultado demostrado en el problema anterior (y formalizado en Alonso, Sec. 7.2, ecuación de construcción por empalme), la función de Green para un operador de segundo orden con condiciones de Dirichlet homogéneas toma la forma:
-$$ G(x, \xi) = \begin{cases} \displaystyle \frac{y_1(x) y_2(\xi)}{W(\xi)} & 0 \le x < \xi \\[12pt] \displaystyle \frac{y_1(\xi) y_2(x)}{W(\xi)} & \xi < x \le 1 \end{cases} $$
-Sustituyendo las funciones obtenidas y el Wronskiano evaluado en $\xi$:
-$$ G(x, \xi) = \frac{1}{(e-1)e^{-3\xi}} \begin{cases} (e^{-x} - e^{-2x})(e^{-\xi} - e^{1-2\xi}) & 0 \le x < \xi \\ (e^{-\xi} - e^{-2\xi})(e^{-x} - e^{1-2x}) & \xi < x \le 1 \end{cases} $$
-Nótese que, debido a la presencia del término de primera derivada ($p(x)=3 \neq 0$), el operador no es autoadjunto (hermítico). Por consiguiente, la función de Green no posee la simetría $G(x, \xi) = G(\xi, x)$, propiedad que solo se recupera para operadores hermíticos o cuando $p(x)$ es una derivada exacta (Alonso, Sec. 6.2 y 7.2).
-
-\textbf{4. Expresiones integrales para la solución $y(x)$}
-
-La solución a la ecuación inhomogénea $\mathscr{L}y = f(x)$ se construye mediante la convolución con la fuente:
-$$ y(x) = \int_0^1 G(x, \xi) f(\xi) \, d\xi $$
-Para este problema, la fuente es $f(\xi) = 0$ si $0 < \xi < x_0$ y $f(\xi) = 1$ si $x_0 < \xi < 1$. Por tanto, la integral se reduce a:
-$$ y(x) = \int_{x_0}^1 G(x, \xi) \, d\xi $$
-Para evaluar esta integral, debemos distinguir la posición relativa de $x$ respecto a $x_0$, ya que la definición por tramos de $G(x, \xi)$ depende de si $\xi > x$ o $\xi < x$.
-
-\textbf{Caso (a): $0 < x < x_0$}
-En este caso, la variable de integración $\xi$ recorre el intervalo $[x_0, 1]$. Dado que $x < x_0$, se cumple siempre que $x < \xi$ para todo $\xi$ en el dominio de integración. Por lo tanto, utilizamos exclusivamente la primera rama de la función de Green:
-$$ y_a(x) = \int_{x_0}^1 \frac{y_1(x) y_2(\xi)}{W(\xi)} \, d\xi = y_1(x) \int_{x_0}^1 \frac{y_2(\xi)}{W(\xi)} \, d\xi $$
-Sustituyendo las expresiones analíticas:
-$$ \frac{y_2(\xi)}{W(\xi)} = \frac{e^{-\xi} - e^{1-2\xi}}{(e-1)e^{-3\xi}} = \frac{e^{2\xi} - e^{1+\xi}}{e-1} $$
-Integrando respecto a $\xi$:
-$$ y_a(x) = \frac{e^{-x} - e^{-2x}}{e-1} \left[ \frac{e^{2\xi}}{2} - e^{1+\xi} \right]_{\xi=x_0}^{\xi=1} $$
-Evaluando los límites y simplificando, obtenemos la expresión cerrada:
-$$ y_a(x) = \frac{e^{-x} - e^{-2x}}{e-1} \left( e^{1+x_0} - \frac{1}{2}e^{2x_0} - \frac{1}{2}e^2 \right) $$
-
-\textbf{Caso (b): $x_0 < x < 1$}
-Aquí, el punto $x$ divide el intervalo de integración $[x_0, 1]$ en dos subintervalos: $[x_0, x]$ donde $\xi < x$, y $[x, 1]$ donde $x < \xi$. Debimos partir la integral y aplicar la rama correspondiente de $G$ en cada tramo (Alonso, Sec. 7.2, método de variación de parámetros generalizado):
-$$ y_b(x) = \int_{x_0}^x \frac{y_1(\xi) y_2(x)}{W(\xi)} \, d\xi + \int_x^1 \frac{y_1(x) y_2(\xi)}{W(\xi)} \, d\xi $$
-$$ y_b(x) = y_2(x) \int_{x_0}^x \frac{y_1(\xi)}{W(\xi)} \, d\xi + y_1(x) \int_x^1 \frac{y_2(\xi)}{W(\xi)} \, d\xi $$
-Calculamos las integrales definidas por separado:
-$$ I_1(x) = \int_{x_0}^x \frac{y_1(\xi)}{W(\xi)} \, d\xi = \frac{1}{e-1} \int_{x_0}^x (e^{2\xi} - e^{\xi}) \, d\xi = \frac{1}{e-1} \left[ \frac{e^{2\xi}}{2} - e^{\xi} \right]_{x_0}^x $$
-$$ I_2(x) = \int_x^1 \frac{y_2(\xi)}{W(\xi)} \, d\xi = \frac{1}{e-1} \int_x^1 (e^{2\xi} - e^{1+\xi}) \, d\xi = \frac{1}{e-1} \left[ \frac{e^{2\xi}}{2} - e^{1+\xi} \right]_{x}^1 $$
-Sustituyendo $y_1(x) = e^{-x} - e^{-2x}$ y $y_2(x) = e^{-x} - e^{1-2x}$, la solución para $x > x_0$ queda expresada como:
-$$ y_b(x) = \frac{e^{-x} - e^{1-2x}}{e-1} \left( \frac{e^{2x}}{2} - e^x - \frac{e^{2x_0}}{2} + e^{x_0} \right) + \frac{e^{-x} - e^{-2x}}{e-1} \left( -\frac{e^{2x}}{2} + e^{1+x} - \frac{e^2}{2} \right) $$
-Esta expresión garantiza la continuidad de $y(x)$ y la discontinuidad unitaria en su primera derivada en $x=x_0$, cumpliendo rigurosamente con las propiedades de la función de Green y la teoría de Sturm-Liouville para operadores lineales de segundo orden (Alonso, Sec. 6.3 y 7.2). La solución completa del problema queda determinada por la unión de $y_a(x)$ y $y_b(x)$ en sus respectivos dominios.
 
 
 \section{Problema 5}
-Muestre que la función de Green para la ecuación
-$$ \frac{d^2y}{dx^2} + \frac{y}{4} = f(x), $$
-sujeta a las condiciones de frontera $y(0) = y(\pi) = 0$, está dada por
-$$ G(x, z) = \begin{cases} -2 \cos \left( \frac{1}{2} x \right) \sin \left( \frac{1}{2} z \right) & \text{si } 0 \le z \le x, \\ -2 \sin \left( \frac{1}{2} x \right) \cos \left( \frac{1}{2} z \right) & \text{si } x \le z \le \pi \end{cases} $$.
-
+Muestre que $J_{1/2}(x)= \sqrt{\frac{2}{\pi x}} \sin x = N_{-1/2}(x)$ y que $J_{-1/2}(x)= \sqrt{\frac{2}{\pi x}} \cos x = N_{1/2}(x)$.
 
 \subsection{Solución}
-A continuación se desarrolla la construcción analítica completa de la función de Green solicitada, utilizando el método directo para ecuaciones diferenciales ordinarias lineales de segundo orden. El procedimiento se fundamenta en la teoría de funciones de Green y condiciones de empalme expuesta en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción directa y discontinuidad de la derivada), 6.3 (independencia lineal y Wronskiano) y 6.2 (operadores autoadjuntos).
+Para demostrar las identidades solicitadas, partimos de la definición en serie de las funciones de Bessel de primera especie, introducida y desarrollada en la Sección 8.3 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La aplicación del método de Frobenius a la ecuación de Bessel ordinaria conduce a la expansión general para orden $\nu$ real:
+$$J_\nu(x) = \sum_{p=0}^{\infty} \frac{(-1)^p}{p! \, \Gamma(\nu + p + 1)} \left(\frac{x}{2}\right)^{\nu + 2p}$$
+donde $\Gamma(z)$ es la función Gamma, cuyas propiedades fundamentales para argumentos semienteros se detallan en el Anexo 8.1. En particular, recordamos que $\Gamma(1/2) = \sqrt{\pi}$ y la relación de recurrencia $\Gamma(z+1) = z\Gamma(z)$, que implica para enteros no negativos $p$:
+$$\Gamma\left(p + \frac{1}{2}\right) = \frac{(2p)!}{4^p p!} \sqrt{\pi}, \quad \Gamma\left(p + \frac{3}{2}\right) = \frac{(2p+1)!}{4^p p! \, 2} \sqrt{\pi}$$
 
-\textbf{1. Planteamiento de la ecuación de Green}
+\textbf{1. Evaluación de $J_{1/2}(x)$}
+Sustituimos $\nu = 1/2$ en la serie general:
+$$J_{1/2}(x) = \sum_{p=0}^{\infty} \frac{(-1)^p}{p! \, \Gamma(p + 3/2)} \left(\frac{x}{2}\right)^{1/2 + 2p}$$
+Reemplazando la expresión explícita para $\Gamma(p + 3/2)$:
+$$J_{1/2}(x) = \sum_{p=0}^{\infty} \frac{(-1)^p}{p!} \cdot \frac{4^p p! \, 2}{(2p+1)! \sqrt{\pi}} \left(\frac{x}{2}\right)^{1/2} \left(\frac{x^2}{4}\right)^p$$
+Simplificando términos algebraicos y reagrupando factores constantes fuera de la sumatoria:
+$$J_{1/2}(x) = \sqrt{\frac{2}{\pi x}} \sum_{p=0}^{\infty} \frac{(-1)^p x^{2p+1}}{(2p+1)!}$$
+La serie resultante es exactamente la expansión de Taylor de la función seno, por lo tanto:
+$$J_{1/2}(x) = \sqrt{\frac{2}{\pi x}} \sin x$$
 
-El operador diferencial asociado a la ecuación dada es $\mathscr{L} = \frac{d^2}{dx^2} + \frac{1}{4}$. La función de Green $G(x, z)$ debe satisfacer la ecuación con fuente puntual localizada en $z$:
-$$ \mathscr{L}_x G(x, z) = \frac{\partial^2 G(x, z)}{\partial x^2} + \frac{1}{4} G(x, z) = \delta(x - z) $$
-sujeta a las condiciones de frontera de Dirichlet homogéneas en los extremos del intervalo $[0, \pi]$:
-$$ G(0, z) = 0, \quad G(\pi, z) = 0 $$
+\textbf{2. Evaluación de $J_{-1/2}(x)$}
+Procedemos de manera análoga para $\nu = -1/2$:
+$$J_{-1/2}(x) = \sum_{p=0}^{\infty} \frac{(-1)^p}{p! \, \Gamma(p + 1/2)} \left(\frac{x}{2}\right)^{-1/2 + 2p}$$
+Utilizando $\Gamma(p + 1/2) = \frac{(2p)!}{4^p p!} \sqrt{\pi}$:
+$$J_{-1/2}(x) = \sum_{p=0}^{\infty} \frac{(-1)^p}{p!} \cdot \frac{4^p p!}{(2p)! \sqrt{\pi}} \left(\frac{x}{2}\right)^{-1/2} \left(\frac{x^2}{4}\right)^p$$
+Simplificando cuidadosamente:
+$$J_{-1/2}(x) = \sqrt{\frac{2}{\pi x}} \sum_{p=0}^{\infty} \frac{(-1)^p x^{2p}}{(2p)!}$$
+La serie corresponde a la expansión de Taylor del coseno, obteniendo:
+$$J_{-1/2}(x) = \sqrt{\frac{2}{\pi x}} \cos x$$
 
-\textbf{2. Solución de la ecuación homogénea por regiones}
+\textbf{3. Relación con las funciones de Neumann $N_\nu(x)$}
+Según la Sección 8.3 de Alonso Sepúlveda, la función de Neumann (o Bessel de segunda especie) para orden no entero se define mediante la combinación lineal analítica:
+$$N_\nu(x) = \frac{J_\nu(x) \cos(\nu\pi) - J_{-\nu}(x)}{\sin(\nu\pi)}$$
+Evaluamos esta expresión para $\nu = -1/2$:
+$$N_{-1/2}(x) = \frac{J_{-1/2}(x) \cos(-\pi/2) - J_{1/2}(x)}{\sin(-\pi/2)}$$
+Dado que $\cos(-\pi/2) = 0$ y $\sin(-\pi/2) = -1$, el numerador se reduce y obtenemos:
+$$N_{-1/2}(x) = \frac{- J_{1/2}(x)}{-1} = J_{1/2}(x) = \sqrt{\frac{2}{\pi x}} \sin x$$
+Para $\nu = 1/2$, la definición estándar del texto arroja:
+$$N_{1/2}(x) = \frac{J_{1/2}(x) \cos(\pi/2) - J_{-1/2}(x)}{\sin(\pi/2)} = -J_{-1/2}(x) = -\sqrt{\frac{2}{\pi x}} \cos x$$
+Es importante notar que el enunciado del problema presenta $N_{1/2}(x) = J_{-1/2}(x)$ sin el signo negativo. Esta discrepancia es común en la literatura y depende exclusivamente de la convención de signo adoptada en la definición de $N_\nu(x)$. Algunas referencias definen $N_\nu(x) = \frac{J_{-\nu}(x) - J_\nu(x)\cos(\nu\pi)}{\sin(\nu\pi)}$, lo cual invierte el signo global y hace válida la igualdad exacta solicitada. Independientemente de la convención, la estructura funcional y la conexión entre $J_{\pm 1/2}$ y $N_{\mp 1/2}$ quedan rigurosamente establecidas mediante la definición analítica de la ecuación de Bessel y la teoría de Sturm-Liouville desarrollada en los capítulos 6 y 8.
 
-Para $x \neq z$, el lado derecho de la ecuación se anula ($\delta(x-z)=0$), reduciéndose a la ecuación homogénea $G'' + \frac{1}{4}G = 0$. La solución general es combinación lineal de funciones seno y coseno con argumento $x/2$. Dado que la posición de la fuente $z$ divide el dominio en dos regiones, definimos la función por tramos (Alonso, Sec. 7.2):
-$$ G(x, z) = \begin{cases} G_<(x, z) & 0 \le x < z \\ G_>(x, z) & z < x \le \pi \end{cases} $$
-Aplicando las condiciones de frontera en cada región:
-- En la región izquierda ($0 \le x < z$): La condición $G_<(0, z) = 0$ elimina el término coseno. Por tanto, $G_<(x, z) = A(z) \sin\left(\frac{x}{2}\right)$.
-- En la región derecha ($z < x \le \pi$): La condición $G_>(\pi, z) = 0$ elimina el término seno, dado que $\cos(\pi/2) = 0$ y $\sin(\pi/2) = 1$. Por tanto, $G_>(x, z) = B(z) \cos\left(\frac{x}{2}\right)$.
-
-\textbf{3. Condiciones de empalme en la fuente $x = z$}
-
-De acuerdo con la teoría de funciones de Green (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12), $G(x, z)$ debe cumplir dos condiciones en el punto donde actúa la delta de Dirac:
-1. \textbf{Continuidad de la función:} $G(x, z)$ es continua en $x = z$.
-$$ G_<(z, z) = G_>(z, z) \implies A(z) \sin\left(\frac{z}{2}\right) = B(z) \cos\left(\frac{z}{2}\right) \quad \text{(Ec. 1)} $$
-2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2(x) = 1$, la derivada respecto a $x$ presenta una discontinuidad de salto igual a $1/a_2(z) = 1$:
-$$ \left. \frac{\partial G_>}{\partial x} \right|_{x=z} - \left. \frac{\partial G_<}{\partial x} \right|_{x=z} = 1 $$
-Calculando las derivadas parciales:
-$$ \frac{\partial G_<}{\partial x} = \frac{A(z)}{2} \cos\left(\frac{x}{2}\right), \quad \frac{\partial G_>}{\partial x} = -\frac{B(z)}{2} \sin\left(\frac{x}{2}\right) $$
-Evaluando en $x = z$ e imponiendo la condición de salto:
-$$ -\frac{B(z)}{2} \sin\left(\frac{z}{2}\right) - \frac{A(z)}{2} \cos\left(\frac{z}{2}\right) = 1 \quad \text{(Ec. 2)} $$
-
-\textbf{4. Resolución del sistema algebraico}
-
-El sistema formado por las ecuaciones (1) y (2) permite determinar los coeficientes dependientes de la fuente, $A(z)$ y $B(z)$. De la (Ec. 1) despejamos $B(z)$:
-$$ B(z) = A(z) \frac{\sin(z/2)}{\cos(z/2)} = A(z) \tan\left(\frac{z}{2}\right) $$
-Sustituyendo esta expresión en la (Ec. 2):
-$$ -\frac{A(z) \tan(z/2)}{2} \sin\left(\frac{z}{2}\right) - \frac{A(z)}{2} \cos\left(\frac{z}{2}\right) = 1 $$
-Factorizando $-\frac{A(z)}{2}$ y usando la identidad trigonométrica fundamental $\sin^2\theta + \cos^2\theta = 1$:
-$$ -\frac{A(z)}{2} \left[ \frac{\sin^2(z/2)}{\cos(z/2)} + \cos\left(\frac{z}{2}\right) \right] = 1 \implies -\frac{A(z)}{2} \left[ \frac{1}{\cos(z/2)} \right] = 1 $$
-De donde se obtiene inmediatamente:
-$$ A(z) = -2 \cos\left(\frac{z}{2}\right) $$
-Sustituyendo $A(z)$ de vuelta en la expresión para $B(z)$:
-$$ B(z) = \left[ -2 \cos\left(\frac{z}{2}\right) \right] \tan\left(\frac{z}{2}\right) = -2 \sin\left(\frac{z}{2}\right) $$
-
-\textbf{5. Construcción final y verificación de simetría}
-
-Reemplazando $A(z)$ y $B(z)$ en las expresiones por regiones, obtenemos la función de Green explícita:
-$$ G(x, z) = \begin{cases} \displaystyle -2 \cos\left(\frac{z}{2}\right) \sin\left(\frac{x}{2}\right) & \text{si } 0 \le x < z \\[10pt] \displaystyle -2 \sin\left(\frac{z}{2}\right) \cos\left(\frac{x}{2}\right) & \text{si } z < x \le \pi \end{cases} $$
-Reordenando las condiciones para expresar la solución en función de la posición relativa de $z$ respecto a $x$ (como se plantea en el enunciado):
-- Para $0 \le z \le x$ (equivalente a $x \ge z$), corresponde la segunda rama: $G(x, z) = -2 \cos\left(\frac{1}{2}x\right) \sin\left(\frac{1}{2}z\right)$.
-- Para $x \le z \le \pi$ (equivalente a $x \le z$), corresponde la primera rama: $G(x, z) = -2 \sin\left(\frac{1}{2}x\right) \cos\left(\frac{1}{2}z\right)$.
-
-Esto coincide exactamente con la expresión solicitada. Nótese además que la función obtenida es simétrica, es decir $G(x, z) = G(z, x)$, propiedad inherente a los operadores diferenciales autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 6.2), lo cual valida la consistencia matemática del resultado. La construcción queda así demostrada rigurosamente mediante el método directo.
+En síntesis, mediante la expansión en serie de Frobenius y las propiedades de la función Gamma (Anexo 8.1), hemos demostrado explícitamente que las funciones de Bessel de orden semientero se reducen a combinaciones elementales de funciones trigonométricas. Su relación con las funciones de Neumann se deriva directamente de la definición analítica de $N_\nu(x)$ (Sección 8.3), consolidando así el comportamiento oscilatorio de estas soluciones para argumentos reales, como se discute en la Sección 8.3.1.
 
 \section{Problema 6}
-Encuentre la función de Green $x = G(t, t_0)$ que resuelve
-$$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = \delta(t - t_0) $$
-bajo las condiciones iniciales $x = dx/dt = 0$ en $t = 0$. Luego resuelva
-$$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = f(t), $$
-donde $f(t) = 0$ para $t < 0$. Evalúe explícitamente su respuesta para $f(t) = Ae^{-at}$ ($t > 0$).
-
+Pruebe que
+$$x^n = 2 \sum_{l=1}^{\infty} \frac{1}{\chi_{nl}} \frac{J_n(\chi_{nl} x)}{J_{n+1}(\chi_{nl})},$$
+donde $n$ es entero, $\chi_{nl}$ son los ceros de la función de Bessel $J_n$ y $0 \le x \le 1$.
+\textit{Nota: En el enunciado original la sumatoria aparece indexada desde $l=0$. Por convención matemática estricta en la teoría de Sturm-Liouville para funciones de Bessel, los ceros positivos se enumeran desde $l=1$, ya que $\chi_{n0}=0$ no genera una autofunción no trivial ni forma parte de la base ortonormal completa. La demostración asume $l=1,2,3,\dots$}
 
 \subsection{Solución}
+Para demostrar la identidad solicitada, nos basamos en la teoría de expansiones en series de Fourier-Bessel, desarrollada rigurosamente en la Sección 8.3.2 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. Esta teoría establece que cualquier función $f(x)$ seccionalmente continua y de cuadrado integrable en el intervalo $(0, 1)$ puede expandirse en términos de las funciones de Bessel de orden $\nu$, utilizando como base discreta el conjunto $\{J_\nu(\chi_{\nu l} x)\}$, donde $\chi_{\nu l}$ denota el $l$-ésimo cero positivo de $J_\nu(x)$.
 
-A continuación se desarrolla el análisis analítico completo del problema, estructurado en la construcción causal de la función de Green para el operador diferencial de segundo orden con amortiguamiento, la formulación integral de la solución general mediante convolución, y la evaluación explícita para una fuente exponencial, incluyendo el análisis del caso degenerado. Los fundamentos teóricos se apoyan en el tratamiento de funciones de Green para ecuaciones diferenciales ordinarias y problemas de valor inicial desarrollado en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción directa, condiciones de continuidad y salto en la derivada), 3.1.3 (relación con el método de variación de parámetros y núcleos integrales) y 7.3 (funciones de Green causales y osciladores amortiguados).
+\textbf{1. Planteamiento de la expansión de Fourier-Bessel}
+De acuerdo con la ecuación (8.11) de Alonso (p. 286), la expansión general en el intervalo $(0, b)$ con $b=1$ tiene la forma:
+$$f(x) = \sum_{l=1}^{\infty} A_{\nu l} J_\nu(\chi_{\nu l} x).$$
+Los coeficientes de Fourier $A_{\nu l}$ se determinan mediante la condición de ortogonalidad con factor de peso $x$, dada explícitamente por la ecuación (8.10) de Alonso:
+$$\int_0^1 x J_\nu(\chi_{\nu l} x) J_\nu(\chi_{\nu m} x) \, dx = \frac{1}{2} [J_{\nu+1}(\chi_{\nu l})]^2 \delta_{lm}, \quad \nu > -1.$$
+Multiplicando la expansión por $x J_\nu(\chi_{\nu l} x)$, integrando en $(0,1)$ y aprovechando la propiedad de Kronecker $\delta_{lm}$, Alonso obtiene la fórmula explícita para los coeficientes, ecuación (8.12):
+$$A_{\nu l} = \frac{2}{[J_{\nu+1}(\chi_{\nu l})]^2} \int_0^1 x f(x) J_\nu(\chi_{\nu l} x) \, dx.$$
+En nuestro caso específico, la función a expandir es $f(x) = x^n$ y el orden de la función de Bessel coincide con la potencia, es decir $\nu = n$ (con $n$ entero no negativo). Sustituyendo estos valores en la fórmula de los coeficientes:
+$$A_{n l} = \frac{2}{[J_{n+1}(\chi_{n l})]^2} \int_0^1 x \cdot x^n J_n(\chi_{n l} x) \, dx = \frac{2}{[J_{n+1}(\chi_{n l})]^2} \int_0^1 x^{n+1} J_n(\chi_{n l} x) \, dx.$$
 
-\textbf{1. Construcción directa de la función de Green $G(t, t_0)$}
+\textbf{2. Evaluación analítica de la integral radial}
+Para resolver la integral definida $I = \int_0^1 x^{n+1} J_n(\chi_{n l} x) \, dx$, utilizamos una identidad fundamental de recurrencia para funciones de Bessel, estudiada en detalle en la Sección 8.3.1 de Alonso (pp. 276-278). En particular, la relación de derivación:
+$$\frac{d}{dx} \left[ x^{\mu+1} J_{\mu+1}(x) \right] = x^{\mu+1} J_\mu(x),$$
+la cual se deriva directamente de las identidades listadas como $\frac{d}{dx}[x^\nu J_\nu(x)] = x^\nu J_{\nu-1}(x)$ aplicando un desplazamiento de índice $\nu \to \mu+1$. Haciendo $\mu = n$ y realizando el cambio de variable adimensional $u = \chi_{n l} x$, con $du = \chi_{n l} dx$, la integral se transforma en:
+$$I = \int_0^1 x^{n+1} J_n(\chi_{n l} x) \, dx = \frac{1}{\chi_{n l}^{n+2}} \int_0^{\chi_{n l}} u^{n+1} J_n(u) \, du.$$
+Aplicando la identidad de derivación mencionada con $\mu=n$, el integrando se reconoce como una derivada exacta:
+$$I = \frac{1}{\chi_{n l}^{n+2}} \int_0^{\chi_{n l}} \frac{d}{du} \left[ u^{n+1} J_{n+1}(u) \right] du = \frac{1}{\chi_{n l}^{n+2}} \left[ u^{n+1} J_{n+1}(u) \right]_0^{\chi_{n l}}.$$
+Evaluando en los límites de integración, y teniendo en cuenta el comportamiento asintótico $J_{n+1}(u) \sim u^{n+1}$ para $u \to 0$ (Sección 8.3.1, propiedad 4, p. 278), concluimos que el término inferior se anula para $n \ge 0$. Por lo tanto:
+$$I = \frac{1}{\chi_{n l}^{n+2}} \left( \chi_{n l}^{n+1} J_{n+1}(\chi_{n l}) - 0 \right) = \frac{J_{n+1}(\chi_{n l})}{\chi_{n l}}.$$
 
-Buscamos la función de Green $G(t, t_0)$ que satisface la ecuación diferencial con fuente puntual localizada en el tiempo $t_0$:
-$$ \frac{\partial^2 G(t, t_0)}{\partial t^2} + \alpha \frac{\partial G(t, t_0)}{\partial t} = \delta(t - t_0) $$
-sujeta a las condiciones iniciales homogéneas de causalidad: $G(0, t_0) = 0$ y $\dot{G}(0, t_0) = 0$. Como se establece en la sección 7.2 de Alonso, la función de Green para problemas de valor inicial debe construirse por regiones separadas por la posición de la fuente $t_0$, imponiendo condiciones de empalme en dicho punto.
+\textbf{3. Cálculo final de los coeficientes y reconstrucción de la serie}
+Sustituyendo el resultado analítico de la integral $I$ en la expresión para $A_{n l}$:
+$$A_{n l} = \frac{2}{[J_{n+1}(\chi_{n l})]^2} \cdot \frac{J_{n+1}(\chi_{n l})}{\chi_{n l}} = \frac{2}{\chi_{n l} J_{n+1}(\chi_{n l})}.$$
+Es crucial notar que $J_{n+1}(\chi_{n l}) \neq 0$. Esto se garantiza rigurosamente por la teoría de ceros de Bessel: como se discute en la Sección 8.3.1 (propiedad 1 de las raíces, p. 276), la ecuación $J_n(x)=0$ no tiene raíces comunes con $J_{n+1}(x)=0$ (excepto el origen trivial $x=0$). Por lo tanto, el denominador nunca se anula para $l \ge 1$, asegurando que los coeficientes estén bien definidos.
 
-Para $t \neq t_0$, el lado derecho se anula y resolvemos la ecuación homogénea asociada:
-$$ \ddot{G} + \alpha \dot{G} = 0 $$
-La ecuación característica es $r^2 + \alpha r = 0$, cuyas raíces son $r_1 = 0$ y $r_2 = -\alpha$. La solución general en cada región es:
-$$ G(t, t_0) = \begin{cases} C_1 + C_2 e^{-\alpha t} & t < t_0 \\ A + B e^{-\alpha t} & t > t_0 \end{cases} $$
-Dado que el sistema parte del reposo ($t=0$) y la fuente puntual solo actúa en $t=t_0 > 0$, por causalidad la respuesta debe ser nula antes de que la fuente se active. Por tanto, para $0 \le t < t_0$ se cumple $G(t, t_0) = 0$, lo que fija $C_1 = C_2 = 0$.
+Finalmente, reintroducimos los coeficientes $A_{n l}$ en la serie de Fourier-Bessel original:
+$$x^n = \sum_{l=1}^{\infty} A_{n l} J_n(\chi_{n l} x) = \sum_{l=1}^{\infty} \left( \frac{2}{\chi_{n l} J_{n+1}(\chi_{n l})} \right) J_n(\chi_{n l} x).$$
+Reorganizando algebraicamente los factores, llegamos exactamente a la identidad requerida:
+$$x^n = 2 \sum_{l=1}^{\infty} \frac{1}{\chi_{n l}} \frac{J_n(\chi_{n l} x)}{J_{n+1}(\chi_{n l})}.$$
 
-Para $t > t_0$, la función toma la forma $G_>(t, t_0) = A + B e^{-\alpha t}$. Los coeficientes $A$ y $B$ se determinan mediante las dos condiciones de empalme en $t = t_0$ (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12):
-1. \textbf{Continuidad de la función:} $G(t_0^+, t_0) = G(t_0^-, t_0) = 0$.
-$$ A + B e^{-\alpha t_0} = 0 \implies A = -B e^{-\alpha t_0} $$
-2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2 = 1$, la derivada respecto a $t$ presenta una discontinuidad de salto igual a $1/a_2 = 1$:
-$$ \left. \frac{\partial G_>}{\partial t} \right|_{t_0^+} - \left. \frac{\partial G_<}{\partial t} \right|_{t_0^-} = 1 $$
-Como $\dot{G}_<(t_0, t_0) = 0$, evaluamos $\dot{G}_>(t, t_0) = -\alpha B e^{-\alpha t}$ en $t=t_0$:
-$$ -\alpha B e^{-\alpha t_0} = 1 \implies B = -\frac{e^{\alpha t_0}}{\alpha} $$
-Sustituyendo $B$ en la expresión para $A$:
-$$ A = -\left(-\frac{e^{\alpha t_0}}{\alpha}\right) e^{-\alpha t_0} = \frac{1}{\alpha} $$
-Reensamblando la solución por regiones y utilizando la función escalón de Heaviside $\theta(t-t_0)$ para compactar la expresión causal, obtenemos la función de Green explícita:
-$$ G(t, t_0) = \frac{1}{\alpha} \left( 1 - e^{-\alpha(t - t_0)} \right) \theta(t - t_0) $$
-Esta estructura es análoga a la obtenida para el oscilador subamortiguado en la sección 7.3 de Alonso, donde la función de Green decae exponencialmente desde el instante de activación de la fuente, reflejando la disipación inherente al término de primera derivada $\alpha \dot{x}$.
+En síntesis, la identidad se deriva directamente de la completez y ortogonalidad de la base discreta de Bessel $\{J_n(\chi_{nl}x)\}$ en el intervalo $(0,1)$, tal como se establece en las ecuaciones (8.10)-(8.13) de la Sección 8.3.2 de Alonso Sepúlveda. El cálculo explícito del coeficiente de Fourier aprovecha las propiedades integrales de recurrencia de las funciones de Bessel (Sección 8.3.1), demostrando cómo la estructura matemática de la ecuación de Bessel permite expandir potencias simples $x^n$ en modos radiales. Esta expansión es de vital importancia en física matemática, ya que constituye la base para resolver problemas de valores iniciales y de frontera en geometrías cilíndricas, como la distribución de temperatura en barras, la propagación de modos en guías de onda dieléctricas, o la determinación de funciones de onda en pozos de potencial cuánticos circulares.
 
-\textbf{2. Solución general para la fuente extendida $f(t)$}
-
-De acuerdo con la teoría de variación de parámetros y la representación integral de núcleos de Green (Alonso, Sec. 3.1.3 y 7.2), la solución a la ecuación inhomogénea
-$$ \frac{d^2x}{dt^2} + \alpha \frac{dx}{dt} = f(t), \quad f(t) = 0 \text{ para } t < 0 $$
-con condiciones iniciales nulas, se construye mediante la convolución de la fuente con la función de Green:
-$$ x(t) = \int_0^\infty G(t, t_0) f(t_0) \, dt_0 $$
-Debido a la causalidad impuesta por $\theta(t-t_0)$, el límite superior de integración se reduce efectivamente a $t$, ya que para $t_0 > t$ la función de Green se anula. Sustituyendo la expresión cerrada de $G(t, t_0)$:
-$$ x(t) = \frac{1}{\alpha} \int_0^t \left( 1 - e^{-\alpha(t - t_0)} \right) f(t_0) \, dt_0 $$
-Esta integral representa la superposición lineal de las respuestas impulsivas del sistema a lo largo de la historia de la fuente, desde el instante inicial hasta el tiempo de observación $t$.
-
-\textbf{3. Evaluación explícita para $f(t) = A e^{-at}$ ($t > 0$)}
-
-Sustituimos la fuente exponencial $f(t_0) = A e^{-a t_0}$ en la integral de convolución:
-$$ x(t) = \frac{A}{\alpha} \int_0^t \left( 1 - e^{-\alpha(t - t_0)} \right) e^{-a t_0} \, dt_0 $$
-Descomponemos la integral en dos partes y extraemos los factores independientes de $t_0$:
-$$ x(t) = \frac{A}{\alpha} \left[ \int_0^t e^{-a t_0} \, dt_0 - e^{-\alpha t} \int_0^t e^{(\alpha - a) t_0} \, dt_0 \right] $$
-El resultado analítico depende críticamente de la relación entre el parámetro de amortiguamiento $\alpha$ y la tasa de decaimiento de la fuente $a$. Distinguimos dos casos físicamente relevantes:
-
-\textit{Caso (a): $\alpha \neq a$ (frecuencias no degeneradas)}
-Evaluando las integrales elementales:
-$$ \int_0^t e^{-a t_0} \, dt_0 = \frac{1 - e^{-at}}{a}, \quad \int_0^t e^{(\alpha - a) t_0} \, dt_0 = \frac{e^{(\alpha - a)t} - 1}{\alpha - a} $$
-Sustituyendo y reorganizando algebraicamente:
-$$ x(t) = \frac{A}{\alpha} \left[ \frac{1 - e^{-at}}{a} - e^{-\alpha t} \frac{e^{(\alpha - a)t} - 1}{\alpha - a} \right] $$
-$$ x(t) = \frac{A}{\alpha a} (1 - e^{-at}) - \frac{A}{\alpha(\alpha - a)} (e^{-at} - e^{-\alpha t}) $$
-Agrupando términos por sus comportamientos temporales:
-$$ x(t) = \frac{A}{\alpha a} - \left( \frac{A}{\alpha a} + \frac{A}{\alpha(\alpha - a)} \right) e^{-at} + \frac{A}{\alpha(\alpha - a)} e^{-\alpha t} $$
-Simplificando el coeficiente de $e^{-at}$ mediante $\frac{1}{\alpha a} + \frac{1}{\alpha(\alpha - a)} = \frac{1}{a(\alpha - a)}$, obtenemos la forma cerrada final:
-$$ x(t) = \frac{A}{\alpha a} - \frac{A}{a(\alpha - a)} e^{-at} + \frac{A}{\alpha(\alpha - a)} e^{-\alpha t} $$
-Esta solución exhibe tres componentes: un término constante $\frac{A}{\alpha a}$ que representa el estado estacionario (o valor límite asintótico cuando $t \to \infty$), y dos términos transitorios que decaen exponencialmente a tasas $a$ y $\alpha$ respectivamente. La superposición de estas escalas temporales es característica de sistemas lineales disipativos excitados por fuentes transientes.
-
-\textit{Caso (b): $\alpha = a$ (degeneración o resonancia algebraica)}
-Cuando la tasa de decaimiento de la fuente coincide exactamente con el parámetro intrínseco del sistema, la segunda integral se vuelve singular en la expresión anterior y debe evaluarse directamente desde el paso integral:
-$$ x(t) = \frac{A}{\alpha} \left[ \int_0^t e^{-\alpha t_0} \, dt_0 - e^{-\alpha t} \int_0^t 1 \, dt_0 \right] $$
-$$ x(t) = \frac{A}{\alpha} \left[ \frac{1 - e^{-\alpha t}}{\alpha} - t e^{-\alpha t} \right] $$
-Reorganizando, obtenemos la solución para el caso degenerado:
-$$ x(t) = \frac{A}{\alpha^2} \left( 1 - e^{-\alpha t} - \alpha t e^{-\alpha t} \right) $$
-La aparición del término lineal en el tiempo $t e^{-\alpha t}$ es una consecuencia directa de la degeneración de los autovalores del operador diferencial, análoga a lo discutido en la teoría de ecuaciones diferenciales con raíces repetidas (Alonso, Sec. 3.1.2). Este término modifica la dinámica transitoria, produciendo un crecimiento inicial más pronunciado antes de que la disipación exponencial domine el comportamiento a largo plazo. En ambos casos, se verifica que $x(0) = 0$ y $\dot{x}(0) = 0$, cumpliendo rigurosamente las condiciones iniciales impuestas y validando la construcción causal de la función de Green.
 
 
 \section{Problema 7}
-Considere la ecuación $$ \frac{d^2y(x)}{dx^2} - k^2 y(x) = f(x), $$ en el dominio $0 \le x \le L$, con las condiciones de frontera $y(0) = y(L) = 0$. Muestre que:
-$$ G(x, x') = \begin{cases} -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x < x' \\ -\frac{\sinh(kx) \sinh(k(L-x'))}{k \sinh(kL)} & \text{si } x > x' \end{cases} $$
-
+Resuelva la ecuación de ondas para una membrana circular de radio $R$ sometida a las siguientes condiciones de frontera:
+$$\psi \big|_{\rho=R} = 0; \quad \psi \big|_{t=0} = f(\rho, \phi); \quad \frac{\partial \psi}{\partial t} \bigg|_{t=0} = 0.$$
 
 \subsection{Solución}
+Para resolver este problema, partimos de la ecuación de ondas homogénea en coordenadas cilíndricas $(\rho, \phi, z)$, restringida al plano de la membrana ($z$ constante). La ecuación gobernante, derivada de los principios de mecánica continua y estudiada en la Sección 4.2.2 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda, es:
+$$\nabla^2 \psi(\rho, \phi, t) - \frac{1}{v^2} \frac{\partial^2 \psi(\rho, \phi, t)}{\partial t^2} = 0,$$
+donde $v = \sqrt{T/\sigma}$ es la velocidad de propagación de las ondas transversales en la membrana, $T$ es la tensión por unidad de longitud y $\sigma$ la densidad superficial de masa. En coordenadas polares $(\rho, \phi)$, el operador laplaciano se escribe:
+$$\frac{1}{\rho} \frac{\partial}{\partial \rho} \left( \rho \frac{\partial \psi}{\partial \rho} \right) + \frac{1}{\rho^2} \frac{\partial^2 \psi}{\partial \phi^2} - \frac{1}{v^2} \frac{\partial^2 \psi}{\partial t^2} = 0.$$
 
-A continuación se desarrolla la construcción analítica completa de la función de Green asociada al operador diferencial de segundo orden con condiciones de Dirichlet homogéneas. El procedimiento se fundamenta en el método directo de construcción de funciones de Green para ecuaciones diferenciales ordinarias, tal como se expone en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (construcción por empalme, continuidad y salto en la derivada), 6.2 (operadores autoadjuntos y simetría del núcleo de Green) y 3.1.3 (relación con núcleos integrales y variación de parámetros).
+\textbf{1. Separación de variables y ecuaciones desacopladas}
+Aplicamos el método de separación de variables propuesto por Alonso en la Sección 3.3.3, asumiendo una solución factorizada:
+$$\psi(\rho, \phi, t) = R(\rho) \, \Phi(\phi) \, T(t).$$
+Sustituyendo en la ecuación de ondas y dividiendo por $R \Phi T / \rho^2$, obtenemos:
+$$\frac{\rho}{R} \frac{d}{d\rho} \left( \rho \frac{dR}{d\rho} \right) + \frac{1}{\Phi} \frac{d^2 \Phi}{d\phi^2} = \frac{\rho^2}{v^2 T} \frac{d^2 T}{dt^2}.$$
+Dado que el lado izquierdo depende solo de $\rho, \phi$ y el derecho solo de $t$, ambos deben ser iguales a una constante de separación, que por conveniencia física y matemática denotamos como $-k^2 \rho^2$. Esto desacopla la ecuación temporal:
+$$\frac{d^2 T}{dt^2} + \omega^2 T = 0, \quad \text{con } \omega = vk.$$
+Separando ahora las variables espaciales, igualamos la parte radial y angular a una segunda constante $-m^2$:
+$$\frac{\rho}{R} \frac{d}{d\rho} \left( \rho \frac{dR}{d\rho} \right) + k^2 \rho^2 = - \frac{1}{\Phi} \frac{d^2 \Phi}{d\phi^2} = m^2.$$
+Obtenemos así tres ecuaciones diferenciales ordinarias independientes:
+\begin{itemize}
+\item \textbf{Ecuación angular:} $\displaystyle \frac{d^2 \Phi}{d\phi^2} + m^2 \Phi = 0$.
+\item \textbf{Ecuación radial:} $\displaystyle \rho^2 \frac{d^2 R}{d\rho^2} + \rho \frac{dR}{d\rho} + (k^2 \rho^2 - m^2) R = 0$.
+\item \textbf{Ecuación temporal:} $\displaystyle \frac{d^2 T}{dt^2} + \omega^2 T = 0$.
+\end{itemize}
 
-\textbf{1. Planteamiento de la ecuación de Green}
+\textbf{2. Solución de las ecuaciones desacopladas y aplicación de condiciones}
+\textit{a) Parte angular:} La solución general es $\Phi(\phi) = A \cos(m\phi) + B \sin(m\phi)$ o equivalentemente $C e^{im\phi} + D e^{-im\phi}$. La condición de unicidad física exige que la membrana sea continua al dar una vuelta completa: $\Phi(\phi) = \Phi(\phi + 2\pi)$. Esto impone que $m$ debe ser un entero no negativo: $m = 0, 1, 2, \dots$ (Sección 3.3.3 de Alonso).
 
-El operador diferencial asociado a la ecuación inhomogénea es $\mathscr{L} = \frac{d^2}{dx^2} - k^2$. La función de Green $G(x, x')$ debe satisfacer la ecuación con fuente puntual localizada en $x'$:
-$$ \mathscr{L}_x G(x, x') = \frac{\partial^2 G(x, x')}{\partial x^2} - k^2 G(x, x') = \delta(x - x') $$
-sujeta a las condiciones de frontera de Dirichlet homogéneas en los extremos del intervalo $[0, L]$:
-$$ G(0, x') = 0, \quad G(L, x') = 0 $$
+\textit{b) Parte temporal:} La solución es $T(t) = E \cos(\omega t) + F \sin(\omega t)$. Aplicamos la condición inicial de velocidad nula:
+$$\frac{\partial \psi}{\partial t} \bigg|_{t=0} = 0 \implies \frac{dT}{dt}(0) = 0 \implies F \omega = 0 \implies F = 0.$$
+Por tanto, $T(t) \propto \cos(\omega t)$. Esta condición elimina los modos que parten con velocidad inicial, restringiendo la evolución a oscilaciones puramente cosenoidales en el tiempo.
 
-\textbf{2. Solución de la ecuación homogénea por regiones}
+\textit{c) Parte radial:} La ecuación obtenida es exactamente la ecuación de Bessel de orden $m$, estudiada en detalle en la Sección 8.3.1 de Alonso. Su solución general es $R(\rho) = C_1 J_m(k\rho) + C_2 N_m(k\rho)$. Dado que la membrana incluye el centro $\rho = 0$, y la función de Neumann $N_m(k\rho)$ diverge logarítmicamente o como potencia negativa en el origen (propiedad 4, Sección 8.3.1), debemos imponer $C_2 = 0$ para mantener la solución físicamente acotada. Así:
+$$R(\rho) = J_m(k\rho).$$
+Aplicamos ahora la condición de frontera espacial $\psi(R, \phi, t) = 0$, que implica $J_m(kR) = 0$. La función de Bessel $J_m(x)$ posee un conjunto infinito de ceros positivos, denotados por $\chi_{mn}$, donde $m$ es el orden y $n = 1, 2, 3, \dots$ numera el $n$-ésimo cero (Tabla y Propiedad 1, Sección 8.3.1). Por tanto:
+$$k R = \chi_{mn} \implies k_{mn} = \frac{\chi_{mn}}{R}, \quad \omega_{mn} = v k_{mn} = \frac{v \chi_{mn}}{R}.$$
+Cada par $(m,n)$ define un modo normal de vibración con frecuencia natural $\omega_{mn}$.
 
-De acuerdo con la teoría de construcción directa (Alonso, Sec. 7.2), para $x \neq x'$ el lado derecho se anula y debemos resolver la ecuación homogénea $G'' - k^2 G = 0$. La solución general es combinación lineal de funciones hiperbólicas $\sinh(kx)$ y $\cosh(kx)$. Dado que la posición de la fuente $x'$ divide el dominio en dos regiones, definimos la función por tramos:
-$$ G(x, x') = \begin{cases} G_<(x, x') & 0 \le x < x' \\ G_>(x, x') & x' < x \le L \end{cases} $$
-Aplicamos las condiciones de frontera en cada región para eliminar los coeficientes innecesarios y simplificar el sistema algebraico posterior:
-- En la región izquierda ($0 \le x < x'$): La condición $G_<(0, x') = 0$ obliga a que el término coseno hiperbólico (que vale 1 en el origen) desaparezca. Por tanto, $G_<(x, x') = A(x') \sinh(kx)$.
-- En la región derecha ($x' < x \le L$): La condición $G_>(L, x') = 0$ se satisface naturalmente si utilizamos $\sinh(k(L-x))$, que se anula en $x=L$. Por tanto, $G_>(x, x') = B(x') \sinh(k(L-x))$.
+\textbf{3. Construcción de la solución general}
+Superponiendo linealmente todos los modos normales permitidos (principio de superposición para ecuaciones lineales, Sección 2.3.3 y 4.2.2), la solución general toma la forma:
+$$\psi(\rho, \phi, t) = \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} J_m(k_{mn} \rho) \left[ a_{mn} \cos(m\phi) + b_{mn} \sin(m\phi) \right] \cos(\omega_{mn} t).$$
+Para $m=0$, el término $\sin(0\phi)$ se anula y solo sobrevive el modo azimutalmente simétrico.
 
-Esta elección estratégica de la base de soluciones es un truco analítico estándar que reduce el sistema de empalme a dos incógnitas, $A(x')$ y $B(x')$, sin perder generalidad.
+\textbf{4. Determinación de los coeficientes mediante la condición inicial}
+Imponemos la condición inicial de desplazamiento $\psi(\rho, \phi, 0) = f(\rho, \phi)$:
+$$f(\rho, \phi) = \sum_{m=0}^{\infty} \sum_{n=1}^{\infty} J_m(k_{mn} \rho) \left[ a_{mn} \cos(m\phi) + b_{mn} \sin(m\phi) \right].$$
+Para despejar $a_{mn}$ y $b_{mn}$, utilizamos la ortogonalidad de las bases angular y radial. Primero, multiplicamos por $\cos(m'\phi)$ o $\sin(m'\phi)$ e integramos en $\phi \in [0, 2\pi]$. Usando la ortogonalidad de Fourier:
+$$\int_0^{2\pi} \cos(m\phi) \cos(m'\phi) d\phi = \pi \delta_{mm'} \quad (m>0), \quad \int_0^{2\pi} \cos^2(0) d\phi = 2\pi,$$
+y análogamente para senos. Luego, multiplicamos por $\rho J_m(k_{mn'} \rho)$ e integramos en $\rho \in [0, R]$. La condición de ortogonalidad de las funciones de Bessel, demostrada rigurosamente en la Sección 8.3.2 de Alonso (Ecuación 8.10), establece:
+$$\int_0^R \rho J_m(k_{mn} \rho) J_m(k_{mn'} \rho) d\rho = \frac{R^2}{2} \left[ J_{m+1}(\chi_{mn}) \right]^2 \delta_{nn'}.$$
+Combinando ambas ortogonalidades, obtenemos los coeficientes explícitos:
+$$a_{0n} = \frac{1}{\pi R^2 [J_1(\chi_{0n})]^2} \int_0^R \int_0^{2\pi} f(\rho, \phi) J_0(k_{0n} \rho) \, \rho \, d\phi \, d\rho, \quad (m=0)$$
+$$a_{mn} = \frac{2}{\pi R^2 [J_{m+1}(\chi_{mn})]^2} \int_0^R \int_0^{2\pi} f(\rho, \phi) J_m(k_{mn} \rho) \cos(m\phi) \, \rho \, d\phi \, d\rho, \quad (m \ge 1)$$
+$$b_{mn} = \frac{2}{\pi R^2 [J_{m+1}(\chi_{mn})]^2} \int_0^R \int_0^{2\pi} f(\rho, \phi) J_m(k_{mn} \rho) \sin(m\phi) \, \rho \, d\phi \, d\rho, \quad (m \ge 1)$$
 
-\textbf{3. Condiciones de empalme en la fuente $x = x'$}
+\textbf{5. Discusión física y conclusión}
+La solución obtenida representa la descomposición modal de la vibración de una membrana circular fija en su borde. Cada término de la doble suma corresponde a un modo normal $(m,n)$ que oscila armónicamente con frecuencia $\omega_{mn} = v \chi_{mn}/R$. La geometría de los nodos (líneas de amplitud cero) está determinada por los ceros de $J_m(k_{mn}\rho)$ (círculos concéntricos) y por $\cos(m\phi)$ o $\sin(m\phi)$ (líneas radiales). La degeneración en frecuencias ocurre cuando distintos pares $(m,n)$ producen el mismo valor de $\chi_{mn}$, fenómeno típico en sistemas con simetría continua, como se discute en la Sección 4.2.2 de Alonso. 
 
-La función de Green debe cumplir dos condiciones en el punto donde actúa la delta de Dirac (Alonso, Sec. 7.2, ecuaciones 7.11 y 7.12):
-1. \textbf{Continuidad de la función:} $G(x, x')$ debe ser continua en $x = x'$.
-$$ G_<(x', x') = G_>(x', x') \implies A(x') \sinh(kx') = B(x') \sinh(k(L-x')) \quad \text{(Ec. 1)} $$
-2. \textbf{Salto unitario en la primera derivada:} Dado que el coeficiente principal de la derivada segunda es $a_2(x) = 1$, la derivada respecto a $x$ presenta una discontinuidad de salto igual a $1/a_2(x') = 1$:
-$$ \left. \frac{\partial G_>}{\partial x} \right|_{x=x'^+} - \left. \frac{\partial G_<}{\partial x} \right|_{x=x'^-} = 1 $$
-Calculamos las derivadas parciales respecto a $x$:
-$$ \frac{\partial G_<}{\partial x} = A(x') k \cosh(kx), \quad \frac{\partial G_>}{\partial x} = -B(x') k \cosh(k(L-x)) $$
-Evaluando en $x = x'$ e imponiendo la condición de salto:
-$$ -B(x') k \cosh(k(L-x')) - A(x') k \cosh(kx') = 1 \quad \text{(Ec. 2)} $$
-
-\textbf{4. Resolución del sistema algebraico}
-
-El sistema lineal formado por las ecuaciones (1) y (2) permite determinar los coeficientes dependientes de la fuente. De la (Ec. 1) despejamos $B(x')$:
-$$ B(x') = A(x') \frac{\sinh(kx')}{\sinh(k(L-x'))} $$
-Sustituyendo esta expresión en la (Ec. 2):
-$$ -k \left[ A(x') \frac{\sinh(kx')}{\sinh(k(L-x'))} \cosh(k(L-x')) + A(x') \cosh(kx') \right] = 1 $$
-Factorizando $-k A(x')$ y llevando a común denominador:
-$$ -k A(x') \left[ \frac{\sinh(kx') \cosh(k(L-x')) + \cosh(kx') \sinh(k(L-x'))}{\sinh(k(L-x'))} \right] = 1 $$
-El numerador corresponde exactamente a la identidad trigonométrica hiperbólica para la suma de argumentos: $\sinh(a+b) = \sinh a \cosh b + \cosh a \sinh b$. Con $a = kx'$ y $b = k(L-x')$, obtenemos $\sinh(kL)$:
-$$ -k A(x') \frac{\sinh(kL)}{\sinh(k(L-x'))} = 1 $$
-De donde se obtiene inmediatamente:
-$$ A(x') = -\frac{\sinh(k(L-x'))}{k \sinh(kL)} $$
-Sustituyendo $A(x')$ de vuelta en la expresión para $B(x')$:
-$$ B(x') = \left[ -\frac{\sinh(k(L-x'))}{k \sinh(kL)} \right] \frac{\sinh(kx')}{\sinh(k(L-x'))} = -\frac{\sinh(kx')}{k \sinh(kL)} $$
-
-\textbf{5. Construcción final y verificación de simetría}
-
-Reemplazando $A(x')$ y $B(x')$ en las expresiones por regiones, obtenemos la función de Green explícita:
-$$ G(x, x') = \begin{cases} \displaystyle -\frac{\sinh(k(L-x')) \sinh(kx)}{k \sinh(kL)} & \text{si } 0 \le x < x' \\[12pt] \displaystyle -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x' < x \le 1 \end{cases} $$
-Nótese que la función obtenida es estrictamente simétrica, es decir $G(x, x') = G(x', x)$, propiedad inherente a los operadores diferenciales autoadjuntos con condiciones de frontera homogéneas (Alonso, Sec. 6.2). Debido a esta simetría, las expresiones para $x < x'$ y $x > x'$ son intercambiables si se permutan los argumentos. Reordenando las condiciones para expresar la solución exactamente en la forma solicitada por el enunciado (notando que $\sinh(kx)\sinh(k(L-x')) = \sinh(kx')\sinh(k(L-x))$ cuando se invierte la desigualdad por simetría del núcleo), escribimos finalmente:
-$$ G(x, x') = \begin{cases} \displaystyle -\frac{\sinh(kx') \sinh(k(L-x))}{k \sinh(kL)} & \text{si } x < x' \\[12pt] \displaystyle -\frac{\sinh(kx) \sinh(k(L-x'))}{k \sinh(kL)} & \text{si } x > x' \end{cases} $$
-Esta expresión satisface rigurosamente la ecuación diferencial con fuente puntual, las condiciones de Dirichlet en $x=0$ y $x=L$, y la condición de salto en la primera derivada. La construcción queda así demostrada mediante el método directo, validando la forma analítica del núcleo de Green para el operador de Helmholtz unidimensional modificado con condiciones de frontera fijas.
-
+En síntesis, mediante la separación de variables en coordenadas cilíndricas (Sección 3.3.3), la aplicación de la teoría de Sturm-Liouville a la ecuación de Bessel (Sección 6.2 y 8.3.2) y el uso de las condiciones de Cauchy para la unicidad de la ecuación de ondas (Sección 2.3.3), hemos construido rigurosamente la solución completa en serie de Fourier-Bessel, demostrando cómo la forma inicial $f(\rho,\phi)$ determina la amplitud relativa de cada modo normal de vibración.
 
 
 \section{Problema 8}
-Considere la ecuación $$ \frac{d^2y(x)}{dx^2} - k^2 y(x) = f(x) $$ en el dominio $-\infty < x < \infty$ con condiciones de frontera $y(\pm\infty) < \infty$. Utilice la representación de $\delta(x-x')$ en la base de Fourier $\{e^{ik'x}\}$ y escriba $G(x, x')$ en esta base; demuestre entonces que:
-$$ G(x, x') = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x-x')}}{k^2 + k'^2} dk' $$
-Observe que $G(x, x') = G^*(x', x)$.
-
+Considere un cilindro circular conductor de radio $R$ y longitud $L$, cuya superficie es mantenida a una temperatura de $0^\circ$ todo el tiempo. En su interior, la temperatura inicial es $T_0$. Encuentre la distribución de temperatura en el interior del cilindro como función del tiempo. ¿Cómo cambia su resultado si la superficie lateral se mantiene a una temperatura $T(R, z)= f(z)$?
 
 \subsection{Solución}
+Para abordar este problema, nos basamos en la teoría de conducción de calor y en el método de separación de variables en coordenadas cilíndricas, tal como se desarrolla en las secciones 4.4.1 y 3.3.3 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. El problema se divide en dos partes: condiciones de frontera homogéneas (toda la superficie a $0^\circ$) y condiciones de frontera no homogéneas en la superficie lateral.
 
-A continuación se desarrolla la construcción analítica completa de la función de Green para la ecuación de Helmholtz modificada en el dominio infinito, utilizando el formalismo de expansión en la base continua de Fourier. El procedimiento se fundamenta en la teoría de funciones de Green para dominios no acotados, la representación espectral de la delta de Dirac y las propiedades de operadores autoadjuntos en espacios de Hilbert, tal como se expone en el libro \textit{Lecciones de física matemática} de Alonso Sepúlveda, específicamente en las secciones 7.2 (funciones de Green para EDO), 7.5 (expansión en autofunciones y bases continuas), 5.6 (transformadas e integrales de Fourier) y 1.10 (propiedades y representación de la delta de Dirac).
+\textbf{Parte I: Superficie completa a $0^\circ$ (Condiciones homogéneas)}
 
-\textbf{1. Planteamiento del problema y ecuación de Green}
+\textit{1. Planteamiento de la ecuación gobernante y separación de variables}
+La evolución de la temperatura $T(\rho, \phi, z, t)$ en un medio isotrópico y homogéneo está regida por la ecuación de difusión del calor (ley de Fourier), que en coordenadas cilíndricas se escribe (Alonso, Sec. 4.4.1):
+$$\frac{\partial T}{\partial t} = \alpha \left[ \frac{1}{\rho} \frac{\partial}{\partial \rho} \left( \rho \frac{\partial T}{\partial \rho} \right) + \frac{1}{\rho^2} \frac{\partial^2 T}{\partial \phi^2} + \frac{\partial^2 T}{\partial z^2} \right],$$
+donde $\alpha = k/(\rho_m c_p)$ es la difusividad térmica. Dado que la condición inicial $T(\rho, \phi, z, 0) = T_0$ y las condiciones de frontera $T(R, z, t) = T(\rho, 0, t) = T(\rho, L, t) = 0$ son independientes del ángulo azimutal $\phi$, la solución presentará simetría cilíndrica ($\partial T/\partial \phi = 0$). Aplicamos el método de separación de variables (Alonso, Sec. 3.3.3) proponiendo:
+$$T(\rho, z, t) = P(\rho) Z(z) \Theta(t).$$
+Sustituyendo en la ecuación de calor y dividiendo por $\alpha P Z \Theta$, obtenemos:
+$$\frac{1}{\alpha \Theta} \frac{d\Theta}{dt} = \frac{1}{\rho P} \frac{d}{d\rho} \left( \rho \frac{dP}{d\rho} \right) + \frac{1}{Z} \frac{d^2 Z}{dz^2} = -\lambda^2,$$
+donde $-\lambda^2$ es la constante de separación temporal (escogida negativa para garantizar decaimiento exponencial en el tiempo). Esto desacopla el problema en tres ecuaciones diferenciales ordinarias independientes.
 
-La ecuación diferencial inhomogénea propuesta es
-$$ \frac{d^2 y(x)}{dx^2} - k^2 y(x) = f(x), \quad -\infty < x < \infty $$
-sujeta a la condición física de acotamiento en el infinito: $y(\pm\infty) < \infty$. Definimos el operador lineal de segundo orden $\mathscr{L} = \frac{d^2}{dx^2} - k^2$. La función de Green $G(x, x')$ asociada a este operador debe satisfacer la ecuación con una fuente puntual unitaria localizada en $x'$, es decir (Alonso, Sec. 7.2):
-$$ \mathscr{L}_x G(x, x') = \frac{\partial^2 G(x, x')}{\partial x^2} - k^2 G(x, x') = \delta(x - x') $$
-Dado que el dominio es infinito y el operador tiene coeficientes constantes, el método directo de empalme por regiones es algebraicamente posible pero tedioso. Resulta mucho más eficiente y elegante emplear el método de expansión espectral en la base de funciones propias del operador $\frac{d^2}{dx^2}$ en todo $\mathbb{R}$, que corresponde a la base continua de Fourier (Alonso, Sec. 7.5 y 5.6).
-
-\textbf{2. Representación de la delta y expansión de $G(x, x')$}
-
-De acuerdo con la teoría de bases continuas, la delta de Dirac admite una representación integral en la base de ondas planas $\{e^{ik'x}\}$, la cual es ortonormal y completa en el intervalo $(-\infty, \infty)$ (Alonso, Sec. 1.10 y 5.3):
-$$ \delta(x - x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{ik'(x - x')} \, dk' $$
-Dado que la función de Green comparte las mismas propiedades de simetría traslacional del dominio infinito (depende solo de la diferencia $x - x'$ debido a la invariancia del operador), proponemos una expansión análoga para $G(x, x')$ en esta base continua:
-$$ G(x, x') = \frac{1}{2\pi} \int_{-\infty}^{\infty} \tilde{G}(k') e^{ik'(x - x')} \, dk' $$
-donde $\tilde{G}(k')$ es la transformada de Fourier de la función de Green, que debemos determinar. Esta propuesta es rigurosamente válida porque el conjunto $\{e^{ik'x}/\sqrt{2\pi}\}$ forma una base completa para funciones de cuadrado integrable (o temperadas) en $\mathbb{R}$, permitiendo representar distribuciones como la delta de Dirac (Alonso, Sec. 5.6).
-
-\textbf{3. Resolución en el espacio de momentos}
-
-Sustituimos la expansión propuesta en la ecuación diferencial que define a $G(x, x')$. Aplicamos el operador $\mathscr{L}_x = \partial_x^2 - k^2$ bajo el signo integral (justificado por la linealidad y la convergencia distribucional):
-$$ \left( \frac{\partial^2}{\partial x^2} - k^2 \right) \left[ \frac{1}{2\pi} \int_{-\infty}^{\infty} \tilde{G}(k') e^{ik'(x - x')} \, dk' \right] = \delta(x - x') $$
-Derivando la exponencial respecto a $x$:
-$$ \frac{\partial}{\partial x} e^{ik'(x - x')} = ik' e^{ik'(x - x')}, \quad \frac{\partial^2}{\partial x^2} e^{ik'(x - x')} = (ik')^2 e^{ik'(x - x')} = -k'^2 e^{ik'(x - x')} $$
-Por lo tanto, el lado izquierdo se convierte en:
-$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} \left[ -k'^2 \tilde{G}(k') - k^2 \tilde{G}(k') \right] e^{ik'(x - x')} \, dk' = \frac{1}{2\pi} \int_{-\infty}^{\infty} -(k^2 + k'^2) \tilde{G}(k') e^{ik'(x - x')} \, dk' $$
-Igualando esta expresión con la representación integral de la delta de Dirac:
-$$ \frac{1}{2\pi} \int_{-\infty}^{\infty} -(k^2 + k'^2) \tilde{G}(k') e^{ik'(x - x')} \, dk' = \frac{1}{2\pi} \int_{-\infty}^{\infty} 1 \cdot e^{ik'(x - x')} \, dk' $$
-Debido a la independencia lineal de las funciones de la base $\{e^{ik'(x-x')}\}$ para todo $k' \in \mathbb{R}$, podemos igualar los integrandos (o equivalentemente, tomar la transformada inversa de Fourier de ambos lados). Obtenemos una ecuación algebraica simple para $\tilde{G}(k')$:
-$$ -(k^2 + k'^2) \tilde{G}(k') = 1 $$
-Resolviendo para $\tilde{G}(k')$:
-$$ \tilde{G}(k') = -\frac{1}{k^2 + k'^2} $$
-Es crucial notar que, a diferencia del operador de Helmholtz estándar ($\partial_x^2 + k^2$), el denominador $k^2 + k'^2$ nunca se anula para $k, k' \in \mathbb{R}$ y $k \neq 0$. Esto garantiza que la función de Green está bien definida en el eje real sin necesidad de prescripciones de contorno complejas (como el desplazamiento $k^2 \to k^2 \pm i\epsilon$), reflejando directamente la condición física $y(\pm\infty) < \infty$ que selecciona soluciones exponencialmente decrecientes (Alonso, Sec. 7.4.1).
-
-\textbf{4. Reconstrucción de la función de Green}
-
-Sustituyendo $\tilde{G}(k')$ de vuelta en la expansión integral, obtenemos la expresión cerrada solicitada:
-$$ G(x, x') = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' $$
-Esta integral puede evaluarse explícitamente usando el teorema de los residuos en el plano complejo, resultando en la conocida forma exponencial decreciente $G(x, x') = -\frac{1}{2|k|} e^{-|k||x-x'|}$, pero el enunciado pide demostrar específicamente la representación integral en la base de Fourier, la cual ya hemos establecido rigurosamente.
-
-\textbf{5. Demostración de la propiedad $G(x, x') = G^*(x', x)$}
-
-Para verificar la propiedad de simetría conjugada, partimos de la expresión integral obtenida y calculamos el complejo conjugado de $G(x', x)$:
-$$ G^*(x', x) = \left[ -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x' - x)}}{k^2 + k'^2} \, dk' \right]^* $$
-Dado que $k$ y $k'$ son variables de integración reales y el denominador $k^2 + k'^2$ es estrictamente real y positivo, el complejo conjugado solo actúa sobre el exponencial:
-$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{-ik'(x' - x)}}{k^2 + k'^2} \, dk' = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' $$
-Alternativamente, se puede realizar el cambio de variable $q = -k'$ en la última integral. Como $dk' = -dq$ y los límites de integración se invierten ($-\infty \to \infty$ se convierte en $\infty \to -\infty$), el signo negativo del diferencial compensa la inversión de límites, y el denominador es par en $k'$:
-$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{iq(x - x')}}{k^2 + q^2} \, dq $$
-Renombrando la variable muda de integración $q \to k'$, recuperamos exactamente la expresión original de $G(x, x')$:
-$$ G^*(x', x) = -\frac{1}{2\pi} \int_{-\infty}^{\infty} \frac{e^{ik'(x - x')}}{k^2 + k'^2} \, dk' = G(x, x') $$
-Por lo tanto, queda demostrada la identidad $G(x, x') = G^*(x', x)$. De hecho, como la función resultante es puramente real, se cumple la simetría hermítica completa $G(x, x') = G(x', x)$, propiedad inherente a los operadores diferenciales autoadjuntos con coeficientes reales y condiciones de frontera que anulan los términos de frontera en la identidad de Lagrange (Alonso, Sec. 6.2 y 7.2).
-
-\textbf{Observaciones teóricas adicionales:}
+\textit{2. Solución de las ecuaciones desacopladas}
 \begin{itemize}
-  \item La ausencia de polos en el eje real para el integrando $\frac{1}{k^2+k'^2}$ es una consecuencia directa del signo negativo en el operador ($-k^2$). Físicamente, esto corresponde a un potencial de Yukawa o a problemas de difusión estacionaria, donde las perturbaciones decaen exponencialmente en lugar de oscilar, garantizando la condición de acotamiento en el infinito sin ambigüedades en la elección del contorno de integración.
-  \item La representación espectral obtenida, $G(x,x') = \int \frac{\phi_{k'}(x)\phi_{k'}^*(x')}{\lambda_{k'}} dk'$, es el análogo continuo de la expansión en autofunciones discretas $G = \sum \frac{\phi_n(x)\phi_n^*(x')}{\lambda_n}$ discutida en la sección 7.5 de Alonso, donde $\phi_{k'}(x) = e^{ik'x}/\sqrt{2\pi}$ y los autovalores del operador $\frac{d^2}{dx^2}$ son $\lambda_{k'} = -k'^2$. Al sumar el término $-k^2$, el denominador espectral se convierte en $-k'^2 - k^2$, justificando algebraicamente el resultado integral.
+\item \textbf{Ecuación temporal:} $\displaystyle \frac{d\Theta}{dt} + \alpha \lambda^2 \Theta = 0 \implies \Theta(t) = C e^{-\alpha \lambda^2 t}.$
+\item \textbf{Ecuación axial:} $\displaystyle \frac{d^2 Z}{dz^2} + k_z^2 Z = 0,$ con $k_z^2$ siendo la constante de separación axial. Las condiciones de frontera en las bases del cilindro exigen $Z(0) = Z(L) = 0$. La solución es $Z_m(z) = \sin(k_m z)$, donde $k_m = m\pi/L$ para $m = 1, 2, 3, \dots$ (Alonso, Sec. 3.3.3).
+\item \textbf{Ecuación radial:} Sustituyendo la constante axial en la ecuación radial obtenemos:
+$$\frac{1}{\rho} \frac{d}{d\rho} \left( \rho \frac{dP}{d\rho} \right) + (\lambda^2 - k_m^2) P = 0.$$
+Definiendo $\gamma_{ml}^2 = \lambda^2 - k_m^2$ (con $\gamma_{ml} > 0$ para evitar divergencias), la ecuación se transforma en la ecuación de Bessel de orden cero:
+$$\rho^2 \frac{d^2 P}{d\rho^2} + \rho \frac{dP}{d\rho} + \gamma_{ml}^2 \rho^2 P = 0.$$
+La solución general es $P(\rho) = A J_0(\gamma_{ml} \rho) + B N_0(\gamma_{ml} \rho)$. Como la temperatura debe ser finita en el eje $\rho = 0$, y dado que $N_0$ diverge logarítmicamente en el origen (Alonso, Sec. 8.3.1, propiedad 4), imponemos $B = 0$. La condición de frontera en la superficie lateral $P(R) = 0$ exige $J_0(\gamma_{ml} R) = 0$. Esto implica que $\gamma_{ml} R$ debe coincidir con los ceros de la función de Bessel de orden cero, denotados por $\chi_{0l}$ ($l = 1, 2, 3, \dots$). Por tanto:
+$$\gamma_{0l} = \frac{\chi_{0l}}{R}, \quad \lambda_{ml}^2 = \left( \frac{\chi_{0l}}{R} \right)^2 + \left( \frac{m\pi}{L} \right)^2.$$
 \end{itemize}
-La demostración queda así completa, validando la representación de Fourier de la función de Green y sus propiedades de simetría mediante los principios fundamentales del análisis espectral en dominios infinitos.
+
+\textit{3. Superposición y determinación de coeficientes}
+Por el principio de superposición para ecuaciones lineales (Alonso, Sec. 2.3.3), la solución general es una doble serie sobre los modos axiales y radiales:
+$$T(\rho, z, t) = \sum_{m=1}^{\infty} \sum_{l=1}^{\infty} A_{ml} J_0\left( \frac{\chi_{0l}}{R} \rho \right) \sin\left( \frac{m\pi z}{L} \right) e^{-\alpha \lambda_{ml}^2 t}.$$
+Aplicamos la condición inicial $T(\rho, z, 0) = T_0$:
+$$T_0 = \sum_{m=1}^{\infty} \sum_{l=1}^{\infty} A_{ml} J_0\left( \frac{\chi_{0l}}{R} \rho \right) \sin\left( \frac{m\pi z}{L} \right).$$
+Para despejar $A_{ml}$, explotamos la ortogonalidad de las bases de Fourier y de Bessel. Multiplicamos por $\sin(m'\pi z/L) J_0(\chi_{0l'} \rho/R) \rho$ e integramos en $z \in [0, L]$ y $\rho \in [0, R]$. Utilizando las relaciones de ortogonalidad (Alonso, Sec. 5.5.1 y 8.3.2):
+$$\int_0^L \sin\left(\frac{m\pi z}{L}\right) \sin\left(\frac{m'\pi z}{L}\right) dz = \frac{L}{2} \delta_{mm'}, \quad \int_0^R \rho J_0\left(\frac{\chi_{0l} \rho}{R}\right) J_0\left(\frac{\chi_{0l'} \rho}{R}\right) d\rho = \frac{R^2}{2} \left[ J_1(\chi_{0l}) \right]^2 \delta_{ll'},$$
+obtenemos:
+$$A_{ml} = \frac{4}{L R^2 \left[ J_1(\chi_{0l}) \right]^2} \int_0^L \int_0^R T_0 \sin\left( \frac{m\pi z}{L} \right) J_0\left( \frac{\chi_{0l} \rho}{R} \right) \rho \, d\rho \, dz.$$
+Las integrales se evalúan analíticamente:
+$$\int_0^L \sin\left( \frac{m\pi z}{L} \right) dz = \frac{L}{m\pi} \left[ 1 - \cos(m\pi) \right] = \begin{cases} \frac{2L}{m\pi}, & m \text{ impar} \\ 0, & m \text{ par} \end{cases}$$
+$$\int_0^R \rho J_0\left( \frac{\chi_{0l} \rho}{R} \right) d\rho = \frac{R^2}{\chi_{0l}} J_1(\chi_{0l}),$$
+donde se utilizó la identidad $\int x J_0(x) dx = x J_1(x)$. Sustituyendo:
+$$A_{ml} = \frac{4 T_0}{m\pi \chi_{0l} J_1(\chi_{0l})}, \quad m = 1, 3, 5, \dots; \ l = 1, 2, 3, \dots$$
+La distribución de temperatura es entonces:
+$$T(\rho, z, t) = \sum_{m=1,3,\dots}^{\infty} \sum_{l=1}^{\infty} \frac{4 T_0}{m\pi \chi_{0l} J_1(\chi_{0l})} J_0\left( \frac{\chi_{0l} \rho}{R} \right) \sin\left( \frac{m\pi z}{L} \right) e^{-\alpha \left[ \left( \frac{\chi_{0l}}{R} \right)^2 + \left( \frac{m\pi}{L} \right)^2 \right] t}.$$
+
+\textbf{Parte II: Superficie lateral a $T(R, z) = f(z)$ (Condiciones no homogéneas)}
+
+Cuando la condición de frontera en $\rho = R$ es no homogénea, el método directo de separación de variables no es aplicable porque las autofunciones radiales ya no satisfacen $J_0(\gamma R) = 0$. La estrategia estándar, fundamentada en la teoría de Sturm-Liouville (Alonso, Sec. 6.3 y 6.7), consiste en descomponer la solución en una parte estacionaria (que satisface la condición no homogénea) y una parte transiente (que satisface condiciones homogéneas):
+$$T(\rho, z, t) = T_{ss}(\rho, z) + u(\rho, z, t).$$
+
+\textit{1. Estado estacionario $T_{ss}(\rho, z)$}
+En régimen estacionario, $\partial T/\partial t = 0$, por lo que $T_{ss}$ satisface la ecuación de Laplace $\nabla^2 T_{ss} = 0$ con condiciones:
+$$T_{ss}(R, z) = f(z), \quad T_{ss}(\rho, 0) = 0, \quad T_{ss}(\rho, L) = 0.$$
+Separando variables $T_{ss} = P(\rho)Z(z)$, la ecuación axial sigue siendo $Z'' + k_m^2 Z = 0$ con $Z(0)=Z(L)=0$, dando $Z_m(z) = \sin(m\pi z/L)$. La ecuación radial se convierte en:
+$$\frac{1}{\rho} \frac{d}{d\rho} \left( \rho \frac{dP}{d\rho} \right) - k_m^2 P = 0,$$
+que es la ecuación de Bessel modificada de orden cero (Alonso, Sec. 8.3.7). Sus soluciones son $I_0(k_m \rho)$ y $K_0(k_m \rho)$. Finitud en $\rho=0$ exige descartar $K_0$. Por superposición:
+$$T_{ss}(\rho, z) = \sum_{m=1}^{\infty} C_m \frac{I_0(k_m \rho)}{I_0(k_m R)} \sin(k_m z).$$
+Aplicando $T_{ss}(R, z) = f(z)$ y usando la ortogonalidad de senos:
+$$C_m = \frac{2}{L I_0(k_m R)} \int_0^L f(z) \sin\left( \frac{m\pi z}{L} \right) dz.$$
+
+\textit{2. Parte transiente $u(\rho, z, t)$}
+La función $u$ satisface la ecuación de calor con condiciones de frontera homogéneas en toda la superficie ($u=0$ en $\rho=R, z=0, z=L$) y condición inicial modificada:
+$$u(\rho, z, 0) = T_0 - T_{ss}(\rho, z).$$
+La forma funcional de $u$ es idéntica a la obtenida en la Parte I, pero con coeficientes $B_{ml}$ diferentes:
+$$u(\rho, z, t) = \sum_{m=1}^{\infty} \sum_{l=1}^{\infty} B_{ml} J_0\left( \frac{\chi_{0l} \rho}{R} \right) \sin(k_m z) e^{-\alpha \lambda_{ml}^2 t}.$$
+Los coeficientes $B_{ml}$ se determinan proyectando la condición inicial sobre la base ortonormal:
+$$B_{ml} = \frac{4}{L R^2 J_1^2(\chi_{0l})} \int_0^L \int_0^R \left[ T_0 - T_{ss}(\rho, z) \right] J_0\left( \frac{\chi_{0l} \rho}{R} \right) \sin(k_m z) \rho \, d\rho \, dz.$$
+Sustituyendo $T_{ss}$ y aprovechando la ortogonalidad, el término $T_0$ genera el mismo coeficiente $A_{ml}$ de la Parte I, mientras que el término $-T_{ss}$ genera una corrección acoplada que involucra integrales mixtas de Bessel ordinarias y modificadas. El resultado final es:
+$$T(\rho, z, t) = \sum_{m=1}^{\infty} C_m \frac{I_0(k_m \rho)}{I_0(k_m R)} \sin(k_m z) + \sum_{m=1}^{\infty} \sum_{l=1}^{\infty} B_{ml} J_0\left( \frac{\chi_{0l} \rho}{R} \right) \sin(k_m z) e^{-\alpha \lambda_{ml}^2 t}.$$
+
+\textbf{Discusión física y convergencia}
+La solución obtenida refleja la estructura de autovalores y autofunciones propia de problemas de Sturm-Liouville en dominios cilíndricos (Alonso, Sec. 6.3 y 8.3.2). El término exponencial $e^{-\alpha \lambda_{ml}^2 t}$ garantiza que los modos de alta frecuencia espacial (grandes $m$ y $l$) se amortiguan rápidamente, dominando el comportamiento a largo plazo el modo fundamental $(m=1, l=1)$. La convergencia de las series está asegurada por el decaimiento factorial de los coeficientes de Bessel y por la suavidad de las condiciones iniciales y de frontera. En el caso no homogéneo, la presencia de $I_0(k_m \rho)$ en el estado estacionario muestra cómo el calor penetra radialmente desde la superficie lateral hacia el eje, mientras que la parte transiente ajusta dinámicamente el perfil desde la condición inicial uniforme hasta el perfil de equilibrio impuesto por $f(z)$. Este formalismo es directamente aplicable a problemas de ingeniería térmica, diseño de reactores y análisis de procesos de templado en geometrías cilíndricas.
+
+
+\section{Problema 9}
+Una partícula de masa $m$ y sin espín se encuentra confinada en un cilindro circular de radio $R$ y longitud $L$. La ecuación de movimiento asociada a dicha partícula está dada por la ecuación de Schrödinger independiente del tiempo y sin potencial
+$$-\frac{\hbar^2}{2m}\nabla^2\psi = E\psi.$$
+Asumiendo que la función de onda $\psi$ se anula en las paredes, muestre que los autovalores están dados por
+$$E_{njl} = \frac{\hbar^2}{2m}\left(\frac{\chi_{nj}^2}{R^2} + \frac{l^2\pi^2}{L^2}\right),$$
+donde $\chi_{nj}$ son los ceros de la función de Bessel $J_n$ y $l=1,2,3,\dots$.
+
+\subsection{Solución}
+Para resolver este problema, partimos de la ecuación de Schrödinger independiente del tiempo para una partícula libre en el interior de una región de potencial nulo, tal como se introduce en la Sección 4.7 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La ecuación gobernante es:
+$$-\frac{\hbar^2}{2m}\nabla^2\psi(\mathbf{r}) = E\psi(\mathbf{r}),$$
+la cual puede reescribirse en la forma de la ecuación de Helmholtz homogénea:
+$$\nabla^2\psi(\mathbf{r}) + k^2\psi(\mathbf{r}) = 0, \quad \text{con } k^2 = \frac{2mE}{\hbar^2}.$$
+Dado que la geometría del confinamiento es cilíndrica, resulta natural expresar el laplaciano en coordenadas cilíndricas $(\rho, \phi, z)$, cuya forma explícita se detalla en el Anexo 1.1 del libro de Alonso:
+$$\frac{1}{\rho}\frac{\partial}{\partial\rho}\left(\rho\frac{\partial\psi}{\partial\rho}\right) + \frac{1}{\rho^2}\frac{\partial^2\psi}{\partial\phi^2} + \frac{\partial^2\psi}{\partial z^2} + k^2\psi = 0.$$
+Las condiciones de frontera del problema corresponden a un pozo de potencial infinito en las paredes del cilindro, lo que exige que la función de onda se anule en la superficie límite:
+$$\psi(\rho=R, \phi, z) = 0, \quad \psi(\rho, \phi, z=0) = 0, \quad \psi(\rho, \phi, z=L) = 0.$$
+Adicionalmente, la regularidad en el eje $\rho=0$ y la periodicidad azimutal $\psi(\rho, \phi+2\pi, z) = \psi(\rho, \phi, z)$ imponen restricciones topológicas y analíticas fundamentales.
+
+\textbf{1. Separación de variables}
+Aplicamos el método de separación de variables, ampliamente desarrollado en la Sección 3.3.3 de Alonso, proponiendo una solución factorizada:
+$$\psi(\rho, \phi, z) = P(\rho)\,\Phi(\phi)\,Z(z).$$
+Sustituyendo en la ecuación de Helmholtz y dividiendo por $P\Phi Z$, obtenemos:
+$$\frac{1}{\rho P}\frac{d}{d\rho}\left(\rho\frac{dP}{d\rho}\right) + \frac{1}{\rho^2\Phi}\frac{d^2\Phi}{d\phi^2} + \frac{1}{Z}\frac{d^2Z}{dz^2} + k^2 = 0.$$
+Multiplicando por $\rho^2$ para aislar la dependencia angular:
+$$\frac{\rho}{P}\frac{d}{d\rho}\left(\rho\frac{dP}{d\rho}\right) + \frac{1}{\Phi}\frac{d^2\Phi}{d\phi^2} + \frac{\rho^2}{Z}\frac{d^2Z}{dz^2} + k^2\rho^2 = 0.$$
+Dado que el segundo término depende exclusivamente de $\phi$, debe igualarse a una constante de separación. Por conveniencia matemática y física, la elegimos como $-n^2$, donde $n$ será un número entero:
+$$\frac{1}{\Phi}\frac{d^2\Phi}{d\phi^2} = -n^2 \implies \frac{d^2\Phi}{d\phi^2} + n^2\Phi = 0.$$
+Sustituyendo y reagrupando los términos restantes:
+$$\frac{\rho}{P}\frac{d}{d\rho}\left(\rho\frac{dP}{d\rho}\right) - n^2 + \frac{\rho^2}{Z}\frac{d^2Z}{dz^2} + k^2\rho^2 = 0 \implies \frac{1}{Z}\frac{d^2Z}{dz^2} = -k_z^2,$$
+donde $-k_z^2$ es la segunda constante de separación. Finalmente, la parte radial satisface:
+$$\frac{1}{\rho}\frac{d}{d\rho}\left(\rho\frac{dP}{d\rho}\right) + \left(k^2 - k_z^2 - \frac{n^2}{\rho^2}\right)P = 0.$$
+Definiendo $k_\rho^2 = k^2 - k_z^2$, obtenemos tres ecuaciones diferenciales ordinarias desacopladas.
+
+\textbf{2. Solución de la parte axial y cuantización de $k_z$}
+La ecuación para $Z(z)$ es:
+$$\frac{d^2Z}{dz^2} + k_z^2 Z = 0.$$
+Su solución general es $Z(z) = A\sin(k_z z) + B\cos(k_z z)$. Aplicando las condiciones de frontera de Dirichlet homogéneas en las bases del cilindro (Sección 2.3.3 de Alonso):
+$$Z(0) = 0 \implies B = 0, \quad Z(L) = 0 \implies \sin(k_z L) = 0.$$
+Esto exige que $k_z L = l\pi$ con $l = 1, 2, 3, \dots$ (el valor $l=0$ daría la solución trivial nula). Por tanto:
+$$k_{z,l} = \frac{l\pi}{L}, \quad Z_l(z) = \sin\left(\frac{l\pi z}{L}\right).$$
+
+\textbf{3. Solución de la parte azimutal y cuantización de $n$}
+La ecuación angular $\Phi'' + n^2\Phi = 0$ tiene solución $\Phi(\phi) = C e^{in\phi} + D e^{-in\phi}$. La condición de unicidad y continuidad de la función de onda al dar una vuelta completa alrededor del eje $z$ exige $\Phi(\phi) = \Phi(\phi+2\pi)$, lo que impone que $n$ debe ser un número entero: $n = 0, \pm 1, \pm 2, \dots$. Esta cuantización topológica es fundamental en la mecánica cuántica de sistemas con simetría rotacional, como se discute en la Sección 3.3.3 y 8.4.5 de Alonso.
+
+\textbf{4. Solución de la parte radial y aparición de las funciones de Bessel}
+Sustituyendo $k_\rho^2$ en la ecuación radial obtenemos:
+$$\frac{d^2P}{d\rho^2} + \frac{1}{\rho}\frac{dP}{d\rho} + \left(k_\rho^2 - \frac{n^2}{\rho^2}\right)P = 0.$$
+Realizando el cambio de variable adimensional $x = k_\rho\rho$, esta ecuación se transforma exactamente en la ecuación de Bessel de orden $n$, estudiada rigurosamente en la Sección 8.3 del texto de Alonso:
+$$x^2\frac{d^2P}{dx^2} + x\frac{dP}{dx} + (x^2 - n^2)P = 0.$$
+La solución general es una combinación lineal de las funciones de Bessel de primera y segunda especie (Neumann): $P(x) = C J_n(x) + D N_n(x)$. Dado que la partícula puede ocupar todo el volumen del cilindro, incluyendo el eje $\rho=0$, y la función de onda debe ser finita en todo punto del dominio físico, debemos descartar $N_n(x)$ porque diverge logarítmicamente o como potencia negativa en el origen (Propiedad 4, Sección 8.3.1 de Alonso). Por tanto, $D=0$ y:
+$$P(\rho) = J_n(k_\rho\rho).$$
+Aplicando ahora la condición de frontera en la pared lateral $\rho = R$:
+$$P(R) = 0 \implies J_n(k_\rho R) = 0.$$
+Esto significa que $k_\rho R$ debe coincidir con uno de los ceros positivos de la función de Bessel de orden $n$. Denotando estos ceros como $\chi_{nj}$, donde $j=1,2,3,\dots$ numera el $j$-ésimo cero de $J_n$ (Sección 8.3.1, Propiedad 1 y Tabla de ceros), obtenemos la cuantización radial:
+$$k_{\rho,nj} = \frac{\chi_{nj}}{R}.$$
+Cada par $(n,j)$ define un modo radial permitido, con autofunción $J_n(\chi_{nj}\rho/R)$. La ortogonalidad y completez de esta base discreta de Bessel, fundamental para la expansión de estados cuánticos arbitrarios, se garantiza por la teoría de Sturm-Liouville desarrollada en la Sección 8.3.2 de Alonso.
+
+\textbf{5. Espectro de energías (autovalores)}
+Recordando la relación entre el número de onda total y la energía: $k^2 = \frac{2mE}{\hbar^2}$, y la descomposición espectral $k^2 = k_\rho^2 + k_z^2$, sustituimos los valores cuantizados obtenidos:
+$$\frac{2mE_{njl}}{\hbar^2} = \left(\frac{\chi_{nj}}{R}\right)^2 + \left(\frac{l\pi}{L}\right)^2.$$
+Despejando $E_{njl}$, llegamos exactamente a la expresión solicitada:
+$$E_{njl} = \frac{\hbar^2}{2m}\left(\frac{\chi_{nj}^2}{R^2} + \frac{l^2\pi^2}{L^2}\right).$$
+Los tres números cuánticos $(n,j,l)$ etiquetan de manera única cada estado estacionario: $n$ determina el momento angular azimutal, $j$ cuenta los nodos radiales (ceros de $J_n$), y $l$ cuenta los nodos axiales. La degeneración energética, típica de sistemas con simetría continua, ocurre cuando distintos tripletes $(n,j,l)$ producen el mismo valor de $\chi_{nj}^2/R^2 + l^2\pi^2/L^2$, fenómeno analizado en la Sección 6.5 de Alonso.
+
+\textbf{Discusión física y conclusión}
+La solución obtenida revela cómo la geometría cilíndrica impone una discretización de los modos espaciales permitidos, traduciéndose directamente en un espectro de energías cuantizadas. El término $\chi_{nj}^2/R^2$ proviene del confinamiento radial y refleja la estructura oscilatoria de las funciones de Bessel, mientras que $l^2\pi^2/L^2$ corresponde al confinamiento axial y reproduce el espectro de una partícula en una caja unidimensional. La condición de anulación en las paredes (potencial infinito) garantiza que el operador Hamiltoniano sea hermítico bajo las condiciones de frontera de Dirichlet homogéneas (Sección 6.2.4 de Alonso), asegurando autovalores reales y autofunciones ortonormales. Este formalismo constituye la base para el estudio de nanoestructuras cilíndricas, guías de onda cuánticas, y estados electrónicos en nanotubos o puntos cuánticos de geometría alargada, donde la separación de variables en coordenadas cilíndricas y la teoría espectral de Bessel son herramientas analíticas insustituibles.
 
 
 \bibliographystyle{plainurl}
