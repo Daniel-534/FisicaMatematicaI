@@ -1,0 +1,836 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Taller 8}
+
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Solución al Taller 8 \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+
+
+
+\section{Problema 1}
+Utilizando la función generatriz muestre las siguientes relaciones (para ello derive la función generatriz con respecto a $x$ o $t$):
+\begin{itemize}
+    \item[a)] $P'_{n-1}(x) + P'_{n+1}(x) = P_n(x) + 2x P'_n(x)$.
+    \item[b)] $(n+1)P_{n+1}(x) = (2n+1)x P_n(x) - n P_{n-1}(x)$.
+\end{itemize}
+De (a) y (b) salen más propiedades. Por ejemplo, derive (b) y reemplace su resultado en (a). Con ello muestre que:
+\begin{itemize}
+    \item[c)] $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$.
+    \item[d)] $P'_{n+1}(x) = (n+1)P_n(x) + x P'_n(x)$.
+    \item[e)] $P_{n+1}'(x) - P'_{n-1}(x) = (2n+1)P_n(x)$. \textit{(Nota: se ajusta un error tipográfico del enunciado original, que por truncamiento en la transcripción aparece como ``$1/(n+1)$''; la identidad estándar es la presentada aquí)}.
+\end{itemize}
+Por último, haga el cambio de variable $n \to n-1$ en (d) y muestre:
+\begin{itemize}
+    \item[f)] $(1-x^2)P'_n(x) = n P_{n-1}(x) - n x P_n(x)$. \textit{(Nota: se corrige el signo del segundo término respecto al enunciado original; el desarrollo analítico conduce necesariamente al signo menos)}.
+\end{itemize}
+
+\subsection{Solución}
+Para abordar este problema nos basamos en la función generatriz de los polinomios de Legendre, introducida y desarrollada extensamente en el Capítulo 8, Sección 8.4 del texto de Alonso Sepúlveda. La función generatriz se define como:
+$$
+g(x,t) = \frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n, \quad |t| < 1, \; |x| \leq 1.
+$$
+A partir de esta expresión fundamental, todas las relaciones de recurrencia y derivadas solicitadas pueden obtenerse mediante diferenciación parcial respecto a $x$ y $t$, seguida de igualación de coeficientes de potencias iguales de $t$. A continuación, se detalla el desarrollo analítico paso a paso.
+
+\vspace{0.3cm}
+\noindent\textbf{Demostración del inciso a):} \\
+Derivamos la función generatriz respecto a la variable espacial $x$:
+$$
+\frac{\partial g}{\partial x} = \frac{\partial}{\partial x} \left(1 - 2xt + t^2\right)^{-1/2} = \frac{t}{\left(1 - 2xt + t^2\right)^{3/2}}.
+$$
+Notamos que $\left(1 - 2xt + t^2\right)^{3/2} = \left(1 - 2xt + t^2\right) \sqrt{1 - 2xt + t^2}$, por lo que podemos reescribir la derivada como:
+$$
+\frac{\partial g}{\partial x} = \frac{t}{1 - 2xt + t^2} \cdot \frac{1}{\sqrt{1 - 2xt + t^2}} = \frac{t}{1 - 2xt + t^2} g(x,t).
+$$
+Multiplicando ambos lados por el denominador:
+$$
+(1 - 2xt + t^2) \frac{\partial g}{\partial x} = t \, g(x,t).
+$$
+Sustituimos las series de potencias correspondientes: $\frac{\partial g}{\partial x} = \sum_{n=0}^{\infty} P'_n(x) t^n$ y $g(x,t) = \sum_{n=0}^{\infty} P_n(x) t^n$:
+$$
+(1 - 2xt + t^2) \sum_{n=0}^{\infty} P'_n(x) t^n = t \sum_{n=0}^{\infty} P_n(x) t^n.
+$$
+Expandimos el producto en el lado izquierdo y alineamos las potencias de $t$:
+$$
+\sum_{n=0}^{\infty} P'_n(x) t^n - 2x \sum_{n=0}^{\infty} P'_n(x) t^{n+1} + \sum_{n=0}^{\infty} P'_n(x) t^{n+2} = \sum_{n=0}^{\infty} P_n(x) t^{n+1}.
+$$
+Realizamos cambios de índice para que todas las sumatorias dependan de $t^n$. En el segundo término hacemos $m = n+1$, en el tercero $m = n+2$, y en el derecho $m = n+1$:
+$$
+\sum_{n=0}^{\infty} P'_n(x) t^n - 2x \sum_{n=1}^{\infty} P'_{n-1}(x) t^n + \sum_{n=2}^{\infty} P'_{n-2}(x) t^n = \sum_{n=1}^{\infty} P_{n-1}(x) t^n.
+$$
+Igualando los coeficientes de $t^n$ para $n \geq 2$ (los casos $n=0,1$ se verifican por separado y son consistentes):
+$$
+P'_n(x) - 2x P'_{n-1}(x) + P'_{n-2}(x) = P_{n-1}(x).
+$$
+Desplazando el índice $n \to n+1$, obtenemos exactamente la relación solicitada:
+$$
+P'_{n+1}(x) - 2x P'_n(x) + P'_{n-1}(x) = P_n(x) \quad \Rightarrow \quad P'_{n-1}(x) + P'_{n+1}(x) = P_n(x) + 2x P'_n(x).
+$$
+Esta identidad demuestra la conexión entre las derivadas de polinomios consecutivos, tal como se discute en la Sección 8.4 de Alonso Sepúlveda.
+
+\vspace{0.3cm}
+\noindent\textbf{Demostración del inciso b):} \\
+Derivamos ahora la función generatriz respecto al parámetro $t$:
+$$
+\frac{\partial g}{\partial t} = \frac{\partial}{\partial t} \left(1 - 2xt + t^2\right)^{-1/2} = \frac{x - t}{\left(1 - 2xt + t^2\right)^{3/2}} = \frac{x - t}{1 - 2xt + t^2} g(x,t).
+$$
+Multiplicando por el denominador:
+$$
+(1 - 2xt + t^2) \frac{\partial g}{\partial t} = (x - t) g(x,t).
+$$
+Sustituimos las series: $\frac{\partial g}{\partial t} = \sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n$ y $g(x,t) = \sum_{n=0}^{\infty} P_n(x) t^n$:
+$$
+(1 - 2xt + t^2) \sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n = (x - t) \sum_{n=0}^{\infty} P_n(x) t^n.
+$$
+Expandiendo y alineando potencias de $t^n$:
+$$
+\sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n - 2x \sum_{n=0}^{\infty} n P_n(x) t^n + \sum_{n=0}^{\infty} (n-1) P_{n-1}(x) t^n = x \sum_{n=0}^{\infty} P_n(x) t^n - \sum_{n=0}^{\infty} P_{n-1}(x) t^n.
+$$
+Igualando coeficientes de $t^n$ para $n \geq 1$:
+$$
+(n+1)P_{n+1}(x) - 2n x P_n(x) + (n-1)P_{n-1}(x) = x P_n(x) - P_{n-1}(x).
+$$
+Reagrupando términos:
+$$
+(n+1)P_{n+1}(x) = (2n x + x) P_n(x) - (n-1 + 1) P_{n-1}(x) \quad \Rightarrow \quad (n+1)P_{n+1}(x) = (2n+1)x P_n(x) - n P_{n-1}(x).
+$$
+Esta es la famosa relación de recurrencia de tres términos, fundamental en la teoría de polinomios ortogonales (Sepúlveda, Sec. 8.4).
+
+\vspace{0.3cm}
+\noindent\textbf{Demostración de los incisos c), d) y e):} \\
+Partimos de la ecuación (b) y la derivamos respecto a $x$:
+$$
+(n+1)P'_{n+1}(x) = (2n+1)P_n(x) + (2n+1)x P'_n(x) - n P'_{n-1}(x). \quad (1)
+$$
+Del inciso (a) despejamos $P'_{n+1}(x) = P_n(x) + 2x P'_n(x) - P'_{n-1}(x)$ y sustituimos en (1):
+$$
+(n+1)\left[ P_n(x) + 2x P'_n(x) - P'_{n-1}(x) \right] = (2n+1)P_n(x) + (2n+1)x P'_n(x) - n P'_{n-1}(x).
+$$
+Expandimos y agrupamos por potencias de $P_n$ y $P'_n$:
+$$
+(n+1)P_n + 2(n+1)x P'_n - (n+1)P'_{n-1} = (2n+1)P_n + (2n+1)x P'_n - n P'_{n-1}.
+$$
+Llevamos todos los términos al lado izquierdo:
+$$
+\left[2(n+1) - (2n+1)\right] x P'_n(x) + \left[-(n+1) + n\right] P'_{n-1}(x) + \left[(n+1) - (2n+1)\right] P_n(x) = 0.
+$$
+Simplificando coeficientes:
+$$
+x P'_n(x) - P'_{n-1}(x) - n P_n(x) = 0 \quad \Rightarrow \quad P'_{n-1}(x) = x P'_n(x) - n P_n(x).
+$$
+Esto prueba el inciso \textbf{c)}. 
+
+Para el inciso \textbf{d)}, volvemos a (a) y sustituimos la expresión recién hallada para $P'_{n-1}(x)$:
+$$
+\left[ x P'_n(x) - n P_n(x) \right] + P'_{n+1}(x) = P_n(x) + 2x P'_n(x).
+$$
+Despejando $P'_{n+1}(x)$:
+$$
+P'_{n+1}(x) = P_n(x) + 2x P'_n(x) - x P'_n(x) + n P_n(x) = (n+1)P_n(x) + x P'_n(x).
+$$
+Esto demuestra el inciso \textbf{d)}.
+
+Finalmente, para el inciso \textbf{e)}, restamos la ecuación del inciso \textbf{c)} de la del inciso \textbf{d)}:
+$$
+P'_{n+1}(x) - P'_{n-1}(x) = \left[ (n+1)P_n(x) + x P'_n(x) \right] - \left[ x P'_n(x) - n P_n(x) \right].
+$$
+Los términos en $x P'_n(x)$ se cancelan, quedando:
+$$
+P'_{n+1}(x) - P'_{n-1}(x) = (2n+1)P_n(x).
+$$
+Esta identidad es de uso frecuente en el desarrollo de expansiones en armónicos esféricos y en la teoría de Sturm-Liouville aplicada a problemas electrostáticos (Sepúlveda, Sec. 8.4.1 y Cap. 6).
+
+\vspace{0.3cm}
+\noindent\textbf{Demostración del inciso f):} \\
+Aplicamos el cambio de índice $n \to n-1$ en la relación del inciso \textbf{d)}:
+$$
+P'_n(x) = n P_{n-1}(x) + x P'_{n-1}(x). \quad (2)
+$$
+Ahora, de la ecuación del inciso \textbf{c)} despejamos $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$ y lo sustituimos en (2):
+$$
+P'_n(x) = n P_{n-1}(x) + x \left[ x P'_n(x) - n P_n(x) \right].
+$$
+Distribuimos $x$ en el corchete:
+$$
+P'_n(x) = n P_{n-1}(x) + x^2 P'_n(x) - n x P_n(x).
+$$
+Agrupamos los términos que contienen $P'_n(x)$ en el lado izquierdo y los demás en el derecho:
+$$
+P'_n(x) - x^2 P'_n(x) = n P_{n-1}(x) - n x P_n(x).
+$$
+Factorizando $P'_n(x)$ en el lado izquierdo obtenemos el resultado final:
+$$
+(1 - x^2) P'_n(x) = n P_{n-1}(x) - n x P_n(x).
+$$
+Esta última identidad es particularmente útil para demostrar que los polinomios de Legendre satisfacen la ecuación diferencial de Legendre, cerrando así el vínculo entre la función generatriz y la estructura de Sturm-Liouville que rige su ortogonalidad (Sepúlveda, Sec. 8.4 y Cap. 6). El signo menos en el segundo término es matemáticamente necesario; su aparición con signo positivo en el enunciado original corresponde a una errata de transcripción común en materiales derivados.
+
+
+\section{Problema 2}
+Derive la expresión (f) respecto a $x$ y utilizando la expresión (c), muestre que los polinomios $P_n(x)$ satisfacen la ecuación diferencial
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) + n(n+1)P_n(x) = 0.
+$$
+Escriba el problema de Sturm-Liouville asociado y encuentre el intervalo de ortogonalidad de los polinomios y sus autovalores.
+
+\subsection{Solución}
+Para abordar este problema, partimos de las identidades de recurrencia obtenidas en el problema anterior, las cuales son fundamentales en la teoría de los polinomios de Legendre. Aunque en la transcripción original del taller aparecen ligeras erratas tipográficas, utilizaremos las formas matemáticamente correctas y estandarizadas en la literatura (ver Sección 8.4 del texto de Alonso Sepúlveda):
+$$
+\text{(c)} \quad P'_{n-1}(x) = x P'_n(x) - n P_n(x),
+$$
+$$
+\text{(f)} \quad (1 - x^2)P'_n(x) = n P_{n-1}(x) - n x P_n(x).
+$$
+Nuestro objetivo es demostrar que estas relaciones implican directamente la ecuación diferencial de Legendre y analizar su estructura espectral.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 1: Derivación de la expresión (f) respecto a $x$}\\
+Derivamos ambos lados de la ecuación (f) con respecto a la variable espacial $x$:
+$$
+\frac{d}{dx}\left[ (1 - x^2)P'_n(x) \right] = \frac{d}{dx}\left[ n P_{n-1}(x) - n x P_n(x) \right].
+$$
+Aplicando la regla del producto en el lado izquierdo y la linealidad de la derivada en el derecho, obtenemos:
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) = n P'_{n-1}(x) - n P_n(x) - n x P'_n(x). \quad (1)
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 2: Sustitución de la expresión (c)}\\
+La ecuación (1) contiene el término $P'_{n-1}(x)$, el cual podemos eliminar utilizando la identidad (c). Sustituimos $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$ en el lado derecho de (1):
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) = n \left[ x P'_n(x) - n P_n(x) \right] - n P_n(x) - n x P'_n(x).
+$$
+Desarrollamos los productos en el lado derecho:
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) = n x P'_n(x) - n^2 P_n(x) - n P_n(x) - n x P'_n(x).
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Simplificación y obtención de la ecuación de Legendre}\\
+Observamos que los términos $n x P'_n(x)$ y $- n x P'_n(x)$ se cancelan exactamente. Agrupando los términos restantes en $P_n(x)$:
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) = - (n^2 + n) P_n(x) = - n(n+1) P_n(x).
+$$
+Trasladando el término del lado derecho al lado izquierdo, obtenemos finalmente la ecuación diferencial de Legendre:
+$$
+(1 - x^2)P''_n(x) - 2x P'_n(x) + n(n+1)P_n(x) = 0.
+$$
+Este desarrollo confirma que los polinomios de Legendre, construidos a partir de la función generatriz y sus relaciones de recurrencia, satisfacen naturalmente esta EDO de segundo orden (Alonso Sepúlveda, Sección 8.4.3 y Cap. 4).
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Formulación del problema de Sturm-Liouville}\\
+Para identificar la estructura de Sturm-Liouville, reescribimos la ecuación diferencial en su forma autoadjunta. Reconociendo directamente la derivada total de un producto, notamos que:
+$$
+\frac{d}{dx}\left[ (1 - x^2) \frac{dP_n}{dx} \right] = (1 - x^2)P''_n(x) - 2x P'_n(x).
+$$
+Por lo tanto, la ecuación de Legendre se escribe compactamente como:
+$$
+\frac{d}{dx}\left[ (1 - x^2) \frac{dP_n(x)}{dx} \right] + n(n+1) P_n(x) = 0. \quad (2)
+$$
+Comparando con la forma canónica de la ecuación de Sturm-Liouville presentada en el texto (Sección 6.3.1):
+$$
+\frac{d}{dx}\left[ p(x) \frac{dy}{dx} \right] + \left[ \lambda w(x) - q(x) \right] y(x) = 0,
+$$
+identificamos inmediatamente los elementos del problema:
+\begin{itemize}
+    \item $p(x) = 1 - x^2$
+    \item $w(x) = 1$ (función de peso)
+    \item $q(x) = 0$
+    \item $\lambda = n(n+1)$ (parámetro espectral o autovalor)
+    \item $y(x) = P_n(x)$ (autofunción)
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 5: Intervalo de ortogonalidad, condiciones de frontera y autovalores}\\
+La teoría de Sturm-Liouville (Sección 6.3 y 6.5 de Alonso Sepúlveda) establece que el intervalo de definición $[a, b]$ y las condiciones de frontera determinan las propiedades espectrales. En el caso de Legendre, observamos que $p(x) = 1 - x^2$ se anula en los extremos $x = \pm 1$. Esto clasifica al problema como \textit{singular} de Sturm-Liouville. 
+
+Para problemas singulares, no se imponen condiciones de Dirichlet o Neumann explícitas en los bordes. En su lugar, se exige que las soluciones sean \textbf{acotadas} (finitas) en todo el intervalo cerrado. Matemáticamente:
+$$
+|P_n(\pm 1)| < \infty.
+$$
+Esta condición de regularidad en los puntos singulares $x = \pm 1$ es suficiente para garantizar la hermiticidad del operador y, por tanto, la ortogonalidad de las autofunciones.
+
+\begin{itemize}
+    \item \textbf{Intervalo de ortogonalidad:} $x \in [-1, 1]$. Este dominio surge naturalmente de la física de problemas con simetría azimutal, donde $x = \cos\theta$ y $\theta \in [0, \pi]$.
+    \item \textbf{Función de peso:} $w(x) = 1$.
+    \item \textbf{Condición de ortogonalidad:} Siguiendo la Sección 8.4.1, para $n \neq m$:
+    $$
+    \int_{-1}^{1} P_n(x) P_m(x) \, dx = 0.
+    $$
+    \item \textbf{Autovalores:} El espectro de valores propios está dado por $\lambda_n = n(n+1)$, con $n = 0, 1, 2, \dots$. La exigencia de soluciones acotadas en $x=\pm 1$ fuerza a que $n$ sea un entero no negativo, cuantizando así el parámetro $\lambda$. Como se discute en la Sección 6.5, el espectro es discreto y acotado inferiormente, y cada autovalor corresponde a una única autofunción polinomial (degeneración simple).
+\end{itemize}
+En conclusión, la derivación analítica a partir de las identidades (c) y (f) no solo reproduce la ecuación diferencial de Legendre, sino que revela su estructura intrínseca como un problema de Sturm-Liouville singular, cuyas soluciones forman una base ortonormal completa en el espacio de Hilbert $L^2_w[-1, 1]$, fundamento matemático para la expansión de multipolos en electrostática y la descripción de momentos angulares en mecánica cuántica.
+
+
+\section{Problema 3}
+Utilizando la función generatriz, muestre que $P_n(0)= 0$ si $n$ es impar y $P_{2n}(0)= \frac{(-1)^n(2n)!}{2^{2n}(n!)^2}$, $n= 0, 1, 2, 3, \dots$.
+
+\subsection{Solución}
+Para abordar este problema nos basamos en la función generatriz de los polinomios de Legendre, introducida y desarrollada en la Sección 8.4 del texto de Alonso Sepúlveda. La función generatriz se define mediante la serie:
+$$
+g(x,t) = \frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n, \quad |t| < 1, \; |x| \leq 1.
+$$
+Nuestro objetivo es evaluar esta expresión en el punto $x=0$, lo que nos permitirá extraer directamente los valores $P_n(0)$ comparando coeficientes de potencias iguales de $t$.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 1: Evaluación en $x=0$}\\
+Sustituyendo $x=0$ en la función generatriz obtenemos:
+$$
+g(0,t) = \frac{1}{\sqrt{1 + t^2}} = \sum_{n=0}^{\infty} P_n(0) t^n.
+$$
+Esta igualdad establece que la expansión en serie de Taylor (o Maclaurin) de $(1+t^2)^{-1/2}$ debe coincidir término a término con la serie que define los polinomios de Legendre evaluados en el origen.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 2: Expansión binomial de $(1+t^2)^{-1/2}$}\\
+Utilizamos la expansión binomial general para un exponente real $\alpha$:
+$$
+(1+z)^\alpha = \sum_{k=0}^{\infty} \binom{\alpha}{k} z^k, \quad |z| < 1,
+$$
+donde el coeficiente binomial generalizado se define como:
+$$
+\binom{\alpha}{k} = \frac{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-k+1)}{k!}.
+$$
+En nuestro caso, $\alpha = -1/2$ y $z = t^2$. Sustituyendo:
+$$
+\frac{1}{\sqrt{1+t^2}} = \sum_{k=0}^{\infty} \binom{-1/2}{k} (t^2)^k = \sum_{k=0}^{\infty} \binom{-1/2}{k} t^{2k}.
+$$
+Desarrollamos explícitamente el coeficiente $\binom{-1/2}{k}$:
+$$
+\binom{-1/2}{k} = \frac{(-\frac{1}{2})(-\frac{3}{2})(-\frac{5}{2})\cdots(-\frac{2k-1}{2})}{k!}.
+$$
+Factorizando el signo $(-1)$ y el denominador $2$ de cada uno de los $k$ factores del numerador:
+$$
+\binom{-1/2}{k} = \frac{(-1)^k}{2^k k!} \left[1 \cdot 3 \cdot 5 \cdots (2k-1)\right].
+$$
+El producto de los primeros $k$ números impares puede escribirse en términos de factoriales completando el producto par:
+$$
+1 \cdot 3 \cdot 5 \cdots (2k-1) = \frac{[1 \cdot 2 \cdot 3 \cdots (2k-1)] \cdot [2 \cdot 4 \cdot 6 \cdots (2k)]}{2 \cdot 4 \cdot 6 \cdots (2k)} = \frac{(2k)!}{2^k k!}.
+$$
+Sustituyendo este resultado en la expresión del coeficiente binomial:
+$$
+\binom{-1/2}{k} = \frac{(-1)^k}{2^k k!} \cdot \frac{(2k)!}{2^k k!} = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}.
+$$
+Por lo tanto, la expansión de la función generatriz en $x=0$ queda:
+$$
+\frac{1}{\sqrt{1+t^2}} = \sum_{k=0}^{\infty} \frac{(-1)^k (2k)!}{2^{2k} (k!)^2} t^{2k}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Identificación de coeficientes y paridad}\\
+Comparando esta serie con la definición original $\sum_{n=0}^{\infty} P_n(0) t^n$, observamos estructuralmente que la expansión solo contiene potencias \textbf{pares} de $t$ (es decir, términos de la forma $t^{2k}$). En el lenguaje de series de potencias, esto implica inmediatamente que todos los coeficientes asociados a potencias impares deben ser nulos:
+$$
+P_n(0) = 0 \quad \text{para todo } n \text{ impar}.
+$$
+Esta propiedad refleja la simetría de paridad de los polinomios de Legendre: $P_n(-x) = (-1)^n P_n(x)$. Al evaluar en $x=0$, los polinomios de orden impar (que son funciones impares) deben anularse, tal como se discute en las propiedades de recurrencia de la Sección 8.4 de Alonso Sepúlveda.
+
+Para los índices pares, hacemos la sustitución $n = 2k$ (equivalentemente $k = n/2$). Igualando los coeficientes de $t^{2k}$ en ambas series:
+$$
+P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}.
+$$
+Renombrando el índice $k$ como $n$ para ajustar la notación al enunciado del problema, obtenemos finalmente la expresión general para los polinomios de Legendre de orden par evaluados en el origen:
+$$
+P_{2n}(0) = \frac{(-1)^n (2n)!}{2^{2n} (n!)^2}, \quad n = 0, 1, 2, \dots
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Verificación para los primeros valores:}\\
+Evaluando explícitamente para $n=0,1,2,3$ como sugiere el enunciado:
+\begin{itemize}
+    \item $n=0$: $P_0(0) = \frac{(-1)^0 0!}{2^0 (0!)^2} = 1$. (Consistente con $P_0(x)=1$)
+    \item $n=1$: $P_2(0) = \frac{(-1)^1 2!}{2^2 (1!)^2} = -\frac{2}{4} = -\frac{1}{2}$. (Consistente con $P_2(x)=\frac{1}{2}(3x^2-1)$)
+    \item $n=2$: $P_4(0) = \frac{(-1)^2 4!}{2^4 (2!)^2} = \frac{24}{16 \cdot 4} = \frac{3}{8}$. (Consistente con $P_4(x)=\frac{1}{8}(35x^4-30x^2+3)$)
+    \item $n=3$: $P_6(0) = \frac{(-1)^3 6!}{2^6 (3!)^2} = -\frac{720}{64 \cdot 36} = -\frac{5}{16}$.
+\end{itemize}
+Estos resultados confirman analíticamente la validez de la fórmula derivada. El desarrollo presentado sigue rigurosamente el tratamiento de la función generatriz y sus propiedades de expansión en serie expuesto en la Sección 8.4 del libro de Alonso Sepúlveda, demostrando de manera constructiva cómo la paridad y los coeficientes factoriales emergen naturalmente de la estructura binomial de $(1+t^2)^{-1/2}$.
+
+
+\section{Problema 4}
+Muestre que
+$$
+\int_{-1}^{1} x^m P_n(x) \, dx = 0 \quad \text{si } m < n.
+$$
+Con esto, encuentre la expansión de $x^4$ en términos de los polinomios de Legendre.
+
+\subsection{Solución}
+Para abordar este problema nos basamos en la teoría de ortogonalidad y completez de los polinomios de Legendre, desarrollada extensamente en el Capítulo 8, Sección 8.4.1 del texto de Alonso Sepúlveda. La demostración se divide en dos partes analíticas: primero se establece la propiedad de ortogonalidad generalizada con potencias de $x$, y segundo se aplica dicha propiedad para construir la expansión en serie de Legendre de la función $x^4$.
+
+\vspace{0.3cm}
+\noindent\textbf{Parte I: Demostración de $\displaystyle\int_{-1}^{1} x^m P_n(x) \, dx = 0$ para $m < n$}\\
+
+La propiedad fundamental de los polinomios de Legendre, establecida en la Sección 8.4.1 y en el Anexo 5.1 (Ortogonalización de Gram-Schmidt), es que el conjunto $\{P_0(x), P_1(x), \dots, P_k(x), \dots\}$ constituye una base completa y ortogonal en el espacio de funciones de cuadrado integrable en el intervalo $[-1, 1]$ con función de peso $w(x) = 1$. Una consecuencia directa de esta construcción es que cada polinomio $P_n(x)$ es de grado exactamente $n$ y es ortogonal a \textbf{cualquier} polinomio de grado estrictamente menor que $n$.
+
+Para demostrarlo analíticamente, consideremos un polinomio arbitrario de grado $m$, específicamente $x^m$ con $m < n$. Debido a la propiedad de base completa, $x^m$ puede expandirse de manera única como combinación lineal de los primeros $m+1$ polinomios de Legendre:
+$$
+x^m = \sum_{k=0}^{m} c_k P_k(x),
+$$
+donde los coeficientes $c_k$ son constantes reales determinadas por la proyección ortogonal. Sustituimos esta expansión en la integral de interés:
+$$
+\int_{-1}^{1} x^m P_n(x) \, dx = \int_{-1}^{1} \left[ \sum_{k=0}^{m} c_k P_k(x) \right] P_n(x) \, dx.
+$$
+Por la linealidad de la integral, intercambiamos la sumatoria y el operador de integración:
+$$
+\int_{-1}^{1} x^m P_n(x) \, dx = \sum_{k=0}^{m} c_k \int_{-1}^{1} P_k(x) P_n(x) \, dx.
+$$
+Ahora aplicamos la condición de ortogonalidad estándar de los polinomios de Legendre (Ecuación 8.26 de Alonso Sepúlveda, Sec. 8.4.1):
+$$
+\int_{-1}^{1} P_k(x) P_n(x) \, dx = \frac{2}{2n+1} \delta_{kn}.
+$$
+Dado que la sumatoria recorre índices $k$ desde $0$ hasta $m$, y por hipótesis $m < n$, se cumple que $k \neq n$ para todos los términos de la suma. Por lo tanto, $\delta_{kn} = 0$ en cada término, y concluimos rigurosamente que:
+$$
+\int_{-1}^{1} x^m P_n(x) \, dx = 0 \quad \forall \, m < n.
+$$
+Esta propiedad es equivalente a afirmar que $P_n(x)$ es ortogonal al subespacio de polinomios de grado menor que $n$, lo cual es una característica intrínseca de las soluciones de Sturm-Liouville regulares con peso unidad (Cap. 6, Sec. 6.3).
+
+\vspace{0.3cm}
+\noindent\textbf{Parte II: Expansión de $x^4$ en polinomios de Legendre}\\
+
+Utilizando el resultado anterior y la teoría de expansiones en bases ortogonales (Sec. 5.2.2 y Ecuación 8.27), cualquier función $f(x)$ definida en $[-1, 1]$ y de cuadrado integrable puede expandirse como:
+$$
+f(x) = \sum_{l=0}^{\infty} a_l P_l(x), \quad \text{con} \quad a_l = \frac{2l+1}{2} \int_{-1}^{1} f(x) P_l(x) \, dx.
+$$
+Para $f(x) = x^4$, la expansión se reduce a una suma finita. Por la Parte I, todos los coeficientes $a_l$ con $l > 4$ son nulos. Además, aprovechamos la simetría de paridad: $x^4$ es una función par, y los polinomios de Legendre satisfacen $P_l(-x) = (-1)^l P_l(x)$ (Sec. 8.4). Por tanto, el integrando $x^4 P_l(x)$ es impar cuando $l$ es impar, y su integral sobre $[-1, 1]$ se anula. Esto elimina automáticamente los coeficientes $a_1$ y $a_3$. La expansión se reduce a:
+$$
+x^4 = a_0 P_0(x) + a_2 P_2(x) + a_4 P_4(x).
+$$
+Calculamos cada coeficiente por proyección directa, utilizando las expresiones explícitas de los primeros polinomios (listados en la Sec. 8.4):
+$$
+P_0(x) = 1, \quad P_2(x) = \frac{1}{2}(3x^2 - 1), \quad P_4(x) = \frac{1}{8}(35x^4 - 30x^2 + 3).
+$$
+
+\noindent\textbf{Cálculo de $a_0$:}
+$$
+a_0 = \frac{1}{2} \int_{-1}^{1} x^4 P_0(x) \, dx = \frac{1}{2} \int_{-1}^{1} x^4 \, dx = \frac{1}{2} \left[ \frac{x^5}{5} \right]_{-1}^{1} = \frac{1}{2} \left( \frac{1}{5} - \left(-\frac{1}{5}\right) \right) = \frac{1}{5}.
+$$
+
+\noindent\textbf{Cálculo de $a_2$:}
+$$
+a_2 = \frac{5}{2} \int_{-1}^{1} x^4 P_2(x) \, dx = \frac{5}{2} \int_{-1}^{1} x^4 \cdot \frac{1}{2}(3x^2 - 1) \, dx = \frac{5}{4} \int_{-1}^{1} (3x^6 - x^4) \, dx.
+$$
+Evaluando la integral par:
+$$
+a_2 = \frac{5}{4} \cdot 2 \left[ \frac{3x^7}{7} - \frac{x^5}{5} \right]_{0}^{1} = \frac{5}{2} \left( \frac{3}{7} - \frac{1}{5} \right) = \frac{5}{2} \left( \frac{15 - 7}{35} \right) = \frac{5}{2} \cdot \frac{8}{35} = \frac{4}{7}.
+$$
+
+\noindent\textbf{Cálculo de $a_4$:}
+$$
+a_4 = \frac{9}{2} \int_{-1}^{1} x^4 P_4(x) \, dx = \frac{9}{2} \int_{-1}^{1} x^4 \cdot \frac{1}{8}(35x^4 - 30x^2 + 3) \, dx = \frac{9}{16} \int_{-1}^{1} (35x^8 - 30x^6 + 3x^4) \, dx.
+$$
+Nuevamente, por paridad:
+$$
+a_4 = \frac{9}{16} \cdot 2 \left[ \frac{35x^9}{9} - \frac{30x^7}{7} + \frac{3x^5}{5} \right]_{0}^{1} = \frac{9}{8} \left( \frac{35}{9} - \frac{30}{7} + \frac{3}{5} \right).
+$$
+Unificando denominadores (315):
+$$
+\frac{35}{9} = \frac{1225}{315}, \quad \frac{30}{7} = \frac{1350}{315}, \quad \frac{3}{5} = \frac{189}{315}.
+$$
+Sumando: $\frac{1225 - 1350 + 189}{315} = \frac{64}{315}$. Por lo tanto:
+$$
+a_4 = \frac{9}{8} \cdot \frac{64}{315} = \frac{576}{2520} = \frac{8}{35}.
+$$
+
+\noindent\textbf{Resultado final y verificación:}\\
+Sustituyendo los coeficientes calculados, obtenemos la expansión solicitada:
+$$
+x^4 = \frac{1}{5} P_0(x) + \frac{4}{7} P_2(x) + \frac{8}{35} P_4(x).
+$$
+Para verificar la consistencia analítica, reemplazamos las expresiones polinomiales explícitas:
+$$
+\begin{aligned}
+x^4 &= \frac{1}{5}(1) + \frac{4}{7}\left[\frac{1}{2}(3x^2 - 1)\right] + \frac{8}{35}\left[\frac{1}{8}(35x^4 - 30x^2 + 3)\right] \\
+&= \frac{1}{5} + \frac{6}{7}x^2 - \frac{2}{7} + x^4 - \frac{6}{7}x^2 + \frac{3}{35} \\
+&= x^4 + \left(\frac{6}{7} - \frac{6}{7}\right)x^2 + \left(\frac{1}{5} - \frac{2}{7} + \frac{3}{35}\right) \\
+&= x^4 + 0 \cdot x^2 + \frac{7 - 10 + 3}{35} = x^4.
+\end{aligned}
+$$
+La identidad se satisface exactamente, confirmando la validez de la expansión. Este desarrollo ilustra cómo la ortogonalidad de Sturm-Liouville permite descomponer funciones polinomiales arbitrarias en la base natural del problema, facilitando el cálculo de potenciales, integrales de acoplamiento y desarrollos multipolares en física matemática (Sepúlveda, Sec. 8.4.1 y Cap. 6).
+
+
+
+\section{Problema 5}
+Una esfera conductora de radio $a$ está dividida en sus dos mitades en el ecuador mediante una franja aislante. El hemisferio superior se carga a un potencial $V_0$ y el hemisferio inferior se mantiene a potencial cero. Determine el potencial electrostático en el interior y el exterior de la esfera.
+
+\subsection{Solución}
+Este problema constituye un ejemplo clásico de condiciones de frontera de Dirichlet para la ecuación de Laplace en geometrías esféricas. La resolución se fundamenta en la teoría de separación de variables y en la completez de los polinomios de Legendre, desarrollada extensamente en el Capítulo 8, Sección 8.4 del texto de Alonso Sepúlveda. A continuación, se presenta el desarrollo analítico paso a paso.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 1: Ecuación gobernante y simetría del sistema}\\
+En las regiones interior ($r < a$) y exterior ($r > a$) a la esfera no existen distribuciones volumétricas de carga libre ($\rho = 0$). Por lo tanto, el potencial electrostático $\phi(\mathbf{r})$ satisface la ecuación de Laplace:
+$$
+\nabla^2 \phi(r, \theta, \varphi) = 0.
+$$
+Dado que la distribución de potencial en la superficie $r=a$ depende únicamente del ángulo polar $\theta$ y es independiente del ángulo azimutal $\varphi$ (simetría azimutal), el problema es efectivamente bidimensional: $\phi = \phi(r, \theta)$. Esta reducción permite utilizar directamente la forma separada para $m=0$ discutida en la Sección 8.4.2 de Alonso Sepúlveda.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 2: Solución general por separación de variables}\\
+Implementando la separación de variables $\phi(r, \theta) = R(r)\Theta(\theta)$ en coordenadas esféricas, y considerando la condición de regularidad en los polos $\theta = 0, \pi$, se obtienen las ecuaciones diferenciales ordinarias para la parte radial y angular. La parte angular conduce a la ecuación de Legendre ordinaria, cuyas soluciones acotadas en $[-1, 1]$ son los polinomios de Legendre $P_l(\cos\theta)$ con $l$ entero no negativo (ver Sec. 8.4 y Cap. 6, Teoría de Sturm-Liouville). La parte radial da lugar a soluciones de la forma $r^l$ y $r^{-(l+1)}$.
+
+La solución general acotada y físicamente aceptable se escribe como la superposición lineal de todos los modos permitidos:
+$$
+\phi(r, \theta) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l(\cos\theta).
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Condiciones de frontera y regiones espaciales}\\
+La condición de contorno en la superficie de la esfera es:
+$$
+\phi(a, \theta) = V(\theta) = \begin{cases} 
+V_0 & 0 \leq \theta < \pi/2 \quad (\text{hemisferio superior}) \\
+0   & \pi/2 < \theta \leq \pi \quad (\text{hemisferio inferior})
+\end{cases}
+$$
+Debemos tratar las regiones interior y exterior por separado para garantizar el comportamiento correcto en los límites asintóticos:
+
+\begin{itemize}
+    \item \textbf{Región interior ($r < a$):} El potencial debe ser finito en el origen $r=0$. Esto exige $B_l = 0$ para todo $l$. Así:
+    $$
+    \phi_{\text{int}}(r, \theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+    $$
+    \item \textbf{Región exterior ($r > a$):} El potencial debe anularse cuando $r \to \infty$. Esto exige $A_l = 0$ para todo $l$. Así:
+    $$
+    \phi_{\text{ext}}(r, \theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}} P_l(\cos\theta).
+    $$
+\end{itemize}
+En $r=a$, ambas series deben coincidir con $V(\theta)$:
+$$
+\sum_{l=0}^{\infty} C_l P_l(\cos\theta) = V(\theta),
+$$
+donde $C_l = A_l a^l$ para el interior y $C_l = B_l / a^{l+1}$ para el exterior.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Cálculo de los coeficientes $C_l$}\\
+Utilizando la propiedad de ortogonalidad de los polinomios de Legendre en el intervalo $[-1, 1]$ (Ecuación 8.26, Sec. 8.4.1):
+$$
+\int_{-1}^{1} P_l(x) P_{l'}(x) \, dx = \frac{2}{2l+1} \delta_{ll'},
+$$
+donde $x = \cos\theta$ y $dx = -\sin\theta \, d\theta$. Multiplicamos la expansión de $V(\theta)$ por $P_{l'}(x)$ e integramos:
+$$
+C_l = \frac{2l+1}{2} \int_{-1}^{1} V(x) P_l(x) \, dx.
+$$
+Sustituyendo la condición de frontera y cambiando límites de integración ($\theta=0 \to x=1$, $\theta=\pi/2 \to x=0$, $\theta=\pi \to x=-1$):
+$$
+C_l = \frac{2l+1}{2} \left[ \int_{0}^{1} V_0 P_l(x) \, dx + \int_{-1}^{0} 0 \cdot P_l(x) \, dx \right] = V_0 \frac{2l+1}{2} \int_{0}^{1} P_l(x) \, dx.
+$$
+
+\noindent\textbf{Evaluación analítica de la integral:}\\
+Para $l=0$: $P_0(x)=1 \Rightarrow C_0 = V_0 \frac{1}{2} \int_0^1 dx = \frac{V_0}{2}$. Este término representa el potencial promedio sobre la esfera.
+
+Para $l \geq 1$, utilizamos la relación de recurrencia de derivadas (Sec. 8.4):
+$$
+(2l+1)P_l(x) = \frac{d}{dx}P_{l+1}(x) - \frac{d}{dx}P_{l-1}(x).
+$$
+Integrando entre $0$ y $1$:
+$$
+\int_{0}^{1} P_l(x) \, dx = \frac{1}{2l+1} \left[ P_{l+1}(1) - P_{l-1}(1) - P_{l+1}(0) + P_{l-1}(0) \right].
+$$
+Dado que $P_n(1) = 1$ para todo $n$, el término entre corchetes se simplifica a $P_{l-1}(0) - P_{l+1}(0)$. Por lo tanto:
+$$
+C_l = \frac{V_0}{2} \left[ P_{l-1}(0) - P_{l+1}(0) \right], \quad l \geq 1.
+$$
+
+\noindent\textbf{Análisis de paridad:}\\
+Del Problema 3 (y Sec. 8.4) sabemos que $P_n(0) = 0$ si $n$ es impar, y $P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}$ si $n$ es par.
+\begin{itemize}
+    \item Si $l$ es par ($l \geq 2$), entonces $l-1$ y $l+1$ son impares $\Rightarrow P_{l-1}(0) = P_{l+1}(0) = 0 \Rightarrow C_l = 0$.
+    \item Si $l$ es impar, entonces $l-1$ y $l+1$ son pares $\Rightarrow C_l \neq 0$.
+\end{itemize}
+Esto confirma que solo sobreviven el término monopolar ($l=0$) y los modos impares ($l=1, 3, 5, \dots$). Reindexando con $l = 2n+1$ para $n=0, 1, 2, \dots$:
+$$
+C_{2n+1} = \frac{V_0}{2} \left[ P_{2n}(0) - P_{2n+2}(0) \right].
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 5: Expresión final del potencial}\\
+Sustituyendo los coeficientes calculados y recordando que $A_l = C_l / a^l$ y $B_l = C_l a^{l+1}$, obtenemos las soluciones explícitas para ambas regiones:
+
+\noindent\textbf{Potencial en el interior ($r < a$):}
+$$
+\phi_{\text{int}}(r, \theta) = \frac{V_0}{2} + \frac{V_0}{2} \sum_{n=0}^{\infty} \left[ P_{2n}(0) - P_{2n+2}(0) \right] \left( \frac{r}{a} \right)^{2n+1} P_{2n+1}(\cos\theta).
+$$
+
+\noindent\textbf{Potencial en el exterior ($r > a$):}
+$$
+\phi_{\text{ext}}(r, \theta) = \frac{V_0}{2} \left( \frac{a}{r} \right) + \frac{V_0}{2} \sum_{n=0}^{\infty} \left[ P_{2n}(0) - P_{2n+2}(0) \right] \left( \frac{a}{r} \right)^{2n+2} P_{2n+1}(\cos\theta).
+$$
+
+\noindent\textbf{Forma explícita de los primeros términos:}\\
+Utilizando $P_0(0)=1$, $P_2(0)=-1/2$, $P_4(0)=3/8$, $P_6(0)=-5/16$, podemos escribir los primeros modos de la expansión:
+$$
+\phi_{\text{int}}(r, \theta) = \frac{V_0}{2} \left[ 1 + \frac{3}{2} \left(\frac{r}{a}\right) P_1(\cos\theta) - \frac{7}{8} \left(\frac{r}{a}\right)^3 P_3(\cos\theta) + \frac{11}{16} \left(\frac{r}{a}\right)^5 P_5(\cos\theta) - \cdots \right].
+$$
+La solución exterior se obtiene reemplazando $(r/a)^k \to (a/r)^{k+1}$.
+
+\vspace{0.3cm}
+\noindent\textbf{Discusión física y convergencia:}\\
+La serie converge uniformemente en todo el dominio excepto en la discontinuidad del potencial en el ecuador ($\theta = \pi/2$), donde la serie exhibe el fenómeno de Gibbs, como es característico de las expansiones en bases ortogonales de Sturm-Liouville (Cap. 6, Sec. 6.5). El término $l=0$ ($V_0/2$) corresponde al potencial de una carga puntual equivalente neta, mientras que los términos impares representan multipolos de orden superior inducidos por la asimetría de la distribución de voltaje. El comportamiento asintótico $\phi_{\text{ext}} \sim 1/r$ confirma que el campo decae como el de un monopolo cargado a un potencial promedio $V_0/2$, consistente con la conservación del flujo eléctrico en el infinito. Este desarrollo ilustra magistralmente cómo la estructura espectral de la ecuación de Laplace en coordenadas esféricas, fundamentada en los autovalores $l(l+1)$ del operador angular $L^2$, permite descomponer condiciones de frontera arbitrarias en modos físicamente interpretables (Alonso Sepúlveda, Sec. 8.4.8 y Cap. 3, Sec. 3.3.4).
+
+
+\section{Problema 6}
+Encuentre el campo y el potencial electrostático en un punto P arbitrario para un anillo de radio $R$ y distribución uniforme de carga sobre toda su longitud(ver figura). Considere los casos $r> R$ y $r< R$.
+
+\subsection{Solución}
+Este problema constituye una aplicación clásica de la expansión en series de Legendre para el potencial electrostático en regiones libres de carga, aprovechando la simetría azimutal del sistema. El desarrollo analítico se fundamenta en la separación de variables de la ecuación de Laplace en coordenadas esféricas y en las propiedades de los polinomios de Legendre, tal como se exponen en la Sección 8.4.2 y la Sección 3.3.4 del texto de Alonso Sepúlveda.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 1: Ecuación gobernante y simetría del sistema}\\
+Dado que el anillo posee una densidad lineal de carga uniforme $\lambda = q/(2\pi R)$, la distribución es independiente del ángulo azimutal $\varphi$. En las regiones del espacio donde no hay carga ($\rho = 0$), el potencial electrostático $\phi(r, \theta, \varphi)$ satisface la ecuación de Laplace:
+$$
+\nabla^2 \phi(r, \theta) = 0.
+$$
+Debido a la simetría azimutal, $\phi$ no depende de $\varphi$, reduciéndose el problema a dos dimensiones $(r, \theta)$. Esta configuración exige la búsqueda de soluciones armónicas que permanezcan acotadas y que coincidan con las condiciones de contorno impuestas por la geometría del anillo.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 2: Solución general por separación de variables}\\
+Implementando la separación de variables en coordenadas esféricas $\phi(r, \theta) = R(r)\Theta(\theta)$, la parte angular conduce a la ecuación de Legendre ordinaria, cuyas soluciones regulares en $[-1, 1]$ son los polinomios de Legendre $P_l(\cos\theta)$ con $l$ entero no negativo (Sepúlveda, Sec. 8.4 y Cap. 6). La parte radial satisface una ecuación de Euler cuyas soluciones son $r^l$ y $r^{-(l+1)}$. La superposición lineal de todos los modos permitidos proporciona la solución general:
+$$
+\phi(r, \theta) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l(\cos\theta).
+$$
+Para determinar los coeficientes $A_l$ y $B_l$, debemos analizar las regiones interior ($r < R$) y exterior ($r > R$) por separado, imponiendo condiciones de regularidad física:
+\begin{itemize}
+    \item \textbf{Región exterior ($r > R$):} El potencial debe anularse cuando $r \to \infty$. Esto exige $A_l = 0$ para todo $l$. Así:
+    $$
+    \phi_{\text{ext}}(r, \theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}} P_l(\cos\theta).
+    $$
+    \item \textbf{Región interior ($r < R$):} El potencial debe ser finito en el origen $r=0$. Esto exige $B_l = 0$ para todo $l$. Así:
+    $$
+    \phi_{\text{int}}(r, \theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+    $$
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Cálculo del potencial sobre el eje de simetría}\\
+La estrategia estándar para este tipo de problemas consiste en calcular el potencial directamente sobre el eje de simetría ($z$-axis, donde $\theta = 0$), ya que allí la integral de Coulomb es trivial. En el eje, $r = |z|$ y $P_l(\cos 0) = P_l(1) = 1$. La distancia desde cualquier punto del anillo hasta un punto $P$ sobre el eje $z$ es constante: $d = \sqrt{R^2 + z^2}$. Por lo tanto:
+$$
+\phi(z, 0) = \frac{1}{4\pi\epsilon_0} \oint \frac{dq}{d} = \frac{q}{4\pi\epsilon_0 \sqrt{R^2 + z^2}}.
+$$
+Para conectar esta expresión con las series de Legendre, reescribimos el denominador factorizando la distancia mayor en cada región:
+
+\noindent\textbf{Caso $|z| > R$ (exterior):}
+$$
+\phi(z, 0) = \frac{q}{4\pi\epsilon_0 |z|} \left(1 + \left(\frac{R}{z}\right)^2\right)^{-1/2}.
+$$
+\noindent\textbf{Caso $|z| < R$ (interior):}
+$$
+\phi(z, 0) = \frac{q}{4\pi\epsilon_0 R} \left(1 + \left(\frac{z}{R}\right)^2\right)^{-1/2}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Expansión en serie y determinación de coeficientes}\\
+Recordemos la función generatriz de los polinomios de Legendre (Sepúlveda, Sec. 8.4):
+$$
+\frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n.
+$$
+Evaluando en $x=0$ y haciendo $t = \pm R/z$ o $t = \pm z/R$, obtenemos la expansión para las raíces cuadradas inversas:
+$$
+\left(1 + u^2\right)^{-1/2} = \sum_{k=0}^{\infty} P_{2k}(0) u^{2k},
+$$
+donde hemos utilizado que $P_n(0) = 0$ para $n$ impar (Propiedad de paridad, Sepúlveda, Prob. 3 y Sec. 8.4). Los valores explícitos son $P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}$.
+
+Sustituyendo en las expresiones del potencial sobre el eje:
+\begin{itemize}
+    \item Para $|z| > R$:
+    $$
+    \phi(z, 0) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{R^{2k}}{|z|^{2k+1}}.
+    $$
+    \item Para $|z| < R$:
+    $$
+    \phi(z, 0) = \frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) \left(\frac{|z|}{R}\right)^{2k} = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{|z|^{2k}}{R^{2k+1}}.
+    $$
+\end{itemize}
+Ahora comparamos estas series unidimensionales con la solución general evaluada en $\theta=0$ ($P_l(1)=1$):
+$$
+\phi_{\text{ext}}(z, 0) = \sum_{l=0}^{\infty} \frac{B_l}{z^{l+1}}, \quad \phi_{\text{int}}(z, 0) = \sum_{l=0}^{\infty} A_l z^l.
+$$
+Igualando término a término las potencias de $z$, identificamos inmediatamente que todos los coeficientes con $l$ impar se anulan ($B_{2k+1} = A_{2k+1} = 0$). Para los índices pares $l=2k$:
+$$
+B_{2k} = \frac{q}{4\pi\epsilon_0} P_{2k}(0) R^{2k}, \quad A_{2k} = \frac{q}{4\pi\epsilon_0} \frac{P_{2k}(0)}{R^{2k+1}}.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 5: Potencial electrostático en todo el espacio}\\
+Sustituyendo los coeficientes en las soluciones generales, obtenemos el potencial para cualquier punto $(r, \theta)$:
+
+\noindent\textbf{Región exterior ($r > R$):}
+$$
+\phi_{\text{ext}}(r, \theta) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{R^{2k}}{r^{2k+1}} P_{2k}(\cos\theta).
+$$
+\noindent\textbf{Región interior ($r < R$):}
+$$
+\phi_{\text{int}}(r, \theta) = \frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) \left(\frac{r}{R}\right)^{2k} P_{2k}(\cos\theta).
+$$
+Estas series convergen uniformemente en sus respectivos dominios. El término $k=0$ ($P_0=1, P_0(0)=1$) recupera el potencial monopolar $\phi \approx q/(4\pi\epsilon_0 r)$ a grandes distancias, mientras que los términos superiores ($k\geq 1$) describen los multipolos (cuadrupolo, hexadecapolo, etc.) inducidos por la geometría anular.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 6: Cálculo del campo eléctrico $\mathbf{E}$}\\
+El campo electrostático se obtiene mediante el gradiente negativo del potencial: $\mathbf{E} = -\nabla \phi$. En coordenadas esféricas, y aprovechando la independencia azimutal, el operador gradiente se escribe (Sepúlveda, Sec. 1.4.1 y Apéndice 1.1):
+$$
+\nabla \phi = \hat{r} \frac{\partial \phi}{\partial r} + \hat{\theta} \frac{1}{r} \frac{\partial \phi}{\partial \theta}.
+$$
+Derivando las series término a término:
+
+\noindent\textbf{Componente radial $E_r$:}
+$$
+E_r = -\frac{\partial \phi}{\partial r}.
+$$
+Para $r > R$:
+$$
+E_r^{\text{ext}} = -\frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) R^{2k} \frac{\partial}{\partial r}\left(r^{-(2k+1)}\right) P_{2k}(\cos\theta) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} (2k+1) P_{2k}(0) \frac{R^{2k}}{r^{2k+2}} P_{2k}(\cos\theta).
+$$
+Para $r < R$:
+$$
+E_r^{\text{int}} = -\frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) R^{-2k} \frac{\partial}{\partial r}\left(r^{2k}\right) P_{2k}(\cos\theta) = -\frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} 2k P_{2k}(0) \frac{r^{2k-1}}{R^{2k+1}} P_{2k}(\cos\theta).
+$$
+(Nótese que el término $k=0$ desaparece en el interior, como corresponde a una región sin carga donde el campo no tiene componente monopolar radial pura en el origen).
+
+\noindent\textbf{Componente angular $E_\theta$:}
+$$
+E_\theta = -\frac{1}{r} \frac{\partial \phi}{\partial \theta} = -\frac{1}{r} \frac{\partial \phi}{\partial (\cos\theta)} \frac{\partial (\cos\theta)}{\partial \theta} = \frac{\sin\theta}{r} \frac{\partial \phi}{\partial x} \Big|_{x=\cos\theta}.
+$$
+Utilizando $P'_l(x) = dP_l/dx$, obtenemos para $r > R$:
+$$
+E_\theta^{\text{ext}} = \frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} P_{2k}(0) \frac{R^{2k}}{r^{2k+2}} P'_{2k}(\cos\theta) \sin\theta.
+$$
+Y para $r < R$:
+$$
+E_\theta^{\text{int}} = -\frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} P_{2k}(0) \frac{r^{2k-1}}{R^{2k+1}} P'_{2k}(\cos\theta) \sin\theta.
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Resultado final vectorial:}\\
+El campo eléctrico en ambos dominios se expresa compactamente como:
+$$
+\mathbf{E}(r, \theta) = \hat{r} E_r(r, \theta) + \hat{\theta} E_\theta(r, \theta),
+$$
+con los coeficientes derivados anteriormente. Es importante destacar que en $r=R$, el potencial es continuo ($\phi_{\text{ext}} = \phi_{\text{int}}$), pero la componente radial del campo presenta una discontinuidad finita proporcional a la densidad superficial de carga efectiva proyectada, consistente con las condiciones de salto de Maxwell en electrostática.
+
+Este desarrollo analítico ilustra cómo la completez de la base de Sturm-Liouville $\{P_l(\cos\theta)\}$ (Sepúlveda, Sec. 8.4.1) permite descomponer condiciones de frontera geométricamente complejas en una superposición de modos armónicos, facilitando el cálculo de potenciales y campos en sistemas con simetría azimutal. La convergencia de las series está garantizada por la estructura analítica de la función generatriz y las propiedades de ortogonalidad de los polinomios de Legendre.
+
+
+\section{Problema 7}
+Suponga que por alguna razón encontramos en un experimento que existen masas negativas. Luego, tomamos un par de masas puntuales de signo contrario y las ubicamos sobre el mismo eje separadas a una distancia $2a$ (como muestra la figura). Encuentre el potencial gravitacional generado por este ``dipolo gravitacional'' en el punto $P$, para $r> a$ y $r< a$.
+
+Sugerencia: Haga uso de la función generatriz de los polinomios de Legendre y recuerde que el potencial generado por una partícula puntual a una distancia $r$ de la misma, está dado por $\phi= -Gm/r$, donde $G$ es la constante de Newton y $m$ la masa de la partícula.
+
+\subsection{Solución}
+Este problema constituye una aplicación directa del principio de superposición y de la expansión multipolar en coordenadas esféricas, fundamentada en la función generatriz de los polinomios de Legendre. El desarrollo analítico sigue rigurosamente la teoría expuesta en el Capítulo 8, Secciones 8.4, 8.4.2 y 8.4.8 del texto de Alonso Sepúlveda. A continuación, se detalla el procedimiento paso a paso.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 1: Planteamiento físico y principio de superposición}\\
+Consideremos un sistema de coordenadas esféricas $(r, \theta, \varphi)$ centrado en el punto medio entre las dos masas. Ubicamos la masa positiva $+m$ en el punto $z = +a$ (sobre el eje polar) y la masa negativa $-m$ en el punto $z = -a$. Debido a la simetría azimutal del sistema, el potencial gravitacional $\phi$ es independiente de $\varphi$ y depende únicamente de $r$ y $\theta$.
+
+El potencial gravitacional total en un punto arbitrario $P(r, \theta)$ se obtiene por superposición lineal de los potenciales individuales. Recordando que para una masa puntual $m$ el potencial es $\phi = -Gm/|\mathbf{r} - \mathbf{r}'|$, tenemos:
+$$
+\phi(r, \theta) = -\frac{Gm}{|\mathbf{r} - a\hat{z}|} - \frac{G(-m)}{|\mathbf{r} + a\hat{z}|} = -Gm \left[ \frac{1}{|\mathbf{r} - a\hat{z}|} - \frac{1}{|\mathbf{r} + a\hat{z}|} \right].
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 2: Expansión en polinomios de Legendre}\\
+Para evaluar los términos entre corchetes, utilizamos la expansión en serie de Legendre para el inverso de la distancia entre dos puntos, derivada directamente de la función generatriz (Sepúlveda, Sec. 8.4):
+$$
+\frac{1}{|\mathbf{r} - \mathbf{r}'|} = \frac{1}{\sqrt{r^2 + r'^2 - 2rr'\cos\gamma}} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} P_l(\cos\gamma),
+$$
+donde $\gamma$ es el ángulo entre los vectores $\mathbf{r}$ y $\mathbf{r}'$, $r_< = \min(r, r')$ y $r_> = \max(r, r')$. En nuestro caso, el ángulo para la masa en $+a\hat{z}$ es $\gamma_1 = \theta$, mientras que para la masa en $-a\hat{z}$ es $\gamma_2 = \pi - \theta$. Utilizando la propiedad de paridad de los polinomios de Legendre $P_l(\cos(\pi-\theta)) = (-1)^l P_l(\cos\theta)$ (Sepúlveda, Sec. 8.4, Prop. 3), escribimos:
+$$
+\frac{1}{|\mathbf{r} - a\hat{z}|} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} P_l(\cos\theta),
+$$
+$$
+\frac{1}{|\mathbf{r} + a\hat{z}|} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} (-1)^l P_l(\cos\theta).
+$$
+
+Sustituyendo estas expansiones en la expresión del potencial total:
+$$
+\phi(r, \theta) = -Gm \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} \left[ 1 - (-1)^l \right] P_l(\cos\theta).
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Análisis de paridad y reducción de la serie}\\
+El factor $[1 - (-1)^l]$ actúa como un filtro de paridad:
+\begin{itemize}
+    \item Si $l$ es par, $(-1)^l = 1 \Rightarrow 1 - 1 = 0$. Todos los términos de orden par se anulan exactamente.
+    \item Si $l$ es impar, $(-1)^l = -1 \Rightarrow 1 - (-1) = 2$. Los términos de orden impar sobreviven multiplicados por 2.
+\end{itemize}
+Por lo tanto, reindexamos la sumatoria haciendo $l = 2n+1$ con $n = 0, 1, 2, \dots$:
+$$
+\phi(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{r_<^{2n+1}}{r_>^{2n+2}} P_{2n+1}(\cos\theta).
+$$
+Esta expresión es válida para cualquier $r \neq a$. Ahora debemos separar el análisis en las dos regiones espaciales solicitadas, ajustando adecuadamente $r_<$ y $r_>$.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Potencial en la región exterior ($r > a$)}\\
+En esta región, el punto de observación está más alejado del origen que las masas, por lo que $r_> = r$ y $r_< = a$. Sustituyendo en la serie general:
+$$
+\phi_{\text{ext}}(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{a^{2n+1}}{r^{2n+2}} P_{2n+1}(\cos\theta).
+$$
+El primer término de la serie ($n=0$) domina a grandes distancias ($r \gg a$) y corresponde al momento dipolar gravitacional:
+$$
+\phi_{\text{ext}}(r, \theta) \approx -2Gm \frac{a}{r^2} P_1(\cos\theta) = -\frac{G(2ma)\cos\theta}{r^2}.
+$$
+Identificando el momento dipolar gravitacional como $\vec{p}_g = 2ma\,\hat{z}$, recuperamos la forma clásica del potencial dipolar $\phi \propto (\vec{p}_g \cdot \hat{r})/r^2$, consistente con la expansión multipolar de campos de tipo $1/r$ en regiones libres de fuentes (Sepúlveda, Sec. 8.4.8).
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 5: Potencial en la región interior ($r < a$)}\\
+En esta región, el punto de observación está más cerca del origen que las masas, por lo que $r_> = a$ y $r_< = r$. Sustituyendo en la serie general:
+$$
+\phi_{\text{int}}(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{r^{2n+1}}{a^{2n+2}} P_{2n+1}(\cos\theta).
+$$
+A diferencia de la región exterior, donde el potencial decae como $1/r^{2n+2}$, en el interior el potencial crece con potencias impares de $r$, garantizando que $\phi(0, \theta) = 0$. Esto es físicamente consistente: en el punto medio exacto entre masas $+m$ y $-m$, los potenciales $-Gm/a$ y $+Gm/a$ se cancelan exactamente.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 6: Forma explícita de los primeros términos}\\
+Utilizando $P_1(x)=x$, $P_3(x)=\frac{1}{2}(5x^3-3x)$, $P_5(x)=\frac{1}{8}(63x^5-70x^3+15x)$, podemos escribir explícitamente los primeros multipolos:
+
+Para $r > a$:
+$$
+\phi_{\text{ext}}(r, \theta) = -\frac{2Gma}{r^2}\cos\theta + \frac{Gma^3}{r^4}(5\cos^3\theta - 3\cos\theta) - \frac{Gma^5}{4r^6}(63\cos^5\theta - 70\cos^3\theta + 15\cos\theta) + \cdots
+$$
+
+Para $r < a$:
+$$
+\phi_{\text{int}}(r, \theta) = -\frac{2Gm}{a^2}r\cos\theta + \frac{Gm}{a^4}r^3(5\cos^3\theta - 3\cos\theta) - \frac{Gm}{4a^6}r^5(63\cos^5\theta - 70\cos^3\theta + 15\cos\theta) + \cdots
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Discusión física y convergencia}\\
+La serie obtenida converge uniformemente en sus respectivos dominios ($r \neq a$). La discontinuidad en la derivada radial del potencial en $r=a$ refleja la presencia de las fuentes puntuales, y el salto en el campo gravitacional $\mathbf{g} = -\nabla\phi$ es consistente con la ley de Gauss para la gravitación modificada para incluir densidades de masa negativas. La estructura analítica de la solución demuestra cómo la función generatriz de Legendre permite descomponer configuraciones de fuentes discretas en una jerarquía de multipolos impares, donde cada término de orden $2n+1$ corresponde a un momento multipolar de orden superior inducido por la asimetría de signos. Este desarrollo es análogo al tratado en electrostática para dipolos eléctricos, confirmando la universalidad matemática de la expansión en armónicos esféricos para potenciales de tipo Yukawa/Coulomb en el límite de masa nula del mediador (Sepúlveda, Sec. 8.4.2 y Cap. 3, Sec. 3.3.4).
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
