@@ -1,0 +1,95 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Quiz 1 Solución}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+\section{Quiz 3: Difusión de calor en un cilindro conductor}
+Considere un cilindro circular conductor de radio $R$ y longitud $L$ cuya superficie se mantiene a una temperatura de $0^\circ$C todo el tiempo. En su interior, la temperatura inicial es $T_0$. Este sistema cumple la ecuación de difusión:
+$$\nabla^2 T = \frac{1}{\alpha^2} \frac{\partial T}{\partial t}$$
+\begin{enumerate}
+\item[a)] Encuentre la distribución de temperatura en el interior del cilindro como función del tiempo.
+\item[b)] Expandir, hacer las integrales y determinar el primer término de la serie de Fourier de este sistema. Asuma: $L = \pi$, $R = 1$.
+\item[c)] Determinar el valor numérico para $z = 10$ m, $\rho = \chi_{01}/2$ y $\alpha = 1.16 \times 10^{-4}$ m$^2$/s (cobre), con $t = 1$ segundo. Dar el resultado en términos de $T_0$.
+\end{enumerate}
+
+\subsection{Solución}
+Para resolver este problema, seguimos el tratamiento de la ecuación de difusión en coordenadas cilíndricas desarrollado en la Sección 4.4.1 y aplicado en el Problema 8 del Taller 7 del texto \textit{Lecciones de física matemática} de Alonso Sepúlveda. La ecuación gobernante, considerando simetría azimutal ($\partial T/\partial\phi = 0$), es:
+$$\frac{1}{\rho}\frac{\partial}{\partial\rho}\left(\rho\frac{\partial T}{\partial\rho}\right) + \frac{\partial^2 T}{\partial z^2} = \frac{1}{\alpha^2}\frac{\partial T}{\partial t},$$
+donde $\alpha$ es la difusividad térmica. Las condiciones de frontera son de Dirichlet homogéneas:
+$$T(R,z,t) = 0, \quad T(\rho,0,t) = T(\rho,L,t) = 0,$$
+y la condición inicial es $T(\rho,z,0) = T_0$ (constante).
+
+\textbf{a) Solución general por separación de variables}
+
+Aplicamos el método de separación de variables (Alonso, Sec. 3.3.3) proponiendo $T(\rho,z,t) = R(\rho)Z(z)\Theta(t)$. Sustituyendo en la ecuación de difusión y dividiendo por $RZ\Theta/\alpha^2$, obtenemos tres ecuaciones desacopladas:
+\begin{itemize}
+\item \textbf{Temporal:} $\displaystyle \frac{d\Theta}{dt} + \alpha^2\lambda^2\Theta = 0 \implies \Theta(t) = e^{-\alpha^2\lambda^2 t}.$
+\item \textbf{Axial:} $\displaystyle \frac{d^2Z}{dz^2} + k_z^2 Z = 0$, con $Z(0)=Z(L)=0$. La solución es $Z_m(z) = \sin(k_m z)$, donde $k_m = m\pi/L$, $m = 1,2,3,\dots$ (Alonso, Sec. 3.3.3).
+\item \textbf{Radial:} $\displaystyle \frac{1}{\rho}\frac{d}{d\rho}\left(\rho\frac{dR}{d\rho}\right) + (\lambda^2 - k_m^2)R = 0$. Definiendo $\gamma_{ml}^2 = \lambda^2 - k_m^2$, esta es la ecuación de Bessel de orden cero (Alonso, Sec. 8.3.1):
+$$\rho^2 R'' + \rho R' + \gamma_{ml}^2\rho^2 R = 0.$$
+La solución finita en $\rho=0$ es $R(\rho) = J_0(\gamma_{ml}\rho)$. La condición $R(R)=0$ exige $J_0(\gamma_{ml}R) = 0$, por lo que $\gamma_{ml}R = \chi_{0l}$, donde $\chi_{0l}$ son los ceros de $J_0$ (Tabla, Sec. 8.3.1). Así:
+$$\gamma_{0l} = \frac{\chi_{0l}}{R}, \quad \lambda_{ml}^2 = \left(\frac{\chi_{0l}}{R}\right)^2 + \left(\frac{m\pi}{L}\right)^2.$$
+\end{itemize}
+
+Por superposición (Alonso, Sec. 2.3.3), la solución general es:
+$$T(\rho,z,t) = \sum_{m=1}^{\infty}\sum_{l=1}^{\infty} A_{ml} \, J_0\!\left(\frac{\chi_{0l}}{R}\rho\right) \sin\!\left(\frac{m\pi z}{L}\right) e^{-\alpha^2\lambda_{ml}^2 t}.$$
+
+Para determinar $A_{ml}$, usamos la condición inicial $T(\rho,z,0) = T_0$ y la ortogonalidad de las bases de Fourier y Bessel (Alonso, Sec. 8.3.2):
+$$T_0 = \sum_{m,l} A_{ml} J_0\!\left(\frac{\chi_{0l}}{R}\rho\right) \sin\!\left(\frac{m\pi z}{L}\right).$$
+Multiplicando por $\rho J_0(\chi_{0l'}\rho/R)\sin(m'\pi z/L)$ e integrando en $\rho\in[0,R]$, $z\in[0,L]$:
+$$A_{ml} = \frac{4}{L R^2 [J_1(\chi_{0l})]^2} \int_0^L \int_0^R T_0 \, J_0\!\left(\frac{\chi_{0l}}{R}\rho\right) \sin\!\left(\frac{m\pi z}{L}\right) \rho \, d\rho \, dz.$$
+Evaluando las integrales (usando $\int_0^R \rho J_0(\chi_{0l}\rho/R)d\rho = (R^2/\chi_{0l})J_1(\chi_{0l})$ y $\int_0^L \sin(m\pi z/L)dz = \frac{L}{m\pi}[1-(-1)^m]$):
+$$A_{ml} = \begin{cases}
+\displaystyle \frac{4T_0}{m\pi \chi_{0l} J_1(\chi_{0l})}, & m \text{ impar}, \\
+0, & m \text{ par}.
+\end{cases}$$
+Por tanto, la distribución de temperatura es:
+$$\boxed{T(\rho,z,t) = \sum_{\substack{m=1\\ m\text{ impar}}}^{\infty} \sum_{l=1}^{\infty} \frac{4T_0}{m\pi \chi_{0l} J_1(\chi_{0l})} \, J_0\!\left(\frac{\chi_{0l}}{R}\rho\right) \sin\!\left(\frac{m\pi z}{L}\right) e^{-\alpha^2\left[\left(\frac{\chi_{0l}}{R}\right)^2 + \left(\frac{m\pi}{L}\right)^2\right] t}}$$
+
+\textbf{b) Primer término de la serie con $L=\pi$, $R=1$}
+
+Con $L=\pi$ y $R=1$, el primer término corresponde a $m=1$ (impar) y $l=1$ (primer cero). Usando $\chi_{01} \approx 2.4048$ (Sec. 8.3.1) y $J_1(\chi_{01}) \approx 0.5191$:
+$$\lambda_{11}^2 = \chi_{01}^2 + 1^2 \approx (2.4048)^2 + 1 = 5.783 + 1 = 6.783.$$
+El coeficiente es:
+$$A_{11} = \frac{4T_0}{\pi \cdot \chi_{01} \cdot J_1(\chi_{01})} \approx \frac{4T_0}{\pi \cdot 2.4048 \cdot 0.5191} \approx \frac{4T_0}{3.915} \approx 1.022\,T_0.$$
+El primer término de la serie es:
+$$\boxed{T_1(\rho,z,t) \approx 1.022\,T_0 \; J_0(2.4048\,\rho) \; \sin(z) \; e^{-6.783\,\alpha^2 t}}$$
+
+\textbf{c) Evaluación numérica para $t=1$ s, $\alpha = 1.16\times 10^{-4}$ m$^2$/s, $z=10$ m, $\rho = \chi_{01}/2$}
+
+Sustituimos los valores dados:
+\begin{itemize}
+\item $\chi_{01} \approx 2.4048$, entonces $\rho = \chi_{01}/2 \approx 1.2024$ m.
+\item $J_0(\chi_{01}\rho) = J_0(\chi_{01}^2/2) = J_0((2.4048)^2/2) = J_0(2.8915)$. Usando tablas o aproximación: $J_0(2.8915) \approx -0.2601$.
+\item $\sin(z) = \sin(10) \approx -0.5440$ (radianes).
+\item Exponencial: $\alpha^2\lambda_{11}^2 t = (1.16\times 10^{-4})^2 \cdot 6.783 \cdot 1 \approx 9.12\times 10^{-8} \ll 1$, por lo que $e^{-\alpha^2\lambda_{11}^2 t} \approx 1 - 9.12\times 10^{-8} \approx 1$.
+\end{itemize}
+Entonces:
+$$T_1 \approx 1.022\,T_0 \cdot (-0.2601) \cdot (-0.5440) \cdot 1 \approx 1.022\,T_0 \cdot 0.1415 \approx 0.1446\,T_0.$$
+Redondeando a tres cifras significativas:
+$$\boxed{T(z=10\,\text{m},\,\rho=\chi_{01}/2,\,t=1\,\text{s}) \approx 0.145\,T_0}$$
+
+\textbf{Discusión física:} El resultado muestra que, tras 1 segundo, la temperatura en el punto especificado es aproximadamente el 14.5\% de la temperatura inicial $T_0$. El factor exponencial es prácticamente 1 debido a la baja difusividad del cobre ($\alpha \sim 10^{-4}$ m$^2$/s), lo que indica que el proceso de difusión es lento a escala macroscópica. La dependencia espacial está gobernada por el modo fundamental de la base de Bessel-Fourier, que decae rápidamente hacia las fronteras donde $T=0$, consistente con las condiciones de Dirichlet homogéneas (Alonso, Sec. 2.3.2 y 6.3).
+
+\end{document}
