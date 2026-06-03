@@ -1,0 +1,619 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+\section{Problema 1}
+La temperatura $T$ de un plato circular, de radio $R$ satisface la ecuación de difusión
+$$
+\nabla^2T(r,\theta,t) = \frac{1}{\kappa}\frac{\partial T(r,\theta,t)}{\partial t}
+$$
+donde $\kappa > 0$ es una constante, $(r,\theta)$ son coordenadas polares y $t$ es el tiempo. Suponga que en $t = 0$ la temperatura del disco es
+$$T(r,\theta,0) = T_0 J_0\left(\frac{\chi_{01}}{R}r\right)$$
+Además, en la frontera del disco la temperatura es cero (Celsius) en todo tiempo. Asuma que la temperatura es finita en el disco.
+Determinar la temperatura $T(r,\theta,t)$ para $t > 0$.
+\textit{Ayuda:} En coordenadas polares:
+$$
+\nabla^2 = \frac{1}{r} \frac{\partial}{\partial r}\left(r\frac{\partial}{\partial r}\right) + \frac{1}{r^2} \frac{\partial^2}{\partial \theta^2}
+$$
+
+\subsection{Solución}
+
+Para resolver este problema de valores iniciales y de frontera, emplearemos el método de separación de variables, una técnica fundamental desarrollada extensamente en el Capítulo 3, Sección 3.2.3 y aplicada específicamente a coordenadas cilíndricas/polares en la Sección 3.3.3 del texto de Alonso Sepúlveda. 
+
+\textbf{Paso 1: Separación de variables}
+Proponemos una solución de la forma $T(r,\theta,t) = R(r)\Theta(\theta)\tau(t)$. Sustituyendo esta propuesta en la ecuación de difusión y utilizando el laplaciano en coordenadas polares dado en el enunciado, obtenemos:
+$$
+\frac{1}{r} \frac{d}{dr}\left(r \frac{dR}{dr}\right)\Theta\tau + \frac{1}{r^2} R \frac{d^2\Theta}{d\theta^2}\tau = \frac{1}{\kappa} R\Theta \frac{d\tau}{dt}
+$$
+Dividiendo toda la ecuación por $R\Theta\tau$, logramos separar la dependencia temporal de la espacial:
+$$
+\frac{1}{\kappa \tau} \frac{d\tau}{dt} = \frac{1}{r R} \frac{d}{dr}\left(r \frac{dR}{dr}\right) + \frac{1}{r^2 \Theta} \frac{d^2\Theta}{d\theta^2}
+$$
+Dado que el lado izquierdo depende únicamente de $t$ y el derecho únicamente de $r$ y $\theta$, ambos deben ser iguales a una constante de separación. Para garantizar que la temperatura decaiga con el tiempo (comportamiento físico esperado en difusión sin fuentes), elegimos esta constante como $-k^2$ (con $k$ real y positivo).
+
+\textbf{Paso 2: Ecuación temporal}
+La ecuación para $\tau(t)$ es:
+$$
+\frac{1}{\kappa \tau} \frac{d\tau}{dt} = -k^2 \implies \frac{d\tau}{dt} + \kappa k^2 \tau = 0
+$$
+Esta es una ecuación diferencial ordinaria de primer orden cuya solución general es:
+$$
+\tau(t) = C e^{-\kappa k^2 t}
+$$
+
+\textbf{Paso 3: Ecuación angular}
+Reorganizando la parte espacial, multiplicamos por $r^2$ para aislar la dependencia angular:
+$$
+\frac{r}{R} \frac{d}{dr}\left(r \frac{dR}{dr}\right) + k^2 r^2 = -\frac{1}{\Theta} \frac{d^2\Theta}{d\theta^2} = m^2
+$$
+Donde $m^2$ es una segunda constante de separación. La ecuación para $\Theta(\theta)$ es:
+$$
+\frac{d^2\Theta}{d\theta^2} + m^2 \Theta = 0
+$$
+Cuya solución general es $\Theta(\theta) = A \cos(m\theta) + B \sin(m\theta)$. Para que la temperatura sea univaluada y continua al dar una vuelta completa al disco, debemos exigir periodicidad: $\Theta(\theta) = \Theta(\theta + 2\pi)$. Esto impone que $m$ debe ser un número entero no negativo ($m = 0, 1, 2, \dots$), como se detalla en la Sección 3.3.3 de Alonso Sepúlveda.
+
+\textbf{Paso 4: Ecuación radial y funciones de Bessel}
+La ecuación para la parte radial $R(r)$ queda como:
+$$
+r^2 \frac{d^2R}{dr^2} + r \frac{dR}{dr} + (k^2 r^2 - m^2)R = 0
+$$
+Esta es la ecuación diferencial de Bessel de orden $m$. Como se estudia en el Capítulo 8, Sección 8.3, su solución general es una combinación lineal de las funciones de Bessel de primera especie $J_m(kr)$ y de segunda especie (o de Neumann) $N_m(kr)$:
+$$
+R(r) = C_1 J_m(kr) + C_2 N_m(kr)
+$$
+El enunciado establece que la temperatura debe ser finita en todo el disco, incluido el origen $r=0$. Según la Sección 8.3.1 (Propiedad 4), la función de Neumann $N_m(kr)$ diverge cuando $r \to 0$. Para evitar infinitos no físicos, debemos imponer $C_2 = 0$. Por lo tanto, la solución radial físicamente aceptable es:
+$$
+R(r) = C_1 J_m(kr)
+$$
+
+\textbf{Paso 5: Aplicación de la condición de frontera en $r=R$}
+La condición de frontera de Dirichlet homogénea establece que $T(R, \theta, t) = 0$ para todo $t$. Esto implica que $R(R) = 0$, es decir:
+$$
+J_m(kR) = 0
+$$
+Esto significa que el argumento $kR$ debe coincidir con uno de los ceros de la función de Bessel de orden $m$. Denotemos al $l$-ésimo cero positivo de $J_m$ como $\chi_{ml}$ (donde $l = 1, 2, 3, \dots$). Entonces:
+$$
+k_{ml} R = \chi_{ml} \implies k_{ml} = \frac{\chi_{ml}}{R}
+$$
+Como se explica en la Sección 8.3.2, el conjunto de funciones $\{J_m(\chi_{ml} r / R)\}$ forma una base completa y ortogonal con factor de peso $r$ en el intervalo $(0, R)$.
+
+\textbf{Paso 6: Solución general por superposición}
+Por el principio de superposición para ecuaciones lineales (Sección 3.1.2), la solución general es una combinación lineal de todos los modos permitidos:
+$$
+T(r,\theta,t) = \sum_{m=0}^{\infty} \sum_{l=1}^{\infty} J_m\left(\frac{\chi_{ml}}{R}r\right) \left[ A_{ml} \cos(m\theta) + B_{ml} \sin(m\theta) \right] e^{-\kappa \left(\frac{\chi_{ml}}{R}\right)^2 t}
+$$
+
+\textbf{Paso 7: Aplicación de la condición inicial}
+En $t=0$, la temperatura está dada por:
+$$
+T(r,\theta,0) = \sum_{m=0}^{\infty} \sum_{l=1}^{\infty} J_m\left(\frac{\chi_{ml}}{R}r\right) \left[ A_{ml} \cos(m\theta) + B_{ml} \sin(m\theta) \right] = T_0 J_0\left(\frac{\chi_{01}}{R}r\right)
+$$
+Observamos que la condición inicial no depende del ángulo $\theta$, lo que implica inmediatamente que todos los coeficientes con $m \neq 0$ deben ser cero ($A_{ml} = B_{ml} = 0$ para $m \ge 1$). La ecuación se reduce a:
+$$
+\sum_{l=1}^{\infty} A_{0l} J_0\left(\frac{\chi_{0l}}{R}r\right) = T_0 J_0\left(\frac{\chi_{01}}{R}r\right)
+$$
+Para encontrar los coeficientes $A_{0l}$, utilizamos la condición de ortogonalidad de las funciones de Bessel (Ecuación 8.10 de Alonso Sepúlveda):
+$$
+\int_0^R r J_0\left(\frac{\chi_{0l}}{R}r\right) J_0\left(\frac{\chi_{0l'}}{R}r\right) dr = \frac{R^2}{2} [J_1(\chi_{0l})]^2 \delta_{ll'}
+$$
+Multiplicando ambos lados de la condición inicial por $r J_0\left(\frac{\chi_{0l'}}{R}r\right)$ e integrando de $0$ a $R$, la ortogonalidad (representada por la delta de Kronecker $\delta_{ll'}$) hace que todos los términos de la sumatoria se anulen excepto cuando $l' = l$. 
+
+Dado que el lado derecho de la condición inicial ya está en la forma de un único modo de la base (específicamente, el modo $m=0, l=1$), por inspección directa e igualdad de coeficientes en una base ortogonal, concluimos que:
+$$
+A_{01} = T_0
+$$
+y $A_{0l} = 0$ para todo $l \neq 1$.
+
+\textbf{Paso 8: Solución final}
+Sustituyendo el único coeficiente no nulo ($A_{01} = T_0$) y los valores correspondientes $m=0, l=1$ en la solución general, obtenemos la expresión analítica exacta para la temperatura en cualquier punto del disco y para cualquier tiempo $t > 0$:
+
+$$
+T(r,\theta,t) = T_0 J_0\left(\frac{\chi_{01}}{R}r\right) e^{-\kappa \left(\frac{\chi_{01}}{R}\right)^2 t}
+$$
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=0, xmax=1.03,
+        ymin=-0.08, ymax=1.08,
+        xlabel={$r/R$},
+        ylabel={$J_0(\chi_{01}r/R)$},
+        title={Perfil radial},
+        title style={font=\small},
+        xtick={0,0.5,1},
+        xticklabels={$0$,$0.5$,$1$},
+        ytick={0,0.5,1},
+        yticklabels={$0$,$0.5$,$1$},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        ticklabel style={font=\small},
+        label style={font=\small},
+        every axis plot/.append style={very thick, blue!70!black, smooth, no markers}
+    ]
+        \addplot coordinates {(0.0000,1.00000) (0.0167,0.99960) (0.0333,0.99839) (0.0500,0.99639) (0.0667,0.99358) (0.0833,0.98998) (0.1000,0.98559) (0.1167,0.98042) (0.1333,0.97446) (0.1500,0.96773) (0.1667,0.96024) (0.1833,0.95199) (0.2000,0.94300) (0.2167,0.93327) (0.2333,0.92282) (0.2500,0.91166) (0.2667,0.89980) (0.2833,0.88726) (0.3000,0.87405) (0.3167,0.86019) (0.3333,0.84569) (0.3500,0.83058) (0.3667,0.81486) (0.3833,0.79857) (0.4000,0.78171) (0.4167,0.76431) (0.4333,0.74639) (0.4500,0.72797) (0.4667,0.70907) (0.4833,0.68972) (0.5000,0.66993) (0.5167,0.64973) (0.5333,0.62915) (0.5500,0.60820) (0.5667,0.58692) (0.5833,0.56533) (0.6000,0.54345) (0.6167,0.52131) (0.6333,0.49893) (0.6500,0.47634) (0.6667,0.45357) (0.6833,0.43064) (0.7000,0.40758) (0.7167,0.38442) (0.7333,0.36117) (0.7500,0.33788) (0.7667,0.31456) (0.7833,0.29125) (0.8000,0.26796) (0.8167,0.24473) (0.8333,0.22157) (0.8500,0.19852) (0.8667,0.17561) (0.8833,0.15285) (0.9000,0.13027) (0.9167,0.10790) (0.9333,0.08577) (0.9500,0.06388) (0.9667,0.04228) (0.9833,0.02098) (1.0000,-0.00000)};
+        \addplot[only marks, mark=*, mark size=1.6pt, red!70!black] coordinates {(1,0)};
+        \node[font=\small, anchor=south west] at (axis cs:0.10,0.70) {$T(r,0)/T_0$};
+        \node[font=\small, anchor=north east] at (axis cs:0.98,0.13) {$T(R,t)=0$};
+    \end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=0, xmax=4.05,
+        ymin=0, ymax=1.08,
+        xlabel={$t/t_c$},
+        ylabel={$e^{-t/t_c}$},
+        title={Amplitud temporal},
+        title style={font=\small},
+        xtick={0,1,2,3,4},
+        ytick={0,0.5,1},
+        yticklabels={$0$,$0.5$,$1$},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        samples=120,
+        domain=0:4,
+        every axis plot/.append style={very thick, red!70!black, smooth, no markers},
+        ticklabel style={font=\small},
+        label style={font=\small}
+    ]
+        \addplot {exp(-x)};
+        \node[font=\small, anchor=north east, align=right] at (axis cs:3.85,0.82)
+            {$t_c=\dfrac{R^2}{\kappa\chi_{01}^2}$};
+    \end{axis}
+\end{tikzpicture}
+\caption{Perfil radial normalizado del primer modo de Bessel y decaimiento temporal de su amplitud.}
+\label{fig:problema1-modo-decaimiento}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=1.0]
+    \shade[inner color=red!45, outer color=blue!8] (0,0) circle (1.85);
+    \draw[very thick] (0,0) circle (1.85);
+    \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (1.85,0) node[midway, below] {$R$};
+    \node[circle, fill=red!70, inner sep=1.8pt] at (0,0) {};
+    \node[font=\small] at (0,-2.25) {$T$ máximo en el centro};
+    \node[font=\small] at (0,2.25) {$T=0$ en la frontera};
+\end{tikzpicture}
+\caption{Representación cualitativa del modo $m=0$: la temperatura es independiente de $\theta$ y se anula en $r=R$.}
+\label{fig:problema1-disco}
+\end{figure}
+
+Esta solución describe un perfil de temperatura que mantiene su forma radial (dada por el primer modo de la función de Bessel $J_0$) mientras su amplitud decae exponencialmente con el tiempo, gobernado por la constante de difusión $\kappa$ y el autovalor espacial $(\chi_{01}/R)^2$, en total concordancia con la teoría de Sturm-Liouville aplicada a la ecuación del calor (Capítulos 6 y 8 de Alonso Sepúlveda).
+
+\section{Problema 2}
+Considere un cuadrupolo eléctrico lineal formado por tres cargas puntuales distribuidas sobre el eje $z$. En el origen del sistema de coordenadas ($z = 0$) se ubica una carga de valor $-2q$. A ambos lados de esta, sobre el mismo eje, se encuentran dos cargas positivas de valor $q$: una situada en la coordenada $z = a$ y la otra en la coordenada $z = -a$.
+
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=1.05,
+    eje/.style={-{Latex[length=3mm]}, thick},
+    vector/.style={-{Latex[length=3mm]}, very thick, blue!65!black},
+    auxiliar/.style={densely dashed, gray!70},
+    cargaPos/.style={circle, draw=red!75!black, fill=red!12, very thick, minimum size=11mm, inner sep=0pt},
+    cargaNeg/.style={circle, draw=blue!75!black, fill=blue!10, very thick, minimum size=13mm, inner sep=0pt},
+    etiqueta/.style={font=\small},
+    punto/.style={circle, fill=black, inner sep=1.6pt}
+]
+    \coordinate (O) at (0,0);
+    \coordinate (Zm) at (-3,0);
+    \coordinate (Zp) at (3,0);
+    \coordinate (P) at (4.2,2.55);
+    \coordinate (Px) at (4.2,0);
+
+    \draw[eje] (-4.6,0) -- (5.15,0) node[right, etiqueta] {$z$};
+    \draw[eje] (0,-0.55) -- (0,3.05) node[above, etiqueta] {eje transversal};
+
+    \node[cargaPos] at (Zm) {$+q$};
+    \node[cargaNeg] at (O) {$-2q$};
+    \node[cargaPos] at (Zp) {$+q$};
+
+    \node[below=6pt, etiqueta] at (Zm) {$z=-a$};
+    \node[below=6pt, etiqueta] at (O) {$z=0$};
+    \node[below=6pt, etiqueta] at (Zp) {$z=a$};
+
+    \draw[vector] (O) -- (P) node[midway, above left=2pt, etiqueta] {$r$};
+    \draw[auxiliar] (P) -- (Px);
+    \node[punto, label={[etiqueta]above right:$p(r,\theta)$}] at (P) {};
+
+    \draw[auxiliar] (0.95,0) arc[start angle=0, end angle=31.3, radius=0.95];
+    \node[etiqueta] at (1.28,0.36) {$\theta$};
+\end{tikzpicture}
+\caption{Geometría del cuadrupolo eléctrico lineal.}
+\label{fig:cuadrupolo-lineal}
+\end{figure}
+\begin{enumerate}[a)]
+\item Calcular el potencial eléctrico $\phi$ en un punto $p$ de coordenadas $(r,\theta)$ con $r>a$.
+\item Determinar $\phi(r,\theta)$ para $r \gg a$ sobre el eje vertical.
+\end{enumerate}
+\textit{Ayuda:} La generatriz de los polinomios de Legendre es
+$$g(x, t) = (1-2xt+t^2)^{-1/2} = \sum_{l=0}^{\infty}P_l(x)t^l$$ con $|t|<1$.
+
+\subsection{Solución}
+
+Para resolver este problema, utilizaremos el principio de superposición para el potencial electrostático y la expansión en serie de polinomios de Legendre, herramientas fundamentales desarrolladas en el Capítulo 4, Sección 4.5 y el Capítulo 8, Sección 8.4 del texto de Alonso Sepúlveda.
+
+\textbf{Inciso a): Cálculo del potencial eléctrico $\phi(r, \theta)$ para $r > a$}
+
+El potencial electrostático $\phi(\mathbf{r})$ generado por una distribución de cargas puntuales se obtiene mediante la superposición de los potenciales individuales. Para una carga puntual $q_i$ ubicada en $\mathbf{r}'_i$, el potencial en un punto $\mathbf{r}$ es:
+$$
+\phi(\mathbf{r}) = \frac{1}{4\pi\epsilon_0} \sum_i \frac{q_i}{|\mathbf{r} - \mathbf{r}'_i|}
+$$
+En nuestro caso, tenemos tres cargas:
+1. Una carga $+q$ en $\mathbf{r}'_1 = a\hat{k}$ (es decir, $z = a$).
+2. Una carga $+q$ en $\mathbf{r}'_2 = -a\hat{k}$ (es decir, $z = -a$).
+3. Una carga $-2q$ en $\mathbf{r}'_3 = 0$ (el origen).
+
+El potencial total en un punto $P$ de coordenadas esféricas $(r, \theta)$ es:
+$$
+\phi(r, \theta) = \frac{q}{4\pi\epsilon_0} \left[ \frac{1}{|\mathbf{r} - a\hat{k}|} + \frac{1}{|\mathbf{r} + a\hat{k}|} - \frac{2}{r} \right]
+$$
+Para evaluar los términos $1/|\mathbf{r} \mp a\hat{k}|$, utilizamos la expansión en polinomios de Legendre, la cual se deriva directamente de la función generatriz proporcionada en el enunciado y se discute en la Sección 8.4 de Alonso Sepúlveda. La distancia entre un punto de observación $\mathbf{r}$ y una fuente en el eje $z$ a una distancia $a$ se expande como:
+$$
+\frac{1}{|\mathbf{r} - a\hat{k}|} = \frac{1}{\sqrt{r^2 + a^2 - 2ra\cos\theta}} = \frac{1}{r} \sum_{l=0}^{\infty} \left(\frac{a}{r}\right)^l P_l(\cos\theta), \quad \text{para } r > a
+$$
+De manera análoga, para la carga en $z = -a$, el ángulo entre $\mathbf{r}$ y $-a\hat{k}$ es $\pi - \theta$. Usando la propiedad de paridad de los polinomios de Legendre, $P_l(\cos(\pi - \theta)) = (-1)^l P_l(\cos\theta)$ (Sección 8.4, Propiedades), obtenemos:
+$$
+\frac{1}{|\mathbf{r} + a\hat{k}|} = \frac{1}{r} \sum_{l=0}^{\infty} \left(\frac{a}{r}\right)^l P_l(\cos(\pi - \theta)) = \frac{1}{r} \sum_{l=0}^{\infty} \left(\frac{a}{r}\right)^l (-1)^l P_l(\cos\theta)
+$$
+Sumando las contribuciones de las dos cargas positivas:
+$$
+\frac{1}{|\mathbf{r} - a\hat{k}|} + \frac{1}{|\mathbf{r} + a\hat{k}|} = \frac{1}{r} \sum_{l=0}^{\infty} \left(\frac{a}{r}\right)^l \left[ 1 + (-1)^l \right] P_l(\cos\theta)
+$$
+El factor $\left[ 1 + (-1)^l \right]$ actúa como un filtro de paridad:
+- Si $l$ es impar, $1 + (-1)^l = 0$, por lo que los términos impares se cancelan.
+- Si $l$ es par, $1 + (-1)^l = 2$, por lo que los términos pares se duplican.
+
+Haciendo el cambio de índice $l = 2k$ con $k = 0, 1, 2, \dots$, la suma se reduce a:
+$$
+\frac{1}{|\mathbf{r} - a\hat{k}|} + \frac{1}{|\mathbf{r} + a\hat{k}|} = \frac{2}{r} \sum_{k=0}^{\infty} \left(\frac{a}{r}\right)^{2k} P_{2k}(\cos\theta)
+$$
+Ahora, sustituimos esta expresión en la ecuación del potencial total. Notemos que el término correspondiente a $k=0$ en la suma es $\left(\frac{a}{r}\right)^0 P_0(\cos\theta) = 1$, ya que $P_0(x) = 1$. Por lo tanto:
+$$
+\phi(r, \theta) = \frac{q}{4\pi\epsilon_0} \left[ \frac{2}{r} \sum_{k=0}^{\infty} \left(\frac{a}{r}\right)^{2k} P_{2k}(\cos\theta) - \frac{2}{r} \right]
+$$
+El término $-2/r$ cancela exactamente el término $k=0$ de la sumatoria. Así, la suma comienza efectivamente desde $k=1$:
+$$
+\phi(r, \theta) = \frac{q}{2\pi\epsilon_0 r} \sum_{k=1}^{\infty} \left(\frac{a}{r}\right)^{2k} P_{2k}(\cos\theta)
+$$
+Esta es la expresión exacta del potencial eléctrico para $r > a$. Observamos que el término monopolar ($l=0$) y el dipolar ($l=1$) son nulos, lo cual es consistente con la definición de un cuadrupolo eléctrico puro, donde la carga total y el momento dipolar neto son cero.
+
+\textbf{Inciso b): Potencial para $r \gg a$ sobre el eje vertical}
+
+El eje vertical corresponde al eje $z$, donde el ángulo polar es $\theta = 0$ (para $z > 0$) o $\theta = \pi$ (para $z < 0$). En ambos casos, $\cos\theta = \pm 1$. Dado que estamos evaluando polinomios de Legendre de orden par, $P_{2k}(\pm 1) = 1$ para todo $k$ (Sección 8.4, Propiedades: $P_l(1) = 1$ y $P_l(-x) = (-1)^l P_l(x)$).
+
+Sustituyendo $\cos\theta = 1$ en la expresión del potencial obtenida en el inciso anterior:
+$$
+\phi(r, 0) = \frac{q}{2\pi\epsilon_0 r} \sum_{k=1}^{\infty} \left(\frac{a}{r}\right)^{2k}
+$$
+Para la región lejana, donde $r \gg a$, la razón $(a/r)$ es mucho menor que 1. En una serie de potencias de un parámetro pequeño, el término dominante es el de menor potencia. Por lo tanto, podemos aproximar la serie truncándola en su primer término ($k=1$):
+$$
+\phi(r, 0) \approx \frac{q}{2\pi\epsilon_0 r} \left(\frac{a}{r}\right)^2 = \frac{q a^2}{2\pi\epsilon_0 r^3}
+$$
+Este resultado muestra que, a grandes distancias a lo largo del eje del cuadrupolo, el potencial decae proporcionalmente a $1/r^3$. Este comportamiento es la firma característica de un momento cuadrupolar eléctrico, distinguiéndolo del decaimiento $1/r$ de un monopolo y $1/r^2$ de un dipolo, tal como se analiza en el contexto de expansiones multipolares en la Sección 8.4.8 de Alonso Sepúlveda.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=0, xmax=180,
+        ymin=-0.55, ymax=1.08,
+        xlabel={$\theta$},
+        ylabel={$P_2(\cos\theta)$},
+        title={Dependencia angular dominante},
+        title style={font=\small},
+        xtick={0,45,90,135,180},
+        xticklabels={$0$,$\pi/4$,$\pi/2$,$3\pi/4$,$\pi$},
+        ytick={-0.5,0,0.5,1},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        samples=160,
+        domain=0:180,
+        every axis plot/.append style={very thick, blue!70!black, smooth, no markers},
+        ticklabel style={font=\small},
+        label style={font=\small}
+    ]
+        \addplot {(3*cos(x)^2-1)/2};
+        \addplot[only marks, mark=*, mark size=1.4pt, red!70!black] coordinates {(0,1) (90,-0.5) (180,1)};
+        \node[font=\small, anchor=south east] at (axis cs:82,-0.42) {$P_2=-1/2$};
+        \node[font=\small, anchor=north west] at (axis cs:10,0.98) {eje $z$};
+    \end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=1, xmax=6,
+        ymin=0, ymax=1.05,
+        xlabel={$r/a$},
+        ylabel={amplitud normalizada},
+        title={Decaimiento lejano},
+        title style={font=\small},
+        xtick={1,2,3,4,5,6},
+        ytick={0,0.5,1},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        samples=160,
+        domain=1:6,
+        ticklabel style={font=\small},
+        label style={font=\small},
+        legend style={font=\scriptsize, draw=none, fill=none, at={(0.98,0.98)}, anchor=north east}
+    ]
+        \addplot[very thick, gray!60, smooth, no markers] {1/x};
+        \addlegendentry{monopolo $1/r$}
+        \addplot[very thick, orange!80!black, smooth, no markers] {1/x^2};
+        \addlegendentry{dipolo $1/r^2$}
+        \addplot[very thick, red!70!black, smooth, no markers] {1/x^3};
+        \addlegendentry{cuadrupolo $1/r^3$}
+    \end{axis}
+\end{tikzpicture}
+\caption{Comportamiento del término cuadrupolar dominante: factor angular $P_2(\cos\theta)$ y decaimiento radial característico $1/r^3$ en la región lejana.}
+\label{fig:problema2-cuadrupolo}
+\end{figure}
+
+
+\section{Problema 3}
+Considere un cascarón esférico de radio $R$ cuyo potencial electrostático sobre la superficie es 
+$$\phi(R,\theta) = V_0 \sin^2\left(\frac{\theta}{2}\right)$$
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=1.05,
+    eje/.style={-{Latex[length=2.8mm]}, thick},
+    radio/.style={-{Latex[length=2.8mm]}, very thick, blue!65!black},
+    auxiliar/.style={densely dashed, gray!65},
+    etiqueta/.style={font=\small},
+    punto/.style={circle, fill=black, inner sep=1.4pt}
+]
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (55:2.25);
+    \coordinate (N) at (90:2.25);
+    \coordinate (S) at (270:2.25);
+
+    \shade[ball color=blue!12, opacity=0.55] (O) circle (2.25);
+    \draw[very thick] (O) circle (2.25);
+    \draw[auxiliar] (-2.25,0) arc[start angle=180, end angle=360, x radius=2.25, y radius=0.55];
+    \draw[auxiliar] (2.25,0) arc[start angle=0, end angle=180, x radius=2.25, y radius=0.55];
+
+    \draw[eje] (0,-2.85) -- (0,2.95) node[above, etiqueta] {$z$};
+    \draw[eje] (-2.85,0) -- (2.95,0);
+    \draw[radio] (O) -- (P) node[midway, above left=1pt, etiqueta] {$R$};
+    \node[punto, label={[etiqueta]above right:$\phi(R,\theta)$}] at (P) {};
+    \node[punto] at (O) {};
+
+    \draw[auxiliar] (O) -- (N);
+    \draw[thin] (0,0.75) arc[start angle=90, end angle=55, radius=0.75];
+    \node[etiqueta] at (0.34,0.92) {$\theta$};
+
+    \node[etiqueta, anchor=south] at (N) {$\theta=0$};
+    \node[etiqueta, anchor=north] at (S) {$\theta=\pi$};
+    \node[etiqueta, align=center] at (0,-3.35)
+        {$\phi(R,\theta)=V_0\sin^2(\theta/2)$};
+\end{tikzpicture}
+\caption{Cascarón esférico conductor de radio $R$ con potencial prescrito sobre la superficie.}
+\label{fig:cascaron-esferico}
+\end{figure}
+\begin{enumerate}[a)]
+\item Determinar el potencial eléctrico $\phi(r,\theta)$ en el interior de la esfera.
+\item Hallar las componentes radial $E_r$ y transversal $E_\theta$ del campo eléctrico en el interior de la esfera
+\end{enumerate}
+\textit{Ayuda:} $$\phi(r,\theta) = \sum_{l = 0}^{\infty}\left(A_l r^l + \frac{B_l}{r^{l+1}}\right)P_l(\cos \theta)$$
+donde $P_l(x) = \frac{1}{2^l l!}\frac{d^l}{dx^l}(x^2-1)^l$
+
+\subsection{Solución}
+
+Para resolver este problema, aplicaremos el método de separación de variables a la ecuación de Laplace en coordenadas esféricas, tal como se desarrolla en el Capítulo 3, Sección 3.3.4, y el Capítulo 8, Sección 8.4.2 del texto de Alonso Sepúlveda.
+
+\textbf{Inciso a): Potencial eléctrico en el interior de la esfera}
+
+Dado que no hay cargas en el interior del cascarón esférico ($r < R$), el potencial electrostático $\phi(r, \theta)$ satisface la ecuación de Laplace $\nabla^2 \phi = 0$. La solución general con simetría azimutal (independiente del ángulo $\varphi$) está dada por la superposición de armónicos esféricos con $m=0$:
+$$
+\phi(r,\theta) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l(\cos\theta)
+$$
+Para que el potencial sea físicamente aceptable y finito en el origen ($r=0$), debemos imponer la condición de que no existan singularidades en el interior de la esfera. Esto requiere que $B_l = 0$ para todo $l$. Por lo tanto, la solución se reduce a:
+$$
+\phi(r,\theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta)
+$$
+Ahora, aplicamos la condición de frontera de Dirichlet en la superficie del cascarón ($r=R$):
+$$
+\phi(R,\theta) = V_0 \sin^2\left(\frac{\theta}{2}\right)
+$$
+Utilizando la identidad trigonométrica del ángulo mitad, $\sin^2(\theta/2) = \frac{1 - \cos\theta}{2}$, podemos reescribir la condición de frontera como:
+$$
+\phi(R,\theta) = \frac{V_0}{2} (1 - \cos\theta)
+$$
+Recordando los primeros polinomios de Legendre, $P_0(\cos\theta) = 1$ y $P_1(\cos\theta) = \cos\theta$ (Sección 8.4 de Alonso Sepúlveda), la condición de frontera se expresa directamente como una combinación lineal de estos polinomios:
+$$
+\phi(R,\theta) = \frac{V_0}{2} P_0(\cos\theta) - \frac{V_0}{2} P_1(\cos\theta)
+$$
+Evaluando nuestra solución general en $r=R$ e igualando con la expresión anterior:
+$$
+\sum_{l=0}^{\infty} A_l R^l P_l(\cos\theta) = \frac{V_0}{2} P_0(\cos\theta) - \frac{V_0}{2} P_1(\cos\theta)
+$$
+Debido a la ortogonalidad de los polinomios de Legendre en el intervalo $[-1, 1]$ (Sección 8.4.1), los coeficientes de cada $P_l(\cos\theta)$ deben coincidir en ambos lados de la ecuación. Esto nos permite identificar directamente los coeficientes $A_l$:
+\begin{itemize}
+\item Para $l=0$: $A_0 R^0 = \frac{V_0}{2} \implies A_0 = \frac{V_0}{2}$
+\item Para $l=1$: $A_1 R^1 = -\frac{V_0}{2} \implies A_1 = -\frac{V_0}{2R}$
+\item Para $l \ge 2$: $A_l = 0$
+\end{itemize}
+Sustituyendo estos coeficientes en la expresión del potencial, obtenemos la solución exacta para el interior de la esfera:
+$$
+\phi(r,\theta) = \frac{V_0}{2} - \frac{V_0}{2R} r \cos\theta
+$$
+Observamos que el potencial es simplemente una función lineal de la coordenada cartesiana $z = r\cos\theta$, lo que sugiere la presencia de un campo eléctrico uniforme en el interior.
+
+\textbf{Inciso b): Componentes del campo eléctrico}
+
+El campo eléctrico $\mathbf{E}$ se obtiene a partir del gradiente negativo del potencial, $\mathbf{E} = -\nabla \phi$. En coordenadas esféricas, el operador gradiente para una función independiente de $\varphi$ se define como (Sección 1.4.1):
+$$
+\nabla \phi = \frac{\partial \phi}{\partial r} \hat{e}_r + \frac{1}{r} \frac{\partial \phi}{\partial \theta} \hat{e}_\theta
+$$
+Calculamos las derivadas parciales del potencial $\phi(r,\theta) = \frac{V_0}{2} - \frac{V_0}{2R} r \cos\theta$:
+$$
+\frac{\partial \phi}{\partial r} = -\frac{V_0}{2R} \cos\theta
+$$
+$$
+\frac{\partial \phi}{\partial \theta} = \frac{V_0}{2R} r \sin\theta
+$$
+Por lo tanto, las componentes del campo eléctrico son:
+$$
+E_r = -\frac{\partial \phi}{\partial r} = \frac{V_0}{2R} \cos\theta
+$$
+$$
+E_\theta = -\frac{1}{r} \frac{\partial \phi}{\partial \theta} = -\frac{1}{r} \left( \frac{V_0}{2R} r \sin\theta \right) = -\frac{V_0}{2R} \sin\theta
+$$
+En forma vectorial, el campo eléctrico en el interior es:
+$$
+\mathbf{E} = \frac{V_0}{2R} (\cos\theta \hat{e}_r - \sin\theta \hat{e}_\theta) = \frac{V_0}{2R} \hat{k}
+$$
+Este resultado confirma analíticamente que el campo eléctrico en el interior del cascarón es uniforme, constante y apunta en la dirección del eje $z$ positivo, lo cual es totalmente consistente con un potencial que varía linealmente con $z$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=0, xmax=180,
+        ymin=0, ymax=1.08,
+        xlabel={$\theta$},
+        ylabel={$\phi(R,\theta)/V_0$},
+        title={Potencial en la superficie},
+        title style={font=\small},
+        xtick={0,45,90,135,180},
+        xticklabels={$0$,$\pi/4$,$\pi/2$,$3\pi/4$,$\pi$},
+        ytick={0,0.5,1},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        samples=160,
+        domain=0:180,
+        every axis plot/.append style={very thick, blue!70!black, smooth, no markers},
+        ticklabel style={font=\small},
+        label style={font=\small}
+    ]
+        \addplot {sin(x/2)^2};
+        \addplot[only marks, mark=*, mark size=1.4pt, red!70!black] coordinates {(0,0) (180,1)};
+        \node[font=\small, anchor=south west] at (axis cs:8,0.04) {$\phi=0$};
+        \node[font=\small, anchor=north east] at (axis cs:174,0.96) {$\phi=V_0$};
+    \end{axis}
+\end{tikzpicture}
+\hfill
+\begin{tikzpicture}
+    \begin{axis}[
+        width=0.47\textwidth,
+        height=5.4cm,
+        axis lines=left,
+        xmin=-1, xmax=1,
+        ymin=0, ymax=1.05,
+        xlabel={$z/R$},
+        ylabel={$\phi/V_0$},
+        title={Potencial interior},
+        title style={font=\small},
+        xtick={-1,0,1},
+        ytick={0,0.5,1},
+        grid=major,
+        grid style={gray!18},
+        axis line style={gray!70},
+        samples=120,
+        domain=-1:1,
+        every axis plot/.append style={very thick, red!70!black, smooth, no markers},
+        ticklabel style={font=\small},
+        label style={font=\small}
+    ]
+        \addplot {0.5 - 0.5*x};
+        \node[font=\small, anchor=south west] at (axis cs:-0.94,0.89) {$z=-R$};
+        \node[font=\small, anchor=north east] at (axis cs:0.95,0.12) {$z=R$};
+    \end{axis}
+\end{tikzpicture}
+\caption{Potencial impuesto sobre la superficie y potencial lineal en el interior, escrito como $\phi/V_0=\frac{1}{2}-\frac{z}{2R}$.}
+\label{fig:problema3-potenciales}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    scale=1.0,
+    campo/.style={-{Latex[length=2.4mm]}, very thick, blue!70!black},
+    eje/.style={-{Latex[length=2.4mm]}, thick},
+    auxiliar/.style={densely dashed, gray!65},
+    radio/.style={-{Latex[length=2.4mm]}, thick, red!70!black},
+    etiqueta/.style={font=\small}
+]
+    \coordinate (O) at (0,0);
+    \coordinate (P) at (38:2.05);
+
+    \shade[ball color=blue!10, opacity=0.55] (O) circle (2.05);
+    \draw[very thick] (O) circle (2.05);
+    \draw[auxiliar] (-2.05,0) arc[start angle=180, end angle=360, x radius=2.05, y radius=0.48];
+    \draw[auxiliar] (2.05,0) arc[start angle=0, end angle=180, x radius=2.05, y radius=0.48];
+
+    \draw[eje] (0,-2.55) -- (0,2.75) node[above, etiqueta] {$z$};
+    \draw[auxiliar] (-2.35,0) -- (2.35,0);
+    \draw[radio] (O) -- (P) node[midway, below right=1pt, etiqueta] {$R$};
+    \node[circle, fill=black, inner sep=1.2pt] at (O) {};
+    \node[etiqueta, below left=1pt] at (O) {$0$};
+
+    \foreach \x in {-1.2,-0.6,0,0.6,1.2} {
+        \draw[campo] (\x,-1.35) -- (\x,1.35);
+    }
+    \node[etiqueta, align=center] at (3.25,0.55)
+        {$\vec{E}=\dfrac{V_0}{2R}\,\hat{k}$};
+    \node[etiqueta, align=center] at (0,-2.78)
+        {campo uniforme en el interior};
+\end{tikzpicture}
+\caption{El potencial lineal produce un campo eléctrico uniforme dirigido en la dirección positiva del eje $z$.}
+\label{fig:problema3-campo-uniforme}
+\end{figure}
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
