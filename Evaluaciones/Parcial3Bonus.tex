@@ -1,0 +1,145 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+
+\section{Problema 3}
+Considere un cascarón esférico de radio $R$ cuyo potencial electrostático sobre la superficie es 
+$$\phi(R,\theta) = V_0 \sin^2\left(\frac{\theta}{2}\right)$$
+\begin{enumerate}[a)]
+\item Determinar el potencial eléctrico $\phi(r,\theta)$ en el interior de la esfera.
+\item Hallar las componentes radial $E_r$ y transversal $E_\theta$ del campo eléctrico en el interior de la esfera
+\end{enumerate}
+
+\subsection{Solucion Problema 3}
+\textbf{item a)}
+
+Conocemos la solución de $\phi$ en esféricas de manera general. Para este problema, claramente debemos imponer que $B_l = 0$, entonces nos queda:
+
+$$
+\phi(r,\theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta)
+$$
+
+Vamos a desarrollar la solución a este problema de manera inteligente. Sabemos que en alguna parte de la solución del problema debemos recurrir a la condición de continuidad para $r<R$ con $r=R$ y sabemos que para un problema con simetría esférica, los primeros términos de una expansión con Legendre son $1$ y $\cos\theta$. Entonces miramos la forma de $V\Bigg|_{r=R}$ y notamos que es un $\sin^2\left(\frac{\theta}{2}\right)$. Entonces recordamos que $\sin^2(x)$ se puede llevar a una forma con $\cos(2x)$, por lo tanto, $\sin^2\left(\frac{\theta}{2}\right)$ se puede llevar a una forma con $\cos\theta$, lo cual nos es muy útil en una expansión de Legendre, porque tenemos términos de $\cos\theta$. Teniendo en cuenta este razonamiento, entonces miremos la expansión de $\phi(R,\theta)$ con legendre y comparemos los coeficientes.
+
+Primero expandimos la expresión del potencial en $R$.
+
+$$\phi(R,\theta) = \sum_{l=0}^{\infty} A'_l R^l P_l(\cos\theta) = \frac{V_0}{2} - \frac{V_0}{2R}\cos\theta$$
+
+Ahora por condición de continuidad, necesitamos que 
+
+$$\phi(r,\theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta) = \sum_{l=0}^{\infty} A'_l R^l P_l(\cos\theta) = \phi(R,\theta)$$
+
+Con esto obtenemos los primeros términos:
+
+\begin{itemize}
+	\item $A_0 = \frac{V_0}{2}$
+	\item $A_1 = - \frac{V_0}{2R}$
+	\item $A_l = 0\qquad \forall l \geq 2$
+\end{itemize}
+
+ Lo aplicamos expandiendo los primeros dos términos.
+
+$$\phi(r,\theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta) = \frac{V_0}{2} - \frac{V_0}{2R} r \cos\theta + \sum_{l=2}^{\infty} A_l r^l P_l(\cos\theta) = \phi(R,\theta)$$
+
+
+Y quedamos con 
+
+$$\phi(r,\theta) = \frac{V_0}{2} - \frac{V_0}{2R}r\cos\theta$$
+
+\textbf{item b)}
+
+Ahora veamos la expresión para el campo eléctrico. Sabemos que 
+
+$$\vec{E} = -\vec{\nabla}_\phi$$ 
+
+y recordemos que en este sistema de coordenadas, 
+
+$$\vec{\nabla} = \frac{\partial}{\partial r} \hat{e_r} + \frac{1}{r}\frac{\partial}{\partial \theta} \hat{e_\theta}$$
+
+Con esto, calculamos el campo eléctrico y nos queda:
+
+$$\vec{E} = \frac{V_0}{2R}\left(\cos\theta \hat{e_r} - \sin\theta \hat{e_\theta}\right) = \frac{V_0}{2R}\hat{e_k}$$
+
+
+\subsubsection*{item c)}
+
+Para la región exterior ($r > R$), claramente debemos imponer que $A_{l}=0$ para que el potencial sea finito en el infinito ($r \to \infty$), entonces nos queda:
+\begin{equation}
+\phi(r,\theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}} P_l(\cos\theta)
+\end{equation}
+
+
+Recordamos que los primeros polinomios de Legendre son $P_0(\cos\theta) = 1$ y $P_1(\cos\theta) = \cos\theta$. Teniendo en cuenta este razonamiento, miremos la expansión de $\phi(R,\theta)$ con Legendre y comparemos los coeficientes en $r = R$:
+\begin{equation}
+\phi(R,\theta) = \sum_{l=0}^{\infty} \frac{B_l}{R^{l+1}} P_l(\cos\theta) = \frac{V_{0}}{2}P_0(\cos\theta) - \frac{V_{0}}{2}P_1(\cos\theta)
+\end{equation}
+
+Al comparar término a término, obtenemos los coeficientes correspondientes:
+\begin{align}
+\frac{B_0}{R^1} = \frac{V_0}{2} &\implies B_0 = \frac{V_0 R}{2} \\
+\frac{B_1}{R^2} = -\frac{V_0}{2} &\implies B_1 = -\frac{V_0 R^2}{2} \\
+B_l = 0 &\quad \forall l \ge 2
+\end{align}
+
+Sustituyendo estos coeficientes en la expansión original para el exterior, nos queda:
+\begin{equation}
+\phi(r,\theta) = \frac{V_{0}R}{2r} - \frac{V_{0}R^{2}}{2r^{2}}\cos\theta
+\end{equation}
+
+\subsubsection*{item d)}
+
+Ahora veamos la expresión para el campo eléctrico. Sabemos que
+\begin{equation}
+\vec{E} = -\vec{\nabla}\phi
+\end{equation}
+y recordemos que en este sistema de coordenadas, el operador gradiente para componentes con simetría azimutal es:
+\begin{equation}
+\vec{\nabla} = \frac{\partial}{\partial r}\hat{e}_{r} + \frac{1}{r}\frac{\partial}{\partial\theta}\hat{e}_{\theta}
+\end{equation}
+
+Calculamos la componente radial ($E_r$):
+\begin{equation}
+E_r = -\frac{\partial \phi}{\partial r} = -\left( -\frac{V_0 R}{2r^2} + \frac{V_0 R^2}{r^3}\cos\theta \right) = \frac{V_0 R}{2r^2} - \frac{V_0 R^2}{r^3}\cos\theta
+\end{equation}
+
+Calculamos la componente transversal ($E_\theta$):
+\begin{equation}
+E_\theta = -\frac{1}{r}\frac{\partial \phi}{\partial \theta} = -\frac{1}{r}\left( \frac{V_0 R^2}{2r^2}\sin\theta \right) = -\frac{V_0 R^2}{2r^3}\sin\theta
+\end{equation}
+
+Con esto, el campo eléctrico en el exterior ($r > R$) queda determinado por:
+\begin{equation}
+\vec{E} = \left( \frac{V_0 R}{2r^2} - \frac{V_0 R^2}{r^3}\cos\theta \right)\hat{e}_{r} - \left( \frac{V_0 R^2}{2r^3}\sin\theta \right)\hat{e}_{\theta}
+\end{equation}
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
