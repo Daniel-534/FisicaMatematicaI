@@ -1,0 +1,208 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt}
+
+
+\begin{document}
+
+
+\section{Problema 3}
+Considere un cascarón esférico de radio $R$ cuyo potencial electrostático sobre la superficie es
+$$\phi(R,\theta) = V_0 \sin^2\!\left(\frac{\theta}{2}\right)$$
+\begin{enumerate}[a)]
+\item Determinar el potencial eléctrico $\phi(r,\theta)$ en el interior de la esfera.
+\item Hallar las componentes radial $E_r$ y transversal $E_\theta$ del campo eléctrico en el interior de la esfera.
+\end{enumerate}
+
+\subsection{Solución Problema 3 — Método de Ortogonalidad}
+
+\textbf{item a)}
+
+Para el interior de la esfera ($r < R$), debemos imponer $B_l = 0$ para garantizar la regularidad
+en $r = 0$. La solución general queda:
+
+$$\phi(r,\theta) = \sum_{l=0}^{\infty} A_l\, r^l\, P_l(\cos\theta)$$
+
+Evaluando en $r = R$ e igualando a la condición de frontera:
+$$\sum_{l=0}^{\infty} A_l R^l\, P_l(\cos\theta) = V_0 \sin^2\!\left(\frac{\theta}{2}\right)$$
+
+Para hallar los coeficientes $A_l$ usamos \textbf{explícitamente la condición de ortogonalidad} de
+los polinomios de Legendre. Multiplicando ambos lados por $P_{l'}(\cos\theta)\sin\theta$ e
+integrando en $[0,\pi]$, y usando que
+$$\int_{-1}^{1} P_l(u)\,P_{l'}(u)\,du = \frac{2}{2l+1}\,\delta_{l\,l'},$$
+obtenemos directamente:
+\begin{equation}
+    A_l R^l = \frac{2l+1}{2}\int_0^{\pi} V_0\sin^2\!\left(\frac{\theta}{2}\right)
+    P_l(\cos\theta)\,\sin\theta\, d\theta
+    \label{eq:coef_Al}
+\end{equation}
+
+\textbf{Evaluación de la integral sin convertir $\sin$ a $\cos$ a priori.}
+Realizamos la sustitución estándar para integrales de Legendre: $u = \cos\theta$,
+$du = -\sin\theta\,d\theta$. Al hacer este cambio de variable, la identidad trigonométrica
+$\sin^2(\theta/2) = (1-\cos\theta)/2$ surge de forma \emph{natural} como paso algebraico
+ordinario —no como observación estratégica previa— dando:
+$$\sin^2\!\left(\frac{\theta}{2}\right) = \frac{1-u}{2}$$
+
+El límite de integración cambia de $[0,\pi]$ a $[1,-1]$, absorbiendo el signo del jacobiano:
+$$A_l R^l = \frac{(2l+1)V_0}{2}\int_{-1}^{1} \frac{1-u}{2}\,P_l(u)\,du
+           = \frac{(2l+1)V_0}{4}
+             \left[\int_{-1}^{1} P_l(u)\,du - \int_{-1}^{1} u\,P_l(u)\,du\right]$$
+
+Evaluamos cada integral por ortogonalidad, reconociendo que $1 = P_0(u)$ y $u = P_1(u)$:
+
+\begin{align}
+    \int_{-1}^{1} P_l(u)\,du &= \int_{-1}^{1} P_0(u)\,P_l(u)\,du
+        = \frac{2}{2\cdot 0+1}\,\delta_{l,0} = 2\,\delta_{l,0}
+    \label{eq:int1}\\[4pt]
+    \int_{-1}^{1} u\,P_l(u)\,du &= \int_{-1}^{1} P_1(u)\,P_l(u)\,du
+        = \frac{2}{2\cdot 1+1}\,\delta_{l,1} = \frac{2}{3}\,\delta_{l,1}
+    \label{eq:int2}
+\end{align}
+
+Sustituyendo \eqref{eq:int1} y \eqref{eq:int2} en \eqref{eq:coef_Al}:
+$$A_l R^l = \frac{(2l+1)V_0}{4}\left[2\,\delta_{l,0} - \frac{2}{3}\,\delta_{l,1}\right]$$
+
+Calculamos cada coeficiente:
+\begin{itemize}
+    \item $l = 0$: $\displaystyle A_0 = \frac{1\cdot V_0}{4}\cdot 2 = \frac{V_0}{2}$
+    \item $l = 1$: $\displaystyle A_1 R = \frac{3V_0}{4}\cdot\left(-\frac{2}{3}\right) = -\frac{V_0}{2}$,
+          luego $A_1 = -\dfrac{V_0}{2R}$
+    \item $l \ge 2$: $A_l = 0$
+\end{itemize}
+
+Aplicando los tres puntos anteriores en la expansión general:
+$$\phi(r,\theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta)
+= \frac{V_0}{2}P_0(\cos\theta) - \frac{V_0}{2R}\,r\,P_1(\cos\theta)
++ \underbrace{\sum_{l=2}^{\infty} 0}_{=\,0}$$
+
+\begin{tcolorbox}
+$$\phi(r,\theta) = \frac{V_0}{2} - \frac{V_0}{2R}\,r\cos\theta$$
+\end{tcolorbox}
+
+\textbf{item b)}
+
+El campo eléctrico se obtiene de $\vec{E} = -\vec{\nabla}\phi$.
+Con simetría azimutal el gradiente en esféricas es:
+$$\vec{\nabla}\phi = \frac{\partial\phi}{\partial r}\,\hat{e}_r
+                  + \frac{1}{r}\frac{\partial\phi}{\partial\theta}\,\hat{e}_\theta$$
+
+Componente radial:
+$$E_r = -\frac{\partial\phi}{\partial r} = -\!\left(-\frac{V_0}{2R}\cos\theta\right)
+      = \frac{V_0}{2R}\cos\theta$$
+
+Componente transversal:
+$$E_\theta = -\frac{1}{r}\frac{\partial\phi}{\partial\theta}
+           = -\frac{1}{r}\left(\frac{V_0}{2R}\,r\sin\theta\right)
+           = -\frac{V_0}{2R}\sin\theta$$
+
+El campo resultante es uniforme (en la dirección $\hat{e}_k \equiv \hat{z}$):
+$$\vec{E} = \frac{V_0}{2R}\!\left(\cos\theta\,\hat{e}_r - \sin\theta\,\hat{e}_\theta\right)
+= \frac{V_0}{2R}\,\hat{e}_k$$
+
+\subsubsection*{item c)}
+
+Para la región exterior ($r > R$), imponemos $A_l = 0$ para que $\phi$ sea finito cuando
+$r\to\infty$:
+\begin{equation}
+    \phi(r,\theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}}\,P_l(\cos\theta)
+\end{equation}
+
+Evaluando en $r = R$ e igualando a la condición de frontera, la condición de ortogonalidad entrega:
+\begin{equation}
+    \frac{B_l}{R^{l+1}} = \frac{2l+1}{2}\int_0^{\pi} V_0\sin^2\!\left(\frac{\theta}{2}\right)
+    P_l(\cos\theta)\,\sin\theta\,d\theta
+    \label{eq:coef_Bl}
+\end{equation}
+
+El lado derecho de \eqref{eq:coef_Bl} es \emph{exactamente el mismo integral} que en
+\eqref{eq:coef_Al}, por lo que no hace falta repetir el cálculo:
+$$\frac{B_l}{R^{l+1}} = \frac{(2l+1)V_0}{4}\left[2\,\delta_{l,0} - \frac{2}{3}\,\delta_{l,1}\right]$$
+
+Calculamos cada coeficiente:
+\begin{itemize}
+    \item $l = 0$: $\dfrac{B_0}{R} = \dfrac{V_0}{2}$, luego $B_0 = \dfrac{V_0 R}{2}$
+    \item $l = 1$: $\dfrac{B_1}{R^2} = -\dfrac{V_0}{2}$, luego $B_1 = -\dfrac{V_0 R^2}{2}$
+    \item $l \ge 2$: $B_l = 0$
+\end{itemize}
+
+\begin{tcolorbox}
+$$\phi(r,\theta) = \frac{V_0 R}{2r} - \frac{V_0 R^2}{2r^2}\cos\theta$$
+\end{tcolorbox}
+
+\subsubsection*{item d)}
+
+Aplicando $\vec{E} = -\vec{\nabla}\phi$ al potencial exterior:
+
+Componente radial:
+\begin{equation}
+    E_r = -\frac{\partial\phi}{\partial r}
+        = -\!\left(-\frac{V_0 R}{2r^2} + \frac{V_0 R^2}{r^3}\cos\theta\right)
+        = \frac{V_0 R}{2r^2} - \frac{V_0 R^2}{r^3}\cos\theta
+\end{equation}
+
+Componente transversal:
+\begin{equation}
+    E_\theta = -\frac{1}{r}\frac{\partial\phi}{\partial\theta}
+             = -\frac{1}{r}\!\left(\frac{V_0 R^2}{2r^2}\sin\theta\right)
+             = -\frac{V_0 R^2}{2r^3}\sin\theta
+\end{equation}
+
+El campo eléctrico en el exterior ($r > R$) es:
+\begin{equation}
+    \vec{E} = \left(\frac{V_0 R}{2r^2} - \frac{V_0 R^2}{r^3}\cos\theta\right)\hat{e}_r
+            - \frac{V_0 R^2}{2r^3}\sin\theta\;\hat{e}_\theta
+\end{equation}
+
+\subsection*{Nota: ¿Es necesario convertir $\sin$ a $\cos$ desde el inicio?}
+
+\textbf{No.} Esa es precisamente la ventaja del método de ortogonalidad: el procedimiento es
+sistemático y no requiere ninguna observación previa sobre la forma conveniente de la condición
+de frontera.
+
+En el método de inspección del documento original, el razonamiento depende de advertir
+\emph{antes de plantear la expansión} que $\sin^2(\theta/2)$ admite una escritura útil con
+$\cos\theta$.  En el método de ortogonalidad, en cambio, la relación
+$\sin^2(\theta/2) = (1-u)/2$ aparece de forma automática al realizar la sustitución
+$u = \cos\theta$, que es el cambio de variable estándar para todo integral de Legendre,
+independientemente de la forma de la condición de frontera.  No se necesita ninguna
+``astucia'' inicial: la función $(1-u)/2$ simplemente se descompone en $P_0(u)$ y $P_1(u)$
+al evaluar los productos escalares \eqref{eq:int1}--\eqref{eq:int2}.
+
+En resumen, la diferencia entre los dos métodos es de \emph{orden lógico}:
+\begin{itemize}
+    \item \textbf{Inspección:} detectar la forma de $\phi(R,\theta)$ $\;\Rightarrow\;$
+          proponer la expansión correcta $\;\Rightarrow\;$ comparar coeficientes.
+    \item \textbf{Ortogonalidad:} proponer la expansión general $\;\Rightarrow\;$
+          calcular integrales con la fórmula de proyección $\;\Rightarrow\;$
+          la forma de $\phi(R,\theta)$ se revela sola durante el cálculo.
+\end{itemize}
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia}
+\end{document}
