@@ -1,0 +1,845 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Fisica Matemática I}
+\fancyhead[c]{Notas de Clase 20260610}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Clase 20260610\par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Polinomios asociados de Legendre}
+
+Los \textbf{polinomios asociados de Legendre}, denotados como $P_l^m(x)$, son una extensión de los polinomios de Legendre ordinarios y surgen fundamentalmente al resolver problemas físicos con \textbf{simetría esférica} que no poseen simetría azimutal completa.
+
+\subsection{Ecuación Diferencial}
+Surgen como soluciones a la \textbf{ecuación asociada de Legendre}, la cual aparece al separar variables en la ecuación de Laplace en coordenadas esféricas para la parte polar ($\theta$):
+    $$(1-x^2)\frac{d^2y}{dx^2} - 2x\frac{dy}{dx} + \left[ l(l+1) - \frac{m^2}{1-x^2} \right]y = 0$$
+    Donde $x = \cos \theta$. Para que las soluciones sean finitas en los polos ($x = \pm 1$), los índices deben cumplir que \textbf{$l$ es un entero no negativo} y \textbf{$m$ es un entero} tal que $-l \leq m \leq l$.
+
+
+\subsection{Definición y Relación con $P_l(x)$}
+Para valores de $m \geq 0$, se definen a partir de la $m$-ésima derivada del polinomio de Legendre ordinario $P_l(x)$:
+    $$P_l^m(x) = (-1)^m (1-x^2)^{m/2} \frac{d^m}{dx^m} P_l(x)$$
+    
+    \textbf{Nota: }\textit{El factor $(-1)^m$ es la fase de Condon-Shortley, utilizada para estandarizar resultados en mecánica cuántica}
+
+\textbf{Justificación de la validez sin el factor $(-1)^m$:}  
+La definición de los polinomios asociados de Legendre puede omitir el factor $(-1)^m$ sin pérdida de propiedades esenciales, ya que dicho factor es únicamente una convención de fase. En muchos contextos de la física matemática y la teoría de potenciales, se prefiere la definición:
+    $$\tilde{P}_l^m(x) = (1-x^2)^{m/2} \frac{d^m}{dx^m} P_l(x)$$
+Esta versión sigue siendo solución de la ecuación asociada de Legendre, pues la ecuación diferencial es lineal y homogénea, de modo que multiplicar por una constante no nula (como $(-1)^m$) no altera la condición de ser solución. La ausencia del factor $(-1)^m$ simplemente modifica la fase global de las funciones, lo cual es irrelevante para propiedades como ortogonalidad, paridad o relaciones de recurrencia. La elección con o sin $(-1)^m$ es, por tanto, una cuestión de normalización o de conveniencia según el área de aplicación (por ejemplo, en mecánica cuántica se usa la fase de Condon-Shortley para simplificar la relación con los armónicos esféricos).
+
+
+\subsection{Fórmula de Rodrigues}
+
+Permite generar cualquier polinomio asociado de forma directa mediante derivación sucesiva:
+    $$P_l^m(x) = \frac{(-1)^m}{2^l l!} (1-x^2)^{m/2} \frac{d^{l+m}}{dx^{l+m}} (x^2-1)^l$$
+
+
+\subsection{Propiedades Fundamentales}
+\begin{enumerate}[a)]
+    \item \textbf{Ortogonalidad:} Para un valor fijo de $m$, los polinomios de diferente grado $l$ son ortogonales en el intervalo $[-1, 1]$:
+    $$\int_{-1}^{1} P_l^m(x) P_k^m(x) dx = \frac{2}{2l+1} \frac{(l+m)!}{(l-m)!} \delta_{lk}$$
+    \item \textbf{Paridad:} La simetría respecto al origen depende de la suma de sus índices:
+    $$P_l^m(-x) = (-1)^{l+m} P_l^m(x)$$
+    \item \textbf{Relación para $m$ negativo:} Los términos con índice inferior negativo se relacionan con los positivos mediante:
+    $$P_l^{-m}(x) = (-1)^m \frac{(l-m)!}{(l+m)!} P_l^m(x)$$
+\end{enumerate}
+
+\subsection{Aplicaciones Principales}
+\begin{enumerate}[a)]
+    \item \textbf{Armónicos Esféricos:} Son la base de las funciones $Y_l^m(\theta, \phi)$, que describen la distribución angular en problemas de \textbf{potencial central}.
+    \item \textbf{Mecánica Cuántica:} Se utilizan para hallar las funciones de onda del \textbf{átomo de hidrógeno} (orbitales atómicos) y para describir el \textbf{momento angular}.
+    \item \textbf{Electrostática:} Permiten expandir potenciales creados por distribuciones de carga asimétricas (como anillos o dipolos fuera del eje).
+\end{enumerate}
+
+
+\section{Solución de la ecuación de Laplace en coordenadas esféricas}
+
+Al resolver la ecuación de Laplace $\nabla^2\phi = 0$ en coordenadas esféricas $(r, \theta, \varphi)$ mediante el método de separación de variables, se propone una solución de la forma $\phi(r, \theta, \varphi) = R(r) \Theta(\theta) \Phi(\varphi)$. Esto conduce a tres ecuaciones diferenciales ordinarias, una para cada variable. La solución angular en $\theta$ está dada por los polinomios asociados de Legendre $P_l^m(\cos \theta)$, mientras que la solución en $\varphi$ es armónica. La solución general puede escribirse como:
+
+$$
+\nabla^2\phi = 0 \quad \Longrightarrow \quad \phi(r,\theta,\varphi) = R(r) G(\varphi) P(\theta)
+$$
+
+$$
+\phi(r, \theta, \varphi) = \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) \left( c_+ e^{im\varphi} + c_- e^{-im\varphi} \right) P_l^m(\cos \theta)
+$$
+
+donde $l$ es un entero no negativo, $m$ es un entero con $-l \leq m \leq l$, y $P_l^m$ son los polinomios asociados de Legendre.
+
+
+\section{Ejemplo: Halle $P_2^1(x)$ con $x = \cos(\theta)$}
+
+Para hallar el polinomio asociado de Legendre $P_2^1(x)$ partiremos de su definición mediante la fórmula de Rodrigues generalizada.
+
+\textbf{Fórmula de Rodrigues:}
+La expresión general es:
+$$
+P_l^m(x) = \frac{(-1)^m}{2^l \, l!} (1 - x^2)^{m/2} \frac{d^{\,l+m}}{dx^{\,l+m}} (x^2 - 1)^l
+$$
+
+\textbf{Identificación de índices:}
+En nuestro caso particular:
+$$
+l = 2 \qquad \text{y} \qquad m = 1
+$$
+Sustituyendo estos valores en la fórmula obtenemos:
+$$
+P_2^1(x) = \frac{(-1)^1}{2^2 \cdot 2!} (1 - x^2)^{1/2} \frac{d^{\,2+1}}{dx^{\,2+1}} (x^2 - 1)^2
+$$
+
+\textbf{Simplificación del coeficiente constante:}
+El factor numérico inicial es:
+$$
+\frac{(-1)^1}{2^2 \cdot 2!} = \frac{-1}{4 \cdot 2} = -\frac{1}{8}
+$$
+
+\textbf{Expansión del binomio:}
+Desarrollamos el polinomio interno:
+$$
+(x^2 - 1)^2 = x^4 - 2x^2 + 1
+$$
+
+\textbf{Cálculo de la derivada de orden $l+m = 3$:}
+Derivamos sucesivamente tres veces:
+$$
+\begin{aligned}
+\frac{d}{dx}(x^4 - 2x^2 + 1) &= 4x^3 - 4x \\[2mm]
+\frac{d^2}{dx^2}(x^4 - 2x^2 + 1) &= 12x^2 - 4 \\[2mm]
+\frac{d^3}{dx^3}(x^4 - 2x^2 + 1) &= 24x
+\end{aligned}
+$$
+
+\textbf{Construcción de $P_2^1(x)$:}
+Reemplazamos todos los elementos hallados:
+$$
+P_2^1(x) = -\frac{1}{8} \sqrt{1 - x^2} \cdot (24x)
+$$
+Simplificando:
+$$
+P_2^1(x) = -3x \sqrt{1 - x^2}
+$$
+
+\textbf{Expresión final en términos de $\theta$:}
+Ahora sustituimos $x = \cos \theta$:
+$$
+P_2^1(\cos \theta) = -3 \cos \theta \, \sqrt{1 - \cos^2 \theta}
+$$
+Por identidad trigonométrica fundamental:
+$$
+\sqrt{1 - \cos^2 \theta} = \sin \theta
+$$
+Por lo tanto, el polinomio asociado de Legendre solicitado es:
+$$
+\boxed{P_2^1(\cos \theta) = -3 \cos \theta \sin \theta}
+$$
+
+\section{Propiedades de $P_l^m(x)$}
+
+\begin{enumerate}[a)]
+    \item \textbf{Ascenso ($m \to m+1$):}
+    $$
+    \sqrt{1 - x^2} \, P_l^{m+1}(x) = \left[ m x + (1 - x^2) \frac{d}{dx} \right] P_l^m(x)
+    $$
+    
+    \item \textbf{Descenso ($m \to m-1$):}
+    $$
+    (l + m)(l - m + 1) \sqrt{1 - x^2} \, P_l^{m-1}(x) = \left[ m x - (1 - x^2) \frac{d}{dx} \right] P_l^m(x)
+    $$
+    
+    \item \textbf{Relación algebraica (recurrencia en $m$):}
+    $$
+    P_l^{m+1}(x) + \frac{2mx}{\sqrt{1 - x^2}} P_l^m(x) + (l + m)(l - m + 1) P_l^{m-1}(x) = 0
+    $$
+\end{enumerate}
+
+\section{Tarea: $P_l^{-m}(x)$}
+
+Demuestre la siguiente propiedad:
+
+$$
+P_l^{-m}(x) = (-1)^m \frac{(l-m)!}{(l+m)!} P_l^m(x)
+$$
+
+
+\section{Ejemplo: Aplicar $G^-$ a $P_2^1$ para hallar $P_2^0$}
+
+$$\boxed{G^- = m x - (1 - x^2) \frac{d}{dx}}$$
+
+\textbf{Solución}
+
+La propiedad diferencial del operador de descenso establece que:
+
+$$
+(l + m)(l - m + 1) \sqrt{1 - x^2} \, P_l^{m-1}(x) = G^-\big[ P_l^m(x) \big]
+$$
+
+Es decir:
+
+$$
+(l + m)(l - m + 1) \sqrt{1 - x^2} \, P_l^{m-1}(x) = \left[ m x - (1 - x^2) \frac{d}{dx} \right] P_l^m(x)
+$$
+
+\subsection*{Identificación de índices}
+En nuestro caso particular:
+$$
+l = 2 \qquad \text{y} \qquad m = 1
+$$
+
+Sustituyendo estos valores:
+
+\begin{itemize}
+    \item \textbf{Lado izquierdo:}
+    $$
+    (2 + 1)(2 - 1 + 1) \sqrt{1 - x^2} \, P_2^{0}(x) = (3)(2) \sqrt{1 - x^2} \, P_2^0(x) = 6 \sqrt{1 - x^2} \, P_2^0(x)
+    $$
+    
+    \item \textbf{Lado derecho (operador $G^-$ aplicado a $P_2^1$):}
+    $$
+    G^-[P_2^1(x)] = \left[ (1)x - (1 - x^2) \frac{d}{dx} \right] P_2^1(x) = \left[ x - (1 - x^2) \frac{d}{dx} \right] P_2^1(x)
+    $$
+\end{itemize}
+
+\textbf{Expresión de $P_2^1(x)$}
+Utilizamos la expresión (según la convención del texto):
+$$
+P_2^1(x) = -3x \sqrt{1 - x^2}
+$$
+(Nota: El signo negativo dependerá de la convención de fase utilizada, pero el procedimiento es análogo.)
+
+\textbf{Cálculo de $G^-[P_2^1(x)]$}
+
+\medskip
+\textbf{Paso 1: Multiplicación por $x$}
+$$
+x \cdot P_2^1(x) = x \cdot \big( -3x \sqrt{1 - x^2} \big) = -3x^2 \sqrt{1 - x^2}
+$$
+
+\medskip
+\textbf{Paso 2: Derivada de $P_2^1(x)$}
+$$
+\frac{d}{dx} P_2^1(x) = \frac{d}{dx} \big( -3x (1 - x^2)^{1/2} \big)
+$$
+$$
+= -3 (1 - x^2)^{1/2} + (-3x) \cdot \frac{1}{2} (1 - x^2)^{-1/2} \cdot (-2x)
+$$
+$$
+= -3 \sqrt{1 - x^2} + \frac{3x^2}{\sqrt{1 - x^2}}
+$$
+
+\medskip
+\textbf{Paso 3: Aplicación del factor $-(1 - x^2)$}
+$$
+- (1 - x^2) \frac{d}{dx} P_2^1(x) = - (1 - x^2) \left( -3 \sqrt{1 - x^2} + \frac{3x^2}{\sqrt{1 - x^2}} \right)
+$$
+$$
+= (1 - x^2) \cdot 3 \sqrt{1 - x^2} - (1 - x^2) \cdot \frac{3x^2}{\sqrt{1 - x^2}}
+$$
+$$
+= 3 (1 - x^2)^{3/2} - 3x^2 \sqrt{1 - x^2}
+$$
+
+\medskip
+\textbf{Paso 4: Suma de ambos términos}
+$$
+G^-[P_2^1(x)] = \big[ -3x^2 \sqrt{1 - x^2} \big] + \big[ 3 (1 - x^2)^{3/2} - 3x^2 \sqrt{1 - x^2} \big]
+$$
+$$
+= -3x^2 \sqrt{1 - x^2} + 3 (1 - x^2) \sqrt{1 - x^2} - 3x^2 \sqrt{1 - x^2}
+$$
+$$
+= \sqrt{1 - x^2} \big[ -3x^2 + 3(1 - x^2) - 3x^2 \big]
+$$
+$$
+= \sqrt{1 - x^2} \big[ -3x^2 + 3 - 3x^2 - 3x^2 \big]
+$$
+$$
+= \sqrt{1 - x^2} \big[ 3 - 9x^2 \big]
+$$
+$$
+= 3 \sqrt{1 - x^2} \, (1 - 3x^2)
+$$
+
+\textbf{Igualación y despeje de $P_2^0(x)$}
+Igualamos el lado izquierdo y el derecho:
+$$
+6 \sqrt{1 - x^2} \, P_2^0(x) = 3 \sqrt{1 - x^2} \, (1 - 3x^2)
+$$
+
+Dividiendo ambos lados por $6 \sqrt{1 - x^2}$ (válido para $x \neq \pm 1$):
+$$
+P_2^0(x) = \frac{3}{6} (1 - 3x^2) = \frac{1}{2} (1 - 3x^2)
+$$
+
+\textbf{Resultado final}
+$$
+\boxed{P_2^0(x) = \frac{1}{2} (3x^2 - 1)}
+$$
+
+Este resultado coincide exactamente con el polinomio de Legendre ordinario $P_2(x)$, como era de esperarse.
+
+\section{Tarea: Consultar la función generatriz de los asociados}
+
+A continuación se presentan dos definiciones equivalentes de la función generatriz para los polinomios asociados de Legendre, según diferentes autores:
+
+\textbf{Arfken ($7.^a$ edición)}
+Define la función generatriz para los asociados como:
+$$
+g_m(x, t) = \frac{(2m - 1)!! \, (1 - x^2)^{m/2}}{(1 - 2xt + t^2)^{m+1/2}} = \sum_{s=0}^\infty P_{s+m}^m(x) \, t^s
+$$
+
+\textbf{Riley}
+Presenta una forma equivalente en su resumen de funciones especiales:
+$$
+G(x, h) = \frac{(2m)! \, (1 - x^2)^{m/2}}{2^m \, m! \, (1 - 2xh + h^2)^{m+1/2}} = \sum_{n=0}^\infty P_{n+m}^m(x) \, h^n
+$$
+
+\medskip
+\textbf{Nota:} Ambas expresiones son equivalentes, ya que se cumple la relación:
+$$
+(2m-1)!! = \frac{(2m)!}{2^m \, m!}
+$$
+
+
+\section{Armónicos esféricos $Y_\ell^m$}
+
+Los armónicos esféricos constituyen una base biortonormal formada a partir de las siguientes bases ortonormales:
+
+\begin{itemize}
+    \item $\{\varphi_m(x)\} = \left\{ \dfrac{1}{\sqrt{2\pi}} e^{i m x} \right\}$
+    \item $\{\varphi_{\ell m}(x)\} = \left\{ \sqrt{\dfrac{2\ell+1}{2}} \sqrt{\dfrac{(\ell-m)!}{(\ell+m)!}} \, P_\ell^m(x) \right\}$
+\end{itemize}
+
+\subsection{Definición de los armónicos esféricos}
+
+La expresión explícita de los armónicos esféricos es:
+
+$$
+Y_\ell^m(\theta, \phi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} \; P_\ell^m(\cos \theta) \; e^{i m \phi}
+$$
+
+\subsection{Propiedad de ortonormalidad}
+
+Estas funciones son ortonormales sobre la superficie de una esfera unitaria, cumpliendo la siguiente relación:
+
+$$
+\int_{0}^{2\pi} \int_{0}^{\pi} \left[ Y_{\ell_1}^{m_1}(\theta, \phi) \right]^* Y_{\ell_2}^{m_2}(\theta, \phi) \; \sin \theta \; d\theta \, d\phi = \delta_{\ell_1 \ell_2} \, \delta_{m_1 m_2}
+$$
+
+\subsection{Solución general de la ecuación de Laplace}
+
+La solución general a la \textbf{ecuación de Laplace} ($\nabla^2 \phi = 0$) en coordenadas esféricas, expresada en términos de los armónicos esféricos $Y_\ell^m(\theta, \varphi)$, se escribe de la siguiente manera:
+
+$$
+\phi(r, \theta, \varphi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^{\ell} \left( A_{\ell m} \, r^\ell + \frac{B_{\ell m}}{r^{\ell+1}} \right) Y_\ell^m(\theta, \varphi)
+$$
+
+donde $A_{\ell m}$ y $B_{\ell m}$ son coeficientes que se determinan a partir de las condiciones de contorno del problema.
+
+
+\section{Ejemplo: Hallar $Y_0^0$, $Y_1^1$, $Y_2^1$}
+
+\subsection{Cálculo de $Y_0^0$}
+
+\textbf{Obtención de $Y_0^0$}
+Partimos de la definición general de los armónicos esféricos:
+$$
+Y_\ell^m(\theta, \phi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} \; P_\ell^m(\cos \theta) \; e^{i m \phi}
+$$
+
+Para $\ell = 0$ y $m = 0$:
+$$
+Y_0^0(\theta, \phi) = \sqrt{\frac{2(0)+1}{4\pi} \frac{(0-0)!}{(0+0)!}} \; P_0^0(\cos \theta) \; e^{i \cdot 0 \cdot \phi}
+$$
+
+Simplificando:
+$$
+\frac{2(0)+1}{4\pi} = \frac{1}{4\pi}, \qquad \frac{0!}{0!} = 1, \qquad e^{0} = 1
+$$
+
+Además, $P_0^0(\cos \theta) = 1$ (primer polinomio de Legendre). Por lo tanto:
+$$
+Y_0^0(\theta, \phi) = \sqrt{\frac{1}{4\pi}} \cdot 1 \cdot 1 = \frac{1}{\sqrt{4\pi}}
+$$
+
+\textbf{Verificación de la norma $\langle Y_0^0 | Y_0^0 \rangle$}
+En un espacio de Hilbert, el producto interno de una función consigo misma representa su norma al cuadrado. Para los armónicos esféricos, la relación entre la notación de Dirac y la representación integral es:
+$$
+\langle Y_0^0 | Y_0^0 \rangle = \int_{\Omega} [Y_0^0(\theta, \phi)]^* Y_0^0(\theta, \phi) \, d\Omega
+$$
+donde $d\Omega = \sin \theta \, d\theta \, d\phi$.
+
+Sustituyendo $Y_0^0 = \dfrac{1}{\sqrt{4\pi}}$:
+$$
+\langle Y_0^0 | Y_0^0 \rangle = \int_{0}^{2\pi} \int_{0}^{\pi} \left( \frac{1}{\sqrt{4\pi}} \right)^* \left( \frac{1}{\sqrt{4\pi}} \right) \sin \theta \, d\theta \, d\phi
+$$
+
+Dado que $\left( \frac{1}{\sqrt{4\pi}} \right)^* \left( \frac{1}{\sqrt{4\pi}} \right) = \frac{1}{4\pi}$, tenemos:
+$$
+\langle Y_0^0 | Y_0^0 \rangle = \frac{1}{4\pi} \int_{0}^{2\pi} \int_{0}^{\pi} \sin \theta \, d\theta \, d\phi
+$$
+
+Desarrollamos explícitamente la integral doble:
+$$
+\int_{0}^{2\pi} \int_{0}^{\pi} \sin \theta \, d\theta \, d\phi = \left( \int_{0}^{2\pi} d\phi \right) \left( \int_{0}^{\pi} \sin \theta \, d\theta \right)
+$$
+
+Calculamos cada integral por separado:
+$$
+\int_{0}^{2\pi} d\phi = \left[ \phi \right]_{0}^{2\pi} = 2\pi
+$$
+$$
+\int_{0}^{\pi} \sin \theta \, d\theta = \left[ -\cos \theta \right]_{0}^{\pi} = (-\cos \pi) - (-\cos 0) = (1) + (1) = 2
+$$
+
+Multiplicando los resultados:
+$$
+\int_{0}^{2\pi} \int_{0}^{\pi} \sin \theta \, d\theta \, d\phi = (2\pi)(2) = 4\pi
+$$
+
+Sustituyendo en la expresión del producto interno:
+$$
+\langle Y_0^0 | Y_0^0 \rangle = \frac{1}{4\pi} \cdot 4\pi = 1
+$$
+
+Por lo tanto, se verifica que $Y_0^0$ está normalizada.
+
+\textbf{Conclusión}
+Este formalismo demuestra que los armónicos esféricos constituyen una \textbf{base ortonormal} completa, donde de forma general se cumple que:
+$$
+\langle Y_\ell^m | Y_{\ell'}^{m'} \rangle = \delta_{\ell\ell'} \, \delta_{mm'}
+$$
+
+\subsection{Cálculo de $Y_1^1$}
+
+\textbf{Expresión general de $Y_\ell^m$}
+
+Para $Y_1^1$ tenemos:
+$$
+\ell = 1, \quad m = 1
+$$
+
+\textbf{Cálculo del coeficiente de normalización}
+$$
+\sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} = \sqrt{\frac{2(1)+1}{4\pi} \frac{(1-1)!}{(1+1)!}} = \sqrt{\frac{3}{4\pi} \frac{0!}{2!}}
+$$
+Recordando que $0! = 1$ y $2! = 2$:
+$$
+\sqrt{\frac{3}{4\pi} \cdot \frac{1}{2}} = \sqrt{\frac{3}{8\pi}}
+$$
+
+\textbf{Valor de $P_1^1(\cos \theta)$}
+Sabemos que $P_1^1(x) = -\sqrt{1 - x^2}$ (con la fase de Condon-Shortley). Sustituyendo $x = \cos \theta$:
+$$
+P_1^1(\cos \theta) = -\sqrt{1 - \cos^2 \theta} = -\sin \theta
+$$
+
+\textbf{Expresión de $Y_1^1$}
+$$
+Y_1^1(\theta, \phi) = \sqrt{\frac{3}{8\pi}} \; (-\sin \theta) \; e^{i \phi}
+$$
+Por lo tanto:
+$$
+Y_1^1(\theta, \phi) = -\sqrt{\frac{3}{8\pi}} \; \sin \theta \; e^{i \phi}
+$$
+
+\textbf{Verificación de la norma $\langle Y_1^1 | Y_1^1 \rangle$}
+
+El producto interno se define como:
+$$
+\langle Y_1^1 | Y_1^1 \rangle = \int_{0}^{2\pi} \int_{0}^{\pi} \left[ Y_1^1(\theta, \phi) \right]^* Y_1^1(\theta, \phi) \; \sin \theta \, d\theta \, d\phi
+$$
+
+Calculamos el integrando:
+$$
+\left[ Y_1^1(\theta, \phi) \right]^* = -\sqrt{\frac{3}{8\pi}} \; \sin \theta \; e^{-i \phi}
+$$
+$$
+Y_1^1(\theta, \phi) = -\sqrt{\frac{3}{8\pi}} \; \sin \theta \; e^{i \phi}
+$$
+Multiplicando:
+$$
+\left[ Y_1^1 \right]^* Y_1^1 = \left( \frac{3}{8\pi} \right) \sin^2 \theta \; e^{-i\phi} e^{i\phi} = \frac{3}{8\pi} \sin^2 \theta
+$$
+
+Sustituimos en la integral:
+$$
+\langle Y_1^1 | Y_1^1 \rangle = \frac{3}{8\pi} \int_{0}^{2\pi} \int_{0}^{\pi} \sin^2 \theta \; \sin \theta \, d\theta \, d\phi = \frac{3}{8\pi} \int_{0}^{2\pi} \int_{0}^{\pi} \sin^3 \theta \, d\theta \, d\phi
+$$
+
+\textbf{Desarrollo de la integral doble}
+
+Separamos las integrales:
+$$
+\int_{0}^{2\pi} \int_{0}^{\pi} \sin^3 \theta \, d\theta \, d\phi = \left( \int_{0}^{2\pi} d\phi \right) \left( \int_{0}^{\pi} \sin^3 \theta \, d\theta \right)
+$$
+
+Cálculo de la integral en $\phi$:
+$$
+\int_{0}^{2\pi} d\phi = \left[ \phi \right]_{0}^{2\pi} = 2\pi
+$$
+
+Cálculo de la integral en $\theta$ usando $\sin^3 \theta = \sin \theta (1 - \cos^2 \theta)$:
+$$
+\int_{0}^{\pi} \sin^3 \theta \, d\theta = \int_{0}^{\pi} \sin \theta \, d\theta - \int_{0}^{\pi} \sin \theta \cos^2 \theta \, d\theta
+$$
+
+Primera integral:
+$$
+\int_{0}^{\pi} \sin \theta \, d\theta = \left[ -\cos \theta \right]_{0}^{\pi} = (-\cos \pi) - (-\cos 0) = (-(-1)) - (-1) = 1 + 1 = 2
+$$
+
+Segunda integral: sea $u = \cos \theta$, $du = -\sin \theta \, d\theta$, cuando $\theta = 0 \to u = 1$, $\theta = \pi \to u = -1$:
+$$
+\int_{0}^{\pi} \sin \theta \cos^2 \theta \, d\theta = \int_{1}^{-1} u^2 (-du) = \int_{-1}^{1} u^2 \, du = \left[ \frac{u^3}{3} \right]_{-1}^{1} = \frac{1}{3} - \left( -\frac{1}{3} \right) = \frac{2}{3}
+$$
+
+Por lo tanto:
+$$
+\int_{0}^{\pi} \sin^3 \theta \, d\theta = 2 - \frac{2}{3} = \frac{4}{3}
+$$
+
+Multiplicamos los resultados:
+$$
+\int_{0}^{2\pi} \int_{0}^{\pi} \sin^3 \theta \, d\theta \, d\phi = (2\pi) \left( \frac{4}{3} \right) = \frac{8\pi}{3}
+$$
+
+\textbf{Resultado final del producto interno}
+$$
+\langle Y_1^1 | Y_1^1 \rangle = \frac{3}{8\pi} \cdot \frac{8\pi}{3} = 1
+$$
+
+Por lo tanto, se verifica que $Y_1^1$ está normalizada:
+$$
+\langle Y_1^1 | Y_1^1 \rangle = 1
+$$
+
+
+\subsection{Cálculo de $Y_2^1$}
+
+Para $Y_2^1$, se utiliza la definición general:
+$$
+Y_2^1(\theta, \phi) = \sqrt{\frac{2 \cdot 2 + 1}{4\pi} \frac{(2-1)!}{(2+1)!}} \, P_2^1(\cos \theta) \, e^{i\phi}
+$$
+$$
+Y_2^1(\theta, \phi) = \sqrt{\frac{5}{4\pi} \cdot \frac{1!}{3!}} \, P_2^1(\cos \theta) \, e^{i\phi}
+$$
+$$
+Y_2^1(\theta, \phi) = \sqrt{\frac{5}{4\pi} \cdot \frac{1}{6}} \, (-3 \cos \theta \sin \theta) \, e^{i\phi}
+$$
+$$
+Y_2^1(\theta, \phi) = \sqrt{\frac{5}{24\pi}} \, (-3 \cos \theta \sin \theta) \, e^{i\phi}
+$$
+$$
+Y_2^1(\theta, \phi) = -\sqrt{\frac{15}{8\pi}} \, \cos \theta \sin \theta \, e^{i\phi}
+$$
+
+\section{Ejemplo 15.5.1 de Arfken}
+
+Determine el potencial electrostático dentro de una región esférica de radio $r_0$ libre de cargas, donde el potencial en la superficie de la frontera esférica se especifica como una función arbitraria $V(r_0, \theta, \phi)$ de las coordenadas angulares $\theta$ y $\phi$.
+
+\textbf{Solución del Problema}
+
+Para resolver este problema, partimos de la solución general de la \textbf{ecuación de Laplace} ($\nabla^2\phi = 0$) en coordenadas esféricas, la cual se expresa como una superposición de productos de funciones radiales y armónicos esféricos:
+$$
+\phi(r, \theta, \phi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell \left( A_{\ell m} r^\ell + \frac{B_{\ell m}}{r^{\ell+1}} \right) Y_\ell^m(\theta, \phi)
+$$
+
+\textbf{Aplicación de las condiciones físicas:}
+Dado que buscamos el potencial en el \textbf{interior} de la esfera ($r \leq r_0$) y este debe permanecer finito en el origen ($r=0$), debemos descartar los términos con potencias negativas de $r$, ya que divergen cuando $r \to 0$. Esto implica que el coeficiente $B_{\ell m}$ debe ser igual a cero para todos los valores de $\ell$ y $m$. En consecuencia, la expresión para el potencial se reduce a:
+$$
+\phi(r, \theta, \phi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell A_{\ell m} r^\ell Y_\ell^m(\theta, \phi)
+$$
+
+\textbf{Condición de frontera:}
+Imponemos la condición de frontera en la superficie de la esfera ($r = r_0$), donde el potencial debe coincidir con la función dada $V(r_0, \theta, \phi)$:
+$$
+V(r_0, \theta, \phi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell A_{\ell m} r_0^\ell Y_\ell^m(\theta, \phi)
+$$
+
+Esta expresión se identifica como una \textbf{expansión de Laplace} de la función superficial en la base de armónicos esféricos.
+
+\textbf{Uso de la ortonormalidad:}
+Para determinar los coeficientes desconocidos $A_{\ell m}$, utilizamos la \textbf{propiedad de ortonormalidad} de los armónicos esféricos sobre la superficie de una esfera unitaria:
+$$
+\int_0^{2\pi} \int_0^\pi [Y_{\ell'}^{m'}(\theta, \phi)]^* Y_\ell^m(\theta, \phi) \sin\theta \, d\theta \, d\phi = \delta_{\ell \ell'} \delta_{m m'}
+$$
+
+Multiplicando ambos lados de la condición de frontera por $[Y_\ell^m(\theta, \phi)]^* \sin\theta$ e integrando sobre todos los ángulos, obtenemos:
+$$
+A_{\ell m} r_0^\ell = \int_0^{2\pi} \int_0^\pi V(r_0, \theta, \phi) [Y_\ell^m(\theta, \phi)]^* \sin\theta \, d\theta \, d\phi
+$$
+
+\textbf{Coeficientes:}
+Despejando $A_{\ell m}$:
+$$
+A_{\ell m} = \frac{1}{r_0^\ell} \int_0^{2\pi} \int_0^\pi V(r_0, \theta, \phi) [Y_\ell^m(\theta, \phi)]^* \sin\theta \, d\theta \, d\phi
+$$
+
+\textbf{Solución final:}
+Al sustituir estos coeficientes en nuestra serie original, determinamos que el potencial en cualquier punto del interior de la esfera se puede escribir de forma compacta como:
+$$
+\phi(r, \theta, \phi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell c_{\ell m} \left( \frac{r}{r_0} \right)^\ell Y_\ell^m(\theta, \phi)
+$$
+donde $c_{\ell m}$ representa los coeficientes de la expansión de Laplace del potencial especificado en la frontera:
+$$
+c_{\ell m} = \int_0^{2\pi} \int_0^\pi V(r_0, \theta, \phi) [Y_\ell^m(\theta, \phi)]^* \sin\theta \, d\theta \, d\phi
+$$
+
+Este resultado garantiza una solución única y continua que satisface tanto la ecuación diferencial en el volumen como las condiciones impuestas en la superficie.
+
+
+\section{Ejemplo: Esferas concéntricas}
+
+Determine el potencial electrostático $\phi(r, \theta, \varphi)$ en la región comprendida entre dos cáscaras esféricas concéntricas de radios $a$ y $b$ ($a < r < b$). La superficie interior ($r=a$) se mantiene a un potencial fijo dado por una función arbitraria $V_a(\theta, \varphi)$, y la superficie exterior ($r=b$) se mantiene a un potencial $V_b(\theta, \varphi)$.
+
+\textbf{Solución y Desarrollo Analítico}
+
+\textbf{1. Planteamiento de la Solución General}
+
+Dado que la región de interés no contiene cargas eléctricas, el potencial satisface la \textbf{ecuación de Laplace} ($\nabla^2\phi = 0$). En coordenadas esféricas, la solución más general que es finita en sus variables angulares es la expansión en armónicos esféricos $Y_\ell^m(\theta, \varphi)$:
+$$
+\phi(r, \theta, \varphi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell \left( A_{\ell m} r^\ell + \frac{B_{\ell m}}{r^{\ell+1}} \right) Y_\ell^m(\theta, \varphi)
+$$
+
+En este problema, a diferencia de los casos donde se estudia solo el interior o el exterior de una esfera, \textbf{debemos conservar ambos términos radiales}. Los términos $r^\ell$ son necesarios para satisfacer la condición en la frontera interior, y los términos $r^{-(\ell+1)}$ son necesarios para la frontera exterior, ya que la región no incluye ni el origen ($r=0$) ni el infinito ($r \to \infty$).
+
+\textbf{2. Aplicación de las Condiciones de Frontera}
+
+Para determinar los coeficientes $A_{\ell m}$ y $B_{\ell m}$, expandimos los potenciales conocidos en las fronteras utilizando la \textbf{expansión de Laplace}:
+
+\begin{itemize}
+    \item En $r = a$: 
+    $$
+    V_a(\theta, \varphi) = \sum_{\ell, m} \alpha_{\ell m} Y_\ell^m(\theta, \varphi)
+    $$
+    
+    \item En $r = b$: 
+    $$
+    V_b(\theta, \varphi) = \sum_{\ell, m} \beta_{\ell m} Y_\ell^m(\theta, \varphi)
+    $$
+\end{itemize}
+
+Donde los coeficientes de superficie $\alpha_{\ell m}$ y $\beta_{\ell m}$ se hallan mediante la propiedad de \textbf{ortonormalidad} de los armónicos esféricos:
+$$
+\alpha_{\ell m} = \int_0^{2\pi} \int_0^\pi V_a(\theta, \varphi) [Y_\ell^m(\theta, \varphi)]^* \sin\theta \, d\theta \, d\varphi
+$$
+$$
+\beta_{\ell m} = \int_0^{2\pi} \int_0^\pi V_b(\theta, \varphi) [Y_\ell^m(\theta, \varphi)]^* \sin\theta \, d\theta \, d\varphi
+$$
+
+\textbf{3. Sistema de Ecuaciones Lineales}
+
+Al igualar término a término la expansión general con los potenciales en $r=a$ y $r=b$, obtenemos para cada par $(\ell, m)$ un sistema de dos ecuaciones con dos incógnitas:
+\begin{enumerate}
+    \item $A_{\ell m} a^\ell + B_{\ell m} a^{-(\ell+1)} = \alpha_{\ell m}$
+    \item $A_{\ell m} b^\ell + B_{\ell m} b^{-(\ell+1)} = \beta_{\ell m}$
+\end{enumerate}
+
+\textbf{4. Resolución de los Coeficientes}
+
+Multiplicando la primera ecuación por $a^{\ell+1}$ y la segunda por $b^{\ell+1}$, obtenemos:
+\begin{align}
+    A_{\ell m} a^{2\ell+1} + B_{\ell m} &= \alpha_{\ell m} a^{\ell+1} \\
+    A_{\ell m} b^{2\ell+1} + B_{\ell m} &= \beta_{\ell m} b^{\ell+1}
+\end{align}
+
+Restando la primera ecuación de la segunda:
+$$
+A_{\ell m} (b^{2\ell+1} - a^{2\ell+1}) = \beta_{\ell m} b^{\ell+1} - \alpha_{\ell m} a^{\ell+1}
+$$
+
+Por lo tanto:
+$$
+A_{\ell m} = \frac{\beta_{\ell m} b^{\ell+1} - \alpha_{\ell m} a^{\ell+1}}{b^{2\ell+1} - a^{2\ell+1}}
+$$
+
+Despejando $B_{\ell m}$ de la primera ecuación:
+$$
+B_{\ell m} = \alpha_{\ell m} a^{\ell+1} - A_{\ell m} a^{2\ell+1}
+$$
+
+Sustituyendo $A_{\ell m}$:
+\begin{align*}
+B_{\ell m} &= \alpha_{\ell m} a^{\ell+1} - a^{2\ell+1} \left( \frac{\beta_{\ell m} b^{\ell+1} - \alpha_{\ell m} a^{\ell+1}}{b^{2\ell+1} - a^{2\ell+1}} \right) \\
+&= \frac{(\alpha_{\ell m} a^{\ell+1})(b^{2\ell+1} - a^{2\ell+1}) - a^{2\ell+1}(\beta_{\ell m} b^{\ell+1} - \alpha_{\ell m} a^{\ell+1})}{b^{2\ell+1} - a^{2\ell+1}} \\
+&= \frac{\alpha_{\ell m} a^{\ell+1} b^{2\ell+1} - \alpha_{\ell m} a^{3\ell+2} - \beta_{\ell m} a^{2\ell+1} b^{\ell+1} + \alpha_{\ell m} a^{3\ell+2}}{b^{2\ell+1} - a^{2\ell+1}} \\
+&= \frac{\alpha_{\ell m} a^{\ell+1} b^{2\ell+1} - \beta_{\ell m} a^{2\ell+1} b^{\ell+1}}{b^{2\ell+1} - a^{2\ell+1}}
+\end{align*}
+
+Factorizando $a^{\ell+1} b^{\ell+1}$:
+$$
+B_{\ell m} = a^{\ell+1} b^{\ell+1} \left( \frac{\alpha_{\ell m} b^{\ell} - \beta_{\ell m} a^{\ell}}{b^{2\ell+1} - a^{2\ell+1}} \right)
+$$
+
+\textbf{5. Resultado Final}
+
+Sustituyendo estos valores en la serie original, obtenemos una expresión única para el potencial en cualquier punto del espacio anular:
+$$
+\phi(r, \theta, \varphi) = \sum_{\ell=0}^\infty \sum_{m=-\ell}^\ell \left[ \left( \frac{\beta_{\ell m} b^{\ell+1} - \alpha_{\ell m} a^{\ell+1}}{b^{2\ell+1} - a^{2\ell+1}} \right) r^\ell + \left( a^{\ell+1} b^{\ell+1} \frac{\alpha_{\ell m} b^{\ell} - \beta_{\ell m} a^{\ell}}{b^{2\ell+1} - a^{2\ell+1}} \right) \frac{1}{r^{\ell+1}} \right] Y_\ell^m(\theta, \varphi)
+$$
+
+que satisface exactamente la ecuación diferencial y las condiciones impuestas en ambas cáscaras.
+
+Este tipo de desarrollo es fundamental para estudiar campos en \textbf{condensadores esféricos asimétricos} o en la \textbf{polarización de medios dieléctricos} entre electrodos esféricos.
+
+
+\section{Tarea: Repasar las propiedades del operador $\hat{L}^2$}
+
+\subsection{Propiedades Generales del Operador $\hat{L}^2$}
+
+El operador $\hat{L}^2$ representa el cuadrado de la magnitud del momento angular orbital en mecánica cuántica. Sus propiedades fundamentales son:
+
+\begin{itemize}
+    \item \textbf{Definición algebraica:} Se define como la suma de los cuadrados de las componentes cartesianas del momento angular:
+    $$\hat{L}^2 = \hat{L}_x^2 + \hat{L}_y^2 + \hat{L}_z^2$$
+    
+    \item \textbf{Representación en coordenadas esféricas:} En el espacio de posiciones, $\hat{L}^2$ actúa únicamente sobre las variables angulares $(\theta, \phi)$ y no depende de la distancia radial $r$. Su forma explícita es:
+    $$\hat{L}^2 = -\left[ \frac{1}{\sin\theta} \frac{\partial}{\partial\theta} \left( \sin\theta \frac{\partial}{\partial\theta} \right) + \frac{1}{\sin^2\theta} \frac{\partial^2}{\partial\phi^2} \right]$$
+    (Nota: El término entre corchetes es exactamente el operador de Laplace-Beltrami en la esfera, a menudo denotado como $\nabla^2_{\Omega}$).
+    
+    \item \textbf{Conmutación con las componentes:} $\hat{L}^2$ conmuta con cualquiera de las componentes cartesianas del momento angular:
+    $$[\hat{L}^2, \hat{L}_x] = [\hat{L}^2, \hat{L}_y] = [\hat{L}^2, \hat{L}_z] = 0$$
+    Esta es la propiedad más importante, ya que garantiza que $\hat{L}^2$ y $\hat{L}_z$ (por convención) pueden tener \textbf{autoestados simultáneos}.
+    
+    \item \textbf{Hermiticidad:} $\hat{L}^2$ es un operador hermítico (autoadjunto). Esto garantiza dos cosas:
+    \begin{enumerate}
+        \item Sus autovalores son números reales.
+        \item Sus autofunciones correspondientes a autovalores diferentes son ortogonales.
+    \end{enumerate}
+    
+    \item \textbf{Definido positivo:} Dado que $\hat{L}_x, \hat{L}_y, \hat{L}_z$ son hermíticos, el valor esperado de $\hat{L}^2$ para cualquier estado $|\psi\rangle$ es la suma de normas al cuadrado:
+    $$\langle \psi | \hat{L}^2 | \psi \rangle = \langle \psi | \hat{L}_x^2 | \psi \rangle + \langle \psi | \hat{L}_y^2 | \psi \rangle + \langle \psi | \hat{L}_z^2 | \psi \rangle = \|\hat{L}_x \psi\|^2 + \|\hat{L}_y \psi\|^2 + \|\hat{L}_z \psi\|^2 \ge 0$$
+    Por lo tanto, todos sus autovalores deben ser mayores o iguales a cero.
+\end{itemize}
+
+\subsection{Propiedades de $\hat{L}^2$ actuando sobre los Armónicos Esféricos $Y_\ell^m$}
+
+Los armónicos esféricos $Y_\ell^m(\theta, \phi)$ son, por definición, las autofunciones (autoestados) del operador $\hat{L}^2$. Cuando $\hat{L}^2$ actúa sobre ellos, se manifiestan las siguientes propiedades:
+
+\begin{itemize}
+    \item \textbf{Ecuación de Autovalores:} La acción de $\hat{L}^2$ sobre $Y_\ell^m$ devuelve la misma función multiplicada por una constante (el autovalor):
+    $$\hat{L}^2 Y_\ell^m(\theta, \phi) = \ell(\ell + 1) Y_\ell^m(\theta, \phi)$$
+    Donde $\ell = 0, 1, 2, 3, \dots$ es el \textbf{número cuántico azimutal} (o de momento angular orbital).
+    
+    \item \textbf{Cuantización de la magnitud:} El resultado anterior nos dice que la magnitud al cuadrado del momento angular no puede tomar cualquier valor, sino que está cuantizada. La magnitud del vector momento angular es $|\vec{L}| = \sqrt{\ell(\ell+1)}$.
+    
+    \item \textbf{Independencia de $m$ (Degeneración):} Observa que el autovalor $\ell(\ell+1)$ \textbf{no depende de $m$}. Para un valor dado de $\ell$, el número cuántico magnético $m$ puede tomar $2\ell + 1$ valores enteros ($m = -\ell, -\ell+1, \dots, \ell$).
+    \begin{itemize}
+        \item Esto significa que existen $2\ell + 1$ funciones diferentes ($Y_\ell^{-\ell}, \dots, Y_\ell^{\ell}$) que son autofunciones de $\hat{L}^2$ con el \textbf{mismo autovalor}.
+        \item A esto se le llama \textbf{degeneración $(2\ell + 1)$-ple}.
+    \end{itemize}
+    
+    \item \textbf{Autoestados Simultáneos con $\hat{L}_z$:} Como se mencionó, $[\hat{L}^2, \hat{L}_z] = 0$. Por lo tanto, los $Y_\ell^m$ también son autofunciones de $\hat{L}_z$:
+    $$\hat{L}_z Y_\ell^m(\theta, \phi) = m Y_\ell^m(\theta, \phi)$$
+    El par de operadores $\{\hat{L}^2, \hat{L}_z\}$ forma un \textbf{Conjunto Completo de Observables que Conmutan (CCOC)} para las variables angulares, lo que permite etiquetar unívocamente cada estado con los dos números cuánticos $(\ell, m)$.
+    
+    \item \textbf{Relación con el Laplaciano y la Energía:} En problemas con simetría esférica (como el átomo de hidrógeno o el oscilador armónico 3D), el operador energía cinética contiene al Laplaciano $\nabla^2$. En coordenadas esféricas, el Laplaciano se separa en una parte radial y una parte angular que es proporcional a $\hat{L}^2$:
+    $$\nabla^2 = \frac{1}{r^2} \frac{\partial}{\partial r} \left( r^2 \frac{\partial}{\partial r} \right) - \frac{\hat{L}^2}{r^2}$$
+    Debido a que $\hat{L}^2 Y_\ell^m = \ell(\ell+1) Y_\ell^m$, al aplicar el Laplaciano a una función de onda separable $\psi(r, \theta, \phi) = R(r)Y_\ell^m(\theta, \phi)$, la parte angular se reemplaza simplemente por la constante $\ell(\ell+1)$, dando origen al llamado \textbf{término de barrera centrífuga} $\frac{\ell(\ell+1)}{2mr^2}$ en la ecuación radial efectiva.
+\end{itemize}
+
+\subsection{Resumen en una sola idea}
+
+El operador $\hat{L}^2$ mide el "tamaño" del momento angular. Al actuar sobre los armónicos esféricos $Y_\ell^m$, los deja invariantes en forma, escalándolos únicamente por el factor $\ell(\ell+1)$, lo que demuestra que los armónicos esféricos son los estados de momento angular bien definido, degenerados $2\ell+1$ veces debido a las diferentes orientaciones posibles ($m$) que no alteran la magnitud total del momento.
+
+\section{Tarea: Calcular $\hat{L}^2Y_1^1$}
+
+\subsection{Definiciones}
+
+Operador de momento angular al cuadrado:
+$$ \hat{L}^2 = -\left[ \frac{1}{\sin\theta} \frac{\partial}{\partial\theta} \left( \sin\theta \frac{\partial}{\partial\theta} \right) + \frac{1}{\sin^2\theta} \frac{\partial^2}{\partial\phi^2} \right] $$
+
+Armónico esférico para $\ell=1, m=1$:
+$$ Y_1^1(\theta, \phi) = C \sin\theta e^{i\phi} \quad \text{donde} \quad C = -\sqrt{\frac{3}{8\pi}} $$
+
+\subsection{Evaluación de las derivadas parciales}
+
+\textbf{Parte azimutal ($\phi$):}
+$$ \frac{\partial}{\partial\phi} \left( C \sin\theta e^{i\phi} \right) = i C \sin\theta e^{i\phi} $$
+$$ \frac{\partial^2}{\partial\phi^2} \left( C \sin\theta e^{i\phi} \right) = i^2 C \sin\theta e^{i\phi} = -C \sin\theta e^{i\phi} $$
+
+\textbf{Parte polar ($\theta$):}
+Primera derivada:
+$$ \frac{\partial}{\partial\theta} \left( C \sin\theta e^{i\phi} \right) = C \cos\theta e^{i\phi} $$
+
+Multiplicación por $\sin\theta$:
+$$ \sin\theta \frac{\partial Y_1^1}{\partial\theta} = C \sin\theta \cos\theta e^{i\phi} $$
+
+Segunda derivada (regla del producto):
+$$ \frac{\partial}{\partial\theta} \left( C \sin\theta \cos\theta e^{i\phi} \right) = C e^{i\phi} \left( \cos\theta \cdot \cos\theta + \sin\theta \cdot (-\sin\theta) \right) = C e^{i\phi} (\cos^2\theta - \sin^2\theta) $$
+
+División por $\sin\theta$:
+$$ \frac{1}{\sin\theta} \frac{\partial}{\partial\theta} \left( \sin\theta \frac{\partial Y_1^1}{\partial\theta} \right) = C e^{i\phi} \left( \frac{\cos^2\theta - \sin^2\theta}{\sin\theta} \right) $$
+
+\subsection{Sustitución en el operador $\hat{L}^2$}
+
+$$ \hat{L}^2 Y_1^1 = -\left[ C e^{i\phi} \left( \frac{\cos^2\theta - \sin^2\theta}{\sin\theta} \right) + \frac{1}{\sin^2\theta} \left( -C \sin\theta e^{i\phi} \right) \right] $$
+
+Factorizamos $C e^{i\phi}$:
+$$ \hat{L}^2 Y_1^1 = - C e^{i\phi} \left[ \frac{\cos^2\theta - \sin^2\theta}{\sin\theta} - \frac{\sin\theta}{\sin^2\theta} \right] $$
+
+Simplificamos el segundo término del corchete:
+$$ \hat{L}^2 Y_1^1 = - C e^{i\phi} \left[ \frac{\cos^2\theta - \sin^2\theta}{\sin\theta} - \frac{1}{\sin\theta} \right] $$
+
+Combinamos las fracciones:
+$$ \hat{L}^2 Y_1^1 = - C e^{i\phi} \left[ \frac{\cos^2\theta - \sin^2\theta - 1}{\sin\theta} \right] $$
+
+\subsection{Simplificación trigonométrica}
+
+Usamos la identidad $\cos^2\theta - 1 = -\sin^2\theta$:
+$$ \cos^2\theta - \sin^2\theta - 1 = (\cos^2\theta - 1) - \sin^2\theta = -\sin^2\theta - \sin^2\theta = -2\sin^2\theta $$
+
+Sustituimos en el corchete:
+$$ \hat{L}^2 Y_1^1 = - C e^{i\phi} \left[ \frac{-2\sin^2\theta}{\sin\theta} \right] $$
+$$ \hat{L}^2 Y_1^1 = - C e^{i\phi} \left[ -2\sin\theta \right] $$
+
+\subsection{Resultado final}
+
+Reagrupamos los términos para recuperar la forma original de $Y_1^1$:
+$$ \hat{L}^2 Y_1^1 = 2 \left( C \sin\theta e^{i\phi} \right) $$
+
+$$ \hat{L}^2 Y_1^1 = 2 Y_1^1 $$
+
+Lo cual verifica la ecuación de autovalores $\hat{L}^2 Y_\ell^m = \ell(\ell+1) Y_\ell^m$ para $\ell=1$, ya que $1(1+1) = 2$.
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
