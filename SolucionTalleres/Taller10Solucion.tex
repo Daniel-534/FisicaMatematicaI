@@ -12,17 +12,23 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usetikzlibrary{arrows.meta}
 
 
 
 % cabecera
 \pagestyle{fancy}
 \fancyhead[l]{Física Matemática I}
-\fancyhead[c]{Taller 8}
+\fancyhead[c]{Taller 10}
 
+\setlength{\headheight}{14.5pt}
 \renewcommand{\headrulewidth}{0.2pt} % linea horizontal
 
 \begin{document}
+\pagenumbering{roman}
 
 \begin{titlepage}
   \centering
@@ -30,8 +36,35 @@
   \vspace{2cm}
   {\huge\bfseries Física Matemática I\par}
   \vspace{0.4cm}
-  {\Large Solución al Taller 8 \par}
-  \vspace{2.5cm}
+  {\Large Solución al Taller 10 \par}
+  \vspace{1.2cm}
+  \begin{tcolorbox}[
+    width=0.86\textwidth,
+    colback=white,
+    colframe=black!55,
+    arc=2mm,
+    boxrule=0.5pt,
+    title={\centering Algunas ecuaciones del taller},
+    fonttitle=\bfseries
+  ]
+  \begin{align*}
+    g(x,t) &= e^{2xt-t^2}=\sum_{n=0}^{\infty}\frac{H_n(x)}{n!}t^n, \\
+    H_n(x) &= (-1)^n e^{x^2}\frac{d^n}{dx^n}\left(e^{-x^2}\right), \\
+    H'_n(x) &= 2nH_{n-1}(x),
+    \qquad
+    2xH_n(x)=2nH_{n-1}(x)+H_{n+1}(x), \\
+    \int_{-\infty}^{\infty} e^{-x^2}H_m(x)H_n(x)\,dx
+    &= \sqrt{\pi}\,2^n n!\,\delta_{mn}, \\
+    H_n(-x) &= (-1)^n H_n(x), \\
+    H''_n(x)-2xH'_n(x)+2nH_n(x) &= 0, \\
+    x^{2r} &= \frac{(2r)!}{2^{2r}}
+    \sum_{k=0}^{r}\frac{H_{2k}(x)}{(2k)!\,(r-k)!}, \\
+    \psi_n(x) &= \left(\frac{\alpha}{\sqrt{\pi}\,2^n n!}\right)^{1/2}
+    H_n(\alpha x)e^{-\alpha^2x^2/2}, \\
+    E_n &= \hbar\omega\left(n+\frac{1}{2}\right).
+  \end{align*}
+  \end{tcolorbox}
+  \vspace{1.2cm}
   {\large Autor:\par}
   \vspace{0.2cm}
   {\large Daniel Soto Villada\par}
@@ -39,795 +72,1106 @@
   \vfill
   {\large \today\par}
 \end{titlepage}
+\setcounter{page}{2}
 
 \newpage
 \tableofcontents
 \newpage
+\pagenumbering{arabic}
 
 
 \section{Problema 1}
-Utilizando la función generatriz muestre las siguientes relaciones (para ello derive la función generatriz con respecto a $x$ o $t$):
+Utilizando la función generatriz de los polinomios de Hermite
+$$
+g(x, t) = e^{2xt - t^2} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n
+$$
+muestre las siguientes relaciones (para ello derive la función generatriz con respecto a $x$ o $t$):
 \begin{itemize}
-    \item[a)] $P'_{n-1}(x) + P'_{n+1}(x) = P_n(x) + 2x P'_n(x)$.
-    \item[b)] $(n+1)P_{n+1}(x) = (2n+1)x P_n(x) - n P_{n-1}(x)$.
-\end{itemize}
-De (a) y (b) salen más propiedades. Por ejemplo, derive (b) y reemplace su resultado en (a). Con ello muestre que:
-\begin{itemize}
-    \item[c)] $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$.
-    \item[d)] $P'_{n+1}(x) = (n+1)P_n(x) + x P'_n(x)$.
-    \item[e)] $P_{n+1}'(x) - P'_{n-1}(x) = (2n+1)P_n(x)$. \textit{(Nota: se ajusta un error tipográfico del enunciado original, que por truncamiento en la transcripción aparece como ``$1/(n+1)$''; la identidad estándar es la presentada aquí)}.
-\end{itemize}
-Por último, haga el cambio de variable $n \to n-1$ en (d) y muestre:
-\begin{itemize}
-    \item[f)] $(1-x^2)P'_n(x) = n P_{n-1}(x) - n x P_n(x)$. \textit{(Nota: se corrige el signo del segundo término respecto al enunciado original; el desarrollo analítico conduce necesariamente al signo menos)}.
+    \item[a)] $2xH_n(x) = 2nH_{n-1}(x) + H_{n+1}(x)$.
+    \item[b)] $H'_n(x) = 2nH_{n-1}(x)$.
+    \item[c)] $H_{2n+1}(0) = 0$, $H_{2n}(0) = (-1)^n \frac{(2n)!}{n!}$.
+    \item[d)] Usando a) y b), muestre que $H''_n(x) - 2xH'_n(x) + 2nH_n(x) = 0$.
+    \item[e)] $e^{2x} = e \sum_{n=0}^{\infty} \frac{H_n(x)}{n!}$.
 \end{itemize}
 
 \subsection{Solución}
-Para abordar este problema nos basamos en la función generatriz de los polinomios de Legendre, introducida y desarrollada extensamente en el Capítulo 8, Sección 8.4 del texto de Alonso Sepúlveda. La función generatriz se define como:
+Para resolver este problema nos basamos en la teoría de los polinomios de Hermite presentada en el Capítulo 8, Sección 8.5 del texto de Alonso Sepúlveda. La función generatriz de los polinomios de Hermite se define como (Alonso Sepúlveda, Sección 8.5, p. 338):
 $$
-g(x,t) = \frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n, \quad |t| < 1, \; |x| \leq 1.
+g(x, t) = e^{2xt - t^2} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n, \quad \text{para } |t| < \infty.
 $$
-A partir de esta expresión fundamental, todas las relaciones de recurrencia y derivadas solicitadas pueden obtenerse mediante diferenciación parcial respecto a $x$ y $t$, seguida de igualación de coeficientes de potencias iguales de $t$. A continuación, se detalla el desarrollo analítico paso a paso.
+A partir de esta expresión fundamental, todas las relaciones de recurrencia, derivadas y valores específicos solicitados pueden obtenerse mediante diferenciación parcial respecto a $x$ y $t$, seguida de la igualación de coeficientes de potencias iguales de $t$. A continuación, se detalla el desarrollo analítico paso a paso.
+
+Antes de entrar en las demostraciones algebraicas, conviene visualizar dos aspectos importantes: la forma de los primeros polinomios de Hermite y el comportamiento de la función generatriz para distintos valores del parámetro auxiliar $t$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=6cm,
+    xmin=-3, xmax=3,
+    ymin=-1.15, ymax=1.15,
+    axis lines=middle,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    ylabel={valor normalizado},
+    title={Primeros polinomios de Hermite},
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.02,0.98)}, anchor=north west},
+    samples=220,
+    domain=-3:3
+]
+\addplot[blue, thick] {1};
+\addlegendentry{$H_0(x)$}
+\addplot[red, thick] {x/3};
+\addlegendentry{$H_1(x)/6$}
+\addplot[green!55!black, thick] {(4*x^2-2)/34};
+\addlegendentry{$H_2(x)/34$}
+\addplot[orange, thick] {(8*x^3-12*x)/180};
+\addlegendentry{$H_3(x)/180$}
+\addplot[purple, thick] {(16*x^4-48*x^2+12)/876};
+\addlegendentry{$H_4(x)/876$}
+\end{axis}
+\end{tikzpicture}
+
+\small\textbf{Figura 1.} Primeros polinomios de Hermite normalizados para comparar su forma y paridad. Los polinomios con $n$ par son funciones pares, mientras que los de $n$ impar son funciones impares.
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=6cm,
+    xmin=-3, xmax=3,
+    ymin=0, ymax=20,
+    axis lines=left,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    ylabel={$g(x,t)$},
+    title={$g(x,t)=e^{2xt-t^2}$},
+    legend style={font=\scriptsize, at={(0.02,0.98)}, anchor=north west},
+    samples=220,
+    domain=-3:3
+]
+\addplot[blue, thick] {exp(0.5*x-0.0625)};
+\addlegendentry{$t=0.25$}
+\addplot[red, thick] {exp(x-0.25)};
+\addlegendentry{$t=0.50$}
+\addplot[green!55!black, thick] {exp(1.5*x-0.5625)};
+\addlegendentry{$t=0.75$}
+\addplot[orange, thick] {exp(2*x-1)};
+\addlegendentry{$t=1.00$}
+\end{axis}
+\end{tikzpicture}
+
+\small\textbf{Figura 2.} Función generatriz $g(x,t)=e^{2xt-t^2}$ para varios valores de $t$. Al expandir esta función en potencias de $t$ aparecen como coeficientes los polinomios $H_n(x)$.
+\end{center}
 
 \vspace{0.3cm}
 \noindent\textbf{Demostración del inciso a):} \\
-Derivamos la función generatriz respecto a la variable espacial $x$:
+Derivamos la función generatriz respecto al parámetro $t$:
 $$
-\frac{\partial g}{\partial x} = \frac{\partial}{\partial x} \left(1 - 2xt + t^2\right)^{-1/2} = \frac{t}{\left(1 - 2xt + t^2\right)^{3/2}}.
+\frac{\partial g}{\partial t} = \frac{\partial}{\partial t} \left( e^{2xt - t^2} \right) = (2x - 2t) e^{2xt - t^2} = (2x - 2t) g(x, t).
 $$
-Notamos que $\left(1 - 2xt + t^2\right)^{3/2} = \left(1 - 2xt + t^2\right) \sqrt{1 - 2xt + t^2}$, por lo que podemos reescribir la derivada como:
+Por otro lado, derivando la serie de potencias término a término respecto a $t$, obtenemos:
 $$
-\frac{\partial g}{\partial x} = \frac{t}{1 - 2xt + t^2} \cdot \frac{1}{\sqrt{1 - 2xt + t^2}} = \frac{t}{1 - 2xt + t^2} g(x,t).
+\frac{\partial g}{\partial t} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} n t^{n-1} = \sum_{n=1}^{\infty} \frac{H_n(x)}{(n-1)!} t^{n-1}.
 $$
-Multiplicando ambos lados por el denominador:
+Realizamos un cambio de índice haciendo $m = n - 1$ (de modo que $n = m + 1$), lo que nos permite reescribir la sumatoria comenzando desde $m = 0$:
 $$
-(1 - 2xt + t^2) \frac{\partial g}{\partial x} = t \, g(x,t).
+\frac{\partial g}{\partial t} = \sum_{m=0}^{\infty} \frac{H_{m+1}(x)}{m!} t^m = \sum_{n=0}^{\infty} \frac{H_{n+1}(x)}{n!} t^n.
 $$
-Sustituimos las series de potencias correspondientes: $\frac{\partial g}{\partial x} = \sum_{n=0}^{\infty} P'_n(x) t^n$ y $g(x,t) = \sum_{n=0}^{\infty} P_n(x) t^n$:
+Igualamos esta expresión con el resultado de derivar la forma cerrada:
 $$
-(1 - 2xt + t^2) \sum_{n=0}^{\infty} P'_n(x) t^n = t \sum_{n=0}^{\infty} P_n(x) t^n.
+(2x - 2t) \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n = \sum_{n=0}^{\infty} \frac{H_{n+1}(x)}{n!} t^n.
 $$
-Expandimos el producto en el lado izquierdo y alineamos las potencias de $t$:
+Distribuimos el término $(2x - 2t)$ en el lado izquierdo:
 $$
-\sum_{n=0}^{\infty} P'_n(x) t^n - 2x \sum_{n=0}^{\infty} P'_n(x) t^{n+1} + \sum_{n=0}^{\infty} P'_n(x) t^{n+2} = \sum_{n=0}^{\infty} P_n(x) t^{n+1}.
+2x \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n - 2 \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^{n+1} = \sum_{n=0}^{\infty} \frac{H_{n+1}(x)}{n!} t^n.
 $$
-Realizamos cambios de índice para que todas las sumatorias dependan de $t^n$. En el segundo término hacemos $m = n+1$, en el tercero $m = n+2$, y en el derecho $m = n+1$:
+En el segundo término de la izquierda, hacemos un cambio de índice $m = n + 1$ (es decir, $n = m - 1$), de modo que la suma comienza en $m = 1$:
 $$
-\sum_{n=0}^{\infty} P'_n(x) t^n - 2x \sum_{n=1}^{\infty} P'_{n-1}(x) t^n + \sum_{n=2}^{\infty} P'_{n-2}(x) t^n = \sum_{n=1}^{\infty} P_{n-1}(x) t^n.
+2x \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n - 2 \sum_{n=1}^{\infty} \frac{H_{n-1}(x)}{(n-1)!} t^n = \sum_{n=0}^{\infty} \frac{H_{n+1}(x)}{n!} t^n.
 $$
-Igualando los coeficientes de $t^n$ para $n \geq 2$ (los casos $n=0,1$ se verifican por separado y son consistentes):
+Notamos que $\frac{1}{(n-1)!} = \frac{n}{n!}$, por lo que podemos reescribir la segunda sumatoria para que comience en $n=0$ (el término $n=0$ es cero):
 $$
-P'_n(x) - 2x P'_{n-1}(x) + P'_{n-2}(x) = P_{n-1}(x).
+\sum_{n=0}^{\infty} \left[ 2x \frac{H_n(x)}{n!} - 2n \frac{H_{n-1}(x)}{n!} \right] t^n = \sum_{n=0}^{\infty} \frac{H_{n+1}(x)}{n!} t^n.
 $$
-Desplazando el índice $n \to n+1$, obtenemos exactamente la relación solicitada:
+Dado que esta igualdad debe cumplirse para todo $t$ en el radio de convergencia, los coeficientes de $t^n$ deben ser idénticos en ambos lados. Igualando los coeficientes y multiplicando toda la ecuación por $n!$, obtenemos:
 $$
-P'_{n+1}(x) - 2x P'_n(x) + P'_{n-1}(x) = P_n(x) \quad \Rightarrow \quad P'_{n-1}(x) + P'_{n+1}(x) = P_n(x) + 2x P'_n(x).
+2x H_n(x) - 2n H_{n-1}(x) = H_{n+1}(x).
 $$
-Esta identidad demuestra la conexión entre las derivadas de polinomios consecutivos, tal como se discute en la Sección 8.4 de Alonso Sepúlveda.
+Reordenando los términos, llegamos exactamente a la relación de recurrencia solicitada:
+$$
+2x H_n(x) = 2n H_{n-1}(x) + H_{n+1}(x).
+$$
+Esta identidad demuestra la conexión entre polinomios de Hermite de órdenes consecutivos, tal como se discute en la Sección 8.5 de Alonso Sepúlveda (p. 338).
 
 \vspace{0.3cm}
 \noindent\textbf{Demostración del inciso b):} \\
-Derivamos ahora la función generatriz respecto al parámetro $t$:
+Derivamos ahora la función generatriz respecto a la variable espacial $x$:
 $$
-\frac{\partial g}{\partial t} = \frac{\partial}{\partial t} \left(1 - 2xt + t^2\right)^{-1/2} = \frac{x - t}{\left(1 - 2xt + t^2\right)^{3/2}} = \frac{x - t}{1 - 2xt + t^2} g(x,t).
+\frac{\partial g}{\partial x} = \frac{\partial}{\partial x} \left( e^{2xt - t^2} \right) = 2t e^{2xt - t^2} = 2t g(x, t).
 $$
-Multiplicando por el denominador:
+Derivando la serie de potencias término a término respecto a $x$, obtenemos:
 $$
-(1 - 2xt + t^2) \frac{\partial g}{\partial t} = (x - t) g(x,t).
+\frac{\partial g}{\partial x} = \sum_{n=0}^{\infty} \frac{H'_n(x)}{n!} t^n.
 $$
-Sustituimos las series: $\frac{\partial g}{\partial t} = \sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n$ y $g(x,t) = \sum_{n=0}^{\infty} P_n(x) t^n$:
+Igualamos ambas expresiones:
 $$
-(1 - 2xt + t^2) \sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n = (x - t) \sum_{n=0}^{\infty} P_n(x) t^n.
+\sum_{n=0}^{\infty} \frac{H'_n(x)}{n!} t^n = 2t \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n = \sum_{n=0}^{\infty} \frac{2 H_n(x)}{n!} t^{n+1}.
 $$
-Expandiendo y alineando potencias de $t^n$:
+Realizamos un cambio de índice en el lado derecho haciendo $m = n + 1$ (es decir, $n = m - 1$), de modo que la suma comienza en $m = 1$:
 $$
-\sum_{n=0}^{\infty} (n+1) P_{n+1}(x) t^n - 2x \sum_{n=0}^{\infty} n P_n(x) t^n + \sum_{n=0}^{\infty} (n-1) P_{n-1}(x) t^n = x \sum_{n=0}^{\infty} P_n(x) t^n - \sum_{n=0}^{\infty} P_{n-1}(x) t^n.
+\sum_{n=0}^{\infty} \frac{H'_n(x)}{n!} t^n = \sum_{m=1}^{\infty} \frac{2 H_{m-1}(x)}{(m-1)!} t^m.
 $$
-Igualando coeficientes de $t^n$ para $n \geq 1$:
+Renombrando el índice mudo $m$ de vuelta a $n$, y usando nuevamente que $\frac{1}{(n-1)!} = \frac{n}{n!}$, podemos escribir el lado derecho comenzando en $n=0$ (pues el término $n=0$ se anula):
 $$
-(n+1)P_{n+1}(x) - 2n x P_n(x) + (n-1)P_{n-1}(x) = x P_n(x) - P_{n-1}(x).
+\sum_{n=0}^{\infty} \frac{H'_n(x)}{n!} t^n = \sum_{n=0}^{\infty} \frac{2n H_{n-1}(x)}{n!} t^n.
 $$
-Reagrupando términos:
+Igualando los coeficientes de $t^n$ y multiplicando por $n!$, obtenemos directamente:
 $$
-(n+1)P_{n+1}(x) = (2n x + x) P_n(x) - (n-1 + 1) P_{n-1}(x) \quad \Rightarrow \quad (n+1)P_{n+1}(x) = (2n+1)x P_n(x) - n P_{n-1}(x).
+H'_n(x) = 2n H_{n-1}(x).
 $$
-Esta es la famosa relación de recurrencia de tres términos, fundamental en la teoría de polinomios ortogonales (Sepúlveda, Sec. 8.4).
+Esta es una de las identidades fundamentales de los polinomios de Hermite, que relaciona la derivada de un polinomio con el polinomio de orden inmediatamente inferior (Alonso Sepúlveda, Sección 8.5, p. 338).
 
 \vspace{0.3cm}
-\noindent\textbf{Demostración de los incisos c), d) y e):} \\
-Partimos de la ecuación (b) y la derivamos respecto a $x$:
+\noindent\textbf{Demostración del inciso c):} \\
+Evaluamos la función generatriz en el punto $x = 0$:
 $$
-(n+1)P'_{n+1}(x) = (2n+1)P_n(x) + (2n+1)x P'_n(x) - n P'_{n-1}(x). \quad (1)
+g(0, t) = e^{2(0)t - t^2} = e^{-t^2}.
 $$
-Del inciso (a) despejamos $P'_{n+1}(x) = P_n(x) + 2x P'_n(x) - P'_{n-1}(x)$ y sustituimos en (1):
+Por definición de la serie generatriz, esta evaluación también debe ser igual a:
 $$
-(n+1)\left[ P_n(x) + 2x P'_n(x) - P'_{n-1}(x) \right] = (2n+1)P_n(x) + (2n+1)x P'_n(x) - n P'_{n-1}(x).
+g(0, t) = \sum_{n=0}^{\infty} \frac{H_n(0)}{n!} t^n.
 $$
-Expandimos y agrupamos por potencias de $P_n$ y $P'_n$:
+Por otro lado, conocemos la expansión en serie de Maclaurin de la función exponencial $e^u = \sum_{k=0}^{\infty} \frac{u^k}{k!}$. Sustituyendo $u = -t^2$, obtenemos:
 $$
-(n+1)P_n + 2(n+1)x P'_n - (n+1)P'_{n-1} = (2n+1)P_n + (2n+1)x P'_n - n P'_{n-1}.
+e^{-t^2} = \sum_{k=0}^{\infty} \frac{(-t^2)^k}{k!} = \sum_{k=0}^{\infty} \frac{(-1)^k}{k!} t^{2k}.
 $$
-Llevamos todos los términos al lado izquierdo:
+Igualamos las dos series de potencias en $t$:
 $$
-\left[2(n+1) - (2n+1)\right] x P'_n(x) + \left[-(n+1) + n\right] P'_{n-1}(x) + \left[(n+1) - (2n+1)\right] P_n(x) = 0.
+\sum_{n=0}^{\infty} \frac{H_n(0)}{n!} t^n = \sum_{k=0}^{\infty} \frac{(-1)^k}{k!} t^{2k}.
 $$
-Simplificando coeficientes:
+Observamos que en el lado derecho solo existen potencias \textbf{pares} de $t$ (es decir, términos de la forma $t^{2k}$). En el lenguaje de series de potencias, esto implica inmediatamente que todos los coeficientes asociados a potencias impares de $t$ en el lado izquierdo deben ser nulos. Por lo tanto, para $n$ impar ($n = 2k + 1$):
 $$
-x P'_n(x) - P'_{n-1}(x) - n P_n(x) = 0 \quad \Rightarrow \quad P'_{n-1}(x) = x P'_n(x) - n P_n(x).
+\frac{H_{2k+1}(0)}{(2k+1)!} = 0 \quad \Longrightarrow \quad H_{2k+1}(0) = 0.
 $$
-Esto prueba el inciso \textbf{c)}. 
+Esta propiedad refleja la simetría de paridad de los polinomios de Hermite: $H_n(-x) = (-1)^n H_n(x)$. Al evaluar en $x=0$, los polinomios de orden impar (que son funciones impares) deben anularse (Alonso Sepúlveda, Sección 8.5, p. 338).
 
-Para el inciso \textbf{d)}, volvemos a (a) y sustituimos la expresión recién hallada para $P'_{n-1}(x)$:
+Para los índices pares, hacemos la sustitución $n = 2k$. Igualando los coeficientes de $t^{2k}$ en ambas series:
 $$
-\left[ x P'_n(x) - n P_n(x) \right] + P'_{n+1}(x) = P_n(x) + 2x P'_n(x).
+\frac{H_{2k}(0)}{(2k)!} = \frac{(-1)^k}{k!}.
 $$
-Despejando $P'_{n+1}(x)$:
+Despejando $H_{2k}(0)$, obtenemos la expresión general para los polinomios de Hermite de orden par evaluados en el origen. Renombrando el índice $k$ como $n$ para ajustar la notación al enunciado del problema:
 $$
-P'_{n+1}(x) = P_n(x) + 2x P'_n(x) - x P'_n(x) + n P_n(x) = (n+1)P_n(x) + x P'_n(x).
+H_{2n}(0) = (-1)^n \frac{(2n)!}{n!}, \quad n = 0, 1, 2, \dots
 $$
-Esto demuestra el inciso \textbf{d)}.
-
-Finalmente, para el inciso \textbf{e)}, restamos la ecuación del inciso \textbf{c)} de la del inciso \textbf{d)}:
-$$
-P'_{n+1}(x) - P'_{n-1}(x) = \left[ (n+1)P_n(x) + x P'_n(x) \right] - \left[ x P'_n(x) - n P_n(x) \right].
-$$
-Los términos en $x P'_n(x)$ se cancelan, quedando:
-$$
-P'_{n+1}(x) - P'_{n-1}(x) = (2n+1)P_n(x).
-$$
-Esta identidad es de uso frecuente en el desarrollo de expansiones en armónicos esféricos y en la teoría de Sturm-Liouville aplicada a problemas electrostáticos (Sepúlveda, Sec. 8.4.1 y Cap. 6).
 
 \vspace{0.3cm}
-\noindent\textbf{Demostración del inciso f):} \\
-Aplicamos el cambio de índice $n \to n-1$ en la relación del inciso \textbf{d)}:
+\noindent\textbf{Demostración del inciso d):} \\
+Partimos de la relación obtenida en el inciso b):
 $$
-P'_n(x) = n P_{n-1}(x) + x P'_{n-1}(x). \quad (2)
+H'_n(x) = 2n H_{n-1}(x). \quad (1)
 $$
-Ahora, de la ecuación del inciso \textbf{c)} despejamos $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$ y lo sustituimos en (2):
+Del inciso a), podemos reescribir la relación de recurrencia despejando $H_{n+1}(x)$:
 $$
-P'_n(x) = n P_{n-1}(x) + x \left[ x P'_n(x) - n P_n(x) \right].
+H_{n+1}(x) = 2x H_n(x) - 2n H_{n-1}(x).
 $$
-Distribuimos $x$ en el corchete:
+Sustituyendo la ecuación (1) en esta expresión, reemplazamos $2n H_{n-1}(x)$ por $H'_n(x)$:
 $$
-P'_n(x) = n P_{n-1}(x) + x^2 P'_n(x) - n x P_n(x).
+H_{n+1}(x) = 2x H_n(x) - H'_n(x). \quad (2)
 $$
-Agrupamos los términos que contienen $P'_n(x)$ en el lado izquierdo y los demás en el derecho:
+Ahora, derivamos la ecuación (2) con respecto a $x$:
 $$
-P'_n(x) - x^2 P'_n(x) = n P_{n-1}(x) - n x P_n(x).
+H'_{n+1}(x) = 2 H_n(x) + 2x H'_n(x) - H''_n(x). \quad (3)
 $$
-Factorizando $P'_n(x)$ en el lado izquierdo obtenemos el resultado final:
+Por otro lado, aplicando la relación del inciso b) pero para el índice $n+1$, sabemos que:
 $$
-(1 - x^2) P'_n(x) = n P_{n-1}(x) - n x P_n(x).
+H'_{n+1}(x) = 2(n+1) H_n(x) = 2n H_n(x) + 2 H_n(x). \quad (4)
 $$
-Esta última identidad es particularmente útil para demostrar que los polinomios de Legendre satisfacen la ecuación diferencial de Legendre, cerrando así el vínculo entre la función generatriz y la estructura de Sturm-Liouville que rige su ortogonalidad (Sepúlveda, Sec. 8.4 y Cap. 6). El signo menos en el segundo término es matemáticamente necesario; su aparición con signo positivo en el enunciado original corresponde a una errata de transcripción común en materiales derivados.
+Igualamos las expresiones (3) y (4) para $H'_{n+1}(x)$:
+$$
+2n H_n(x) + 2 H_n(x) = 2 H_n(x) + 2x H'_n(x) - H''_n(x).
+$$
+Restamos $2 H_n(x)$ de ambos lados de la ecuación:
+$$
+2n H_n(x) = 2x H'_n(x) - H''_n(x).
+$$
+Reordenando todos los términos en un solo lado para igualar a cero, obtenemos la ecuación diferencial de Hermite:
+$$
+H''_n(x) - 2x H'_n(x) + 2n H_n(x) = 0.
+$$
+Este desarrollo confirma que los polinomios de Hermite, construidos a partir de la función generatriz y sus relaciones de recurrencia, satisfacen naturalmente esta EDO de segundo orden, la cual es la forma autoadjunta del problema de Sturm-Liouville asociado al oscilador armónico cuántico (Alonso Sepúlveda, Sección 8.5, p. 334 y p. 341).
 
+\vspace{0.3cm}
+\noindent\textbf{Demostración del inciso e):} \\
+Evaluamos la función generatriz en el valor específico del parámetro $t = 1$. Sustituyendo directamente en la forma cerrada de la función generatriz:
+$$
+g(x, 1) = e^{2x(1) - (1)^2} = e^{2x - 1} = e^{2x} \cdot e^{-1} = \frac{e^{2x}}{e}.
+$$
+Por otro lado, evaluando $t = 1$ en la expansión en serie de la función generatriz, obtenemos:
+$$
+g(x, 1) = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} (1)^n = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!}.
+$$
+Igualando ambas expresiones para $g(x, 1)$:
+$$
+\frac{e^{2x}}{e} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!}.
+$$
+Finalmente, multiplicando ambos lados de la ecuación por la constante $e$, obtenemos la identidad solicitada:
+$$
+e^{2x} = e \sum_{n=0}^{\infty} \frac{H_n(x)}{n!}.
+$$
+Esta relación es una consecuencia directa y elegante de la definición de la función generatriz, demostrando cómo la evaluación en puntos específicos del parámetro auxiliar $t$ revela identidades funcionales profundas de los polinomios ortogonales (Alonso Sepúlveda, Sección 8.5, p. 338).
 
 \section{Problema 2}
-Derive la expresión (f) respecto a $x$ y utilizando la expresión (c), muestre que los polinomios $P_n(x)$ satisfacen la ecuación diferencial
+Derivando $n$ veces respecto a $t$ la función generatriz, obtenga la fórmula de Rodrigues:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) + n(n+1)P_n(x) = 0.
+H_n(x) = (-1)^n e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right).
 $$
-Escriba el problema de Sturm-Liouville asociado y encuentre el intervalo de ortogonalidad de los polinomios y sus autovalores.
+Con esta, muestre que los polinomios de Hermite satisfacen la propiedad de paridad:
+$$
+H_n(-x) = (-1)^n H_n(x).
+$$
 
 \subsection{Solución}
-Para abordar este problema, partimos de las identidades de recurrencia obtenidas en el problema anterior, las cuales son fundamentales en la teoría de los polinomios de Legendre. Aunque en la transcripción original del taller aparecen ligeras erratas tipográficas, utilizaremos las formas matemáticamente correctas y estandarizadas en la literatura (ver Sección 8.4 del texto de Alonso Sepúlveda):
+Para resolver este problema nos basamos en la teoría de los polinomios de Hermite presentada en el Capítulo 8, Sección 8.5 del texto de Alonso Sepúlveda. La función generatriz de estos polinomios se define como (Alonso Sepúlveda, Sección 8.5, p. 338):
 $$
-\text{(c)} \quad P'_{n-1}(x) = x P'_n(x) - n P_n(x),
+g(x, t) = e^{2xt - t^2} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n, \quad \text{para } |t| < \infty.
 $$
-$$
-\text{(f)} \quad (1 - x^2)P'_n(x) = n P_{n-1}(x) - n x P_n(x).
-$$
-Nuestro objetivo es demostrar que estas relaciones implican directamente la ecuación diferencial de Legendre y analizar su estructura espectral.
+A partir de esta expresión fundamental, podemos derivar identidades clave mediante diferenciación parcial y evaluación en puntos específicos. A continuación, se detalla el desarrollo analítico paso a paso.
+
+Para acompañar la demostración, se muestran dos gráficos pertinentes. El primero ilustra cómo la fórmula de Rodrigues relaciona los polinomios de Hermite con derivadas sucesivas de la gaussiana $e^{-x^2}$. El segundo compara $H_n(x)$ con $H_n(-x)$ para un caso par y uno impar, haciendo visible la propiedad $H_n(-x)=(-1)^nH_n(x)$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=6cm,
+    xmin=-3, xmax=3,
+    ymin=-1.1, ymax=1.1,
+    axis lines=middle,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    ylabel={valor},
+    title={Gaussiana y derivadas asociadas a Rodrigues},
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.02,0.98)}, anchor=north west},
+    samples=220,
+    domain=-3:3
+]
+\addplot[blue, thick] {exp(-x^2)};
+\addlegendentry{$e^{-x^2}$}
+\addplot[red, thick] {-2*x*exp(-x^2)};
+\addlegendentry{$\frac{d}{dx}e^{-x^2}$}
+\addplot[green!55!black, thick] {(4*x^2-2)*exp(-x^2)};
+\addlegendentry{$\frac{d^2}{dx^2}e^{-x^2}$}
+\addplot[purple, thick] {(-8*x^3+12*x)*exp(-x^2)};
+\addlegendentry{$\frac{d^3}{dx^3}e^{-x^2}$}
+\end{axis}
+\end{tikzpicture}
+
+\small\textbf{Figura 3.} Primeras derivadas de $e^{-x^2}$. La fórmula de Rodrigues muestra que, al multiplicarlas por $(-1)^n e^{x^2}$, se obtienen los polinomios $H_n(x)$.
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.78\textwidth,
+    height=6cm,
+    xmin=-3, xmax=3,
+    ymin=-1.15, ymax=1.15,
+    axis lines=middle,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    ylabel={valor normalizado},
+    title={Comparación de paridad en $H_2$ y $H_3$},
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.02,0.98)}, anchor=north west},
+    samples=220,
+    domain=-3:3
+]
+\addplot[blue, thick] {(4*x^2-2)/34};
+\addlegendentry{$H_2(x)/34$}
+\addplot[blue, dashed, thick] {(4*x^2-2)/34};
+\addlegendentry{$H_2(-x)/34$}
+\addplot[red, thick] {(8*x^3-12*x)/180};
+\addlegendentry{$H_3(x)/180$}
+\addplot[red, dashed, thick] {(-8*x^3+12*x)/180};
+\addlegendentry{$H_3(-x)/180$}
+\end{axis}
+\end{tikzpicture}
+
+\small\textbf{Figura 4.} Visualización de la paridad: $H_2(-x)=H_2(x)$ por ser de orden par, mientras que $H_3(-x)=-H_3(x)$ por ser de orden impar.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 1: Derivación de la expresión (f) respecto a $x$}\\
-Derivamos ambos lados de la ecuación (f) con respecto a la variable espacial $x$:
+\noindent\textbf{Paso 1: Obtención de la fórmula de Rodrigues} \\
+Derivamos la función generatriz $n$ veces con respecto al parámetro $t$. Al aplicar el operador $\frac{\partial^n}{\partial t^n}$ a la serie de potencias, obtenemos:
 $$
-\frac{d}{dx}\left[ (1 - x^2)P'_n(x) \right] = \frac{d}{dx}\left[ n P_{n-1}(x) - n x P_n(x) \right].
+\frac{\partial^n}{\partial t^n} g(x, t) = \sum_{k=n}^{\infty} \frac{H_k(x)}{k!} k(k-1)\cdots(k-n+1) t^{k-n}.
 $$
-Aplicando la regla del producto en el lado izquierdo y la linealidad de la derivada en el derecho, obtenemos:
+Evaluando esta derivada en $t=0$, todos los términos de la sumatoria se anulan excepto aquel para el cual $k=n$, cuyo coeficiente se simplifica a $n!/n! = 1$. Por lo tanto:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) = n P'_{n-1}(x) - n P_n(x) - n x P'_n(x). \quad (1)
+\left. \frac{\partial^n}{\partial t^n} g(x, t) \right|_{t=0} = H_n(x). \quad (1)
 $$
+Por otro lado, podemos reescribir el exponente de la forma cerrada de la función generatriz completando el cuadrado:
+$$
+2xt - t^2 = x^2 - (x^2 - 2xt + t^2) = x^2 - (x-t)^2.
+$$
+Así, la función generatriz se factoriza como:
+$$
+g(x, t) = e^{x^2} e^{-(x-t)^2}.
+$$
+Ahora derivamos esta expresión $n$ veces con respecto a $t$. Para facilitar el cálculo, introducimos la variable auxiliar $u = x - t$, de modo que la derivada respecto a $t$ se relaciona con la derivada respecto a $u$ mediante la regla de la cadena: $\frac{\partial}{\partial t} = -\frac{\partial}{\partial u}$. Entonces:
+$$
+\frac{\partial^n}{\partial t^n} \left[ e^{x^2} e^{-(x-t)^2} \right] = e^{x^2} \left( -\frac{\partial}{\partial u} \right)^n e^{-u^2} = (-1)^n e^{x^2} \frac{\partial^n}{\partial u^n} \left( e^{-u^2} \right).
+$$
+Evaluamos este resultado en $t=0$, lo que equivale a establecer $u=x$:
+$$
+\left. \frac{\partial^n}{\partial t^n} g(x, t) \right|_{t=0} = (-1)^n e^{x^2} \left. \frac{d^n}{du^n} \left( e^{-u^2} \right) \right|_{u=x} = (-1)^n e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right). \quad (2)
+$$
+Igualando las expresiones (1) y (2), obtenemos directamente la fórmula de Rodrigues para los polinomios de Hermite:
+$$
+H_n(x) = (-1)^n e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right).
+$$
+Esta identidad es fundamental y se encuentra explícitamente listada entre las propiedades algebraicas de los polinomios de Hermite en la Sección 8.5 del texto de Alonso Sepúlveda (p. 338).
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 2: Sustitución de la expresión (c)}\\
-La ecuación (1) contiene el término $P'_{n-1}(x)$, el cual podemos eliminar utilizando la identidad (c). Sustituimos $P'_{n-1}(x) = x P'_n(x) - n P_n(x)$ en el lado derecho de (1):
+\noindent\textbf{Paso 2: Demostración de la propiedad de paridad} \\
+Utilizando la fórmula de Rodrigues recién obtenida, evaluamos el polinomio en el punto $-x$:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) = n \left[ x P'_n(x) - n P_n(x) \right] - n P_n(x) - n x P'_n(x).
+H_n(-x) = (-1)^n e^{(-x)^2} \frac{d^n}{d(-x)^n} \left( e^{-(-x)^2} \right).
 $$
-Desarrollamos los productos en el lado derecho:
+Dado que el cuadrado de un número real es independiente de su signo, $(-x)^2 = x^2$, por lo que los términos exponenciales permanecen invariantes:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) = n x P'_n(x) - n^2 P_n(x) - n P_n(x) - n x P'_n(x).
+H_n(-x) = (-1)^n e^{x^2} \frac{d^n}{d(-x)^n} \left( e^{-x^2} \right).
 $$
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 3: Simplificación y obtención de la ecuación de Legendre}\\
-Observamos que los términos $n x P'_n(x)$ y $- n x P'_n(x)$ se cancelan exactamente. Agrupando los términos restantes en $P_n(x)$:
+Ahora, analizamos el operador de derivada. Sabemos que la derivada respecto a $-x$ introduce un signo menos: $\frac{d}{d(-x)} = -\frac{d}{dx}$. Al aplicar este operador $n$ veces consecutivas, obtenemos un factor global de $(-1)^n$:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) = - (n^2 + n) P_n(x) = - n(n+1) P_n(x).
+\frac{d^n}{d(-x)^n} = \left( -\frac{d}{dx} \right)^n = (-1)^n \frac{d^n}{dx^n}.
 $$
-Trasladando el término del lado derecho al lado izquierdo, obtenemos finalmente la ecuación diferencial de Legendre:
+Sustituyendo esta relación en la expresión para $H_n(-x)$, tenemos:
 $$
-(1 - x^2)P''_n(x) - 2x P'_n(x) + n(n+1)P_n(x) = 0.
+H_n(-x) = (-1)^n e^{x^2} \left[ (-1)^n \frac{d^n}{dx^n} \left( e^{-x^2} \right) \right].
 $$
-Este desarrollo confirma que los polinomios de Legendre, construidos a partir de la función generatriz y sus relaciones de recurrencia, satisfacen naturalmente esta EDO de segundo orden (Alonso Sepúlveda, Sección 8.4.3 y Cap. 4).
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 4: Formulación del problema de Sturm-Liouville}\\
-Para identificar la estructura de Sturm-Liouville, reescribimos la ecuación diferencial en su forma autoadjunta. Reconociendo directamente la derivada total de un producto, notamos que:
+Agrupando los factores $(-1)^n$, obtenemos $(-1)^{2n}$. Dado que $n$ es un entero no negativo, $(-1)^{2n} = 1$, por lo que:
 $$
-\frac{d}{dx}\left[ (1 - x^2) \frac{dP_n}{dx} \right] = (1 - x^2)P''_n(x) - 2x P'_n(x).
+H_n(-x) = e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right).
 $$
-Por lo tanto, la ecuación de Legendre se escribe compactamente como:
+Para recuperar la expresión original de $H_n(x)$, multiplicamos y dividimos por $(-1)^n$ (notando que $1 = (-1)^n \cdot (-1)^n$):
 $$
-\frac{d}{dx}\left[ (1 - x^2) \frac{dP_n(x)}{dx} \right] + n(n+1) P_n(x) = 0. \quad (2)
+H_n(-x) = (-1)^n \left[ (-1)^n e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right) \right] = (-1)^n H_n(x).
 $$
-Comparando con la forma canónica de la ecuación de Sturm-Liouville presentada en el texto (Sección 6.3.1):
-$$
-\frac{d}{dx}\left[ p(x) \frac{dy}{dx} \right] + \left[ \lambda w(x) - q(x) \right] y(x) = 0,
-$$
-identificamos inmediatamente los elementos del problema:
-\begin{itemize}
-    \item $p(x) = 1 - x^2$
-    \item $w(x) = 1$ (función de peso)
-    \item $q(x) = 0$
-    \item $\lambda = n(n+1)$ (parámetro espectral o autovalor)
-    \item $y(x) = P_n(x)$ (autofunción)
-\end{itemize}
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 5: Intervalo de ortogonalidad, condiciones de frontera y autovalores}\\
-La teoría de Sturm-Liouville (Sección 6.3 y 6.5 de Alonso Sepúlveda) establece que el intervalo de definición $[a, b]$ y las condiciones de frontera determinan las propiedades espectrales. En el caso de Legendre, observamos que $p(x) = 1 - x^2$ se anula en los extremos $x = \pm 1$. Esto clasifica al problema como \textit{singular} de Sturm-Liouville. 
-
-Para problemas singulares, no se imponen condiciones de Dirichlet o Neumann explícitas en los bordes. En su lugar, se exige que las soluciones sean \textbf{acotadas} (finitas) en todo el intervalo cerrado. Matemáticamente:
-$$
-|P_n(\pm 1)| < \infty.
-$$
-Esta condición de regularidad en los puntos singulares $x = \pm 1$ es suficiente para garantizar la hermiticidad del operador y, por tanto, la ortogonalidad de las autofunciones.
-
-\begin{itemize}
-    \item \textbf{Intervalo de ortogonalidad:} $x \in [-1, 1]$. Este dominio surge naturalmente de la física de problemas con simetría azimutal, donde $x = \cos\theta$ y $\theta \in [0, \pi]$.
-    \item \textbf{Función de peso:} $w(x) = 1$.
-    \item \textbf{Condición de ortogonalidad:} Siguiendo la Sección 8.4.1, para $n \neq m$:
-    $$
-    \int_{-1}^{1} P_n(x) P_m(x) \, dx = 0.
-    $$
-    \item \textbf{Autovalores:} El espectro de valores propios está dado por $\lambda_n = n(n+1)$, con $n = 0, 1, 2, \dots$. La exigencia de soluciones acotadas en $x=\pm 1$ fuerza a que $n$ sea un entero no negativo, cuantizando así el parámetro $\lambda$. Como se discute en la Sección 6.5, el espectro es discreto y acotado inferiormente, y cada autovalor corresponde a una única autofunción polinomial (degeneración simple).
-\end{itemize}
-En conclusión, la derivación analítica a partir de las identidades (c) y (f) no solo reproduce la ecuación diferencial de Legendre, sino que revela su estructura intrínseca como un problema de Sturm-Liouville singular, cuyas soluciones forman una base ortonormal completa en el espacio de Hilbert $L^2_w[-1, 1]$, fundamento matemático para la expansión de multipolos en electrostática y la descripción de momentos angulares en mecánica cuántica.
+Esto demuestra rigurosamente que los polinomios de Hermite tienen paridad definida: son funciones pares si $n$ es par, e impares si $n$ es impar. Esta propiedad de simetría es consistente con la discusión general sobre la paridad de las soluciones a ecuaciones diferenciales de Sturm-Liouville con coeficientes pares, como se detalla en la Sección 8.5 de Alonso Sepúlveda, y es crucial para simplificar integrales en problemas de mecánica cuántica, como el cálculo de elementos de matriz en el oscilador armónico.
 
 
 \section{Problema 3}
-Utilizando la función generatriz, muestre que $P_n(0)= 0$ si $n$ es impar y $P_{2n}(0)= \frac{(-1)^n(2n)!}{2^{2n}(n!)^2}$, $n= 0, 1, 2, 3, \dots$.
+Para el oscilador armónico, muestre
+$$
+\langle \psi_m | x | \psi_n \rangle = \sqrt{\frac{\hbar}{2m\omega}} \left[ \sqrt{n} \delta_{m,n-1} + \sqrt{n+1} \delta_{m,n+1} \right]
+$$
+¿Qué transiciones dipolares son posibles? (en otras palabras, escriba las reglas de selección dipolares para el oscilador armónico).
 
 \subsection{Solución}
-Para abordar este problema nos basamos en la función generatriz de los polinomios de Legendre, introducida y desarrollada en la Sección 8.4 del texto de Alonso Sepúlveda. La función generatriz se define mediante la serie:
-$$
-g(x,t) = \frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n, \quad |t| < 1, \; |x| \leq 1.
-$$
-Nuestro objetivo es evaluar esta expresión en el punto $x=0$, lo que nos permitirá extraer directamente los valores $P_n(0)$ comparando coeficientes de potencias iguales de $t$.
+Para resolver este problema nos basamos en el tratamiento algebraico del oscilador armónico cuántico presentado en el Capítulo 8, Sección 8.5.2 del texto de Alonso Sepúlveda. En esta sección se introduce el formalismo de los operadores de creación y aniquilación, los cuales simplifican enormemente el cálculo de elementos de matriz en la base de los estados estacionarios del oscilador.
+
+Antes de realizar el cálculo algebraico, es útil visualizar la idea física: el operador dipolar $\hat{x}$ conecta únicamente estados vecinos. Por eso, en el diagrama de niveles solo aparecen flechas entre niveles adyacentes y, en la matriz de elementos $\langle m|\hat{x}|n\rangle$, los valores no nulos quedan concentrados en las dos diagonales inmediatamente vecinas a la diagonal principal.
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=0.75cm]
+    \foreach \n in {0,1,2,3,4,5} {
+        \draw[thick] (0,\n) -- (4.2,\n);
+        \node[left] at (0,\n) {$E_{\n}=\hbar\omega(\n+\frac12)$};
+        \node[right] at (4.2,\n) {$|\n\rangle$};
+    }
+    \foreach \n/\m in {0/1,1/2,2/3,3/4,4/5} {
+        \draw[-{Latex}, blue!70!black, very thick, bend left=18] (4.75,\n) to node[right, font=\scriptsize] {$\Delta n=+1$} (4.75,\m);
+        \draw[-{Latex}, red!70!black, very thick, bend left=18] (-0.55,\m) to node[left, font=\scriptsize] {$\Delta n=-1$} (-0.55,\n);
+    }
+    \draw[-{Latex}, black!45, dashed, thick] (2.0,0) -- node[pos=0.38, right, font=\scriptsize] {prohibida: $\Delta n=2$} (2.0,2);
+    \node[align=center, font=\small] at (2.1,-0.85) {Transiciones dipolares del oscilador armónico};
+\end{tikzpicture}
+
+\small\textbf{Figura 5.} Diagrama de niveles de energía. El operador dipolar $\hat{x}\propto\hat{a}+\hat{a}^\dagger$ solo sube o baja un cuanto, por lo que las transiciones permitidas cumplen $\Delta n=\pm1$.
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.72]
+    \foreach \m in {0,...,6} {
+        \node[left] at (-0.15,6-\m+0.5) {$m=\m$};
+        \node[below, rotate=45, anchor=north east] at (\m+0.5,-0.15) {$n=\m$};
+    }
+    \foreach \m in {0,...,6} {
+        \foreach \n in {0,...,6} {
+            \pgfmathtruncatemacro{\diff}{abs(\m-\n)}
+            \ifnum\diff=1
+                \fill[blue!55] (\n,6-\m) rectangle +(1,1);
+                \node[white, font=\scriptsize] at (\n+0.5,6-\m+0.5) {$\neq0$};
+            \else
+                \fill[black!5] (\n,6-\m) rectangle +(1,1);
+            \fi
+            \draw[black!35] (\n,6-\m) rectangle +(1,1);
+        }
+    }
+    \node[above] at (3.5,7.25) {Estructura de $\langle m|\hat{x}|n\rangle$};
+    \node[below, align=center, font=\small] at (3.5,-1.35) {Solo sobreviven las celdas con $m=n\pm1$};
+\end{tikzpicture}
+
+\small\textbf{Figura 6.} Patrón de selección dipolar en forma matricial. Las dos diagonales azules corresponden a los términos $\delta_{m,n-1}$ y $\delta_{m,n+1}$.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 1: Evaluación en $x=0$}\\
-Sustituyendo $x=0$ en la función generatriz obtenemos:
+\noindent\textbf{Paso 1: Expresión del operador de posición en términos de operadores escalera} \\
+El Hamiltoniano del oscilador armónico unidimensional está dado por:
 $$
-g(0,t) = \frac{1}{\sqrt{1 + t^2}} = \sum_{n=0}^{\infty} P_n(0) t^n.
+\hat{H} = \frac{\hat{p}^2}{2m} + \frac{1}{2} m \omega^2 \hat{x}^2
 $$
-Esta igualdad establece que la expansión en serie de Taylor (o Maclaurin) de $(1+t^2)^{-1/2}$ debe coincidir término a término con la serie que define los polinomios de Legendre evaluados en el origen.
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 2: Expansión binomial de $(1+t^2)^{-1/2}$}\\
-Utilizamos la expansión binomial general para un exponente real $\alpha$:
+Para adimensionalizar el problema, se introduce la variable adimensional $y = x \sqrt{\frac{m\omega}{\hbar}}$. En términos de esta variable, los operadores de aniquilación ($\hat{a}$) y creación ($\hat{a}^\dagger$) se definen como (Alonso Sepúlveda, Sección 8.5.2, p. 344):
 $$
-(1+z)^\alpha = \sum_{k=0}^{\infty} \binom{\alpha}{k} z^k, \quad |z| < 1,
+\hat{a} = \frac{1}{\sqrt{2}} \left( y + \frac{d}{dy} \right), \quad \hat{a}^\dagger = \frac{1}{\sqrt{2}} \left( y - \frac{d}{dy} \right)
 $$
-donde el coeficiente binomial generalizado se define como:
+Sumando estas dos expresiones, podemos despejar la variable adimensional $y$:
 $$
-\binom{\alpha}{k} = \frac{\alpha(\alpha-1)(\alpha-2)\cdots(\alpha-k+1)}{k!}.
+\hat{a} + \hat{a}^\dagger = \frac{1}{\sqrt{2}} (2y) = \sqrt{2} y \quad \Longrightarrow \quad y = \frac{1}{\sqrt{2}} (\hat{a} + \hat{a}^\dagger)
 $$
-En nuestro caso, $\alpha = -1/2$ y $z = t^2$. Sustituyendo:
+Dado que $\hat{x} = \sqrt{\frac{\hbar}{m\omega}} y$, el operador de posición $\hat{x}$ puede escribirse en términos de los operadores escalera como:
 $$
-\frac{1}{\sqrt{1+t^2}} = \sum_{k=0}^{\infty} \binom{-1/2}{k} (t^2)^k = \sum_{k=0}^{\infty} \binom{-1/2}{k} t^{2k}.
-$$
-Desarrollamos explícitamente el coeficiente $\binom{-1/2}{k}$:
-$$
-\binom{-1/2}{k} = \frac{(-\frac{1}{2})(-\frac{3}{2})(-\frac{5}{2})\cdots(-\frac{2k-1}{2})}{k!}.
-$$
-Factorizando el signo $(-1)$ y el denominador $2$ de cada uno de los $k$ factores del numerador:
-$$
-\binom{-1/2}{k} = \frac{(-1)^k}{2^k k!} \left[1 \cdot 3 \cdot 5 \cdots (2k-1)\right].
-$$
-El producto de los primeros $k$ números impares puede escribirse en términos de factoriales completando el producto par:
-$$
-1 \cdot 3 \cdot 5 \cdots (2k-1) = \frac{[1 \cdot 2 \cdot 3 \cdots (2k-1)] \cdot [2 \cdot 4 \cdot 6 \cdots (2k)]}{2 \cdot 4 \cdot 6 \cdots (2k)} = \frac{(2k)!}{2^k k!}.
-$$
-Sustituyendo este resultado en la expresión del coeficiente binomial:
-$$
-\binom{-1/2}{k} = \frac{(-1)^k}{2^k k!} \cdot \frac{(2k)!}{2^k k!} = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}.
-$$
-Por lo tanto, la expansión de la función generatriz en $x=0$ queda:
-$$
-\frac{1}{\sqrt{1+t^2}} = \sum_{k=0}^{\infty} \frac{(-1)^k (2k)!}{2^{2k} (k!)^2} t^{2k}.
+\hat{x} = \sqrt{\frac{\hbar}{2m\omega}} (\hat{a} + \hat{a}^\dagger)
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 3: Identificación de coeficientes y paridad}\\
-Comparando esta serie con la definición original $\sum_{n=0}^{\infty} P_n(0) t^n$, observamos estructuralmente que la expansión solo contiene potencias \textbf{pares} de $t$ (es decir, términos de la forma $t^{2k}$). En el lenguaje de series de potencias, esto implica inmediatamente que todos los coeficientes asociados a potencias impares deben ser nulos:
+\noindent\textbf{Paso 2: Acción de los operadores escalera sobre los estados propios} \\
+Los estados propios de energía del oscilador armónico, denotados como $|\psi_n\rangle$ o simplemente $|n\rangle$, son autofunciones del operador número $\hat{N} = \hat{a}^\dagger \hat{a}$. La acción de los operadores de aniquilación y creación sobre estos estados está dada por las relaciones fundamentales (Alonso Sepúlveda, Sección 8.5.2, Ecuación 8.72, p. 345):
 $$
-P_n(0) = 0 \quad \text{para todo } n \text{ impar}.
+\hat{a} |n\rangle = \sqrt{n} |n-1\rangle
 $$
-Esta propiedad refleja la simetría de paridad de los polinomios de Legendre: $P_n(-x) = (-1)^n P_n(x)$. Al evaluar en $x=0$, los polinomios de orden impar (que son funciones impares) deben anularse, tal como se discute en las propiedades de recurrencia de la Sección 8.4 de Alonso Sepúlveda.
-
-Para los índices pares, hacemos la sustitución $n = 2k$ (equivalentemente $k = n/2$). Igualando los coeficientes de $t^{2k}$ en ambas series:
 $$
-P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}.
+\hat{a}^\dagger |n\rangle = \sqrt{n+1} |n+1\rangle
 $$
-Renombrando el índice $k$ como $n$ para ajustar la notación al enunciado del problema, obtenemos finalmente la expresión general para los polinomios de Legendre de orden par evaluados en el origen:
-$$
-P_{2n}(0) = \frac{(-1)^n (2n)!}{2^{2n} (n!)^2}, \quad n = 0, 1, 2, \dots
-$$
+Además, recordamos que los estados propios forman una base ortonormal, por lo que satisfacen la condición $\langle m | n \rangle = \delta_{m,n}$.
 
 \vspace{0.3cm}
-\noindent\textbf{Verificación para los primeros valores:}\\
-Evaluando explícitamente para $n=0,1,2,3$ como sugiere el enunciado:
+\noindent\textbf{Paso 3: Cálculo del elemento de matriz $\langle \psi_m | \hat{x} | \psi_n \rangle$} \\
+Sustituimos la expresión de $\hat{x}$ en el elemento de matriz solicitado:
+$$
+\langle \psi_m | \hat{x} | \psi_n \rangle = \sqrt{\frac{\hbar}{2m\omega}} \langle m | (\hat{a} + \hat{a}^\dagger) | n \rangle
+$$
+Por la linealidad del producto interno, podemos separar esto en dos términos:
+$$
+\langle \psi_m | \hat{x} | \psi_n \rangle = \sqrt{\frac{\hbar}{2m\omega}} \left( \langle m | \hat{a} | n \rangle + \langle m | \hat{a}^\dagger | n \rangle \right)
+$$
+Ahora aplicamos la acción de los operadores sobre el ket $|n\rangle$:
+$$
+\langle m | \hat{a} | n \rangle = \langle m | \left( \sqrt{n} |n-1\rangle \right) = \sqrt{n} \langle m | n-1 \rangle = \sqrt{n} \delta_{m, n-1}
+$$
+$$
+\langle m | \hat{a}^\dagger | n \rangle = \langle m | \left( \sqrt{n+1} |n+1\rangle \right) = \sqrt{n+1} \langle m | n+1 \rangle = \sqrt{n+1} \delta_{m, n+1}
+$$
+Sustituyendo estos resultados en la expresión del elemento de matriz, obtenemos finalmente:
+$$
+\langle \psi_m | \hat{x} | \psi_n \rangle = \sqrt{\frac{\hbar}{2m\omega}} \left[ \sqrt{n} \delta_{m, n-1} + \sqrt{n+1} \delta_{m, n+1} \right]
+$$
+lo cual demuestra la relación solicitada.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Reglas de selección dipolares} \\
+En mecánica cuántica, la probabilidad de transición por unidad de tiempo entre un estado inicial $|n\rangle$ y un estado final $|m\rangle$ debido a la interacción con un campo electromagnético (en la aproximación dipolar eléctrica) es proporcional al cuadrado del módulo del elemento de matriz del operador de momento dipolar, $\hat{d} = q\hat{x}$. Es decir, la probabilidad de transición $P_{m \leftarrow n}$ es proporcional a:
+$$
+P_{m \leftarrow n} \propto |\langle \psi_m | \hat{x} | \psi_n \rangle|^2
+$$
+Observando la expresión obtenida para el elemento de matriz, vemos que este es diferente de cero únicamente si se cumple alguna de las siguientes condiciones impuestas por las deltas de Kronecker:
 \begin{itemize}
-    \item $n=0$: $P_0(0) = \frac{(-1)^0 0!}{2^0 (0!)^2} = 1$. (Consistente con $P_0(x)=1$)
-    \item $n=1$: $P_2(0) = \frac{(-1)^1 2!}{2^2 (1!)^2} = -\frac{2}{4} = -\frac{1}{2}$. (Consistente con $P_2(x)=\frac{1}{2}(3x^2-1)$)
-    \item $n=2$: $P_4(0) = \frac{(-1)^2 4!}{2^4 (2!)^2} = \frac{24}{16 \cdot 4} = \frac{3}{8}$. (Consistente con $P_4(x)=\frac{1}{8}(35x^4-30x^2+3)$)
-    \item $n=3$: $P_6(0) = \frac{(-1)^3 6!}{2^6 (3!)^2} = -\frac{720}{64 \cdot 36} = -\frac{5}{16}$.
+    \item $\delta_{m, n-1} \neq 0 \implies m = n - 1$
+    \item $\delta_{m, n+1} \neq 0 \implies m = n + 1$
 \end{itemize}
-Estos resultados confirman analíticamente la validez de la fórmula derivada. El desarrollo presentado sigue rigurosamente el tratamiento de la función generatriz y sus propiedades de expansión en serie expuesto en la Sección 8.4 del libro de Alonso Sepúlveda, demostrando de manera constructiva cómo la paridad y los coeficientes factoriales emergen naturalmente de la estructura binomial de $(1+t^2)^{-1/2}$.
-
+Esto significa que el oscilador armónico solo puede realizar transiciones entre niveles de energía adyacentes. En términos del cambio en el número cuántico $\Delta n = m - n$, las únicas transiciones permitidas son aquellas para las cuales:
+$$
+\Delta n = \pm 1
+$$
+Esta es la \textbf{regla de selección dipolar} para el oscilador armónico cuántico. Como se discute en la Sección 8.5.2 (p. 345-346) de Alonso Sepúlveda, esto explica por qué el oscilador armónico emite o absorbe radiación de una sola frecuencia fundamental $\omega$, correspondiente a la diferencia de energía $\Delta E = E_{n+1} - E_n = \hbar\omega$, independientemente del nivel de energía en el que se encuentre el sistema. Las transiciones con $\Delta n = \pm 2, \pm 3, \dots$ están prohibidas en la aproximación dipolar eléctrica (aunque pueden ocurrir con probabilidades mucho menores a través de momentos multipolares de orden superior, como el cuadrupolo, donde $\Delta n = \pm 2$).
 
 \section{Problema 4}
-Muestre que
+Para el oscilador armónico, encuentre las reglas de selección cuadrupolares, es decir, calcule
 $$
-\int_{-1}^{1} x^m P_n(x) \, dx = 0 \quad \text{si } m < n.
+\langle \psi_m | x^2 | \psi_n \rangle.
 $$
-Con esto, encuentre la expansión de $x^4$ en términos de los polinomios de Legendre.
 
 \subsection{Solución}
-Para abordar este problema nos basamos en la teoría de ortogonalidad y completez de los polinomios de Legendre, desarrollada extensamente en el Capítulo 8, Sección 8.4.1 del texto de Alonso Sepúlveda. La demostración se divide en dos partes analíticas: primero se establece la propiedad de ortogonalidad generalizada con potencias de $x$, y segundo se aplica dicha propiedad para construir la expansión en serie de Legendre de la función $x^4$.
+Para resolver este problema nos basamos en el tratamiento algebraico del oscilador armónico cuántico presentado en el Capítulo 8, Sección 8.5.2 del texto de Alonso Sepúlveda. En esta sección se introduce el formalismo de los operadores de creación ($\hat{a}^\dagger$) y aniquilación ($\hat{a}$), los cuales simplifican enormemente el cálculo de elementos de matriz en la base de los estados estacionarios del oscilador, evitando integrales complicadas con polinomios de Hermite.
+
+Antes de iniciar el cálculo, conviene visualizar la estructura física del operador cuadrupolar. Como $\hat{x}^2$ contiene los términos $\hat{a}^2$, $\hat{a}^{\dagger 2}$ y $2\hat{N}+1$, puede conectar un estado consigo mismo o con estados separados por dos cuantos. Además, al ser un operador par, conserva la paridad del estado.
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=0.72cm]
+    \fill[green!8, rounded corners] (-0.35,-0.35) rectangle (2.65,6.55);
+    \fill[orange!10, rounded corners] (3.05,-0.35) rectangle (6.05,6.55);
+    \node[green!45!black, font=\bfseries\small] at (1.15,6.85) {sector par};
+    \node[orange!70!black, font=\bfseries\small] at (4.55,6.85) {sector impar};
+
+    \foreach \n/\y/\sector/\paridad in {0/0/1.15/par,1/1/4.55/impar,2/2/1.15/par,3/3/4.55/impar,4/4/1.15/par,5/5/4.55/impar,6/6/1.15/par} {
+        \draw[thick] (\sector-0.85,\y) -- (\sector+0.85,\y);
+        \node[left, font=\scriptsize] at (\sector-0.9,\y) {$|\n\rangle$};
+        \node[right, font=\scriptsize] at (\sector+0.9,\y) {$E_{\n}$};
+    }
+
+    \foreach \a/\b in {0/2,2/4,4/6} {
+        \draw[-{Latex}, blue!70!black, very thick, bend left=16] (1.65,\a) to (1.65,\b);
+        \draw[-{Latex}, red!70!black, very thick, bend left=16] (0.65,\b) to (0.65,\a);
+    }
+    \foreach \a/\b in {1/3,3/5} {
+        \draw[-{Latex}, blue!70!black, very thick, bend left=16] (5.05,\a) to (5.05,\b);
+        \draw[-{Latex}, red!70!black, very thick, bend left=16] (4.05,\b) to (4.05,\a);
+    }
+
+    \foreach \n/\sector in {0/1.15,1/4.55,2/1.15,3/4.55,4/1.15,5/4.55,6/1.15} {
+        \draw[black!55, thick, loop right, min distance=8mm] (\sector+0.35,\n) to (\sector+0.35,\n);
+    }
+
+    \node[draw, rounded corners, fill=white, align=left, font=\scriptsize] at (3.1,-1.0) {
+        $\hat{a}^{\dagger 2}:\ \Delta n=+2$\quad $\hat{a}^{2}:\ \Delta n=-2$\\
+        $2\hat{N}+1:\ \Delta n=0$\quad $\hat{x}^2$ conserva paridad
+    };
+\end{tikzpicture}
+
+\small\textbf{Figura 7.} Diagrama de niveles para las transiciones cuadrupolares. Las flechas azules y rojas conectan niveles separados por dos cuantos, mientras que los lazos representan los términos diagonales $m=n$.
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.68]
+    \foreach \m in {0,...,7} {
+        \node[left, font=\scriptsize] at (-0.15,7-\m+0.5) {$m=\m$};
+        \node[below, rotate=45, anchor=north east, font=\scriptsize] at (\m+0.5,-0.15) {$n=\m$};
+    }
+    \foreach \m in {0,...,7} {
+        \foreach \n in {0,...,7} {
+            \pgfmathtruncatemacro{\diff}{\m-\n}
+            \pgfmathtruncatemacro{\adiff}{abs(\m-\n)}
+            \ifnum\adiff=0
+                \fill[purple!60] (\n,7-\m) rectangle +(1,1);
+                \node[white, font=\tiny] at (\n+0.5,7-\m+0.5) {$2n+1$};
+            \else
+                \ifnum\diff=2
+                    \fill[blue!58] (\n,7-\m) rectangle +(1,1);
+                    \node[white, font=\tiny] at (\n+0.5,7-\m+0.5) {$+2$};
+                \else
+                    \ifnum\diff=-2
+                        \fill[red!58] (\n,7-\m) rectangle +(1,1);
+                        \node[white, font=\tiny] at (\n+0.5,7-\m+0.5) {$-2$};
+                    \else
+                        \fill[black!4] (\n,7-\m) rectangle +(1,1);
+                    \fi
+                \fi
+            \fi
+            \draw[black!30] (\n,7-\m) rectangle +(1,1);
+        }
+    }
+    \draw[decorate, decoration={brace, amplitude=5pt}, thick] (8.15,8) -- node[right=6pt, align=left, font=\scriptsize] {solo tres\\diagonales} (8.15,0);
+    \node[above, align=center] at (4,8.25) {Patrón de $\langle m|\hat{x}^2|n\rangle$};
+    \node[draw, rounded corners, fill=white, align=left, font=\scriptsize] at (4,-1.85) {
+        \textcolor{purple!70!black}{diagonal: $m=n$}\quad
+        \textcolor{blue!70!black}{$m=n+2$}\quad
+        \textcolor{red!70!black}{$m=n-2$}
+    };
+\end{tikzpicture}
+
+\small\textbf{Figura 8.} Mapa matricial de los elementos cuadrupolares no nulos. La diagonal central proviene de $2\hat{N}+1$, y las diagonales secundarias de $\hat{a}^{\dagger 2}$ y $\hat{a}^{2}$.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Parte I: Demostración de $\displaystyle\int_{-1}^{1} x^m P_n(x) \, dx = 0$ para $m < n$}\\
-
-La propiedad fundamental de los polinomios de Legendre, establecida en la Sección 8.4.1 y en el Anexo 5.1 (Ortogonalización de Gram-Schmidt), es que el conjunto $\{P_0(x), P_1(x), \dots, P_k(x), \dots\}$ constituye una base completa y ortogonal en el espacio de funciones de cuadrado integrable en el intervalo $[-1, 1]$ con función de peso $w(x) = 1$. Una consecuencia directa de esta construcción es que cada polinomio $P_n(x)$ es de grado exactamente $n$ y es ortogonal a \textbf{cualquier} polinomio de grado estrictamente menor que $n$.
-
-Para demostrarlo analíticamente, consideremos un polinomio arbitrario de grado $m$, específicamente $x^m$ con $m < n$. Debido a la propiedad de base completa, $x^m$ puede expandirse de manera única como combinación lineal de los primeros $m+1$ polinomios de Legendre:
+\noindent\textbf{Paso 1: Expresión del operador de posición al cuadrado en términos de operadores escalera} \\
+El operador de posición $\hat{x}$ se puede escribir en términos de los operadores de aniquilación y creación como (Alonso Sepúlveda, Sección 8.5.2, p. 344):
 $$
-x^m = \sum_{k=0}^{m} c_k P_k(x),
+\hat{x} = \sqrt{\frac{\hbar}{2m\omega}} (\hat{a} + \hat{a}^\dagger)
 $$
-donde los coeficientes $c_k$ son constantes reales determinadas por la proyección ortogonal. Sustituimos esta expansión en la integral de interés:
+Para encontrar el elemento de matriz cuadrupolar, necesitamos elevar al cuadrado este operador:
 $$
-\int_{-1}^{1} x^m P_n(x) \, dx = \int_{-1}^{1} \left[ \sum_{k=0}^{m} c_k P_k(x) \right] P_n(x) \, dx.
+\hat{x}^2 = \frac{\hbar}{2m\omega} (\hat{a} + \hat{a}^\dagger)^2 = \frac{\hbar}{2m\omega} (\hat{a}^2 + \hat{a}^{\dagger 2} + \hat{a}\hat{a}^\dagger + \hat{a}^\dagger\hat{a})
 $$
-Por la linealidad de la integral, intercambiamos la sumatoria y el operador de integración:
+Utilizamos la relación de conmutación fundamental de los operadores escalera, $[\hat{a}, \hat{a}^\dagger] = 1$, la cual implica que $\hat{a}\hat{a}^\dagger = \hat{a}^\dagger\hat{a} + 1$. Sustituyendo esto en la expresión anterior, obtenemos una forma ordenada (con el operador número $\hat{N} = \hat{a}^\dagger\hat{a}$):
 $$
-\int_{-1}^{1} x^m P_n(x) \, dx = \sum_{k=0}^{m} c_k \int_{-1}^{1} P_k(x) P_n(x) \, dx.
+\hat{x}^2 = \frac{\hbar}{2m\omega} (\hat{a}^2 + \hat{a}^{\dagger 2} + 2\hat{a}^\dagger\hat{a} + 1)
 $$
-Ahora aplicamos la condición de ortogonalidad estándar de los polinomios de Legendre (Ecuación 8.26 de Alonso Sepúlveda, Sec. 8.4.1):
-$$
-\int_{-1}^{1} P_k(x) P_n(x) \, dx = \frac{2}{2n+1} \delta_{kn}.
-$$
-Dado que la sumatoria recorre índices $k$ desde $0$ hasta $m$, y por hipótesis $m < n$, se cumple que $k \neq n$ para todos los términos de la suma. Por lo tanto, $\delta_{kn} = 0$ en cada término, y concluimos rigurosamente que:
-$$
-\int_{-1}^{1} x^m P_n(x) \, dx = 0 \quad \forall \, m < n.
-$$
-Esta propiedad es equivalente a afirmar que $P_n(x)$ es ortogonal al subespacio de polinomios de grado menor que $n$, lo cual es una característica intrínseca de las soluciones de Sturm-Liouville regulares con peso unidad (Cap. 6, Sec. 6.3).
 
 \vspace{0.3cm}
-\noindent\textbf{Parte II: Expansión de $x^4$ en polinomios de Legendre}\\
+\noindent\textbf{Paso 2: Acción de los operadores sobre los estados propios} \\
+Los estados propios de energía del oscilador armónico, denotados como $|\psi_n\rangle$ o simplemente $|n\rangle$, satisfacen las siguientes relaciones de acción de los operadores escalera (Alonso Sepúlveda, Sección 8.5.2, Ecuación 8.72, p. 344):
+$$
+\hat{a} |n\rangle = \sqrt{n} |n-1\rangle
+$$
+$$
+\hat{a}^\dagger |n\rangle = \sqrt{n+1} |n+1\rangle
+$$
+Además, recordamos que los estados propios forman una base ortonormal, por lo que $\langle m | n \rangle = \delta_{m,n}$.
 
-Utilizando el resultado anterior y la teoría de expansiones en bases ortogonales (Sec. 5.2.2 y Ecuación 8.27), cualquier función $f(x)$ definida en $[-1, 1]$ y de cuadrado integrable puede expandirse como:
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Cálculo del elemento de matriz $\langle \psi_m | \hat{x}^2 | \psi_n \rangle$} \\
+Sustituimos la expresión de $\hat{x}^2$ en el elemento de matriz solicitado y aplicamos la linealidad del producto interno:
 $$
-f(x) = \sum_{l=0}^{\infty} a_l P_l(x), \quad \text{con} \quad a_l = \frac{2l+1}{2} \int_{-1}^{1} f(x) P_l(x) \, dx.
+\langle m | \hat{x}^2 | n \rangle = \frac{\hbar}{2m\omega} \langle m | \left( \hat{a}^2 + \hat{a}^{\dagger 2} + 2\hat{a}^\dagger\hat{a} + 1 \right) | n \rangle
 $$
-Para $f(x) = x^4$, la expansión se reduce a una suma finita. Por la Parte I, todos los coeficientes $a_l$ con $l > 4$ son nulos. Además, aprovechamos la simetría de paridad: $x^4$ es una función par, y los polinomios de Legendre satisfacen $P_l(-x) = (-1)^l P_l(x)$ (Sec. 8.4). Por tanto, el integrando $x^4 P_l(x)$ es impar cuando $l$ es impar, y su integral sobre $[-1, 1]$ se anula. Esto elimina automáticamente los coeficientes $a_1$ y $a_3$. La expansión se reduce a:
-$$
-x^4 = a_0 P_0(x) + a_2 P_2(x) + a_4 P_4(x).
-$$
-Calculamos cada coeficiente por proyección directa, utilizando las expresiones explícitas de los primeros polinomios (listados en la Sec. 8.4):
-$$
-P_0(x) = 1, \quad P_2(x) = \frac{1}{2}(3x^2 - 1), \quad P_4(x) = \frac{1}{8}(35x^4 - 30x^2 + 3).
-$$
+Evaluamos cada término por separado:
 
-\noindent\textbf{Cálculo de $a_0$:}
+1. \textbf{Término $\hat{a}^2$}:
 $$
-a_0 = \frac{1}{2} \int_{-1}^{1} x^4 P_0(x) \, dx = \frac{1}{2} \int_{-1}^{1} x^4 \, dx = \frac{1}{2} \left[ \frac{x^5}{5} \right]_{-1}^{1} = \frac{1}{2} \left( \frac{1}{5} - \left(-\frac{1}{5}\right) \right) = \frac{1}{5}.
-$$
-
-\noindent\textbf{Cálculo de $a_2$:}
-$$
-a_2 = \frac{5}{2} \int_{-1}^{1} x^4 P_2(x) \, dx = \frac{5}{2} \int_{-1}^{1} x^4 \cdot \frac{1}{2}(3x^2 - 1) \, dx = \frac{5}{4} \int_{-1}^{1} (3x^6 - x^4) \, dx.
-$$
-Evaluando la integral par:
-$$
-a_2 = \frac{5}{4} \cdot 2 \left[ \frac{3x^7}{7} - \frac{x^5}{5} \right]_{0}^{1} = \frac{5}{2} \left( \frac{3}{7} - \frac{1}{5} \right) = \frac{5}{2} \left( \frac{15 - 7}{35} \right) = \frac{5}{2} \cdot \frac{8}{35} = \frac{4}{7}.
+\langle m | \hat{a}^2 | n \rangle = \langle m | \hat{a} (\sqrt{n} |n-1\rangle) = \sqrt{n} \langle m | \sqrt{n-1} |n-2\rangle = \sqrt{n(n-1)} \langle m | n-2 \rangle = \sqrt{n(n-1)} \delta_{m, n-2}
 $$
 
-\noindent\textbf{Cálculo de $a_4$:}
+2. \textbf{Término $\hat{a}^{\dagger 2}$}:
+\begin{align*}
+\langle m | \hat{a}^{\dagger 2} | n \rangle
+&= \langle m | \hat{a}^\dagger (\sqrt{n+1} |n+1\rangle) \\
+&= \sqrt{n+1}\,\langle m | \sqrt{n+2} |n+2\rangle \\
+&= \sqrt{(n+1)(n+2)}\,\langle m | n+2 \rangle \\
+&= \sqrt{(n+1)(n+2)}\,\delta_{m, n+2}.
+\end{align*}
+
+3. \textbf{Término $2\hat{a}^\dagger\hat{a}$}:
 $$
-a_4 = \frac{9}{2} \int_{-1}^{1} x^4 P_4(x) \, dx = \frac{9}{2} \int_{-1}^{1} x^4 \cdot \frac{1}{8}(35x^4 - 30x^2 + 3) \, dx = \frac{9}{16} \int_{-1}^{1} (35x^8 - 30x^6 + 3x^4) \, dx.
-$$
-Nuevamente, por paridad:
-$$
-a_4 = \frac{9}{16} \cdot 2 \left[ \frac{35x^9}{9} - \frac{30x^7}{7} + \frac{3x^5}{5} \right]_{0}^{1} = \frac{9}{8} \left( \frac{35}{9} - \frac{30}{7} + \frac{3}{5} \right).
-$$
-Unificando denominadores (315):
-$$
-\frac{35}{9} = \frac{1225}{315}, \quad \frac{30}{7} = \frac{1350}{315}, \quad \frac{3}{5} = \frac{189}{315}.
-$$
-Sumando: $\frac{1225 - 1350 + 189}{315} = \frac{64}{315}$. Por lo tanto:
-$$
-a_4 = \frac{9}{8} \cdot \frac{64}{315} = \frac{576}{2520} = \frac{8}{35}.
+\langle m | 2\hat{a}^\dagger\hat{a} | n \rangle = 2n \langle m | n \rangle = 2n \delta_{m, n}
 $$
 
-\noindent\textbf{Resultado final y verificación:}\\
-Sustituyendo los coeficientes calculados, obtenemos la expansión solicitada:
+4. \textbf{Término $1$ (Identidad)}:
 $$
-x^4 = \frac{1}{5} P_0(x) + \frac{4}{7} P_2(x) + \frac{8}{35} P_4(x).
+\langle m | 1 | n \rangle = \langle m | n \rangle = \delta_{m, n}
 $$
-Para verificar la consistencia analítica, reemplazamos las expresiones polinomiales explícitas:
-$$
-\begin{aligned}
-x^4 &= \frac{1}{5}(1) + \frac{4}{7}\left[\frac{1}{2}(3x^2 - 1)\right] + \frac{8}{35}\left[\frac{1}{8}(35x^4 - 30x^2 + 3)\right] \\
-&= \frac{1}{5} + \frac{6}{7}x^2 - \frac{2}{7} + x^4 - \frac{6}{7}x^2 + \frac{3}{35} \\
-&= x^4 + \left(\frac{6}{7} - \frac{6}{7}\right)x^2 + \left(\frac{1}{5} - \frac{2}{7} + \frac{3}{35}\right) \\
-&= x^4 + 0 \cdot x^2 + \frac{7 - 10 + 3}{35} = x^4.
-\end{aligned}
-$$
-La identidad se satisface exactamente, confirmando la validez de la expansión. Este desarrollo ilustra cómo la ortogonalidad de Sturm-Liouville permite descomponer funciones polinomiales arbitrarias en la base natural del problema, facilitando el cálculo de potenciales, integrales de acoplamiento y desarrollos multipolares en física matemática (Sepúlveda, Sec. 8.4.1 y Cap. 6).
 
+Sumando todos los términos, obtenemos la expresión completa para el elemento de matriz cuadrupolar:
+$$
+\langle \psi_m | \hat{x}^2 | \psi_n \rangle = \frac{\hbar}{2m\omega} \left[ \sqrt{n(n-1)} \delta_{m, n-2} + \sqrt{(n+1)(n+2)} \delta_{m, n+2} + (2n+1) \delta_{m, n} \right]
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 4: Reglas de selección cuadrupolares} \\
+En mecánica cuántica, la probabilidad de una transición entre un estado inicial $|n\rangle$ y un estado final $|m\rangle$ mediada por un operador (en este caso, el momento cuadrupolar, proporcional a $\hat{x}^2$) es proporcional al cuadrado del módulo del elemento de matriz correspondiente. 
+
+Observando la expresión obtenida, el elemento de matriz es diferente de cero únicamente si se cumple alguna de las siguientes condiciones impuestas por las deltas de Kronecker:
+\begin{itemize}
+    \item $\delta_{m, n-2} \neq 0 \implies m = n - 2$
+    \item $\delta_{m, n+2} \neq 0 \implies m = n + 2$
+    \item $\delta_{m, n} \neq 0 \implies m = n$
+\end{itemize}
+
+Esto significa que el oscilador armónico solo puede realizar transiciones cuadrupolares entre niveles de energía que difieran en $0$ o $\pm 2$ cuantos de energía. En términos del cambio en el número cuántico $\Delta n = m - n$, las reglas de selección cuadrupolares son:
+$$
+\Delta n = 0, \pm 2
+$$
+
+\vspace{0.3cm}
+\noindent\textbf{Discusión física y paridad} \\
+Este resultado es completamente consistente con las propiedades de simetría del sistema. El operador $\hat{x}^2$ es una función par bajo inversión espacial ($x \to -x$). Los estados propios del oscilador armónico tienen paridad definida: $P|n\rangle = (-1)^n |n\rangle$. Para que un elemento de matriz de un operador par sea no nulo, los estados inicial y final deben tener la misma paridad, es decir, $(-1)^m = (-1)^n$, lo cual exige que la diferencia $m - n$ sea un número par. 
+
+Mientras que las transiciones dipolares (gobernadas por el operador $\hat{x}$, que es impar) requieren $\Delta n = \pm 1$ (cambio de paridad), las transiciones cuadrupolares (gobernadas por $\hat{x}^2$, que es par) requieren $\Delta n = 0, \pm 2$ (conservación de paridad), tal como se discute en el contexto de las reglas de selección en la Sección 8.5.2 (p. 345-346) de Alonso Sepúlveda. Estas transiciones son de orden superior y, por lo tanto, tienen probabilidades de ocurrencia mucho menores que las dipolares, pero son fundamentales en espectroscopía cuando las transiciones dipolares están prohibidas por las reglas de selección.
 
 
 \section{Problema 5}
-Una esfera conductora de radio $a$ está dividida en sus dos mitades en el ecuador mediante una franja aislante. El hemisferio superior se carga a un potencial $V_0$ y el hemisferio inferior se mantiene a potencial cero. Determine el potencial electrostático en el interior y el exterior de la esfera.
+Demuestre la relación de ortogonalidad de los polinomios de Hermite:
+$$
+\int_{-\infty}^{\infty} e^{-x^2} H_m(x) H_n(x) \, dx = \sqrt{\pi} \, 2^n \, n! \, \delta_{mn}.
+$$
 
 \subsection{Solución}
-Este problema constituye un ejemplo clásico de condiciones de frontera de Dirichlet para la ecuación de Laplace en geometrías esféricas. La resolución se fundamenta en la teoría de separación de variables y en la completez de los polinomios de Legendre, desarrollada extensamente en el Capítulo 8, Sección 8.4 del texto de Alonso Sepúlveda. A continuación, se presenta el desarrollo analítico paso a paso.
+Para abordar este problema nos basamos en el desarrollo formal de la ortogonalidad de los polinomios de Hermite presentado en el Capítulo 8, Sección 8.5 (pp. 339--340) del texto de Alonso Sepúlveda. Esta propiedad es fundamental, ya que garantiza que los polinomios de Hermite forman una base ortogonal en el espacio de Hilbert $\mathcal{L}^2(\mathbb{R})$ con peso $w(x) = e^{-x^2}$, lo cual es la base matemática para la cuantización del oscilador armónico y para la expansión de funciones en series de Hermite. A continuación, se detalla la demostración analítica paso a paso.
+
+La idea central de la ortogonalidad puede verse geométricamente si se consideran las funciones de Hermite ponderadas por la gaussiana: cada modo tiene un patrón de nodos distinto y, al multiplicar dos modos diferentes e integrar en todo el eje real, las áreas positivas y negativas se cancelan exactamente. En cambio, el producto de un modo consigo mismo siempre produce una contribución positiva que da la norma $\sqrt{\pi}\,2^n n!$.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    width=0.58\textwidth,
+    height=6.2cm,
+    xmin=-3.2, xmax=3.2,
+    ymin=-1.25, ymax=1.25,
+    axis lines=middle,
+    grid=both,
+    grid style={black!10},
+    xlabel={$x$},
+    ylabel={modo ponderado},
+    title={Modos gaussianos de Hermite},
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.02,0.98)}, anchor=north west},
+    samples=240,
+    domain=-3.2:3.2
+]
+\addplot[blue!75!black, thick] {exp(-x^2/2)};
+\addlegendentry{$\Phi_0$}
+\addplot[red!75!black, thick] {sqrt(2)*x*exp(-x^2/2)};
+\addlegendentry{$\Phi_1$}
+\addplot[green!55!black, thick] {((2*x^2-1)/sqrt(2))*exp(-x^2/2)};
+\addlegendentry{$\Phi_2$}
+\addplot[purple!75!black, thick] {((2*x^3-3*x)/sqrt(3))*exp(-x^2/2)};
+\addlegendentry{$\Phi_3$}
+\addplot[black!45, dashed, thick] {0};
+\end{axis}
+
+
+\end{tikzpicture}
+
+\small\textbf{Figura 9.} Visualización de la ortogonalidad de Hermite. Se muestran modos gaussianos con paridades y nodos distintos; al multiplicar modos diferentes e integrar sobre todo el eje real, las contribuciones positivas y negativas se cancelan.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 1: Ecuación gobernante y simetría del sistema}\\
-En las regiones interior ($r < a$) y exterior ($r > a$) a la esfera no existen distribuciones volumétricas de carga libre ($\rho = 0$). Por lo tanto, el potencial electrostático $\phi(\mathbf{r})$ satisface la ecuación de Laplace:
+\noindent\textbf{Paso 1: Planteamiento de la integral de ortogonalidad} \\
+Consideremos la integral general que define el producto interno con peso $e^{-x^2}$ entre dos polinomios de Hermite de órdenes $m$ y $n$:
 $$
-\nabla^2 \phi(r, \theta, \varphi) = 0.
+I_{mn} = \int_{-\infty}^{\infty} e^{-x^2} H_m(x) H_n(x) \, dx.
 $$
-Dado que la distribución de potencial en la superficie $r=a$ depende únicamente del ángulo polar $\theta$ y es independiente del ángulo azimutal $\varphi$ (simetría azimutal), el problema es efectivamente bidimensional: $\phi = \phi(r, \theta)$. Esta reducción permite utilizar directamente la forma separada para $m=0$ discutida en la Sección 8.4.2 de Alonso Sepúlveda.
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 2: Solución general por separación de variables}\\
-Implementando la separación de variables $\phi(r, \theta) = R(r)\Theta(\theta)$ en coordenadas esféricas, y considerando la condición de regularidad en los polos $\theta = 0, \pi$, se obtienen las ecuaciones diferenciales ordinarias para la parte radial y angular. La parte angular conduce a la ecuación de Legendre ordinaria, cuyas soluciones acotadas en $[-1, 1]$ son los polinomios de Legendre $P_l(\cos\theta)$ con $l$ entero no negativo (ver Sec. 8.4 y Cap. 6, Teoría de Sturm-Liouville). La parte radial da lugar a soluciones de la forma $r^l$ y $r^{-(l+1)}$.
-
-La solución general acotada y físicamente aceptable se escribe como la superposición lineal de todos los modos permitidos:
+Para evaluar esta expresión, sustituiremos uno de los polinomios mediante la fórmula de Rodrigues, la cual establecimos en el problema anterior (Alonso Sepúlveda, Sección 8.5, p. 338):
 $$
-\phi(r, \theta) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l(\cos\theta).
+H_n(x) = (-1)^n e^{x^2} \frac{d^n}{dx^n} \left( e^{-x^2} \right).
+$$
+Insertando esta expresión en $I_{mn}$, los factores exponenciales $e^{x^2}$ y $e^{-x^2}$ se cancelan algebraicamente, simplificando notablemente el integrando:
+$$
+I_{mn} = (-1)^n \int_{-\infty}^{\infty} H_m(x) \frac{d^n}{dx^n} \left( e^{-x^2} \right) \, dx. \quad (1)
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 3: Condiciones de frontera y regiones espaciales}\\
-La condición de contorno en la superficie de la esfera es:
+\noindent\textbf{Paso 2: Integración por partes $n$ veces} \\
+Aplicaremos el método de integración por partes de forma iterada $n$ veces sobre la ecuación (1). Recordemos la fórmula estándar:
 $$
-\phi(a, \theta) = V(\theta) = \begin{cases} 
-V_0 & 0 \leq \theta < \pi/2 \quad (\text{hemisferio superior}) \\
-0   & \pi/2 < \theta \leq \pi \quad (\text{hemisferio inferior})
-\end{cases}
+\int u \, dv = uv - \int v \, du.
 $$
-Debemos tratar las regiones interior y exterior por separado para garantizar el comportamiento correcto en los límites asintóticos:
+Tomamos $u = H_m(x)$ y $dv = \frac{d^n}{dx^n}(e^{-x^2}) dx$. En cada paso, derivaremos el polinomio $H_m(x)$ e integraremos la derivada de orden superior de la gaussiana. Tras la primera integración por partes:
+$$
+I_{mn} = (-1)^n \left[ H_m(x) \frac{d^{n-1}}{dx^{n-1}}(e^{-x^2}) \right]_{-\infty}^{\infty} - (-1)^n \int_{-\infty}^{\infty} H'_m(x) \frac{d^{n-1}}{dx^{n-1}}(e^{-x^2}) \, dx.
+$$
+El término evaluado en los límites $\pm \infty$ se anula estrictamente. Esto se debe a que la función $e^{-x^2}$ y todas sus derivadas decaen exponencialmente a cero cuando $|x| \to \infty$, mientras que $H_m(x)$ crece solo como un polinomio de grado $m$. Matemáticamente, para cualquier entero $k \geq 0$:
+$$
+\lim_{x \to \pm \infty} x^k e^{-x^2} = 0 \quad \text{y} \quad \lim_{x \to \pm \infty} \frac{d^k}{dx^k}(e^{-x^2}) = 0.
+$$
+Por lo tanto, todos los términos de frontera desaparecen en cada aplicación de integración por partes. Repitiendo el proceso $n$ veces consecutivas, obtenemos:
+$$
+I_{mn} = (-1)^n (-1)^n \int_{-\infty}^{\infty} \frac{d^n}{dx^n} \left[ H_m(x) \right] e^{-x^2} \, dx = \int_{-\infty}^{\infty} e^{-x^2} \frac{d^n H_m(x)}{dx^n} \, dx. \quad (2)
+$$
+El factor $(-1)^{2n} = 1$ se ha simplificado.
+
+\vspace{0.3cm}
+\noindent\textbf{Paso 3: Análisis por casos según los grados $m$ y $n$} \\
+La expresión (2) depende crucialmente de la relación entre los órdenes $m$ y $n$, dado que $H_m(x)$ es un polinomio de grado exactamente $m$. Analizamos tres situaciones:
 
 \begin{itemize}
-    \item \textbf{Región interior ($r < a$):} El potencial debe ser finito en el origen $r=0$. Esto exige $B_l = 0$ para todo $l$. Así:
+    \item \textbf{Caso 1: $m < n$}. Si el grado del polinomio $H_m(x)$ es menor que el número de derivadas $n$, entonces la derivada $n$-ésima es idénticamente cero:
     $$
-    \phi_{\text{int}}(r, \theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
+    \frac{d^n}{dx^n} H_m(x) = 0 \quad \text{para } m < n.
     $$
-    \item \textbf{Región exterior ($r > a$):} El potencial debe anularse cuando $r \to \infty$. Esto exige $A_l = 0$ para todo $l$. Así:
+    Sustituyendo en (2), obtenemos inmediatamente $I_{mn} = 0$.
+
+    \item \textbf{Caso 2: $m > n$}. Por la simetría del producto interno, $I_{mn} = I_{nm}$. Si intercambiamos los roles de $m$ y $n$ en la demostración anterior, el mismo argumento de integración por partes $m$ veces lleva a una integral que contiene $\frac{d^m}{dx^m} H_n(x)$, la cual es cero porque $n < m$. Por lo tanto, $I_{mn} = 0$ también en este caso.
+
+    \item \textbf{Caso 3: $m = n$}. Este es el caso donde la integral no se anula. La derivada $n$-ésima de un polinomio de grado $n$ es una constante igual al coeficiente del término de mayor grado multiplicado por $n!$. Según las propiedades de los polinomios de Hermite (Alonso Sepúlveda, Sección 8.5, p. 338), el coeficiente del término de mayor potencia $x^n$ en $H_n(x)$ es $2^n$. Es decir:
     $$
-    \phi_{\text{ext}}(r, \theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}} P_l(\cos\theta).
+    H_n(x) = 2^n x^n + \text{términos de orden inferior}.
+    $$
+    Al derivar $n$ veces, todos los términos de orden inferior desaparecen y queda:
+    $$
+    \frac{d^n}{dx^n} H_n(x) = 2^n \frac{d^n}{dx^n} (x^n) = 2^n \cdot n!.
     $$
 \end{itemize}
-En $r=a$, ambas series deben coincidir con $V(\theta)$:
-$$
-\sum_{l=0}^{\infty} C_l P_l(\cos\theta) = V(\theta),
-$$
-donde $C_l = A_l a^l$ para el interior y $C_l = B_l / a^{l+1}$ para el exterior.
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 4: Cálculo de los coeficientes $C_l$}\\
-Utilizando la propiedad de ortogonalidad de los polinomios de Legendre en el intervalo $[-1, 1]$ (Ecuación 8.26, Sec. 8.4.1):
+\noindent\textbf{Paso 4: Evaluación final y normalización} \\
+Sustituyendo el resultado del caso $m=n$ en la ecuación (2), la constante $2^n n!$ puede sacarse fuera de la integral:
 $$
-\int_{-1}^{1} P_l(x) P_{l'}(x) \, dx = \frac{2}{2l+1} \delta_{ll'},
+I_{nn} = 2^n n! \int_{-\infty}^{\infty} e^{-x^2} \, dx.
 $$
-donde $x = \cos\theta$ y $dx = -\sin\theta \, d\theta$. Multiplicamos la expansión de $V(\theta)$ por $P_{l'}(x)$ e integramos:
+La integral restante es la clásica integral gaussiana, cuyo valor es bien conocido y se encuentra tabulado en la literatura matemática estándar (Alonso Sepúlveda, Apéndices y Sección 8.5, p. 340):
 $$
-C_l = \frac{2l+1}{2} \int_{-1}^{1} V(x) P_l(x) \, dx.
+\int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}.
 $$
-Sustituyendo la condición de frontera y cambiando límites de integración ($\theta=0 \to x=1$, $\theta=\pi/2 \to x=0$, $\theta=\pi \to x=-1$):
+Por lo tanto:
 $$
-C_l = \frac{2l+1}{2} \left[ \int_{0}^{1} V_0 P_l(x) \, dx + \int_{-1}^{0} 0 \cdot P_l(x) \, dx \right] = V_0 \frac{2l+1}{2} \int_{0}^{1} P_l(x) \, dx.
-$$
-
-\noindent\textbf{Evaluación analítica de la integral:}\\
-Para $l=0$: $P_0(x)=1 \Rightarrow C_0 = V_0 \frac{1}{2} \int_0^1 dx = \frac{V_0}{2}$. Este término representa el potencial promedio sobre la esfera.
-
-Para $l \geq 1$, utilizamos la relación de recurrencia de derivadas (Sec. 8.4):
-$$
-(2l+1)P_l(x) = \frac{d}{dx}P_{l+1}(x) - \frac{d}{dx}P_{l-1}(x).
-$$
-Integrando entre $0$ y $1$:
-$$
-\int_{0}^{1} P_l(x) \, dx = \frac{1}{2l+1} \left[ P_{l+1}(1) - P_{l-1}(1) - P_{l+1}(0) + P_{l-1}(0) \right].
-$$
-Dado que $P_n(1) = 1$ para todo $n$, el término entre corchetes se simplifica a $P_{l-1}(0) - P_{l+1}(0)$. Por lo tanto:
-$$
-C_l = \frac{V_0}{2} \left[ P_{l-1}(0) - P_{l+1}(0) \right], \quad l \geq 1.
+I_{nn} = \sqrt{\pi} \, 2^n \, n!.
 $$
 
-\noindent\textbf{Análisis de paridad:}\\
-Del Problema 3 (y Sec. 8.4) sabemos que $P_n(0) = 0$ si $n$ es impar, y $P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}$ si $n$ es par.
-\begin{itemize}
-    \item Si $l$ es par ($l \geq 2$), entonces $l-1$ y $l+1$ son impares $\Rightarrow P_{l-1}(0) = P_{l+1}(0) = 0 \Rightarrow C_l = 0$.
-    \item Si $l$ es impar, entonces $l-1$ y $l+1$ son pares $\Rightarrow C_l \neq 0$.
-\end{itemize}
-Esto confirma que solo sobreviven el término monopolar ($l=0$) y los modos impares ($l=1, 3, 5, \dots$). Reindexando con $l = 2n+1$ para $n=0, 1, 2, \dots$:
+Combinando los tres casos analizados mediante el uso de la delta de Kronecker $\delta_{mn}$ (que vale 1 si $m=n$ y 0 en caso contrario), obtenemos la relación de ortogonalidad completa:
 $$
-C_{2n+1} = \frac{V_0}{2} \left[ P_{2n}(0) - P_{2n+2}(0) \right].
+\int_{-\infty}^{\infty} e^{-x^2} H_m(x) H_n(x) \, dx = \sqrt{\pi} \, 2^n \, n! \, \delta_{mn}.
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 5: Expresión final del potencial}\\
-Sustituyendo los coeficientes calculados y recordando que $A_l = C_l / a^l$ y $B_l = C_l a^{l+1}$, obtenemos las soluciones explícitas para ambas regiones:
-
-\noindent\textbf{Potencial en el interior ($r < a$):}
+\noindent\textbf{Discusión y relevancia física} \\
+Este resultado demuestra que los polinomios de Hermite son ortogonales bajo el peso $e^{-x^2}$ en el dominio $(-\infty, \infty)$. La presencia del factor de normalización $\sqrt{\pi} 2^n n!$ indica que los polinomios no están ortonormalizados, sino simplemente ortogonales. En el contexto de la mecánica cuántica, esta relación se utiliza directamente para normalizar las autofunciones del oscilador armónico unidimensional:
 $$
-\phi_{\text{int}}(r, \theta) = \frac{V_0}{2} + \frac{V_0}{2} \sum_{n=0}^{\infty} \left[ P_{2n}(0) - P_{2n+2}(0) \right] \left( \frac{r}{a} \right)^{2n+1} P_{2n+1}(\cos\theta).
+\psi_n(x) = \left( \frac{m\omega}{\pi \hbar} \right)^{1/4} \frac{1}{\sqrt{2^n n!}} H_n\left( \sqrt{\frac{m\omega}{\hbar}} x \right) e^{-\frac{m\omega}{2\hbar} x^2},
 $$
-
-\noindent\textbf{Potencial en el exterior ($r > a$):}
-$$
-\phi_{\text{ext}}(r, \theta) = \frac{V_0}{2} \left( \frac{a}{r} \right) + \frac{V_0}{2} \sum_{n=0}^{\infty} \left[ P_{2n}(0) - P_{2n+2}(0) \right] \left( \frac{a}{r} \right)^{2n+2} P_{2n+1}(\cos\theta).
-$$
-
-\noindent\textbf{Forma explícita de los primeros términos:}\\
-Utilizando $P_0(0)=1$, $P_2(0)=-1/2$, $P_4(0)=3/8$, $P_6(0)=-5/16$, podemos escribir los primeros modos de la expansión:
-$$
-\phi_{\text{int}}(r, \theta) = \frac{V_0}{2} \left[ 1 + \frac{3}{2} \left(\frac{r}{a}\right) P_1(\cos\theta) - \frac{7}{8} \left(\frac{r}{a}\right)^3 P_3(\cos\theta) + \frac{11}{16} \left(\frac{r}{a}\right)^5 P_5(\cos\theta) - \cdots \right].
-$$
-La solución exterior se obtiene reemplazando $(r/a)^k \to (a/r)^{k+1}$.
-
-\vspace{0.3cm}
-\noindent\textbf{Discusión física y convergencia:}\\
-La serie converge uniformemente en todo el dominio excepto en la discontinuidad del potencial en el ecuador ($\theta = \pi/2$), donde la serie exhibe el fenómeno de Gibbs, como es característico de las expansiones en bases ortogonales de Sturm-Liouville (Cap. 6, Sec. 6.5). El término $l=0$ ($V_0/2$) corresponde al potencial de una carga puntual equivalente neta, mientras que los términos impares representan multipolos de orden superior inducidos por la asimetría de la distribución de voltaje. El comportamiento asintótico $\phi_{\text{ext}} \sim 1/r$ confirma que el campo decae como el de un monopolo cargado a un potencial promedio $V_0/2$, consistente con la conservación del flujo eléctrico en el infinito. Este desarrollo ilustra magistralmente cómo la estructura espectral de la ecuación de Laplace en coordenadas esféricas, fundamentada en los autovalores $l(l+1)$ del operador angular $L^2$, permite descomponer condiciones de frontera arbitrarias en modos físicamente interpretables (Alonso Sepúlveda, Sec. 8.4.8 y Cap. 3, Sec. 3.3.4).
+garantizando que $\int_{-\infty}^{\infty} |\psi_n(x)|^2 dx = 1$. La demostración presentada sigue rigurosamente la línea de razonamiento expuesta en la Sección 8.5 del texto de Alonso Sepúlveda, donde se enfatiza que la ortogonalidad es consecuencia directa de la estructura de Sturm-Liouville de la ecuación diferencial de Hermite y de la fórmula de Rodrigues.
 
 
 \section{Problema 6}
-Encuentre el campo y el potencial electrostático en un punto P arbitrario para un anillo de radio $R$ y distribución uniforme de carga sobre toda su longitud(ver figura). Considere los casos $r> R$ y $r< R$.
+Muestre las siguientes relaciones:
+$$
+\sin(2x) = \frac{1}{e} \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} H_{2n+1}(x), \quad \cos(2x) = \frac{1}{e} \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} H_{2n}(x).
+$$
 
 \subsection{Solución}
-Este problema constituye una aplicación clásica de la expansión en series de Legendre para el potencial electrostático en regiones libres de carga, aprovechando la simetría azimutal del sistema. El desarrollo analítico se fundamenta en la separación de variables de la ecuación de Laplace en coordenadas esféricas y en las propiedades de los polinomios de Legendre, tal como se exponen en la Sección 8.4.2 y la Sección 3.3.4 del texto de Alonso Sepúlveda.
+Para resolver este problema nos basamos en la teoría de los polinomios de Hermite presentada en el Capítulo 8, Sección 8.5 del texto de Alonso Sepúlveda. La herramienta fundamental para esta demostración es la función generatriz de los polinomios de Hermite, la cual se define como (Alonso Sepúlveda, Sección 8.5, p. 338):
+$$
+g(x, t) = e^{2xt - t^2} = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} t^n, \quad \text{para todo } t \in \mathbb{C}.
+$$
+Esta serie de potencias converge absolutamente para cualquier valor complejo de $t$, lo que nos permite evaluar la función generatriz en puntos del plano complejo, como $t = i$ (donde $i$ es la unidad imaginaria, $i^2 = -1$), sin perder validez matemática. A continuación, se detalla el desarrollo analítico paso a paso.
+
+Antes de realizar la demostración algebraica, es útil comparar gráficamente las funciones exactas $\sin(2x)$ y $\cos(2x)$ con las sumas truncadas de Hermite. En la figura siguiente se usan los términos hasta $H_9(x)$ para el seno y hasta $H_8(x)$ para el coseno, lo cual permite observar cómo la separación entre términos impares y pares reproduce, respectivamente, la simetría impar del seno y la simetría par del coseno.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=1.2cm},
+    width=0.47\textwidth,
+    height=5.8cm,
+    xmin=-2.2, xmax=2.2,
+    ymin=-1.25, ymax=1.25,
+    axis lines=middle,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    samples=260,
+    domain=-2.2:2.2,
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.03,0.97)}, anchor=north west}
+]
+\nextgroupplot[
+    title={Serie impar para $\sin(2x)$},
+    ylabel={valor}
+]
+\addplot[blue, thick] {sin(deg(2*x))};
+\addlegendentry{$\sin(2x)$}
+\addplot[red, dashed, thick] {exp(-1)*(2*x - (8*x^3-12*x)/6 + (32*x^5-160*x^3+120*x)/120 - (128*x^7-1344*x^5+3360*x^3-1680*x)/5040 + (512*x^9-9216*x^7+48384*x^5-80640*x^3+30240*x)/362880)};
+\addlegendentry{suma hasta $H_9$}
+
+\nextgroupplot[
+    title={Serie par para $\cos(2x)$}
+]
+\addplot[blue, thick] {cos(deg(2*x))};
+\addlegendentry{$\cos(2x)$}
+\addplot[red, dashed, thick] {exp(-1)*(1 - (4*x^2-2)/2 + (16*x^4-48*x^2+12)/24 - (64*x^6-480*x^4+720*x^2-120)/720 + (256*x^8-3584*x^6+13440*x^4-13440*x^2+1680)/40320)};
+\addlegendentry{suma hasta $H_8$}
+\end{groupplot}
+\end{tikzpicture}
+
+\small\textbf{Figura 10.} Comparación entre las funciones trigonométricas exactas y las sumas parciales de Hermite obtenidas al evaluar la función generatriz en $t=i$. Los términos impares aproximan al seno y los términos pares aproximan al coseno.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 1: Ecuación gobernante y simetría del sistema}\\
-Dado que el anillo posee una densidad lineal de carga uniforme $\lambda = q/(2\pi R)$, la distribución es independiente del ángulo azimutal $\varphi$. En las regiones del espacio donde no hay carga ($\rho = 0$), el potencial electrostático $\phi(r, \theta, \varphi)$ satisface la ecuación de Laplace:
+\noindent\textbf{Paso 1: Evaluación de la forma cerrada de la función generatriz en $t = i$} \\
+Sustituimos $t = i$ directamente en la expresión exponencial de la función generatriz:
 $$
-\nabla^2 \phi(r, \theta) = 0.
+g(x, i) = e^{2x(i) - (i)^2}.
 $$
-Debido a la simetría azimutal, $\phi$ no depende de $\varphi$, reduciéndose el problema a dos dimensiones $(r, \theta)$. Esta configuración exige la búsqueda de soluciones armónicas que permanezcan acotadas y que coincidan con las condiciones de contorno impuestas por la geometría del anillo.
+Dado que $i^2 = -1$, el exponente se simplifica de la siguiente manera:
+$$
+2x(i) - (i)^2 = 2ix - (-1) = 1 + 2ix.
+$$
+Por lo tanto, la función generatriz evaluada en $t = i$ se convierte en:
+$$
+g(x, i) = e^{1 + 2ix} = e^1 \cdot e^{2ix} = e \cdot e^{2ix}.
+$$
+Aplicando la fórmula de Euler, $e^{i\theta} = \cos(\theta) + i\sin(\theta)$, con $\theta = 2x$, podemos separar esta expresión en sus partes real e imaginaria:
+$$
+g(x, i) = e \left( \cos(2x) + i \sin(2x) \right). \quad (1)
+$$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 2: Solución general por separación de variables}\\
-Implementando la separación de variables en coordenadas esféricas $\phi(r, \theta) = R(r)\Theta(\theta)$, la parte angular conduce a la ecuación de Legendre ordinaria, cuyas soluciones regulares en $[-1, 1]$ son los polinomios de Legendre $P_l(\cos\theta)$ con $l$ entero no negativo (Sepúlveda, Sec. 8.4 y Cap. 6). La parte radial satisface una ecuación de Euler cuyas soluciones son $r^l$ y $r^{-(l+1)}$. La superposición lineal de todos los modos permitidos proporciona la solución general:
+\noindent\textbf{Paso 2: Evaluación de la serie de potencias en $t = i$} \\
+Ahora sustituimos $t = i$ en el lado derecho de la definición de la función generatriz (la serie infinita):
 $$
-\phi(r, \theta) = \sum_{l=0}^{\infty} \left( A_l r^l + \frac{B_l}{r^{l+1}} \right) P_l(\cos\theta).
+g(x, i) = \sum_{n=0}^{\infty} \frac{H_n(x)}{n!} i^n.
 $$
-Para determinar los coeficientes $A_l$ y $B_l$, debemos analizar las regiones interior ($r < R$) y exterior ($r > R$) por separado, imponiendo condiciones de regularidad física:
+Para analizar esta suma, es conveniente separarla en dos series: una que contenga los términos con índices pares ($n = 2k$) y otra con los términos de índices impares ($n = 2k + 1$), donde $k = 0, 1, 2, \dots$. 
+
+Analicemos las potencias de $i$:
 \begin{itemize}
-    \item \textbf{Región exterior ($r > R$):} El potencial debe anularse cuando $r \to \infty$. Esto exige $A_l = 0$ para todo $l$. Así:
-    $$
-    \phi_{\text{ext}}(r, \theta) = \sum_{l=0}^{\infty} \frac{B_l}{r^{l+1}} P_l(\cos\theta).
-    $$
-    \item \textbf{Región interior ($r < R$):} El potencial debe ser finito en el origen $r=0$. Esto exige $B_l = 0$ para todo $l$. Así:
-    $$
-    \phi_{\text{int}}(r, \theta) = \sum_{l=0}^{\infty} A_l r^l P_l(\cos\theta).
-    $$
+    \item Para $n = 2k$ (par): $i^{2k} = (i^2)^k = (-1)^k$.
+    \item Para $n = 2k + 1$ (impar): $i^{2k+1} = i \cdot i^{2k} = i(-1)^k$.
 \end{itemize}
 
-\vspace{0.3cm}
-\noindent\textbf{Paso 3: Cálculo del potencial sobre el eje de simetría}\\
-La estrategia estándar para este tipo de problemas consiste en calcular el potencial directamente sobre el eje de simetría ($z$-axis, donde $\theta = 0$), ya que allí la integral de Coulomb es trivial. En el eje, $r = |z|$ y $P_l(\cos 0) = P_l(1) = 1$. La distancia desde cualquier punto del anillo hasta un punto $P$ sobre el eje $z$ es constante: $d = \sqrt{R^2 + z^2}$. Por lo tanto:
+Sustituyendo estas identidades en la serie, obtenemos:
 $$
-\phi(z, 0) = \frac{1}{4\pi\epsilon_0} \oint \frac{dq}{d} = \frac{q}{4\pi\epsilon_0 \sqrt{R^2 + z^2}}.
+g(x, i) = \sum_{k=0}^{\infty} \frac{H_{2k}(x)}{(2k)!} (-1)^k + \sum_{k=0}^{\infty} \frac{H_{2k+1}(x)}{(2k+1)!} i(-1)^k.
 $$
-Para conectar esta expresión con las series de Legendre, reescribimos el denominador factorizando la distancia mayor en cada región:
-
-\noindent\textbf{Caso $|z| > R$ (exterior):}
+Factorizando la unidad imaginaria $i$ en la segunda sumatoria, podemos agrupar las partes real e imaginaria de la serie:
 $$
-\phi(z, 0) = \frac{q}{4\pi\epsilon_0 |z|} \left(1 + \left(\frac{R}{z}\right)^2\right)^{-1/2}.
-$$
-\noindent\textbf{Caso $|z| < R$ (interior):}
-$$
-\phi(z, 0) = \frac{q}{4\pi\epsilon_0 R} \left(1 + \left(\frac{z}{R}\right)^2\right)^{-1/2}.
+g(x, i) = \left[ \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} H_{2k}(x) \right] + i \left[ \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!} H_{2k+1}(x) \right]. \quad (2)
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 4: Expansión en serie y determinación de coeficientes}\\
-Recordemos la función generatriz de los polinomios de Legendre (Sepúlveda, Sec. 8.4):
-$$
-\frac{1}{\sqrt{1 - 2xt + t^2}} = \sum_{n=0}^{\infty} P_n(x) t^n.
-$$
-Evaluando en $x=0$ y haciendo $t = \pm R/z$ o $t = \pm z/R$, obtenemos la expansión para las raíces cuadradas inversas:
-$$
-\left(1 + u^2\right)^{-1/2} = \sum_{k=0}^{\infty} P_{2k}(0) u^{2k},
-$$
-donde hemos utilizado que $P_n(0) = 0$ para $n$ impar (Propiedad de paridad, Sepúlveda, Prob. 3 y Sec. 8.4). Los valores explícitos son $P_{2k}(0) = \frac{(-1)^k (2k)!}{2^{2k} (k!)^2}$.
+\noindent\textbf{Paso 3: Igualación de partes reales e imaginarias} \\
+Dado que las expresiones (1) y (2) representan la misma función $g(x, i)$, sus partes reales deben ser iguales entre sí, y sus partes imaginarias también deben ser iguales entre sí. 
 
-Sustituyendo en las expresiones del potencial sobre el eje:
-\begin{itemize}
-    \item Para $|z| > R$:
-    $$
-    \phi(z, 0) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{R^{2k}}{|z|^{2k+1}}.
-    $$
-    \item Para $|z| < R$:
-    $$
-    \phi(z, 0) = \frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) \left(\frac{|z|}{R}\right)^{2k} = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{|z|^{2k}}{R^{2k+1}}.
-    $$
-\end{itemize}
-Ahora comparamos estas series unidimensionales con la solución general evaluada en $\theta=0$ ($P_l(1)=1$):
+\textbf{Igualando las partes reales:}
 $$
-\phi_{\text{ext}}(z, 0) = \sum_{l=0}^{\infty} \frac{B_l}{z^{l+1}}, \quad \phi_{\text{int}}(z, 0) = \sum_{l=0}^{\infty} A_l z^l.
+e \cos(2x) = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} H_{2k}(x).
 $$
-Igualando término a término las potencias de $z$, identificamos inmediatamente que todos los coeficientes con $l$ impar se anulan ($B_{2k+1} = A_{2k+1} = 0$). Para los índices pares $l=2k$:
+Dividiendo ambos lados por la constante $e$, obtenemos la primera relación solicitada:
 $$
-B_{2k} = \frac{q}{4\pi\epsilon_0} P_{2k}(0) R^{2k}, \quad A_{2k} = \frac{q}{4\pi\epsilon_0} \frac{P_{2k}(0)}{R^{2k+1}}.
+\cos(2x) = \frac{1}{e} \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k)!} H_{2k}(x).
+$$
+
+\textbf{Igualando las partes imaginarias:}
+$$
+e \sin(2x) = \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!} H_{2k+1}(x).
+$$
+Dividiendo nuevamente ambos lados por $e$, obtenemos la segunda relación solicitada:
+$$
+\sin(2x) = \frac{1}{e} \sum_{k=0}^{\infty} \frac{(-1)^k}{(2k+1)!} H_{2k+1}(x).
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 5: Potencial electrostático en todo el espacio}\\
-Sustituyendo los coeficientes en las soluciones generales, obtenemos el potencial para cualquier punto $(r, \theta)$:
+\noindent\textbf{Discusión y relevancia} \\
+Este elegante resultado demuestra cómo la función generatriz, al ser evaluada en el plano complejo, actúa como un puente directo entre las funciones trigonométricas y los polinomios de Hermite. La separación en partes par e impar de la serie refleja la propiedad de paridad de los polinomios de Hermite: $H_n(-x) = (-1)^n H_n(x)$ (Alonso Sepúlveda, Sección 8.5, p. 338). Los polinomios de orden par $H_{2k}(x)$ son funciones pares y se asocian naturalmente con el coseno (que también es par), mientras que los polinomios de orden impar $H_{2k+1}(x)$ son funciones impares y se asocian con el seno (que es impar). 
 
-\noindent\textbf{Región exterior ($r > R$):}
+Finalmente, renombrando el índice mudo de sumatoria $k$ como $n$ para coincidir exactamente con la notación del enunciado del problema, concluimos la demostración de manera rigurosa:
 $$
-\phi_{\text{ext}}(r, \theta) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) \frac{R^{2k}}{r^{2k+1}} P_{2k}(\cos\theta).
+\sin(2x) = \frac{1}{e} \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} H_{2n+1}(x), \quad \cos(2x) = \frac{1}{e} \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} H_{2n}(x).
 $$
-\noindent\textbf{Región interior ($r < R$):}
-$$
-\phi_{\text{int}}(r, \theta) = \frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) \left(\frac{r}{R}\right)^{2k} P_{2k}(\cos\theta).
-$$
-Estas series convergen uniformemente en sus respectivos dominios. El término $k=0$ ($P_0=1, P_0(0)=1$) recupera el potencial monopolar $\phi \approx q/(4\pi\epsilon_0 r)$ a grandes distancias, mientras que los términos superiores ($k\geq 1$) describen los multipolos (cuadrupolo, hexadecapolo, etc.) inducidos por la geometría anular.
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 6: Cálculo del campo eléctrico $\mathbf{E}$}\\
-El campo electrostático se obtiene mediante el gradiente negativo del potencial: $\mathbf{E} = -\nabla \phi$. En coordenadas esféricas, y aprovechando la independencia azimutal, el operador gradiente se escribe (Sepúlveda, Sec. 1.4.1 y Apéndice 1.1):
-$$
-\nabla \phi = \hat{r} \frac{\partial \phi}{\partial r} + \hat{\theta} \frac{1}{r} \frac{\partial \phi}{\partial \theta}.
-$$
-Derivando las series término a término:
-
-\noindent\textbf{Componente radial $E_r$:}
-$$
-E_r = -\frac{\partial \phi}{\partial r}.
-$$
-Para $r > R$:
-$$
-E_r^{\text{ext}} = -\frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} P_{2k}(0) R^{2k} \frac{\partial}{\partial r}\left(r^{-(2k+1)}\right) P_{2k}(\cos\theta) = \frac{q}{4\pi\epsilon_0} \sum_{k=0}^{\infty} (2k+1) P_{2k}(0) \frac{R^{2k}}{r^{2k+2}} P_{2k}(\cos\theta).
-$$
-Para $r < R$:
-$$
-E_r^{\text{int}} = -\frac{q}{4\pi\epsilon_0 R} \sum_{k=0}^{\infty} P_{2k}(0) R^{-2k} \frac{\partial}{\partial r}\left(r^{2k}\right) P_{2k}(\cos\theta) = -\frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} 2k P_{2k}(0) \frac{r^{2k-1}}{R^{2k+1}} P_{2k}(\cos\theta).
-$$
-(Nótese que el término $k=0$ desaparece en el interior, como corresponde a una región sin carga donde el campo no tiene componente monopolar radial pura en el origen).
-
-\noindent\textbf{Componente angular $E_\theta$:}
-$$
-E_\theta = -\frac{1}{r} \frac{\partial \phi}{\partial \theta} = -\frac{1}{r} \frac{\partial \phi}{\partial (\cos\theta)} \frac{\partial (\cos\theta)}{\partial \theta} = \frac{\sin\theta}{r} \frac{\partial \phi}{\partial x} \Big|_{x=\cos\theta}.
-$$
-Utilizando $P'_l(x) = dP_l/dx$, obtenemos para $r > R$:
-$$
-E_\theta^{\text{ext}} = \frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} P_{2k}(0) \frac{R^{2k}}{r^{2k+2}} P'_{2k}(\cos\theta) \sin\theta.
-$$
-Y para $r < R$:
-$$
-E_\theta^{\text{int}} = -\frac{q}{4\pi\epsilon_0} \sum_{k=1}^{\infty} P_{2k}(0) \frac{r^{2k-1}}{R^{2k+1}} P'_{2k}(\cos\theta) \sin\theta.
-$$
-
-\vspace{0.3cm}
-\noindent\textbf{Resultado final vectorial:}\\
-El campo eléctrico en ambos dominios se expresa compactamente como:
-$$
-\mathbf{E}(r, \theta) = \hat{r} E_r(r, \theta) + \hat{\theta} E_\theta(r, \theta),
-$$
-con los coeficientes derivados anteriormente. Es importante destacar que en $r=R$, el potencial es continuo ($\phi_{\text{ext}} = \phi_{\text{int}}$), pero la componente radial del campo presenta una discontinuidad finita proporcional a la densidad superficial de carga efectiva proyectada, consistente con las condiciones de salto de Maxwell en electrostática.
-
-Este desarrollo analítico ilustra cómo la completez de la base de Sturm-Liouville $\{P_l(\cos\theta)\}$ (Sepúlveda, Sec. 8.4.1) permite descomponer condiciones de frontera geométricamente complejas en una superposición de modos armónicos, facilitando el cálculo de potenciales y campos en sistemas con simetría azimutal. La convergencia de las series está garantizada por la estructura analítica de la función generatriz y las propiedades de ortogonalidad de los polinomios de Legendre.
-
+Esto completa la demostración analítica solicitada, fundamentada en las propiedades de la función generatriz expuestas en el texto de referencia.
 
 \section{Problema 7}
-Suponga que por alguna razón encontramos en un experimento que existen masas negativas. Luego, tomamos un par de masas puntuales de signo contrario y las ubicamos sobre el mismo eje separadas a una distancia $2a$ (como muestra la figura). Encuentre el potencial gravitacional generado por este ``dipolo gravitacional'' en el punto $P$, para $r> a$ y $r< a$.
-
-Sugerencia: Haga uso de la función generatriz de los polinomios de Legendre y recuerde que el potencial generado por una partícula puntual a una distancia $r$ de la misma, está dado por $\phi= -Gm/r$, donde $G$ es la constante de Newton y $m$ la masa de la partícula.
+Expandir las funciones
+$$
+f(x) = x^{2r}, \quad g(x) = x^{2r+1}
+$$
+en términos de los polinomios de Hermite.
 
 \subsection{Solución}
-Este problema constituye una aplicación directa del principio de superposición y de la expansión multipolar en coordenadas esféricas, fundamentada en la función generatriz de los polinomios de Legendre. El desarrollo analítico sigue rigurosamente la teoría expuesta en el Capítulo 8, Secciones 8.4, 8.4.2 y 8.4.8 del texto de Alonso Sepúlveda. A continuación, se detalla el procedimiento paso a paso.
+Para resolver este problema nos basamos en la teoría de los polinomios de Hermite presentada en el Capítulo 8, Sección 8.5 del texto de Alonso Sepúlveda. Cualquier función $f(x)$ de cuadrado integrable con peso $e^{-x^2}$ en el intervalo $(-\infty, \infty)$ puede expandirse en una serie de polinomios de Hermite de la forma (Alonso Sepúlveda, Sección 8.5, p. 339):
+$$
+f(x) = \sum_{n=0}^{\infty} c_n H_n(x)
+$$
+donde los coeficientes $c_n$ se determinan utilizando la relación de ortogonalidad de los polinomios de Hermite:
+$$
+\int_{-\infty}^{\infty} e^{-x^2} H_m(x) H_n(x) \, dx = \sqrt{\pi} \, 2^n \, n! \, \delta_{mn}
+$$
+Multiplicando la expansión por $e^{-x^2} H_m(x)$ e integrando, obtenemos la fórmula explícita para los coeficientes:
+$$
+c_n = \frac{1}{\sqrt{\pi} \, 2^n \, n!} \int_{-\infty}^{\infty} e^{-x^2} f(x) H_n(x) \, dx
+$$
+A continuación, aplicamos este método analítico a las funciones $f(x) = x^{2r}$ y $g(x) = x^{2r+1}$.
+
+
+Antes de desarrollar los coeficientes en forma general, conviene visualizar la idea de la expansión finita. La figura siguiente muestra dos ejemplos particulares: $x^4$ se reconstruye con polinomios pares $H_0$, $H_2$ y $H_4$, mientras que $x^5$ se reconstruye con polinomios impares $H_1$, $H_3$ y $H_5$. Esto ilustra que la paridad del monomio determina qué familia de polinomios de Hermite aparece en la suma.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=1.2cm},
+    width=0.47\textwidth,
+    height=5.8cm,
+    xmin=-2, xmax=2,
+    axis lines=middle,
+    grid=both,
+    grid style={black!12},
+    xlabel={$x$},
+    samples=240,
+    domain=-2:2,
+    legend style={font=\scriptsize, cells={anchor=west}, at={(0.03,0.97)}, anchor=north west}
+]
+\nextgroupplot[
+    title={Expansión par de $x^4$},
+    ymin=-0.5, ymax=16.5,
+    ylabel={valor}
+]
+\addplot[blue, thick] {x^4};
+\addlegendentry{$x^4$}
+\addplot[red, dashed, thick] {3/4 + (3/4)*(4*x^2-2) + (1/16)*(16*x^4-48*x^2+12)};
+\addlegendentry{$\frac{3}{4}H_0+\frac{3}{4}H_2+\frac{1}{16}H_4$}
+
+\nextgroupplot[
+    title={Expansión impar de $x^5$},
+    ymin=-33, ymax=33
+]
+\addplot[blue, thick] {x^5};
+\addlegendentry{$x^5$}
+\addplot[red, dashed, thick] {(15/8)*(2*x) + (5/16)*(8*x^3-12*x) + (1/32)*(32*x^5-160*x^3+120*x)};
+\addlegendentry{$\frac{15}{8}H_1+\frac{5}{16}H_3+\frac{1}{32}H_5$}
+\end{groupplot}
+\end{tikzpicture}
+
+\small\textbf{Figura 11.} Ejemplos de expansiones finitas de monomios en polinomios de Hermite. Los monomios pares usan únicamente $H_{2n}(x)$ y los monomios impares únicamente $H_{2n+1}(x)$.
+\end{center}
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 1: Planteamiento físico y principio de superposición}\\
-Consideremos un sistema de coordenadas esféricas $(r, \theta, \varphi)$ centrado en el punto medio entre las dos masas. Ubicamos la masa positiva $+m$ en el punto $z = +a$ (sobre el eje polar) y la masa negativa $-m$ en el punto $z = -a$. Debido a la simetría azimutal del sistema, el potencial gravitacional $\phi$ es independiente de $\varphi$ y depende únicamente de $r$ y $\theta$.
-
-El potencial gravitacional total en un punto arbitrario $P(r, \theta)$ se obtiene por superposición lineal de los potenciales individuales. Recordando que para una masa puntual $m$ el potencial es $\phi = -Gm/|\mathbf{r} - \mathbf{r}'|$, tenemos:
+\noindent\textbf{Caso 1: Expansión de $f(x) = x^{2r}$} \\
+Los coeficientes de la expansión están dados por:
 $$
-\phi(r, \theta) = -\frac{Gm}{|\mathbf{r} - a\hat{z}|} - \frac{G(-m)}{|\mathbf{r} + a\hat{z}|} = -Gm \left[ \frac{1}{|\mathbf{r} - a\hat{z}|} - \frac{1}{|\mathbf{r} + a\hat{z}|} \right].
+c_n = \frac{1}{\sqrt{\pi} \, 2^n \, n!} \int_{-\infty}^{\infty} e^{-x^2} x^{2r} H_n(x) \, dx
+$$
+Dado que $x^{2r}$ es una función par y los polinomios de Hermite tienen paridad definida $H_n(-x) = (-1)^n H_n(x)$, el integrando es una función impar cuando $n$ es impar. Por lo tanto, la integral se anula para $n$ impar, es decir, $c_{2k+1} = 0$. 
+
+Para $n$ par, hacemos $n = 2m$ (con $m$ entero no negativo). Utilizamos la fórmula de Rodrigues para los polinomios de Hermite (Alonso Sepúlveda, Sección 8.5, p. 338):
+$$
+H_{2m}(x) = (-1)^{2m} e^{x^2} \frac{d^{2m}}{dx^{2m}} \left( e^{-x^2} \right) = e^{x^2} \frac{d^{2m}}{dx^{2m}} \left( e^{-x^2} \right)
+$$
+Sustituyendo esto en la integral para $c_{2m}$:
+$$
+c_{2m} = \frac{1}{\sqrt{\pi} \, 2^{2m} \, (2m)!} \int_{-\infty}^{\infty} x^{2r} \frac{d^{2m}}{dx^{2m}} \left( e^{-x^2} \right) \, dx
+$$
+Aplicamos integración por partes $2m$ veces. Dado que $e^{-x^2}$ y todas sus derivadas tienden a cero cuando $x \to \pm \infty$, los términos de frontera se anulan. Cada integración por partes introduce un factor de $(-1)$, por lo que después de $2m$ pasos obtenemos:
+$$
+c_{2m} = \frac{(-1)^{2m}}{\sqrt{\pi} \, 2^{2m} \, (2m)!} \int_{-\infty}^{\infty} e^{-x^2} \frac{d^{2m}}{dx^{2m}} \left( x^{2r} \right) \, dx
+$$
+La derivada $2m$-ésima de $x^{2r}$ es:
+$$
+\frac{d^{2m}}{dx^{2m}} \left( x^{2r} \right) = \frac{(2r)!}{(2r-2m)!} x^{2r-2m}
+$$
+Si $m > r$, esta derivada es cero, por lo que $c_{2m} = 0$. Para $m \leq r$, la integral se convierte en una integral gaussiana estándar:
+$$
+\int_{-\infty}^{\infty} x^{2(r-m)} e^{-x^2} \, dx = \frac{(2(r-m))!}{2^{2(r-m)} (r-m)!} \sqrt{\pi} = \frac{(2r-2m)!}{2^{2r-2m} (r-m)!} \sqrt{\pi}
+$$
+Sustituyendo este resultado en la expresión para $c_{2m}$:
+$$
+c_{2m} = \frac{1}{\sqrt{\pi} \, 2^{2m} \, (2m)!} \cdot \frac{(2r)!}{(2r-2m)!} \cdot \frac{(2r-2m)!}{2^{2r-2m} (r-m)!} \sqrt{\pi}
+$$
+Simplificando los factoriales y las potencias de 2:
+$$
+c_{2m} = \frac{(2r)!}{2^{2r} \, (2m)! \, (r-m)!}
+$$
+Cambiando el índice de sumatoria de $m$ a $n$ para coincidir con la notación estándar del enunciado, la expansión de $x^{2r}$ es:
+$$
+x^{2r} = \frac{(2r)!}{2^{2r}} \sum_{n=0}^{r} \frac{H_{2n}(x)}{(2n)! \, (r-n)!}
+$$
+Este resultado coincide exactamente con el problema propuesto en la página 340 del texto de Alonso Sepúlveda.
+
+\vspace{0.3cm}
+\noindent\textbf{Caso 2: Expansión de $g(x) = x^{2r+1}$} \\
+De manera análoga, los coeficientes son:
+$$
+c_n = \frac{1}{\sqrt{\pi} \, 2^n \, n!} \int_{-\infty}^{\infty} e^{-x^2} x^{2r+1} H_n(x) \, dx
+$$
+Dado que $x^{2r+1}$ es una función impar, el integrando es par solo cuando $n$ es impar. Por lo tanto, $c_{2m} = 0$. 
+
+Para $n$ impar, hacemos $n = 2m+1$. Usando la fórmula de Rodrigues:
+$$
+H_{2m+1}(x) = (-1)^{2m+1} e^{x^2} \frac{d^{2m+1}}{dx^{2m+1}} \left( e^{-x^2} \right) = - e^{x^2} \frac{d^{2m+1}}{dx^{2m+1}} \left( e^{-x^2} \right)
+$$
+Sustituyendo en la integral para $c_{2m+1}$:
+$$
+c_{2m+1} = \frac{1}{\sqrt{\pi} \, 2^{2m+1} \, (2m+1)!} \int_{-\infty}^{\infty} x^{2r+1} \left[ - \frac{d^{2m+1}}{dx^{2m+1}} \left( e^{-x^2} \right) \right] \, dx
+$$
+Integrando por partes $2m+1$ veces, los términos de frontera se anulan y obtenemos un factor de $(-1)^{2m+1}$:
+$$
+c_{2m+1} = \frac{(-1) \cdot (-1)^{2m+1}}{\sqrt{\pi} \, 2^{2m+1} \, (2m+1)!} \int_{-\infty}^{\infty} e^{-x^2} \frac{d^{2m+1}}{dx^{2m+1}} \left( x^{2r+1} \right) \, dx
+$$
+Dado que $(-1)^{2m+2} = 1$, el signo global es positivo. La derivada $(2m+1)$-ésima de $x^{2r+1}$ es:
+$$
+\frac{d^{2m+1}}{dx^{2m+1}} \left( x^{2r+1} \right) = \frac{(2r+1)!}{(2r-2m)!} x^{2r-2m}
+$$
+Nuevamente, si $m > r$, la derivada es cero. Para $m \leq r$, evaluamos la integral gaussiana:
+$$
+\int_{-\infty}^{\infty} x^{2(r-m)} e^{-x^2} \, dx = \frac{(2r-2m)!}{2^{2r-2m} (r-m)!} \sqrt{\pi}
+$$
+Sustituyendo en $c_{2m+1}$:
+$$
+c_{2m+1} = \frac{1}{\sqrt{\pi} \, 2^{2m+1} \, (2m+1)!} \cdot \frac{(2r+1)!}{(2r-2m)!} \cdot \frac{(2r-2m)!}{2^{2r-2m} (r-m)!} \sqrt{\pi}
+$$
+Simplificando:
+$$
+c_{2m+1} = \frac{(2r+1)!}{2^{2r+1} \, (2m+1)! \, (r-m)!}
+$$
+Cambiando el índice de sumatoria de $m$ a $n$, la expansión de $x^{2r+1}$ es:
+$$
+x^{2r+1} = \frac{(2r+1)!}{2^{2r+1}} \sum_{n=0}^{r} \frac{H_{2n+1}(x)}{(2n+1)! \, (r-n)!}
 $$
 
 \vspace{0.3cm}
-\noindent\textbf{Paso 2: Expansión en polinomios de Legendre}\\
-Para evaluar los términos entre corchetes, utilizamos la expansión en serie de Legendre para el inverso de la distancia entre dos puntos, derivada directamente de la función generatriz (Sepúlveda, Sec. 8.4):
-$$
-\frac{1}{|\mathbf{r} - \mathbf{r}'|} = \frac{1}{\sqrt{r^2 + r'^2 - 2rr'\cos\gamma}} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} P_l(\cos\gamma),
-$$
-donde $\gamma$ es el ángulo entre los vectores $\mathbf{r}$ y $\mathbf{r}'$, $r_< = \min(r, r')$ y $r_> = \max(r, r')$. En nuestro caso, el ángulo para la masa en $+a\hat{z}$ es $\gamma_1 = \theta$, mientras que para la masa en $-a\hat{z}$ es $\gamma_2 = \pi - \theta$. Utilizando la propiedad de paridad de los polinomios de Legendre $P_l(\cos(\pi-\theta)) = (-1)^l P_l(\cos\theta)$ (Sepúlveda, Sec. 8.4, Prop. 3), escribimos:
-$$
-\frac{1}{|\mathbf{r} - a\hat{z}|} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} P_l(\cos\theta),
-$$
-$$
-\frac{1}{|\mathbf{r} + a\hat{z}|} = \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} (-1)^l P_l(\cos\theta).
-$$
+\noindent\textbf{Discusión y relevancia:} \\
+Estas expansiones demuestran cómo cualquier monomio puede expresarse como una combinación lineal finita de polinomios de Hermite. Esto es una consecuencia directa de que $H_n(x)$ es un polinomio de grado $n$ con coeficiente principal $2^n$, lo que garantiza que el conjunto $\{H_n(x)\}$ forma una base completa para el espacio de polinomios. Este tipo de desarrollos es fundamental en mecánica cuántica para calcular elementos de matriz de operadores de posición en la base del oscilador armónico, tal como se discute en la Sección 8.5.2 (p. 341) de Alonso Sepúlveda.
 
-Sustituyendo estas expansiones en la expresión del potencial total:
-$$
-\phi(r, \theta) = -Gm \sum_{l=0}^{\infty} \frac{r_<^l}{r_>^{l+1}} \left[ 1 - (-1)^l \right] P_l(\cos\theta).
-$$
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 3: Análisis de paridad y reducción de la serie}\\
-El factor $[1 - (-1)^l]$ actúa como un filtro de paridad:
-\begin{itemize}
-    \item Si $l$ es par, $(-1)^l = 1 \Rightarrow 1 - 1 = 0$. Todos los términos de orden par se anulan exactamente.
-    \item Si $l$ es impar, $(-1)^l = -1 \Rightarrow 1 - (-1) = 2$. Los términos de orden impar sobreviven multiplicados por 2.
-\end{itemize}
-Por lo tanto, reindexamos la sumatoria haciendo $l = 2n+1$ con $n = 0, 1, 2, \dots$:
-$$
-\phi(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{r_<^{2n+1}}{r_>^{2n+2}} P_{2n+1}(\cos\theta).
-$$
-Esta expresión es válida para cualquier $r \neq a$. Ahora debemos separar el análisis en las dos regiones espaciales solicitadas, ajustando adecuadamente $r_<$ y $r_>$.
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 4: Potencial en la región exterior ($r > a$)}\\
-En esta región, el punto de observación está más alejado del origen que las masas, por lo que $r_> = r$ y $r_< = a$. Sustituyendo en la serie general:
-$$
-\phi_{\text{ext}}(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{a^{2n+1}}{r^{2n+2}} P_{2n+1}(\cos\theta).
-$$
-El primer término de la serie ($n=0$) domina a grandes distancias ($r \gg a$) y corresponde al momento dipolar gravitacional:
-$$
-\phi_{\text{ext}}(r, \theta) \approx -2Gm \frac{a}{r^2} P_1(\cos\theta) = -\frac{G(2ma)\cos\theta}{r^2}.
-$$
-Identificando el momento dipolar gravitacional como $\vec{p}_g = 2ma\,\hat{z}$, recuperamos la forma clásica del potencial dipolar $\phi \propto (\vec{p}_g \cdot \hat{r})/r^2$, consistente con la expansión multipolar de campos de tipo $1/r$ en regiones libres de fuentes (Sepúlveda, Sec. 8.4.8).
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 5: Potencial en la región interior ($r < a$)}\\
-En esta región, el punto de observación está más cerca del origen que las masas, por lo que $r_> = a$ y $r_< = r$. Sustituyendo en la serie general:
-$$
-\phi_{\text{int}}(r, \theta) = -2Gm \sum_{n=0}^{\infty} \frac{r^{2n+1}}{a^{2n+2}} P_{2n+1}(\cos\theta).
-$$
-A diferencia de la región exterior, donde el potencial decae como $1/r^{2n+2}$, en el interior el potencial crece con potencias impares de $r$, garantizando que $\phi(0, \theta) = 0$. Esto es físicamente consistente: en el punto medio exacto entre masas $+m$ y $-m$, los potenciales $-Gm/a$ y $+Gm/a$ se cancelan exactamente.
-
-\vspace{0.3cm}
-\noindent\textbf{Paso 6: Forma explícita de los primeros términos}\\
-Utilizando $P_1(x)=x$, $P_3(x)=\frac{1}{2}(5x^3-3x)$, $P_5(x)=\frac{1}{8}(63x^5-70x^3+15x)$, podemos escribir explícitamente los primeros multipolos:
-
-Para $r > a$:
-$$
-\phi_{\text{ext}}(r, \theta) = -\frac{2Gma}{r^2}\cos\theta + \frac{Gma^3}{r^4}(5\cos^3\theta - 3\cos\theta) - \frac{Gma^5}{4r^6}(63\cos^5\theta - 70\cos^3\theta + 15\cos\theta) + \cdots
-$$
-
-Para $r < a$:
-$$
-\phi_{\text{int}}(r, \theta) = -\frac{2Gm}{a^2}r\cos\theta + \frac{Gm}{a^4}r^3(5\cos^3\theta - 3\cos\theta) - \frac{Gm}{4a^6}r^5(63\cos^5\theta - 70\cos^3\theta + 15\cos\theta) + \cdots
-$$
-
-\vspace{0.3cm}
-\noindent\textbf{Discusión física y convergencia}\\
-La serie obtenida converge uniformemente en sus respectivos dominios ($r \neq a$). La discontinuidad en la derivada radial del potencial en $r=a$ refleja la presencia de las fuentes puntuales, y el salto en el campo gravitacional $\mathbf{g} = -\nabla\phi$ es consistente con la ley de Gauss para la gravitación modificada para incluir densidades de masa negativas. La estructura analítica de la solución demuestra cómo la función generatriz de Legendre permite descomponer configuraciones de fuentes discretas en una jerarquía de multipolos impares, donde cada término de orden $2n+1$ corresponde a un momento multipolar de orden superior inducido por la asimetría de signos. Este desarrollo es análogo al tratado en electrostática para dipolos eléctricos, confirmando la universalidad matemática de la expansión en armónicos esféricos para potenciales de tipo Yukawa/Coulomb en el límite de masa nula del mediador (Sepúlveda, Sec. 8.4.2 y Cap. 3, Sec. 3.3.4).
-
-\bibliographystyle{plainurl}
-\bibliography{bibliografia} 
 \end{document}
