@@ -1,0 +1,538 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, angles, quotes, decorations.pathmorphing, babel}
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Notas de Clase 20260612}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\setlength{\headheight}{14.5pt}
+\renewcommand{\headrulewidth}{0.2pt}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Clase 20260612\par}
+  \vspace{0.8cm}
+  {\large Armónicos esféricos, función de Green y ecuación de Laguerre\par}
+  \vspace{1.7cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section*{Armónicos esféricos, función de Green y ecuación de Laguerre}
+\addcontentsline{toc}{section}{Armónicos esféricos, función de Green y ecuación de Laguerre}
+
+
+\textit{Transcrito y organizado a partir de las fotografías del tablero (clase del 12/06/2026), con explicaciones adicionales para dar contexto y completar los pasos intermedios.}
+
+\medskip
+
+
+\subsection{Introducción}
+
+
+En esta clase se resuelven dos problemas de electrostática con simetría esférica mediante \textbf{separación de variables en armónicos esféricos}. Para el segundo problema se necesita además el \textbf{teorema de adición de armónicos esféricos} y el método de la \textbf{función de Green} para la ecuación de Poisson, que conduce a la \textbf{expansión multipolar} en polinomios de Legendre. Al final se introduce la \textbf{ecuación de Laguerre}, cuyas soluciones ---junto con los armónicos esféricos--- son la base de las funciones de onda del átomo de hidrógeno (de ahí su lugar en este curso).
+
+\medskip
+
+
+\section{Repaso: ecuación de Laplace en coordenadas esféricas}
+
+
+La solución general de $\nabla^2\phi=0$ en coordenadas esféricas $(r,\theta,\varphi)$ es:
+
+\[
+\phi(r,\theta,\varphi)=\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\left[A_{\ell m}\,r^{\ell}+\frac{B_{\ell m}}{r^{\,\ell+1}}\right]Y_\ell^{m}(\theta,\varphi)
+\]
+
+
+donde los \textbf{armónicos esféricos} son
+
+\[
+Y_\ell^m(\theta,\varphi)=\sqrt{\frac{2\ell+1}{4\pi}\,\frac{(\ell-m)!}{(\ell+m)!}}\;P_\ell^{m}(\cos\theta)\,e^{im\varphi}
+\]
+
+
+Los dos casos que se usan en el Ejemplo de la sección 2 (ambos con $m=0$, sin dependencia en $\varphi$):
+
+\[
+Y_0^0=\sqrt{\frac{1}{4\pi}}=\text{cte}, \qquad\qquad Y_1^0=\sqrt{\frac{3}{4\pi}}\,P_1(\cos\theta)=\sqrt{\frac{3}{4\pi}}\cos\theta
+\]
+
+
+\textbf{Condición de regularidad en el origen:} si la región de interés incluye $r=0$ (problema \textbf{interior}), se debe tener $B_{\ell m}=0$ para todo $\ell,m$ (de lo contrario $\phi\to\infty$ cuando $r\to0$). Por lo tanto:
+
+\[
+\phi_{\text{int}}(r,\theta,\varphi)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^{m}(\theta,\varphi)\tag{1}
+\]
+
+
+\medskip
+
+
+\section{\texorpdfstring{Ejemplo resuelto: cascarón esférico con $\phi(R,\theta)=V_0\sin^2(\theta/2)$}{Ejemplo resuelto: cascarón esférico con potencial de frontera}}
+
+
+\textbf{Enunciado:} determinar el campo eléctrico y el potencial en el \textbf{interior} de un cascarón esférico de radio $R$, dado que el potencial sobre su superficie es
+
+\[
+\phi(R,\theta)=V_0\sin^2\!\left(\frac{\theta}{2}\right)
+\]
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.05, >=Stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (42:2.2);
+  \coordinate (Z) at (0,2.2);
+  \draw[fill=blue!5, draw=blue!55!black, thick] (O) circle (2.2);
+  \draw[->, thick] (O) -- (0,2.9) node[above] {$z$};
+  \draw[->, thick] (O) -- (3.0,0) node[right] {$x$};
+  \draw[->, very thick, red!70!black] (O) -- (P) node[midway, above left] {$R$};
+  \draw[dashed] (P) -- (0,2.2);
+  \pic[draw=black, ->, "$\theta$", angle radius=0.8cm, angle eccentricity=1.25] {angle=P--O--Z};
+  \fill (O) circle (1.3pt) node[below left] {$O$};
+  \fill (P) circle (1.3pt) node[above right] {$\phi(R,\theta)=V_0\sin^2(\theta/2)$};
+  \node[align=center, blue!55!black] at (0,-2.65) {cascarón esférico\\superficie $r=R$};
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Planteamiento}
+
+
+Como la región de interés (interior) incluye el origen, se usa directamente (1):
+
+\[
+\phi(r,\theta)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^{m}(\theta,\varphi)
+\]
+
+
+\subsection{Expansión del potencial de frontera en armónicos esféricos}
+
+
+En $r=R$ debe cumplirse:
+
+\[
+V_0\sin^2\!\left(\frac{\theta}{2}\right)=\sum_{\ell,m}A_{\ell m}\,R^{\ell}\,Y_\ell^{m}(\theta,\varphi)
+\]
+
+
+Usando la identidad trigonométrica $\sin^2(\theta/2)=\dfrac{1-\cos\theta}{2}$:
+
+\[
+V_0\sin^2\!\left(\frac{\theta}{2}\right)=\frac{V_0}{2}-\frac{V_0}{2}\cos\theta
+\]
+
+
+Esta expresión no depende de $\varphi$ y solo contiene un término constante y un término en $\cos\theta$, es decir, únicamente los armónicos $Y_0^0$ y $Y_1^0$ intervienen. Invirtiendo las relaciones de la sección 1:
+
+\[
+1=\sqrt{4\pi}\;Y_0^0\,,\qquad\qquad \cos\theta=\sqrt{\frac{4\pi}{3}}\;Y_1^0
+\]
+
+
+Sustituyendo:
+
+\[
+V_0\sin^2\!\left(\frac{\theta}{2}\right)=\frac{V_0\sqrt{4\pi}}{2}\left[Y_0^0-\frac{1}{\sqrt3}\,Y_1^0\right]
+\]
+
+
+\subsection{\texorpdfstring{Cálculo de los coeficientes $A_{\ell m}$}{Cálculo de los coeficientes A lm}}
+
+
+Se multiplica ambos lados por $Y_{\ell'}^{m'*}(\theta,\varphi)$ y se integra sobre el ángulo sólido, usando la ortonormalidad de los armónicos esféricos:
+
+\[
+\int Y_\ell^{m}\,Y_{\ell'}^{m'*}\,d\Omega=\delta_{\ell\ell'}\,\delta_{mm'}
+\]
+
+
+Esto da $A_{\ell'm'}R^{\ell'}=\dfrac{V_0\sqrt{4\pi}}{2}\left[\delta_{\ell'0}\delta_{m'0}-\dfrac{1}{\sqrt3}\delta_{\ell'1}\delta_{m'0}\right]$, es decir:
+
+\[
+\boxed{A_{\ell m}=\frac{V_0\sqrt{4\pi}}{2}\,R^{-\ell}\left[\delta_{\ell0}\delta_{m0}-\frac{1}{\sqrt3}\,\delta_{\ell1}\delta_{m0}\right]}\tag{2}
+\]
+
+
+Solo dos coeficientes son distintos de cero:
+
+\[
+A_{00}=V_0\sqrt{\pi}\,,\qquad\qquad A_{10}=-\frac{V_0}{R}\sqrt{\frac{\pi}{3}}
+\]
+
+
+\subsection{Potencial en el interior}
+
+
+Sustituyendo en (1) (solo sobreviven $\ell=0$ y $\ell=1$, $m=0$):
+
+\[
+\phi(r,\theta)=A_{00}\,Y_0^0+A_{10}\,r\,Y_1^0=V_0\sqrt{\pi}\cdot\frac{1}{\sqrt{4\pi}}-\frac{V_0}{R}\sqrt{\frac{\pi}{3}}\cdot r\cdot\sqrt{\frac{3}{4\pi}}\cos\theta
+\]
+
+
+\[
+\boxed{\phi(r,\theta)=\frac{V_0}{2}\left(1-\frac{r}{R}\cos\theta\right)}\qquad (r\le R)\tag{3}
+\]
+
+
+\subsection{Campo eléctrico}
+
+
+\[
+\vec E=-\nabla\phi=-\left[\hat r\,\frac{\partial}{\partial r}+\frac{\hat\theta}{r}\,\frac{\partial}{\partial\theta}\right]\phi
+\]
+
+
+Con $\dfrac{\partial\phi}{\partial r}=-\dfrac{V_0}{2R}\cos\theta$ y $\dfrac{\partial\phi}{\partial\theta}=\dfrac{V_0\,r}{2R}\sin\theta$, se obtiene:
+
+\[
+\boxed{\vec E=\frac{V_0}{2R}\left(\cos\theta\,\hat r-\sin\theta\,\hat\theta\right)}\qquad (r<R)\tag{4}
+\]
+
+
+\begin{tcolorbox}[colback=blue!3, colframe=blue!35!black, title={Nota}, fonttitle=\bfseries]
+\textbf{Nota:} $\cos\theta\,\hat r-\sin\theta\,\hat\theta=\hat z$ es una identidad válida en cualquier punto del espacio. Por lo tanto:
+
+\[
+\vec E=\frac{V_0}{2R}\,\hat z
+\]
+
+¡El campo en el \textbf{interior es uniforme}, aunque el potencial impuesto en la frontera, $V_0\sin^2(\theta/2)$, no lo parezca a simple vista!
+
+\end{tcolorbox}
+
+
+\medskip
+
+
+\section{Teorema de adición de armónicos esféricos}
+
+
+Sean $(\theta,\varphi)$ y $(\theta',\varphi')$ dos direcciones arbitrarias, y sea $\gamma$ el ángulo entre ellas (el ángulo entre los vectores unitarios $\hat r$ y $\hat r\,'$). El \textbf{teorema de adición} establece:
+
+\[
+P_\ell(\cos\gamma)=\frac{4\pi}{2\ell+1}\sum_{m=-\ell}^{\ell}Y_\ell^{m*}(\theta,\varphi)\,Y_\ell^{m}(\theta',\varphi')
+\]
+
+
+\textbf{¿Por qué es importante?} Permite escribir $P_\ell(\cos\gamma)$ ---que depende del ángulo \textit{relativo} entre $\vec r$ y $\vec r\,'$--- como una suma de productos de armónicos esféricos evaluados \textit{por separado} en $(\theta,\varphi)$ y en $(\theta',\varphi')$. Esto es indispensable para integrar sobre una distribución de carga (variable $\vec r\,'$) manteniendo el punto de observación $\vec r$ arbitrario. Se utiliza en la sección 5.
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+  \node[draw=black!65, fill=green!6, rounded corners=2pt, very thick,
+        minimum width=0.82\textwidth, minimum height=2.0cm, align=center] (board) {};
+  \node[align=center] at (board.center) {\Large\itshape ``Estudiar, continuar el ejercicio''\\[2mm]
+  \normalsize Teorema de adición: $P_\ell(\cos\gamma)\longrightarrow Y_\ell^m(\theta,\varphi)Y_\ell^m(\theta',\varphi')$};
+  \draw[decorate, decoration={coil, aspect=0.25, segment length=3pt, amplitude=2pt}, black!45]
+    ([xshift=-3.6cm,yshift=-0.65cm]board.center) -- ([xshift=3.6cm,yshift=-0.65cm]board.center);
+\end{tikzpicture}
+\end{center}
+
+
+\medskip
+
+
+\section{Función de Green para la ecuación de Poisson}
+
+
+\[
+\nabla^2\phi=-\frac{\rho}{\varepsilon_0}\qquad\text{(Ecuación de Poisson)}
+\]
+
+
+La función de Green del laplaciano, $G(\vec r,\vec r\,')=\dfrac{1}{4\pi|\vec r-\vec r\,'|}$, satisface $\nabla^2G=-\delta^{3}(\vec r-\vec r\,')$, de modo que la solución general de Poisson es:
+
+\[
+\boxed{\phi(\vec r)=\frac{1}{4\pi\varepsilon_0}\int\frac{\rho(\vec r\,')}{|\vec r-\vec r\,'|}\,dV'}\tag{5}
+\]
+
+
+(esta es, simplemente, la generalización de la Ley de Coulomb a una distribución continua de carga $\rho(\vec r\,')$).
+
+\subsection{\texorpdfstring{Expansión multipolar de $1/|\vec r-\vec r\,'|$}{Expansión multipolar del potencial de Green}}
+
+
+Por la ley de cosenos, $|\vec r-\vec r\,'|=\sqrt{r^2+r'^2-2rr'\cos\gamma}$.
+
+Caso $r>r'$:
+
+\[
+\frac{1}{|\vec r-\vec r\,'|}=\frac{1}{r}\cdot\frac{1}{\sqrt{1+(r'/r)^2-2(r'/r)\cos\gamma}}
+\]
+
+
+Con $t=r'/r$ y $x=\cos\gamma$, se reconoce la \textbf{función generatriz de los polinomios de Legendre}:
+
+\[
+g(t,x)=\frac{1}{\sqrt{1-2xt+t^2}}=\sum_{\ell=0}^{\infty}P_\ell(x)\,t^{\ell}\qquad(|t|<1)
+\]
+
+
+por lo que
+
+\[
+\frac{1}{|\vec r-\vec r\,'|}=\frac{1}{r}\sum_{\ell=0}^{\infty}P_\ell(\cos\gamma)\left(\frac{r'}{r}\right)^{\ell}\qquad(r>r')
+\]
+
+
+Caso $r<r'$ (intercambiando $r\leftrightarrow r'$ por simetría):
+
+\[
+\frac{1}{|\vec r-\vec r\,'|}=\frac{1}{r'}\sum_{\ell=0}^{\infty}P_\ell(\cos\gamma)\left(\frac{r}{r'}\right)^{\ell}\qquad(r<r')
+\]
+
+
+\textbf{Forma unificada}, definiendo $r_>=\max(r,r')$ y $r_<=\min(r,r')$:
+
+\[
+\boxed{\frac{1}{|\vec r-\vec r\,'|}=\sum_{\ell=0}^{\infty}\frac{r_<^{\,\ell}}{r_>^{\,\ell+1}}\,P_\ell(\cos\gamma)}\tag{6}
+\]
+
+
+Esta es la célebre \textbf{expansión multipolar}, base del siguiente ejercicio.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.15, >=Stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (R) at (28:3.4);
+  \coordinate (Rp) at (72:2.4);
+  \draw[->, thick] (O) -- (3.9,0) node[right] {$x$};
+  \draw[->, thick] (O) -- (0,3.0) node[above] {$z$};
+  \draw[->, very thick, blue!70!black] (O) -- (R) node[midway, below right] {$\vec r$};
+  \draw[->, very thick, red!70!black] (O) -- (Rp) node[midway, left] {$\vec r\,'$};
+  \draw[dashed, thick, purple!70!black] (Rp) -- (R) node[midway, above right] {$\vec r-\vec r\,'$};
+  \pic[draw=black, ->, "$\gamma$", angle radius=0.75cm, angle eccentricity=1.25] {angle=R--O--Rp};
+  \fill (O) circle (1.3pt) node[below left] {$O$};
+  \fill (R) circle (1.4pt) node[right] {observación};
+  \fill (Rp) circle (1.4pt) node[above] {fuente};
+\end{tikzpicture}
+\end{center}
+
+
+\medskip
+
+
+\section{\texorpdfstring{Ejercicio: esfera maciza con carga $+Q$ uniforme (aislada)}{Ejercicio: esfera maciza con carga positiva uniforme}}
+
+
+\textbf{Enunciado:} calcular el potencial $\phi(\vec r)$ y el campo $\vec E(\vec r)$ generados por una esfera maciza de radio $R$, con densidad de carga volumétrica \textbf{uniforme} y carga total $+Q$, aislada (sin influencias externas).
+
+\[
+\rho_0=\frac{Q}{\frac{4}{3}\pi R^3}=\frac{3Q}{4\pi R^3}\quad(\text{constante})
+\]
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95, >=Stealth]
+  \coordinate (C) at (0,0);
+  \coordinate (S) at (48:1.45);
+  \coordinate (P) at (22:3.25);
+  \draw[fill=orange!10, draw=orange!70!black, thick] (C) circle (1.85);
+  \draw[->, thick] (C) -- (0,2.4) node[above] {$z$};
+  \draw[->, thick] (C) -- (2.35,0) node[right] {$x$};
+  \draw[->, very thick, blue!70!black] (C) -- (P) node[midway, below right] {$\vec r$};
+  \draw[->, very thick, red!70!black] (C) -- (S) node[midway, left] {$\vec r\,'$};
+  \draw[dashed, thick, purple!70!black] (S) -- (P) node[midway, above] {$\vec r-\vec r\,'$};
+  \draw[<->, orange!80!black] (C) -- (-1.85,0) node[midway, below] {$R$};
+  \pic[draw=black, ->, "$\gamma$", angle radius=0.58cm, angle eccentricity=1.3] {angle=P--C--S};
+  \fill (C) circle (1.4pt) node[below left] {$C$};
+  \fill (S) circle (1.4pt) node[above left] {fuente};
+  \fill (P) circle (1.4pt) node[right] {$P$};
+  \node[align=center] at (0,-2.35) {$\rho_0=\mathrm{cte}$\\carga total $+Q$};
+  \begin{scope}[xshift=6.0cm, yshift=-0.35cm]
+    \coordinate (O) at (0,0);
+    \coordinate (Zs) at (0,2.1);
+    \draw[->, thick] (O) -- (0,2.1) node[above] {$z$};
+    \draw[->, thick] (O) -- (2.2,0) node[right] {$x$};
+    \draw[->, thick] (O) -- (-1.35,-1.05) node[below left] {$y$};
+    \draw[->, very thick, blue!70!black] (O) -- (45:1.75) node[midway, above left] {$r$};
+    \draw[dashed] (45:1.75) -- (1.24,0);
+    \coordinate (Ps) at (45:1.75);
+    \pic[draw=black, ->, "$\theta$", angle radius=0.55cm, angle eccentricity=1.35] {angle=Ps--O--Zs};
+    \draw[->] (0.55,0) arc[start angle=0, end angle=-36, radius=0.55] node[midway, right] {$\varphi$};
+    \node at (0,-1.65) {ejes esféricos};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+\subsection{Estrategia}
+
+
+Se combina la fórmula de Green (5) con la expansión multipolar (6):
+
+\[
+\phi(\vec r)=\frac{\rho_0}{4\pi\varepsilon_0}\sum_{\ell=0}^{\infty}\int_0^{R}\!\int_{4\pi}\frac{r_<^{\,\ell}}{r_>^{\,\ell+1}}\,P_\ell(\cos\gamma)\;r'^2\,dr'\,d\Omega'
+\]
+
+
+\textbf{Simplificación clave:} como $\rho_0$ es constante (no depende de $\theta',\varphi'$), al integrar $P_\ell(\cos\gamma)$ sobre $d\Omega'$ ---usando el teorema de adición de la sección 3--- \textbf{todos los términos con $\ell>0$ se anulan}. Físicamente: una esfera uniformemente cargada no tiene momentos multipolares de orden $\ell\geq1$ respecto a su centro. Solo sobrevive $\ell=0$, con $P_0=1$ y $\int d\Omega'=4\pi$.
+
+\subsection{\texorpdfstring{Región exterior ($r>R\;\Rightarrow\; r_>=r,\ r_<=r'$ siempre)}{Región exterior}}
+
+
+\[
+\phi(r)=\frac{\rho_0}{4\pi\varepsilon_0}\cdot\frac{4\pi}{r}\int_0^{R} r'^2\,dr'=\frac{\rho_0}{\varepsilon_0\,r}\cdot\frac{R^3}{3}=\frac{Q}{4\pi\varepsilon_0\,r}=\frac{kQ}{r}
+\]
+
+
+\subsection{\texorpdfstring{Región interior ($r\le R$)}{Región interior}}
+
+
+Aquí hay que separar la integral en $r'<r$ (donde $r_>=r$) y $r'>r$ (donde $r_>=r'$):
+
+\[
+\phi(r)=\frac{\rho_0}{\varepsilon_0}\left[\frac{1}{r}\int_0^{r}r'^2\,dr'+\int_{r}^{R}r'\,dr'\right]=\frac{\rho_0}{2\varepsilon_0}\left(R^2-\frac{r^2}{3}\right)=\frac{kQ}{2R^3}\left(3R^2-r^2\right)
+\]
+
+
+\subsection{Resultados finales}
+
+
+\[
+\boxed{\phi(\vec r)=\begin{cases}\dfrac{kQ}{r}\,, & r>R\\[3mm] \dfrac{kQ}{2R^3}\left(3R^2-r^2\right)\,, & r\le R\end{cases}}\qquad\left(k\equiv\dfrac{1}{4\pi\varepsilon_0}\right)
+\]
+
+
+Por simetría esférica, $\vec E=-\dfrac{\partial\phi}{\partial r}\,\hat r$, de donde:
+
+\[
+\boxed{\vec E(\vec r)=\begin{cases}\dfrac{1}{4\pi\varepsilon_0}\dfrac{Q}{r^2}\,\hat r\,, & r>R\\[3mm] \dfrac{kQ\,r}{R^3}\,\hat r\,, & r\le R\end{cases}}
+\]
+
+
+Este es el resultado clásico para una esfera uniformemente cargada: fuera se comporta como una carga puntual $Q$ en el origen, y dentro el campo crece linealmente con $r$.
+
+\medskip
+
+
+\section{Ecuación de Laguerre}
+
+
+\begin{tcolorbox}[colback=blue!3, colframe=blue!35!black, title={Nota}, fonttitle=\bfseries]
+\textbf{Contexto:} esta ecuación aparece al resolver la parte \textbf{radial} de la ecuación de Schrödinger para el átomo de hidrógeno (potencial coulombiano $\sim 1/r$). Así como los armónicos esféricos $Y_\ell^m(\theta,\varphi)$ resuelven la parte angular (secciones 1–5), los \textbf{polinomios de Laguerre asociados} resuelven la parte radial.
+
+\end{tcolorbox}
+
+
+\subsection{Ecuación de Laguerre (forma simple)}
+
+
+\[
+x\ddot y+(1-x)\dot y+ny=0\tag{7}
+\]
+
+
+(donde $\dot y=dy/dx$). Se resuelve por el \textbf{método de Frobenius} (serie de potencias alrededor del punto singular regular $x=0$). La solución polinómica, para $n=0,1,2,\dots$, es el \textbf{polinomio de Laguerre}:
+
+\[
+y=L_n(x)=\sum_{p=0}^{n}\frac{(-1)^p\,x^p}{(p!)^2\,(n-p)!}\tag{8}
+\]
+
+
+\textbf{Fórmula de Rodrigues} (forma compacta equivalente):
+
+\[
+L_n(x)=\frac{e^{x}}{n!}\,\frac{d^{\,n}}{dx^{n}}\left(x^{n}e^{-x}\right)\tag{9}
+\]
+
+
+\textbf{Relación de ortogonalidad} en $[0,\infty)$ con peso $e^{-x}$:
+
+\[
+\int_0^\infty e^{-x}\,L_n(x)\,L_m(x)\,dx=\delta_{nm}
+\]
+
+
+\subsection{Ecuación general (asociada) de Laguerre}
+
+
+\[
+x\ddot y+(k+1-x)\dot y+ny=0\tag{10}
+\]
+
+
+\textbf{Solución} --- polinomios de Laguerre asociados (o generalizados):
+
+\[
+\boxed{L_n^{k}(x)=\frac{e^{x}\,x^{-k}}{n!}\,\frac{d^{\,n}}{dx^{n}}\left(x^{\,n+k}\,e^{-x}\right)}\tag{11}
+\]
+
+
+Caso particular: para $k=0$ se recupera $L_n^{0}(x)=L_n(x)$ (los polinomios "simples" de la sección 6.1).
+
+\begin{tcolorbox}[colback=blue!3, colframe=blue!35!black, title={Nota}, fonttitle=\bfseries]
+\textbf{Nota --- analogía con Legendre:} así como los polinomios de Legendre $P_\ell(x)$ se generalizan a los \textbf{asociados} $P_\ell^{m}(x)$ (presentes en $Y_\ell^m$), los polinomios de Laguerre $L_n(x)$ se generalizan a los \textbf{asociados} $L_n^{k}(x)$. En el átomo de hidrógeno, la función de onda completa tiene la forma
+
+\[
+\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^{m}(\theta,\varphi),
+\]
+
+donde la parte radial $R_{n\ell}(r)$ se construye con $L_{n}^{k}(x)$ (con $k=2\ell+1$ y $x\propto r$), mientras que la parte angular $Y_\ell^m$ involucra $P_\ell^{m}(\cos\theta)$ --- cerrando así el círculo con la sección 1.
+
+\end{tcolorbox}
+
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0, >=Stealth]
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (42:2.5);
+  \coordinate (Z) at (0,3.0);
+  \draw[->, thick] (O) -- (0,3.0) node[above] {$z$};
+  \draw[->, thick] (O) -- (3.2,0) node[right] {$x$};
+  \draw[->, thick] (O) -- (-1.8,-1.25) node[below left] {$y$};
+  \draw[->, very thick, blue!70!black] (O) -- (P) node[midway, above left] {$r$};
+  \draw[dashed] (P) -- (1.86,0);
+  \draw[dashed] (P) -- (-0.55,-0.38);
+  \pic[draw=black, ->, "$\theta$", angle radius=0.75cm, angle eccentricity=1.25] {angle=P--O--Z};
+  \draw[->] (0.85,0) arc[start angle=0, end angle=-34, radius=0.85] node[midway, right] {$\varphi$};
+  \fill (O) circle (1.3pt) node[below left] {$O$};
+  \fill (P) circle (1.3pt) node[above right] {$\psi_{n\ell m}=R_{n\ell}(r)Y_\ell^m(\theta,\varphi)$};
+  \node[draw=black!45, fill=blue!4, rounded corners=2pt, align=center] at (5.3,1.0)
+    {parte radial\\$R_{n\ell}(r)$\\Laguerre};
+  \node[draw=black!45, fill=green!5, rounded corners=2pt, align=center] at (5.3,-1.0)
+    {parte angular\\$Y_\ell^m(\theta,\varphi)$\\Legendre asociado};
+  \draw[->, thick] (3.6,0.45) -- (4.35,0.85);
+  \draw[->, thick] (3.6,-0.2) -- (4.35,-0.85);
+\end{tikzpicture}
+\end{center}
+
+
+\end{document}
