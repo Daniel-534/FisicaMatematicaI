@@ -961,4 +961,122 @@ $$\psi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} A_{\ell m
 Sustituyendo $k_{\ell n} = \alpha_{\ell n}/R$:
 $$\psi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} A_{\ell m} j_\ell\left(\frac{\alpha_{\ell n}r}{R}\right) Y_{\ell}^m(\theta,\varphi).$$
 
+\section{Problema 9: Expansión de $e^{-ax}$ en la base de Laguerre}
+
+Demuestre que la expansión de $e^{-ax}$ en la base $L_n^k(x)$ en $x: (0, \infty)$ es:
+$$e^{-ax} = \frac{1}{(1+a)^{1+k}} \sum_{n=0}^{\infty} \left(\frac{a}{1+a}\right)^n L_n^k(x)$$
+
+\subsection{Solución}
+
+
+Cualquier función $f(x)$ definida en $(0, \infty)$ que sea de cuadrado integrable con respecto al peso $w(x) = x^k e^{-x}$ puede expandirse en la base de polinomios de Laguerre generalizados como:
+$$f(x) = \sum_{n=0}^{\infty} c_n L_n^k(x)$$
+
+donde los coeficientes $c_n$ están dados por:
+$$c_n = \frac{\langle L_n^k, f \rangle}{\langle L_n^k, L_n^k \rangle} = \frac{\int_0^{\infty} x^k e^{-x} L_n^k(x) f(x) \, dx}{\int_0^{\infty} x^k e^{-x} [L_n^k(x)]^2 \, dx}$$
+
+
+La relación de ortogonalidad para los polinomios de Laguerre generalizados es 
+$$\int_0^{\infty} x^k e^{-x} L_n^k(x) L_m^k(x) \, dx = \frac{\Gamma(n+k+1)}{n!} \delta_{nm}$$
+
+Por lo tanto, el denominador (la norma al cuadrado) es:
+$$\langle L_n^k, L_n^k \rangle = \frac{\Gamma(n+k+1)}{n!}$$
+
+
+Para $f(x) = e^{-ax}$ con $a > -1$ (para garantizar convergencia), el numerador es:
+$$\langle L_n^k, e^{-ax} \rangle = \int_0^{\infty} x^k e^{-x} L_n^k(x) e^{-ax} \, dx = \int_0^{\infty} x^k e^{-(1+a)x} L_n^k(x) \, dx$$
+
+Para evaluar esta integral, utilizamos la fórmula integral para los polinomios de Laguerre. Una identidad útil es:
+$$\int_0^{\infty} x^k e^{-sx} L_n^k(x) \, dx = \frac{\Gamma(n+k+1)}{n!} \frac{(s-1)^n}{s^{n+k+1}}, \quad \text{para } \text{Re}(s) > 0$$
+
+Esta fórmula puede derivarse de la función generatriz de los polinomios de Laguerre o de representaciones integrales.
+
+
+Sustituyendo $s = 1+a$ en la fórmula anterior:
+$$\int_0^{\infty} x^k e^{-(1+a)x} L_n^k(x) \, dx = \frac{\Gamma(n+k+1)}{n!} \frac{((1+a)-1)^n}{(1+a)^{n+k+1}}$$
+
+Simplificando:
+$$\langle L_n^k, e^{-ax} \rangle = \frac{\Gamma(n+k+1)}{n!} \frac{a^n}{(1+a)^{n+k+1}}$$
+
+
+Sustituyendo en la expresión para $c_n$:
+$$c_n = \frac{\langle L_n^k, e^{-ax} \rangle}{\langle L_n^k, L_n^k \rangle} = \frac{\frac{\Gamma(n+k+1)}{n!} \frac{a^n}{(1+a)^{n+k+1}}}{\frac{\Gamma(n+k+1)}{n!}}$$
+
+Los factores $\frac{\Gamma(n+k+1)}{n!}$ se cancelan:
+$$c_n = \frac{a^n}{(1+a)^{n+k+1}}$$
+
+Reescribiendo de manera más conveniente:
+$$c_n = \frac{1}{(1+a)^{1+k}} \cdot \frac{a^n}{(1+a)^n} = \frac{1}{(1+a)^{1+k}} \left(\frac{a}{1+a}\right)^n$$
+
+Sustituyendo los coeficientes $c_n$ en la expansión general:
+$$e^{-ax} = \sum_{n=0}^{\infty} c_n L_n^k(x) = \sum_{n=0}^{\infty} \frac{1}{(1+a)^{1+k}} \left(\frac{a}{1+a}\right)^n L_n^k(x)$$
+
+Factorizando el término constante:
+$$e^{-ax} = \frac{1}{(1+a)^{1+k}} \sum_{n=0}^{\infty} \left(\frac{a}{1+a}\right)^n L_n^k(x)$$
+
+que es exactamente la expresión que queríamos demostrar.
+
+\textbf{Convergencia:} La serie converge para $a > -1$, lo cual garantiza que $|a/(1+a)| < 1$ cuando $a > -1/2$, asegurando la convergencia de la serie geométrica implícita en los coeficientes.
+
+\textbf{Caso particular:} Para $k=0$ (polinomios de Laguerre ordinarios), obtenemos:
+$$e^{-ax} = \frac{1}{1+a} \sum_{n=0}^{\infty} \left(\frac{a}{1+a}\right)^n L_n(x)$$
+
+\section{Problema: Distancia más probable en el estado fundamental del átomo de hidrógeno}
+
+El estado normal del átomo de hidrógeno es el de más baja energía, $(n = 1)$. Le corresponde una función de onda:
+$$\psi_{100} = \frac{1}{\sqrt{\pi a_0^3}} e^{-r/a_0}$$
+donde $a_0 = 2\alpha = 4\hbar^2\pi\epsilon_0/mq^2$ es el radio de Bohr. La densidad volumétrica de probabilidad de localización del electrón es $dP/dV = \psi_{100}^*\psi_{100}$, de modo que $dP/dr = 4\pi r^2|\psi_{100}|^2$. Demuestre que la distancia más probable a la que se encuentra el electrón del núcleo es $r = a_0$, coincidente con el radio de la primera órbita de Bohr.
+
+\subsection{Solución}
+
+La densidad volumétrica de probabilidad de encontrar al electrón en un punto del espacio está dada por el módulo cuadrado de la función de onda:
+$$\frac{dP}{dV} = |\psi_{100}|^2 = \psi_{100}^*\psi_{100} = \frac{1}{\pi a_0^3} e^{-2r/a_0}$$
+
+Para obtener la densidad radial de probabilidad $dP/dr$, que nos dice la probabilidad de encontrar al electrón en una capa esférica de radio $r$ y espesor $dr$, integramos sobre los ángulos sólidos. El elemento de volumen en coordenadas esféricas es $dV = r^2 \sen\theta \, dr \, d\theta \, d\varphi$, e integrando sobre $\theta \in [0, \pi]$ y $\varphi \in [0, 2\pi]$ obtenemos el factor $4\pi r^2$:
+$$\frac{dP}{dr} = 4\pi r^2 |\psi_{100}|^2 = 4\pi r^2 \cdot \frac{1}{\pi a_0^3} e^{-2r/a_0}$$
+
+Simplificando:
+$$\frac{dP}{dr} = \frac{4}{a_0^3} r^2 e^{-2r/a_0} \quad (1)$$
+
+Esta función representa la densidad de probabilidad radial y debe ser normalizada, es decir, $\int_0^\infty (dP/dr) \, dr = 1$, como puede verificarse fácilmente.
+
+La distancia más probable $r_{\text{mp}}$ es aquella para la cual $dP/dr$ alcanza su valor máximo. Para encontrarla, derivamos la ecuación (1) con respecto a $r$ e igualamos a cero:
+$$\frac{d}{dr}\left(\frac{dP}{dr}\right) = \frac{4}{a_0^3} \frac{d}{dr}\left[r^2 e^{-2r/a_0}\right] = 0$$
+
+Aplicando la regla del producto:
+$$\frac{d}{dr}\left[r^2 e^{-2r/a_0}\right] = 2r \, e^{-2r/a_0} + r^2 \left(-\frac{2}{a_0}\right) e^{-2r/a_0} = 0$$
+
+Factorizando $2r \, e^{-2r/a_0}$:
+$$2r \, e^{-2r/a_0} \left(1 - \frac{r}{a_0}\right) = 0 \quad (2)$$
+
+Esta ecuación tiene dos soluciones:
+\begin{itemize}
+\item $r = 0$: corresponde a un mínimo de la densidad radial (de hecho, $dP/dr = 0$ en el origen).
+\item $r = a_0$: corresponde al punto crítico que buscamos.
+\end{itemize}
+
+Para confirmar que $r = a_0$ corresponde efectivamente a un máximo, evaluamos la segunda derivada de $dP/dr$ en este punto, o alternativamente analizamos el signo de la primera derivada en las proximidades.
+
+Derivando nuevamente la expresión (2) respecto a $r$:
+$$\frac{d^2}{dr^2}\left(\frac{dP}{dr}\right) = \frac{4}{a_0^3} \frac{d}{dr}\left[2r \, e^{-2r/a_0} - \frac{2r^2}{a_0} e^{-2r/a_0}\right]$$
+
+$$= \frac{4}{a_0^3} \left[2 e^{-2r/a_0} - \frac{4r}{a_0} e^{-2r/a_0} - \frac{4r}{a_0} e^{-2r/a_0} + \frac{4r^2}{a_0^2} e^{-2r/a_0}\right]$$
+
+$$= \frac{4}{a_0^3} e^{-2r/a_0} \left[2 - \frac{8r}{a_0} + \frac{4r^2}{a_0^2}\right]$$
+
+Evaluando en $r = a_0$:
+$$\left.\frac{d^2}{dr^2}\left(\frac{dP}{dr}\right)\right|_{r=a_0} = \frac{4}{a_0^3} e^{-2} \left[2 - 8 + 4\right] = \frac{4}{a_0^3} e^{-2} (-2) = -\frac{8}{a_0^3 e^2} < 0$$
+
+Dado que la segunda derivada es negativa en $r = a_0$, confirmamos que este punto corresponde a un \textbf{máximo} de la densidad radial de probabilidad.
+
+
+El valor máximo de la densidad radial de probabilidad se alcanza en:
+$$r_{\text{mp}} = a_0 = \frac{4\hbar^2\pi\epsilon_0}{mq^2} \approx 0.529 \, \text{Å}$$
+
+Este resultado es notable porque coincide exactamente con el radio de la primera órbita de Bohr en el modelo semiclásico del átomo de hidrógeno. Sin embargo, la interpretación es fundamentalmente diferente: en el modelo de Bohr, el electrón se encuentra \textit{siempre} a distancia $a_0$ del núcleo (órbita circular fija), mientras que en la mecánica cuántica, $a_0$ es simplemente la distancia \textit{más probable}, existiendo una probabilidad no nula de encontrar al electrón a cualquier distancia $r > 0$ del núcleo.
+
+La probabilidad de encontrar al electrón en $r = a_0$ se obtiene evaluando la ecuación (1):
+$$\left.\frac{dP}{dr}\right|_{r=a_0} = \frac{4}{a_0^3} a_0^2 e^{-2} = \frac{4}{a_0 e^2} \approx \frac{0.541}{a_0}$$
+
+
 \end{document}
