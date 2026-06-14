@@ -11,7 +11,21 @@
 \usepackage[most]{tcolorbox}
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
+
 \usepackage{booktabs}
+\usetikzlibrary{arrows.meta, babel, calc, decorations.markings, decorations.pathreplacing, patterns, shapes.geometric}
+\colorlet{masscol}{blue!65!black}
+\colorlet{fieldcol}{orange!90!black}
+\colorlet{gausscol}{green!45!black}
+\colorlet{poslobecol}{red!70!black}
+\colorlet{neglobecol}{blue!70!black}
+\tikzset{
+  fieldline/.style={thick, fieldcol, -{Latex[length=2.6mm]}},
+  gausssurface/.style={gausscol, fill=green!18, fill opacity=0.25, line width=0.7pt},
+  masssphere/.style={ball color=blue!28, fill opacity=0.55},
+  shellsurface/.style={ball color=blue!14, fill opacity=0.18},
+  measure/.style={fill=white, inner sep=1.5pt}
+}
 
 
 
@@ -217,6 +231,27 @@ $$
 $$
 donde $r_{<}$ ($r_{>}$) es el menor (mayor) de los valores $r$ y $r'$, y $Y_{\ell m}$ son los armónicos esféricos.
 
+\begin{center}
+
+\begin{tikzpicture}[scale=1.03, line cap=round, line join=round]
+  \def\R{1.55}\def\Rg{2.35}
+  \shade[masssphere] (0,0) circle (\R);
+  \draw[masscol, thick] (0,0) circle (\R);
+  \draw[gausssurface] (0,0) circle (\Rg);
+  \draw[gausscol, dashed] (-\Rg,0) arc[start angle=180,end angle=360,x radius=\Rg,y radius=0.42*\Rg];
+  \draw[gausscol] (\Rg,0) arc[start angle=0,end angle=180,x radius=\Rg,y radius=0.42*\Rg];
+  \foreach \ang in {20,65,110,155,205,250,295,340}{\draw[fieldline] (\ang:2.35) -- (\ang:1.72);}
+  \foreach \ang in {35,85,135,225,275,325}{\node[masscol!80, scale=0.75] at (\ang:0.95) {$\bullet$};}
+  \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (38:\Rg) node[midway, above, measure] {$r$};
+  \draw[<->, thin] (0,-0.1) -- (-\R,-0.1) node[midway, below, measure] {$R$};
+  \node[align=center, masscol!80!black] at (0,0.15) {$\rho_0$\\uniforme};
+  \node[gausscol!60!black] at (0,-2.75) {superficie gaussiana};
+  \node[fieldcol!80!black] at (2.95,1.05) {$\vec g \parallel -\hat r$};
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Esfera maciza homogénea del Problema 2. La simetría esférica hace que solo sobreviva el modo monopolar $Y_{00}$; por eso una superficie gaussiana esférica captura toda la física del campo.}
+\end{center}
+
 Dado que la distribución de masa es uniforme, $\rho(\vec{r}') = \rho_0$ para $r' \leq R$ y $0$ en caso contrario. Sustituyendo la expansión en la integral del potencial, obtenemos:
 $$
 \Phi(\vec{r}) = -4\pi G \rho_0 \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} \frac{Y_{\ell m}(\theta, \varphi)}{2\ell+1} \int_0^R \frac{r_{<}^\ell}{r_{>}^{\ell+1}} r'^2 dr' \int_{0}^{2\pi} \int_{0}^{\pi} Y_{\ell m}^*(\theta', \varphi') \sin\theta' d\theta' d\varphi'
@@ -283,6 +318,24 @@ $$
 $$
 El campo crece linealmente desde el centro hasta la superficie y luego decae con el cuadrado de la distancia, un resultado clásico que valida nuestro desarrollo con armónicos esféricos.
 
+\begin{center}
+
+\begin{tikzpicture}[x=1.25cm,y=1.15cm]
+  \draw[->] (-0.15,0) -- (4.4,0) node[right] {$r/R$};
+  \draw[->] (0,-0.05) -- (0,2.35) node[above] {magnitud normalizada};
+  \draw[dashed, gray] (1,0) -- (1,2.15) node[above, black] {$R$};
+  \draw[very thick, fieldcol] plot[domain=0:1, samples=2] (\x,{1.65*\x});
+  \draw[very thick, fieldcol] plot[domain=1:4, samples=80] (\x,{1.65/(\x*\x)});
+  \draw[very thick, masscol] plot[domain=0:1, samples=80] (\x,{1.95-0.30*\x*\x});
+  \draw[very thick, masscol] plot[domain=1:4, samples=80] (\x,{1.65/\x});
+  \node[fieldcol!80!black, anchor=west] at (1.55,1.25) {$|\vec g|:\ r\ \to\ 1/r^2$};
+  \node[masscol!80!black, anchor=west] at (1.55,0.78) {$-\Phi:\ 3-r^2\ \to\ 1/r$};
+  \node[below] at (1,0) {$1$};
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Perfil radial cualitativo para la esfera homogénea: el campo interior crece linealmente y el exterior decae como $1/r^2$, mientras el potencial permanece continuo en $r=R$.}
+\end{center}
+
 \textbf{Comparación con la Ley de Gauss:} \\
 Sí, es indiscutiblemente más simple usar la Ley de Gauss para la gravitación en este caso específico. La Ley de Gauss establece que $\oint_S \vec{g} \cdot d\vec{A} = -4\pi G M_{\text{enc}}$. 
 Debido a la simetría esférica perfecta de la distribución de masa uniforme, podemos elegir una superficie gaussiana esférica de radio $r$. El campo $\vec{g}$ es radial y de magnitud constante sobre la superficie, por lo que la integral de flujo se reduce a $g(r) \cdot 4\pi r^2$. 
@@ -336,6 +389,25 @@ $$
 \rho(r', \theta', \varphi') = \rho_0 \frac{r'}{R} \sqrt{\frac{4\pi}{3}} Y_{10}(\theta', \varphi') \quad \text{para } r' < R
 $$
 Esta forma es crucial porque, al sustituir en la integral del potencial, la ortogonalidad de los armónicos esféricos (Sección 8.4.5 de Alonso) anulará todos los términos de la sumatoria excepto aquel donde $\ell=1$ y $m=0$.
+
+\begin{center}
+
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round]
+  \def\R{2.0}
+  \shade[ball color=gray!10, opacity=0.35] (0,0) circle (\R);
+  \begin{scope}\clip (0,0) circle (\R);\fill[poslobecol!45, opacity=0.70] (-\R,0) rectangle (\R,\R);\fill[neglobecol!45, opacity=0.70] (-\R,-\R) rectangle (\R,0);\end{scope}
+  \draw[thick] (0,0) circle (\R);
+  \draw[dashed] (-\R,0) arc[start angle=180,end angle=360,x radius=\R,y radius=0.35*\R];
+  \draw (\R,0) arc[start angle=0,end angle=180,x radius=\R,y radius=0.35*\R];
+  \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (0,2.55) node[above] {$z$};
+  \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (2.65,0) node[right] {$\rho_\perp$};
+  \node[poslobecol!80!black] at (0,1.15) {$r\cos\theta>0$};
+  \node[neglobecol!80!black] at (0,-1.15) {$r\cos\theta<0$};
+  \node[align=center] at (0,-2.55) {$\rho=\rho_0(r/R)\cos\theta$\\modo $\ell=1,m=0$};
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Distribución dipolar del Problema 3. La mitad superior y la inferior contribuyen con signos opuestos, lo cual elimina el monopolo y selecciona el armónico $Y_{10}$.}
+\end{center}
 
 \vspace{0.3cm}
 \noindent\textbf{3. Cálculo del potencial gravitacional} \\
@@ -448,6 +520,26 @@ $$
 donde $G$ es la constante de gravitación universal y el signo negativo refleja la naturaleza atractiva de la interacción. 
 
 Para una distribución de masa confinada exclusivamente a una superficie esférica de radio $R$ con densidad superficial uniforme $\sigma_0$, la densidad volumétrica equivalente se expresa utilizando la delta de Dirac (Alonso Sepúlveda, Sección 1.10, "Una aplicación"):
+
+\begin{center}
+
+\begin{tikzpicture}[scale=1.02, line cap=round, line join=round]
+  \def\R{1.65}
+  \shade[shellsurface] (0,0) circle (\R);
+  \draw[masscol, ultra thick] (0,0) circle (\R);
+  \draw[masscol, dashed] (-\R,0) arc[start angle=180,end angle=360,x radius=\R,y radius=0.35*\R];
+  \draw[masscol] (\R,0) arc[start angle=0,end angle=180,x radius=\R,y radius=0.35*\R];
+  \foreach \ang in {0,30,...,330}{\node[masscol, scale=0.55] at (\ang:\R) {$\bullet$};}
+  \draw[gausssurface] (0,0) circle (0.8);
+  \node[gausscol!55!black] at (0,-0.28) {$M_{\rm enc}=0$};
+  \foreach \ang in {25,70,115,160,205,250,295,340}{\draw[fieldline] (\ang:2.55) -- (\ang:1.9);}
+  \node[align=center] at (0,2.35) {cáscara uniforme\\$\sigma_0$};
+  \node[align=center, gausscol!50!black] at (0,-1.05) {$\vec g=0$\\interior};
+  \draw[<->, thin] (0,0) -- (150:\R) node[midway, measure] {$R$};
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Cáscara esférica uniforme del Problema 4. En el interior no hay masa encerrada y el campo se anula; fuera, toda la cáscara actúa como una masa puntual en el centro.}
+\end{center}
 $$
 \rho(\vec{r}') = \sigma_0 \frac{\delta(r' - R)}{r'^2}
 $$
@@ -574,6 +666,30 @@ Por lo tanto, la densidad se escribe como:
 $$
 \sigma(\vec{r}') = \sigma_0 \sqrt{\frac{8\pi}{15}} \left[ Y_{2, 2}(\theta', \varphi') + Y_{2, -2}(\theta', \varphi') \right]
 $$
+
+\begin{center}
+
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round]
+  \def\R{2.05}
+  \shade[ball color=gray!8, opacity=0.3] (0,0) circle (\R);
+  \begin{scope}\clip (0,0) circle (\R);
+    \fill[poslobecol!55, opacity=0.72] (0,0) -- (45:\R) arc[start angle=45,end angle=135,radius=\R] -- cycle;
+    \fill[poslobecol!55, opacity=0.72] (0,0) -- (225:\R) arc[start angle=225,end angle=315,radius=\R] -- cycle;
+    \fill[neglobecol!55, opacity=0.72] (0,0) -- (135:\R) arc[start angle=135,end angle=225,radius=\R] -- cycle;
+    \fill[neglobecol!55, opacity=0.72] (0,0) -- (315:\R) arc[start angle=315,end angle=405,radius=\R] -- cycle;
+  \end{scope}
+  \draw[thick] (0,0) circle (\R);
+  \draw[dashed] (-\R,0) arc[start angle=180,end angle=360,x radius=\R,y radius=0.32*\R];
+  \draw (\R,0) arc[start angle=0,end angle=180,x radius=\R,y radius=0.32*\R];
+  \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (2.75,0) node[right] {$x$};
+  \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (0,2.65) node[above] {$y$};
+  \node[poslobecol!85!black] at (0,1.15) {$+$};\node[poslobecol!85!black] at (0,-1.15) {$+$};
+  \node[neglobecol!85!black] at (1.15,0) {$-$};\node[neglobecol!85!black] at (-1.15,0) {$-$};
+  \node[align=center] at (0,-2.65) {$\sin^2\theta\cos 2\varphi$\\combinación $Y_{2,2}+Y_{2,-2}$};
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Patrón cuadrupolar del Problema 5. Los cuatro lóbulos alternados muestran por qué la integral angular selecciona únicamente los modos $\ell=2$, $m=\pm2$.}
+\end{center}
 
 \vspace{0.3cm}
 \noindent\textbf{4. Cálculo del potencial gravitacional} \\
@@ -731,6 +847,31 @@ $$
 \frac{dR}{dr} = 0 \quad \text{y} \quad \frac{d^2R}{dr^2} = 0
 $$
 Además, en el modelo de rotor rígido libre, no hay potencial que dependa de la posición angular, por lo que podemos tomar $V(a) = 0$ (o absorberlo en la definición de $E$). 
+
+\begin{center}
+
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round]
+  \begin{scope}[shift={(-2.25,0)}]
+    \def\R{1.45}
+    \shade[ball color=blue!10, opacity=0.35] (0,0) circle (\R);
+    \draw[thick] (0,0) circle (\R);
+    \draw[dashed] (-\R,0) arc[start angle=180,end angle=360,x radius=\R,y radius=0.35*\R];
+    \draw (\R,0) arc[start angle=0,end angle=180,x radius=\R,y radius=0.35*\R];
+    \draw[-{Latex[length=2.6mm]}, thick] (0,0) -- (52:\R) node[midway, left, measure] {$a$};
+    \fill[fieldcol] (52:\R) circle (2.2pt) node[above right] {$m$};
+    \draw[thick, fieldcol, -{Latex[length=2.4mm]}] (30:1.65) arc[start angle=30,end angle=112,radius=1.65];
+    \node at (0,-1.9) {rotor rígido: $r=a$};
+  \end{scope}
+  \begin{scope}[shift={(2.1,-1.15)}]
+    \draw[->] (0,0) -- (0,3.1) node[above] {$E_\ell$};
+    \draw[->] (-0.25,0) -- (2.5,0) node[right] {$\ell$};
+    \foreach \l/\E in {0/0,1/0.55,2/1.65,3/3.05}{\draw[very thick, masscol] (0.35,\E) -- (1.65,\E);\node[left] at (0.32,\E) {$\ell=\l$};}
+    \node[align=center, anchor=west] at (1.78,1.65) {$E_\ell=\dfrac{\hbar^2}{2I}\ell(\ell+1)$};
+  \end{scope}
+\end{tikzpicture}
+\par\smallskip
+{\small\textbf{Figura.} Interpretación geométrica del rotor rígido del Problema 6: la partícula queda confinada a una esfera de radio fijo y la energía depende solo de $\ell$, con degeneración en $m$.}
+\end{center}
 
 La ecuación de Schrödinger original se reduce drásticamente. Evaluando el laplaciano en $r=a$ y eliminando los términos radiales, obtenemos:
 $$

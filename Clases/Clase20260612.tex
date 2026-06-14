@@ -76,7 +76,7 @@ En esta clase se resuelven dos problemas de electrostática con simetría esfér
 La solución general de $\nabla^2\phi=0$ en coordenadas esféricas $(r,\theta,\varphi)$ es:
 
 \[
-\phi(r,\theta,\varphi)=\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\left[A_{\ell m}\,r^{\ell}+\frac{B_{\ell m}}{r^{\,\ell+1}}\right]Y_\ell^{m}(\theta,\varphi)
+\phi(r,\theta,\varphi)=\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\left[A_{\ell m}\,r^{\ell}+\frac{B_{\ell m}}{r^{\,\ell+1}}\right]Y_\ell^m(\theta,\varphi)
 \]
 
 
@@ -97,7 +97,7 @@ Y_0^0=\sqrt{\frac{1}{4\pi}}=\text{cte}, \qquad\qquad Y_1^0=\sqrt{\frac{3}{4\pi}}
 \textbf{Condición de regularidad en el origen:} si la región de interés incluye $r=0$ (problema \textbf{interior}), se debe tener $B_{\ell m}=0$ para todo $\ell,m$ (de lo contrario $\phi\to\infty$ cuando $r\to0$). Por lo tanto:
 
 \[
-\phi_{\text{int}}(r,\theta,\varphi)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^{m}(\theta,\varphi)\tag{1}
+\phi_{\text{int}}(r,\theta,\varphi)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^m(\theta,\varphi)\tag{1}
 \]
 
 
@@ -138,7 +138,7 @@ Y_0^0=\sqrt{\frac{1}{4\pi}}=\text{cte}, \qquad\qquad Y_1^0=\sqrt{\frac{3}{4\pi}}
 Como la región de interés (interior) incluye el origen, se usa directamente (1):
 
 \[
-\phi(r,\theta)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^{m}(\theta,\varphi)
+\phi(r,\theta)=\sum_{\ell,m}A_{\ell m}\,r^{\ell}\,Y_\ell^m(\theta,\varphi)
 \]
 
 
@@ -148,7 +148,7 @@ Como la región de interés (interior) incluye el origen, se usa directamente (1
 En $r=R$ debe cumplirse:
 
 \[
-V_0\sin^2\!\left(\frac{\theta}{2}\right)=\sum_{\ell,m}A_{\ell m}\,R^{\ell}\,Y_\ell^{m}(\theta,\varphi)
+V_0\sin^2\!\left(\frac{\theta}{2}\right)=\sum_{\ell,m}A_{\ell m}\,R^{\ell}\,Y_\ell^m(\theta,\varphi)
 \]
 
 
@@ -176,10 +176,10 @@ V_0\sin^2\!\left(\frac{\theta}{2}\right)=\frac{V_0\sqrt{4\pi}}{2}\left[Y_0^0-\fr
 \subsection{\texorpdfstring{Cálculo de los coeficientes $A_{\ell m}$}{Cálculo de los coeficientes A lm}}
 
 
-Se multiplica ambos lados por $Y_{\ell'}^{m'*}(\theta,\varphi)$ y se integra sobre el ángulo sólido, usando la ortonormalidad de los armónicos esféricos:
+Se multiplica ambos lados por $(Y_{\ell'}^{m'})^*(\theta,\varphi)$ y se integra sobre el ángulo sólido, usando la ortonormalidad de los armónicos esféricos:
 
 \[
-\int Y_\ell^{m}\,Y_{\ell'}^{m'*}\,d\Omega=\delta_{\ell\ell'}\,\delta_{mm'}
+\int Y_\ell^m\,(Y_{\ell'}^{m'})^*\,d\Omega=\delta_{\ell\ell'}\,\delta_{mm'}
 \]
 
 
@@ -248,7 +248,7 @@ Con $\dfrac{\partial\phi}{\partial r}=-\dfrac{V_0}{2R}\cos\theta$ y $\dfrac{\par
 Sean $(\theta,\varphi)$ y $(\theta',\varphi')$ dos direcciones arbitrarias, y sea $\gamma$ el ángulo entre ellas (el ángulo entre los vectores unitarios $\hat r$ y $\hat r\,'$). El \textbf{teorema de adición} establece:
 
 \[
-P_\ell(\cos\gamma)=\frac{4\pi}{2\ell+1}\sum_{m=-\ell}^{\ell}Y_\ell^{m*}(\theta,\varphi)\,Y_\ell^{m}(\theta',\varphi')
+P_\ell(\cos\gamma)=\frac{4\pi}{2\ell+1}\sum_{m=-\ell}^{\ell}(Y_\ell^m)^*(\theta,\varphi)\,Y_\ell^m(\theta',\varphi')
 \]
 
 
@@ -502,7 +502,7 @@ Caso particular: para $k=0$ se recupera $L_n^{0}(x)=L_n(x)$ (los polinomios "sim
 \textbf{Nota --- analogía con Legendre:} así como los polinomios de Legendre $P_\ell(x)$ se generalizan a los \textbf{asociados} $P_\ell^{m}(x)$ (presentes en $Y_\ell^m$), los polinomios de Laguerre $L_n(x)$ se generalizan a los \textbf{asociados} $L_n^{k}(x)$. En el átomo de hidrógeno, la función de onda completa tiene la forma
 
 \[
-\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^{m}(\theta,\varphi),
+\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^m(\theta,\varphi),
 \]
 
 donde la parte radial $R_{n\ell}(r)$ se construye con $L_{n}^{k}(x)$ (con $k=2\ell+1$ y $x\propto r$), mientras que la parte angular $Y_\ell^m$ involucra $P_\ell^{m}(\cos\theta)$ --- cerrando así el círculo con la sección 1.
@@ -534,5 +534,431 @@ donde la parte radial $R_{n\ell}(r)$ se construye con $L_{n}^{k}(x)$ (con $k=2\e
 \end{tikzpicture}
 \end{center}
 
+\section{Problema 1: Determinar $A_{\ell m}$}
+Demostrar que los coeficientes $A_{\ell m}$ en la expansión de una función arbitraria $f(\theta, \phi)$ en términos de armónicos esféricos:
+$$f(\theta, \phi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} A_{\ell m} Y_\ell^m(\theta, \phi)$$
+están dados por la expresión:
+$$A_{\ell m} = \int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega$$
+
+\subsection{Solución}
+
+Partimos de la expansión de la función $f(\theta, \phi)$ en la base completa de armónicos esféricos. Para evitar confusión con los índices específicos $\ell$ y $m$ que deseamos aislar en el lado izquierdo de la ecuación final, reescribimos la sumatoria utilizando índices mudos $\ell'$ y $m'$:
+$$f(\theta, \phi) = \sum_{\ell'=0}^{\infty} \sum_{m'=-\ell'}^{\ell'} A_{\ell' m'} Y_{\ell'}^{m'}(\theta, \phi)$$
+
+Multiplicamos ambos lados de la ecuación anterior por el complejo conjugado del armónico esférico $(Y_\ell^m(\theta, \phi))^*$, correspondiente a los índices $\ell$ y $m$ que queremos proyectar:
+$$f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* = \left[ \sum_{\ell'=0}^{\infty} \sum_{m'=-\ell'}^{\ell'} A_{\ell' m'} Y_{\ell'}^{m'}(\theta, \phi) \right] (Y_\ell^m(\theta, \phi))^*$$
+
+Integramos ambos lados de la ecuación sobre todo el ángulo sólido $4\pi$ (es decir, $\theta$ desde $0$ hasta $\pi$ y $\phi$ desde $0$ hasta $2\pi$, con el elemento diferencial de ángulo sólido $d\Omega = \sen\theta \, d\theta \, d\phi$):
+$$\int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega = \int_{4\pi} \left[ \sum_{\ell'=0}^{\infty} \sum_{m'=-\ell'}^{\ell'} A_{\ell' m'} Y_{\ell'}^{m'}(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \right] d\Omega$$
+
+Debido a la linealidad del operador integral, podemos intercambiar el orden de la integración y las sumatorias discretas, sacando los coeficientes constantes $A_{\ell' m'}$ fuera de la integral:
+$$\int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega = \sum_{\ell'=0}^{\infty} \sum_{m'=-\ell'}^{\ell'} A_{\ell' m'} \left[ \int_{4\pi} Y_{\ell'}^{m'}(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega \right]$$
+
+Aquí utilizamos la propiedad fundamental de ortonormalidad de los armónicos esféricos, dada por la ecuación:
+$$\int_{4\pi} (Y_\ell^m(\theta, \phi))^* Y_{\ell'}^{m'}(\theta, \phi) \, d\Omega = \delta_{\ell \ell'} \delta_{m m'}$$
+
+Sustituimos la condición de ortonormalidad en la expresión del Paso 4:
+$$\int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega = \sum_{\ell'=0}^{\infty} \sum_{m'=-\ell'}^{\ell'} A_{\ell' m'} \delta_{\ell \ell'} \delta_{m m'}$$
+La presencia de las deltas de Kronecker $\delta_{\ell \ell'} \delta_{m m'}$ actúa como un filtro que anula todos los términos de la doble sumatoria, excepto aquel en el que $\ell' = \ell$ y $m' = m$. Por lo tanto, la sumatoria colapsa a un único término:
+$$\int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega = A_{\ell m}$$
+
+Reordenando la igualdad, obtenemos exactamente la expresión que queríamos demostrar:
+$$A_{\ell m} = \int_{4\pi} f(\theta, \phi) (Y_\ell^m(\theta, \phi))^* \, d\Omega$$
+
+
+
+\section{Problema 2: $\vec{r} \cdot \vec{\nabla} Y_\ell^m(\theta,\phi) = 0$}
+
+Demostrar que el producto punto entre el vector de posición y el gradiente de un armónico esférico es nulo:
+$$\vec{r} \cdot \vec{\nabla} Y_\ell^m(\theta,\phi) = 0$$
+
+\subsection{Solución}
+
+En coordenadas esféricas $(r, \theta, \phi)$, el operador gradiente se define como:
+$$\vec{\nabla} = \hat{e}_r \frac{\partial}{\partial r} + \hat{e}_\theta \frac{1}{r} \frac{\partial}{\partial \theta} + \hat{e}_\phi \frac{1}{r \sen\theta} \frac{\partial}{\partial \phi}$$
+El vector de posición $\vec{r}$ en este sistema de coordenadas tiene una expresión extremadamente simple, apuntando puramente en la dirección radial con magnitud $r$:
+$$\vec{r} = r \hat{e}_r$$
+Al realizar el producto punto entre $\vec{r}$ y el operador $\vec{\nabla}$, aprovechamos la ortonormalidad de la base local ($\hat{e}_r \cdot \hat{e}_r = 1$, $\hat{e}_r \cdot \hat{e}_\theta = 0$, $\hat{e}_r \cdot \hat{e}_\phi = 0$):
+$$\vec{r} \cdot \vec{\nabla} = (r \hat{e}_r) \cdot \left( \hat{e}_r \frac{\partial}{\partial r} + \hat{e}_\theta \frac{1}{r} \frac{\partial}{\partial \theta} + \hat{e}_\phi \frac{1}{r \sen\theta} \frac{\partial}{\partial \phi} \right) = r \frac{\partial}{\partial r}$$
+Este operador $r \frac{\partial}{\partial r}$ mide la tasa de cambio de una función a lo largo de la dirección radial (es decir, cómo cambia la función si nos alejamos o acercamos al origen, manteniendo $\theta$ y $\phi$ constantes).
+
+Por definición, los armónicos esféricos $Y_\ell^m(\theta,\phi)$ son funciones que dependen \textbf{exclusivamente} de las coordenadas angulares $\theta$ y $\phi$. No poseen dependencia alguna con la coordenada radial $r$. Matemáticamente, esto se expresa como:
+$$\frac{\partial}{\partial r} Y_\ell^m(\theta,\phi) = 0$$
+Por lo tanto, al aplicar el operador $\vec{r} \cdot \vec{\nabla}$ sobre el armónico esférico, obtenemos:
+$$\vec{r} \cdot \vec{\nabla} Y_\ell^m(\theta,\phi) = r \frac{\partial}{\partial r} Y_\ell^m(\theta,\phi) = r (0) = 0$$
+
+\section{Problema 3: Cascarones esféricos concentricos}
+
+Si en la región entre dos cascarones esféricos de radios $a$ y $b$ se satisface la ecuación de Laplace para potencial electrostático y si $\phi = V_1(\theta, \varphi)$ en $r = a$ y $\phi = V_2(\theta, \varphi)$ en $r = b$, evaluar $\phi(r, \theta, \varphi)$.
+
+Obsérvese que $r = 0$ no está incluido en el problema, de modo que $B_{\ell m}$ será en principio diferente de cero.
+
+\subsection{Solución}
+
+Dado que el potencial satisface la ecuación de Laplace en la región $a < r < b$, y considerando que el origen no está incluido en el dominio del problema, la solución general en coordenadas esféricas se expresa como una combinación lineal de armónicos esféricos:
+
+$$
+\phi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} \left( A_{\ell m} r^\ell + \frac{B_{\ell m}}{r^{\ell+1}} \right) Y_\ell^m(\theta,\varphi)
+$$
+
+donde $Y_\ell^m(\theta,\varphi)$ son los armónicos esféricos, y tanto los coeficientes $A_{\ell m}$ como $B_{\ell m}$ deben determinarse a partir de las condiciones de frontera.
+
+Las condiciones de frontera son:
+$$
+\phi(a,\theta,\varphi) = V_1(\theta,\varphi)
+$$
+$$
+\phi(b,\theta,\varphi) = V_2(\theta,\varphi)
+$$
+
+Sustituyendo $r=a$ y $r=b$ en la solución general:
+$$
+\sum_{\ell,m} \left( A_{\ell m} a^\ell + \frac{B_{\ell m}}{a^{\ell+1}} \right) Y_\ell^m(\theta,\varphi) = V_1(\theta,\varphi)
+$$
+$$
+\sum_{\ell,m} \left( A_{\ell m} b^\ell + \frac{B_{\ell m}}{b^{\ell+1}} \right) Y_\ell^m(\theta,\varphi) = V_2(\theta,\varphi)
+$$
+
+Utilizando la ortogonalidad de los armónicos esféricos:
+$$
+\int \left(Y_{\ell'}^{m'}(\theta,\varphi)\right)^* Y_\ell^m(\theta,\varphi) d\Omega = \delta_{\ell\ell'}\delta_{mm'}
+$$
+
+Multiplicamos ambas ecuaciones por $\left(Y_{\ell'}^{m'}(\theta,\varphi)\right)^*$ e integramos sobre el ángulo sólido:
+$$
+A_{\ell m} a^\ell + \frac{B_{\ell m}}{a^{\ell+1}} = \int V_1(\theta,\varphi) \left(Y_\ell^m(\theta,\varphi)\right)^* d\Omega \equiv C_{\ell m}
+$$
+$$
+A_{\ell m} b^\ell + \frac{B_{\ell m}}{b^{\ell+1}} = \int V_2(\theta,\varphi) \left(Y_\ell^m(\theta,\varphi)\right)^* d\Omega \equiv D_{\ell m}
+$$
+
+Esto nos da un sistema de dos ecuaciones con dos incógnitas ($A_{\ell m}$ y $B_{\ell m}$) para cada par $(\ell,m)$:
+$$
+A_{\ell m} a^\ell + B_{\ell m} a^{-(\ell+1)} = C_{\ell m}
+$$
+$$
+A_{\ell m} b^\ell + B_{\ell m} b^{-(\ell+1)} = D_{\ell m}
+$$
+
+Resolviendo este sistema:
+$$
+A_{\ell m} = \frac{b^{\ell+1}C_{\ell m} - a^{\ell+1}D_{\ell m}}{b^{2\ell+1} - a^{2\ell+1}}, \qquad 
+B_{\ell m} = \frac{a^\ell b^\ell (D_{\ell m} - C_{\ell m})}{b^{-(\ell+1)} - a^{-(\ell+1)}} = \frac{a^\ell b^\ell (C_{\ell m} - D_{\ell m})}{a^{-(\ell+1)} - b^{-(\ell+1)}}
+$$
+
+Por lo tanto, el potencial electrostático en la región entre los dos cascarones es:
+$$
+\phi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} \left[ \frac{b^{\ell+1}C_{\ell m} - a^{\ell+1}D_{\ell m}}{b^{2\ell+1} - a^{2\ell+1}} r^\ell + \frac{a^\ell b^\ell (C_{\ell m} - D_{\ell m})}{a^{-(\ell+1)} - b^{-(\ell+1)}} \frac{1}{r^{\ell+1}} \right] Y_\ell^m(\theta,\varphi)
+$$
+
+donde los coeficientes $C_{\ell m}$ y $D_{\ell m}$ están dados por las proyecciones de los potenciales de frontera sobre los armónicos esféricos.
+
+\section{Problema 4: Temperatura sobre superficie esférica}
+La temperatura sobre la superficie de una esfera de radio $R$ se mantiene fija y con un valor $T(R, \theta, \varphi) = f(\theta)$. Demuestre que en esta situación de estado estacionario:
+$$
+T(r,\theta,\varphi) = \frac{1}{2} \sum_{\ell=0}^{\infty} \frac{(2\ell+1)}{R^\ell} \left[ \int_0^{\pi} f(\theta') \sen\theta' P_\ell(\cos\theta') d\theta' \right] r^\ell P_\ell(\cos\theta)
+$$
+
+\subsection{Solución}
+
+En estado estacionario, la temperatura satisface la ecuación de Laplace:
+$$
+\nabla^2 T(r,\theta,\varphi) = 0
+$$
+
+Dado que la condición de frontera $T(R,\theta,\varphi) = f(\theta)$ es independiente del ángulo azimutal $\varphi$, la solución también será independiente de $\varphi$ (simetría azimutal). Por lo tanto, $T = T(r,\theta)$.
+
+La solución general de la ecuación de Laplace con simetría azimutal en coordenadas esféricas se expresa en términos de los polinomios de Legendre:
+$$
+T(r,\theta) = \sum_{\ell=0}^{\infty} \left( A_\ell r^\ell + \frac{B_\ell}{r^{\ell+1}} \right) P_\ell(\cos\theta)
+$$
+
+Como estamos interesados en la región interior de la esfera ($r < R$) y la temperatura debe ser finita en el origen ($r=0$), debemos tener $B_\ell = 0$ para todo $\ell$. Así:
+$$
+T(r,\theta) = \sum_{\ell=0}^{\infty} A_\ell r^\ell P_\ell(\cos\theta)
+$$
+
+Aplicando la condición de frontera en $r = R$:
+$$
+T(R,\theta) = f(\theta) = \sum_{\ell=0}^{\infty} A_\ell R^\ell P_\ell(\cos\theta)
+$$
+
+Para determinar los coeficientes $A_\ell$, utilizamos la ortogonalidad de los polinomios de Legendre:
+$$
+\int_0^{\pi} P_{\ell'}(\cos\theta) P_\ell(\cos\theta) \sen\theta \, d\theta = \frac{2}{2\ell+1} \delta_{\ell\ell'}
+$$
+
+Multiplicamos la ecuación de la condición de frontera por $P_{\ell'}(\cos\theta) \sen\theta$ e integramos de $0$ a $\pi$:
+$$
+\int_0^{\pi} f(\theta) P_\ell(\cos\theta) \sen\theta \, d\theta = \sum_{\ell'=0}^{\infty} A_{\ell'} R^{\ell'} \int_0^{\pi} P_{\ell'}(\cos\theta) P_\ell(\cos\theta) \sen\theta \, d\theta
+$$
+
+Utilizando la relación de ortogonalidad:
+$$
+\int_0^{\pi} f(\theta) P_\ell(\cos\theta) \sen\theta \, d\theta = A_\ell R^\ell \cdot \frac{2}{2\ell+1}
+$$
+
+Despejando $A_\ell$:
+$$
+A_\ell = \frac{2\ell+1}{2R^\ell} \int_0^{\pi} f(\theta) P_\ell(\cos\theta) \sen\theta \, d\theta
+$$
+
+Sustituyendo este resultado en la expresión para $T(r,\theta)$:
+$$
+T(r,\theta) = \sum_{\ell=0}^{\infty} \left[ \frac{2\ell+1}{2R^\ell} \int_0^{\pi} f(\theta') P_\ell(\cos\theta') \sen\theta' \, d\theta' \right] r^\ell P_\ell(\cos\theta)
+$$
+
+Reorganizando los términos, obtenemos la expresión solicitada:
+$$
+T(r,\theta,\varphi) = \frac{1}{2} \sum_{\ell=0}^{\infty} \frac{(2\ell+1)}{R^\ell} \left[ \int_0^{\pi} f(\theta') \sen\theta' P_\ell(\cos\theta') d\theta' \right] r^\ell P_\ell(\cos\theta)
+$$
+
+que es independiente de $\varphi$ debido a la simetría azimutal del problema.
+
+\section{Problema 5: Ecuación de Helmholtz}
+Demuestre que la solución a la ecuación de Helmholtz $(\nabla^2 + k^2)\phi = 0$, en coordenadas esféricas, que satisface la condición de continuidad en $\varphi$, e incluye $\theta = 0, \pi/2$, es:
+$$\phi(r, \theta, \varphi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \varphi)$$
+
+\subsection{Solución}
+La ecuación de Helmholtz es:
+$$(\nabla^2 + k^2)\phi(r, \theta, \varphi) = 0$$
+
+En coordenadas esféricas, el laplaciano tiene la forma:
+$$\nabla^2\phi = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial\phi}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial\phi}{\partial\theta}\right) + \frac{1}{r^2\sin^2\theta}\frac{\partial^2\phi}{\partial\varphi^2}$$
+
+Proponemos una solución separada de la forma:
+$$\phi(r, \theta, \varphi) = R(r)\Theta(\theta)\Phi(\varphi)$$
+
+Sustituyendo en la ecuación de Helmholtz y dividiendo por $\phi = R\Theta\Phi$:
+$$\frac{1}{R}\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + \frac{1}{\Theta}\frac{1}{r^2\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d\Theta}{d\theta}\right) + \frac{1}{\Phi}\frac{1}{r^2\sin^2\theta}\frac{d^2\Phi}{d\varphi^2} + k^2 = 0$$
+
+Multiplicando por $r^2$:
+$$\frac{1}{R}\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + \frac{1}{\Theta}\frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d\Theta}{d\theta}\right) + \frac{1}{\Phi}\frac{1}{\sin^2\theta}\frac{d^2\Phi}{d\varphi^2} + k^2r^2 = 0$$
+
+El término que depende de $\varphi$ debe ser constante. Sea $m^2$ esta constante:
+$$\frac{1}{\Phi}\frac{d^2\Phi}{d\varphi^2} = -m^2$$
+
+La solución es $\Phi(\varphi) = e^{im\varphi}$. La condición de continuidad $\Phi(\varphi) = \Phi(\varphi + 2\pi)$ exige que $m$ sea entero: $m = 0, \pm 1, \pm 2, \ldots$
+
+Separando la parte angular, obtenemos:
+$$\frac{1}{\Theta}\frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d\Theta}{d\theta}\right) - \frac{m^2}{\sin^2\theta} = -\ell(\ell+1)$$
+
+donde $\ell(\ell+1)$ es la constante de separación. Esta es la \textbf{ecuación asociada de Legendre}:
+$$\frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d\Theta}{d\theta}\right) + \left[\ell(\ell+1) - \frac{m^2}{\sin^2\theta}\right]\Theta = 0$$
+
+Con el cambio $x = \cos\theta$, esta ecuación se transforma en:
+$$\frac{d}{dx}\left[(1-x^2)\frac{dP}{dx}\right] + \left[\ell(\ell+1) - \frac{m^2}{1-x^2}\right]P = 0$$
+
+Las soluciones regulares en $x = \pm 1$ (es decir, $\theta = 0, \pi$) son los \textbf{polinomios asociados de Legendre} $P_\ell^m(\cos\theta)$, donde $\ell$ debe ser entero no negativo y $|m| \leq \ell$.
+
+Combinando las soluciones angulares, definimos los \textbf{armónicos esféricos}:
+$$Y_\ell^m(\theta, \varphi) = N_{\ell m} P_\ell^m(\cos\theta) e^{im\varphi}$$
+
+donde $N_{\ell m}$ es el factor de normalización. Los armónicos esféricos forman una base ortonormal completa en la esfera.
+
+La parte radial satisface:
+$$\frac{1}{r^2}\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + \left[k^2 - \frac{\ell(\ell+1)}{r^2}\right]R = 0$$
+
+Haciendo el cambio $u(r) = rR(r)$, obtenemos:
+$$\frac{d^2u}{dr^2} + \left[k^2 - \frac{\ell(\ell+1)}{r^2}\right]u = 0$$
+
+Esta es la \textbf{ecuación de Bessel esférica}. Sus soluciones linealmente independientes son:
+\begin{itemize}
+\item $j_\ell(kr)$: función de Bessel esférica de primera especie (regular en $r=0$)
+\item $\eta_\ell(kr)$: función de Bessel esférica de segunda especie (Neumann, singular en $r=0$)
+\end{itemize}
+
+Por lo tanto, la solución general radial es:
+$$R_\ell(r) = A_\ell j_\ell(kr) + B_\ell \eta_\ell(kr)$$
+
+
+Combinando todas las partes y sumando sobre todos los valores permitidos de $\ell$ y $m$, obtenemos:
+$$\phi(r, \theta, \varphi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \varphi)$$
+
+\section{Problema 6: Ecuación de onda}
+Utilizando separación de variables para la ecuación de ondas en coordenadas esféricas demuestre que la solución tiene la forma:
+$$\psi(\vec{r}, t) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \phi) \times [C_{\ell m} e^{ikct} + D_{\ell m} e^{-ikct}]$$
+
+\subsection{Solución}
+
+La ecuación de ondas en tres dimensiones es:
+$$\nabla^2\psi(\vec{r}, t) - \frac{1}{c^2}\frac{\partial^2\psi(\vec{r}, t)}{\partial t^2} = 0$$
+
+
+Proponemos una solución separada:
+$$\psi(\vec{r}, t) = \phi(\vec{r})T(t)$$
+
+Sustituyendo en la ecuación de ondas:
+$$T(t)\nabla^2\phi(\vec{r}) - \frac{1}{c^2}\phi(\vec{r})\frac{d^2T}{dt^2} = 0$$
+
+Dividiendo por $\phi(\vec{r})T(t)$:
+$$\frac{\nabla^2\phi}{\phi} = \frac{1}{c^2}\frac{1}{T}\frac{d^2T}{dt^2} = -k^2$$
+
+donde $-k^2$ es la constante de separación (negativa para obtener soluciones oscilatorias).
+
+
+La ecuación para $T(t)$ es:
+$$\frac{d^2T}{dt^2} + k^2c^2T = 0$$
+
+Cuya solución general es:
+$$T(t) = C e^{ikct} + D e^{-ikct}$$
+
+La parte espacial satisface la ecuación de Helmholtz:
+$$(\nabla^2 + k^2)\phi(\vec{r}) = 0$$
+
+Sabemos que la solución general en coordenadas esféricas es:
+$$\phi(r, \theta, \varphi) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \varphi)$$
+
+Combinando las partes espacial y temporal, y permitiendo que los coeficientes temporales dependan de $\ell$ y $m$, obtenemos:
+$$\psi(\vec{r}, t) = \sum_{\ell=0}^{\infty} \sum_{m=-\ell}^{\ell} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \phi) \times [C_{\ell m} e^{ikct} + D_{\ell m} e^{-ikct}]$$
+
+Esta es la solución general a la ecuación de ondas en coordenadas esféricas, expresada como superposición de modos normales caracterizados por los números cuánticos $\ell$ y $m$.
+
+\section{Problema 7: Modos normales de oscilación}
+
+Obtener el espectro de frecuencias (modos normales de oscilación) para una cavidad acústica resonante de forma esférica y radio $R$. La condición de frontera es de la forma: 
+
+$$\frac{\partial\psi(\vec{r}, t)}{\partial r}\Bigg|_{r=R} = 0$$.
+
+\subsection{Solución}
+
+Para una cavidad acústica esférica, buscamos soluciones a la ecuación de ondas que satisfagan:
+\begin{itemize}
+\item La ecuación de ondas: $\nabla^2\psi - \frac{1}{c^2}\frac{\partial^2\psi}{\partial t^2} = 0$
+\item Condición de frontera de Neumann: $\left.\frac{\partial\psi}{\partial r}\right|_{r=R} = 0$
+\item Regularidad en el origen: $\psi$ debe ser finita en $r=0$
+\end{itemize}
+
+
+Sabemos que la solución general tiene la forma:
+$$\psi(\vec{r}, t) = \sum_{\ell,m} [A_{\ell m} j_\ell(kr) + B_{\ell m} \eta_\ell(kr)] Y_\ell^m(\theta, \varphi) [C_{\ell m} e^{ikct} + D_{\ell m} e^{-ikct}]$$
+
+La condición de regularidad en $r=0$ exige $B_{\ell m} = 0$ (pues $\eta_\ell(kr)$ diverge en el origen). Por lo tanto:
+$$\psi(\vec{r}, t) = \sum_{\ell,m} A_{\ell m} j_\ell(kr) Y_\ell^m(\theta, \varphi) [C_{\ell m} e^{ikct} + D_{\ell m} e^{-ikct}]$$
+
+
+La condición $\left.\frac{\partial\psi}{\partial r}\right|_{r=R} = 0$ debe cumplirse para cada modo $(\ell,m)$ individualmente. Esto implica:
+$$\left.\frac{d}{dr}j_\ell(kr)\right|_{r=R} = 0$$
+
+Usando la regla de la cadena:
+$$k \cdot j_\ell'(kR) = 0$$
+
+Como $k \neq 0$ (para soluciones no triviales), debemos tener:
+$$j_\ell'(kR) = 0$$
+
+
+Sea $\alpha_{\ell n}$ el $n$-ésimo cero de la derivada de la función de Bessel esférica $j_\ell'(x)$. Entonces:
+$$k_{\ell n} R = \alpha_{\ell n}$$
+
+de donde:
+$$k_{\ell n} = \frac{\alpha_{\ell n}}{R}$$
+
+La frecuencia angular correspondiente es:
+$$\omega_{\ell n} = c k_{\ell n} = \frac{c \cdot \alpha_{\ell n}}{R}$$
+
+y la frecuencia lineal:
+$$f_{\ell n} = \frac{\omega_{\ell n}}{2\pi} = \frac{c \cdot \alpha_{\ell n}}{2\pi R}$$
+
+Los modos normales de oscilación son:
+$$\psi_{\ell n m}(\vec{r}, t) = j_\ell\left(\frac{\alpha_{\ell n} r}{R}\right) Y_\ell^m(\theta, \varphi) [C_{\ell n m} e^{i\omega_{\ell n}t} + D_{\ell n m} e^{-i\omega_{\ell n}t}]$$
+
+con frecuencias:
+$$\omega_{\ell n} = \frac{c \cdot \alpha_{\ell n}}{R}, \quad \ell = 0, 1, 2, \ldots; \quad n = 1, 2, 3, \ldots; \quad m = -\ell, \ldots, \ell$$
+
+Cada frecuencia $\omega_{\ell n}$ es $(2\ell+1)$-veces degenerada debido a los diferentes valores de $m$.
+
+
+\section{Problema 8: Partícula atómica en un cascarón esférico}
+
+Una partícula atómica está confinada dentro de un cascarón esférico de radio $R$. La partícula es descrita por una función de onda que satisface la ecuación de Schrödinger
+
+
+$$-\frac{\hbar^2}{2m}\nabla^2\psi = E\psi,$$
+
+
+con la condición de que $\psi$ sea nula sobre las paredes. Demostrar que los niveles de energía permitidos tienen la forma:
+
+
+$$E_{\ell n} = \frac{\alpha_{\ell n}^2\hbar^2}{2mR^2},$$
+
+
+donde $\alpha_{\ell n}$ son los ceros de la función de Bessel esférica $j_\ell(x)$, es decir los ceros de $J_{\ell+1/2}(x)$, y que la función de onda es:
+
+
+$$\psi = \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} A_{\ell m} j_\ell(\alpha_{\ell n}r/R) Y_{\ell}^m(\theta, \varphi).$$
+
+
+\subsection{Solución}
+
+La ecuación de Schrödinger independiente del tiempo para una partícula libre ($V=0$) en el interior del cascarón es:
+$$-\frac{\hbar^2}{2m}\nabla^2\psi(r,\theta,\varphi) = E\psi(r,\theta,\varphi).$$
+
+Reescribiendo:
+$$\nabla^2\psi + k^2\psi = 0, \quad \text{donde} \quad k^2 = \frac{2mE}{\hbar^2}.$$
+
+Proponemos una solución separada de la forma:
+$$\psi(r,\theta,\varphi) = R(r)Y(\theta,\varphi).$$
+
+Sustituyendo en la ecuación de Helmholtz y multiplicando por $r^2/\psi$:
+$$\frac{1}{R}\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + k^2r^2 = -\frac{1}{Y}\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial Y}{\partial\theta}\right) + \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\varphi^2}\right].$$
+
+El lado izquierdo depende sólo de $r$ y el derecho sólo de los ángulos, por lo que ambos deben ser iguales a una constante que denotamos $\ell(\ell+1)$:
+
+\textbf{Ecuación angular:}
+$$\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial Y}{\partial\theta}\right) + \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\varphi^2} + \ell(\ell+1)Y = 0.$$
+
+\textbf{Ecuación radial:}
+$$\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + [k^2r^2 - \ell(\ell+1)]R = 0.$$
+
+
+La ecuación angular es la ecuación de los armónicos esféricos. Separamos $Y(\theta,\varphi) = \Theta(\theta)\Phi(\varphi)$:
+
+Para $\Phi(\varphi)$ obtenemos:
+$$\frac{d^2\Phi}{d\varphi^2} + m^2\Phi = 0 \quad \Rightarrow \quad \Phi(\varphi) = e^{im\varphi},$$
+donde $m$ debe ser entero para garantizar la periodicidad $\Phi(\varphi+2\pi) = \Phi(\varphi)$.
+
+Para $\Theta(\theta)$ obtenemos la ecuación asociada de Legendre:
+$$\frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d\Theta}{d\theta}\right) + \left[\ell(\ell+1) - \frac{m^2}{\sin^2\theta}\right]\Theta = 0.$$
+
+Con el cambio $x = \cos\theta$, esta se convierte en la ecuación de Legendre asociada cuyas soluciones regulares en $[-1,1]$ son los polinomios asociados de Legendre $P_\ell^m(\cos\theta)$, con $\ell$ entero no negativo y $|m| \leq \ell$.
+
+La ecuación radial es:
+$$\frac{d}{dr}\left(r^2\frac{dR}{dr}\right) + [k^2r^2 - \ell(\ell+1)]R = 0.$$
+
+Haciendo el cambio $R(r) = u(r)/r$, obtenemos:
+$$\frac{d^2u}{dr^2} + \left[k^2 - \frac{\ell(\ell+1)}{r^2}\right]u = 0.$$
+
+Esta es la ecuación de Bessel esférica. Introduciendo la variable adimensional $x = kr$, la ecuación se escribe:
+$$\frac{d^2u}{dx^2} + \left[1 - \frac{\ell(\ell+1)}{x^2}\right]u = 0.$$
+
+Las soluciones regulares en el origen son las funciones de Bessel esféricas $j_\ell(x)$, relacionadas con las funciones de Bessel ordinarias por:
+$$j_\ell(x) = \sqrt{\frac{\pi}{2x}}J_{\ell+1/2}(x).$$
+
+Por lo tanto, la solución radial es:
+$$R(r) = A j_\ell(kr),$$
+donde hemos descartado la función de Neumann esférica $\eta_\ell(kr)$ porque diverge en $r=0$.
+
+La condición de que $\psi$ sea nula sobre las paredes ($r=R$) implica:
+$$R(R) = A j_\ell(kR) = 0.$$
+
+Para tener una solución no trivial ($A \neq 0$), debemos tener:
+$$j_\ell(kR) = 0.$$
+
+Denotemos por $\alpha_{\ell n}$ el $n$-ésimo cero de la función $j_\ell(x)$, es decir:
+$$j_\ell(\alpha_{\ell n}) = 0, \quad n = 1, 2, 3, \ldots$$
+
+Entonces:
+$$kR = \alpha_{\ell n} \quad \Rightarrow \quad k_{\ell n} = \frac{\alpha_{\ell n}}{R}.$$
+
+Recordando que $k^2 = 2mE/\hbar^2$, obtenemos los niveles de energía cuantizados:
+$$E_{\ell n} = \frac{\hbar^2 k_{\ell n}^2}{2m} = \frac{\hbar^2}{2m}\left(\frac{\alpha_{\ell n}}{R}\right)^2 = \frac{\alpha_{\ell n}^2\hbar^2}{2mR^2}.$$
+
+Para cada par de números cuánticos $(\ell, n)$, tenemos $(2\ell+1)$ estados degenerados correspondientes a los diferentes valores de $m = -\ell, -\ell+1, \ldots, \ell$.
+
+La solución general es una combinación lineal de todas las soluciones permitidas:
+$$\psi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} A_{\ell m} j_\ell(k_{\ell n}r) Y_{\ell}^m(\theta,\varphi).$$
+
+Sustituyendo $k_{\ell n} = \alpha_{\ell n}/R$:
+$$\psi(r,\theta,\varphi) = \sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell} A_{\ell m} j_\ell\left(\frac{\alpha_{\ell n}r}{R}\right) Y_{\ell}^m(\theta,\varphi).$$
 
 \end{document}
