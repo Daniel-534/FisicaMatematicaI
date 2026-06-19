@@ -1,0 +1,647 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, angles, quotes, decorations.pathmorphing, babel}
+
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Notas de Clase 20260617}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\setlength{\headheight}{14.5pt}
+\renewcommand{\headrulewidth}{0.2pt}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+  \thispagestyle{empty}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Clase 20260617\par}
+  \vspace{0.8cm}
+  {\large Ecuación de Laguerre asociada y átomo de hidrógeno\par}
+  \vspace{1.0cm}
+  \begin{tcolorbox}[
+    colback=blue!3,
+    colframe=blue!45!black,
+    width=0.88\textwidth,
+    arc=2mm,
+    boxrule=0.7pt,
+    title={Ecuaciones principales},
+    fonttitle=\bfseries,
+    halign=center
+  ]
+  $$
+  x\ddot{y}+(k+1-x)\dot{y}+ny=0,
+  \qquad
+  L_n^k(x)=\frac{e^x x^{-k}}{n!}\frac{d^n}{dx^n}\left(e^{-x}x^{n+k}\right)
+  $$
+  $$
+  \psi_p^k=x^{(k+1)/2}e^{-x/2}L_p^k(x),
+  \qquad
+  \ddot{\psi}_p^k+\psi_p^k\left[-\frac{k^2-1}{4x^2}+\frac{2p+k+1}{2x}-\frac14\right]=0
+  $$
+  $$
+  \hat{H}\psi=E\psi,
+  \qquad
+  \hat{H}=-\frac{\hbar^2}{2m}\nabla^2-\frac{ke^2}{r}
+  $$
+  $$
+  \ddot{u}(r)+\left[-\frac{\ell(\ell+1)}{r^2}+\frac{\lambda}{r}+b\right]u(r)=0,
+  \qquad
+  E_n=-\frac{mK^2}{2\hbar^2 n^2}
+  $$
+  \end{tcolorbox}
+  \vspace{0.9cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+Desarrollo de la clase del día 20260617
+
+\section{Resumen o repaso}
+
+\begin{enumerate}
+\item \textbf{Ecuación de Laguerre asociada:}
+\[
+x\ddot{y} + (k + 1 - x)\dot{y} + ny = 0.
+\]
+\item \textbf{Polinomios de Laguerre asociados escritos con la fórmula de Rodrigues:}
+\[
+L_n^k(x) = \frac{e^x x^{-k}}{n!} \frac{d^n}{dx^n} (e^{-x} x^{n+k}).
+\]
+\end{enumerate}
+
+\subsection{Tarea}
+
+Mostrar que:
+
+\[
+\psi_p^k = x^{(k+1)/2}e^{-x/2}L_p^k(x)
+\]
+
+cumple la siguiente ecuación:
+
+\[
+\ddot{\psi}_p^k + \psi_p^k \left[-\frac{k^2-1}{4x^2} + \frac{2p+k+1}{2x} - \frac{1}{4}\right] = 0
+\]
+
+\subsection{Solución}
+\subsubsection{Ecuación diferencial de los polinomios de Laguerre asociados}
+
+Los polinomios de Laguerre asociados $L_p^k(x)$ son soluciones de la ecuación diferencial asociada de Laguerre:
+
+\[
+x \ddot{L}_p^k + (k+1-x)\dot{L}_p^k + p L_p^k = 0
+\]
+
+Para simplificar la notación en las derivadas, denotaremos $L \equiv L_p^k(x)$. La ecuación anterior se puede reescribir agrupando los términos con derivadas:
+
+\[
+x \ddot{L} + (k+1-x)\dot{L} = -p L \quad \text{--- (Ec. 1)}
+\]
+
+\subsubsection[Cálculo de la primera derivada de psi]{Cálculo de la primera derivada de $\psi_p^k$}
+
+Definimos nuestra función como:
+\[
+\psi = x^{(k+1)/2} e^{-x/2} L
+\]
+
+Aplicamos la regla del producto para derivar respecto a $x$ (usando el punto para denotar $d/dx$):
+
+\[
+\dot{\psi} = \left[ \frac{k+1}{2} x^{(k-1)/2} \right] e^{-x/2} L + x^{(k+1)/2} \left[ -\frac{1}{2} e^{-x/2} \right] L + x^{(k+1)/2} e^{-x/2} \dot{L}
+\]
+
+Factorizamos el término común $x^{(k-1)/2} e^{-x/2}$:
+
+\[
+\dot{\psi} = x^{(k-1)/2} e^{-x/2} \left[ \frac{k+1}{2} L - \frac{x}{2} L + x \dot{L} \right]
+\]
+
+Sacando un factor de $1/2$ en el corchete, obtenemos una expresión compacta para la primera derivada:
+
+\[
+\dot{\psi} = \frac{1}{2} x^{(k-1)/2} e^{-x/2} \Big[ (k+1-x)L + 2x\dot{L} \Big] \quad \text{--- (Ec. 2)}
+\]
+
+\subsubsection[Cálculo de la segunda derivada de psi]{Cálculo de la segunda derivada de $\psi_p^k$}
+
+Para hallar $\ddot{\psi}$, derivamos la \textbf{Ec. 2}. Definimos $A(x) = x^{(k-1)/2} e^{-x/2}$ y $B(x) = (k+1-x)L + 2x\dot{L}$, de modo que $\dot{\psi} = \frac{1}{2} A(x) B(x)$.
+
+La derivada de $A(x)$ es:
+\[
+\dot{A} = \frac{k-1}{2} x^{(k-3)/2} e^{-x/2} - \frac{1}{2} x^{(k-1)/2} e^{-x/2} = \frac{1}{2} x^{(k-3)/2} e^{-x/2} (k-1-x)
+\]
+
+La derivada de $B(x)$ es:
+\[
+\dot{B} = -L + (k+1-x)\dot{L} + 2\dot{L} + 2x\ddot{L} = -L + (k+3-x)\dot{L} + 2x\ddot{L}
+\]
+
+Aplicando la regla del producto $\ddot{\psi} = \frac{1}{2}(\dot{A}B + A\dot{B})$:
+
+\[
+\ddot{\psi} = \frac{1}{4} x^{(k-3)/2} e^{-x/2} (k-1-x) \Big[ (k+1-x)L + 2x\dot{L} \Big] + \frac{1}{2} x^{(k-1)/2} e^{-x/2} \Big[ -L + (k+3-x)\dot{L} + 2x\ddot{L} \Big]
+\]
+
+Para simplificar, factorizamos $\frac{1}{4} x^{(k-3)/2} e^{-x/2}$ en toda la expresión (notando que $x^{(k-1)/2} = x \cdot x^{(k-3)/2}$, lo que multiplica el segundo término por $2x$):
+
+\[
+\ddot{\psi} = \frac{1}{4} x^{(k-3)/2} e^{-x/2} \Big\{ (k-1-x)(k+1-x)L + 2x(k-1-x)\dot{L} + 2x \big[ -L + (k+3-x)\dot{L} + 2x\ddot{L} \big] \Big\}
+\]
+
+\subsubsection{Agrupación de términos}
+
+Expandimos y agrupamos los términos dentro de las llaves según las funciones $L$, $\dot{L}$ y $\ddot{L}$:
+
+\begin{itemize}
+\item \textbf{Términos con $L$:}
+\end{itemize}
+\[
+(k-1-x)(k+1-x) - 2x = (k-x)^2 - 1 - 2x = x^2 - 2(k+1)x + (k^2 - 1)
+\]
+\begin{itemize}
+\item \textbf{Términos con $\dot{L}$:}
+\end{itemize}
+\[
+2x(k-1-x) + 2x(k+3-x) = 2kx - 2x - 2x^2 + 2kx + 6x - 2x^2 = 4x(k+1-x)
+\]
+\begin{itemize}
+\item \textbf{Términos con $\ddot{L}$:}
+\end{itemize}
+\[
+2x(2x\ddot{L}) = 4x^2\ddot{L}
+\]
+
+Sustituyendo esto de nuevo en la expresión de $\ddot{\psi}$:
+
+\[
+\ddot{\psi} = \frac{1}{4} x^{(k-3)/2} e^{-x/2} \Big\{ 4x^2\ddot{L} + 4x(k+1-x)\dot{L} + \big[ x^2 - 2(k+1)x + (k^2 - 1) \big] L \Big\}
+\]
+
+\subsubsection{Sustitución de la ecuación de Laguerre}
+
+Observamos que los dos primeros términos dentro de las llaves son exactamente $4x$ veces la \textbf{Ec. 1}. 
+Si multiplicamos la \textbf{Ec. 1} por $4x$, obtenemos:
+\[
+4x^2\ddot{L} + 4x(k+1-x)\dot{L} = -4pxL
+\]
+
+Sustituimos esta identidad en nuestra expresión para $\ddot{\psi}$:
+
+\[
+\ddot{\psi} = \frac{1}{4} x^{(k-3)/2} e^{-x/2} \Big\{ -4pxL + \big[ x^2 - 2(k+1)x + (k^2 - 1) \big] L \Big\}
+\]
+
+Factorizamos $L$:
+
+\[
+\ddot{\psi} = \frac{1}{4} x^{(k-3)/2} e^{-x/2} L \Big\{ x^2 - (2k + 2 + 4p)x + (k^2 - 1) \Big\}
+\]
+
+\subsubsection[Expresión final en términos de psi]{Expresión final en términos de $\psi$}
+
+Recordemos que la función original es $\psi = x^{(k+1)/2} e^{-x/2} L$. 
+Podemos reescribir el prefactor de nuestra ecuación como:
+\[
+\frac{1}{4} x^{(k-3)/2} e^{-x/2} L = \frac{1}{4x^2} \left( x^{(k+1)/2} e^{-x/2} L \right) = \frac{\psi}{4x^2}
+\]
+
+Sustituyendo esto:
+
+\[
+\ddot{\psi} = \frac{\psi}{4x^2} \Big[ x^2 - (2p + k + 1)2x + (k^2 - 1) \Big]
+\]
+
+Distribuimos el $\frac{1}{4x^2}$ en cada término del corchete:
+
+\[
+\ddot{\psi} = \psi \left[ \frac{x^2}{4x^2} - \frac{2(2p + k + 1)x}{4x^2} + \frac{k^2 - 1}{4x^2} \right]
+\]
+
+\[
+\ddot{\psi} = \psi \left[ \frac{1}{4} - \frac{2p + k + 1}{2x} + \frac{k^2 - 1}{4x^2} \right]
+\]
+
+Finalmente, pasamos todos los términos al lado izquierdo de la ecuación y factorizamos un signo negativo dentro del corchete para llegar a la forma solicitada:
+
+\[
+\ddot{\psi} + \psi \left[ -\frac{k^2-1}{4x^2} + \frac{2p+k+1}{2x} - \frac{1}{4} \right] = 0
+\]
+
+\subsubsection{El Átomo de Hidrógeno: Del Núcleo a la Nube Cuántica}
+
+\textbf{El experimento de Rutherford y el nacimiento del núcleo}
+A principios del siglo XX, el modelo atómico aceptado era el de Thomson, conocido como el "pudin de pasas": se creía que el átomo era una esfera difusa de carga positiva con los electrones incrustados en ella, como pasas en un pastel. En 1911, Ernest Rutherford decidió poner a prueba este modelo utilizando un haz de partículas alfa (que son pesadas, rápidas y tienen carga positiva) disparadas contra una lámina de oro extremadamente delgada. 
+
+La gran mayoría de las partículas atravesaban la lámina sin desviarse, lo que demostraba que el átomo es casi todo espacio vacío. Sin embargo, el hallazgo revolucionario fue que \textbf{una pequeñísima fracción de las partículas alfa rebotaba violentamente hacia atrás}. Rutherford famosamente comparó esto con disparar un obús de quince pulgadas a un trozo de papel higiénico y que el obús rebotara hacia ti. Clásicamente, esto no tenía ningún sentido bajo el modelo de Thomson; una carga difusa no podría ejercer la fuerza repulsiva suficiente para frenar y devolver una partícula alfa pesada y veloz. La única explicación lógica era que casi toda la masa del átomo y toda su carga positiva estaban concentradas en un volumen infinitesimal y ultra-denso en el centro: \textbf{había nacido el núcleo atómico}.
+
+\textbf{Niveles de energía y la emisión de luz}
+Aunque el modelo de Rutherford explicaba la estructura básica, la física clásica predecía que un electrón orbitando el núcleo debería irradiar energía continuamente en forma de ondas electromagnéticas, perdiendo velocidad y espiralando hasta colapsar contra el núcleo en una fracción de segundo. Los átomos, por tanto, no deberían ser estables. 
+
+Para resolver esto, Niels Bohr propuso que los electrones no podían orbitar a cualquier distancia, sino que estaban restringidos a \textbf{niveles de energía específicos y cuantizados} (los famosos $n=1, 2, 3...$). Mientras el electrón se mantuviera en uno de estos niveles, no emitía energía. 
+
+Sin embargo, cuando un electrón absorbía energía (por ejemplo, por calor o electricidad), saltaba a un nivel superior ($n$), entrando en un estado "excitado". Como este estado es inestable, el electrón tiende a caer de regreso a un nivel inferior ($n'$). Aquí entra la conservación de la energía: el electrón no puede simplemente "perder" la diferencia de energía entre el nivel alto y el bajo. En su lugar, \textbf{emite esa energía exacta al espacio en forma de un paquete discreto de luz llamado fotón}. El color (la frecuencia) de esa luz depende exactamente de la "distancia" energética entre ambos niveles. Esto explicaba por qué el gas de hidrógeno, al ser excitado, no brilla con un arcoíris continuo, sino que emite líneas de colores muy específicos y puros.
+
+\textbf{La revolución de la Mecánica Cuántica (circa 1923)}
+Aunque el modelo de Bohr funcionaba matemáticamente para el hidrógeno, era un "parche" clásico: seguía tratando al electrón como una bolita con una órbita definida. 
+
+Alrededor de 1923-1924, la física experimentó un quiebre conceptual total. Físicos como Louis de Broglie propusieron que si la luz (una onda) podía comportarse como partícula, entonces la materia (como el electrón) también debía comportarse como una \textbf{onda}. 
+
+Esta idea detonó el nacimiento de la \textbf{Mecánica Cuántica} moderna, desarrollada a mediados de los años 20 por Schrödinger, Heisenberg y Dirac. En este nuevo marco, la idea de "órbitas" circulares fue destruida. El electrón dejó de ser una partícula puntual girando alrededor del núcleo para convertirse en una \textbf{nube de probabilidad} (un orbital). Los números $n$ dejaron de ser distancias físicas y se convirtieron en "números cuánticos" que definían la energía, la forma y el tamaño de estas complejas nubes tridimensionales donde es \textit{probable} encontrar al electrón. El átomo de hidrógeno pasó de ser un sistema solar en miniatura a ser el primer y más puro laboratorio de la extraña y probabilista naturaleza cuántica del universo.
+
+
+\section{Mecánica clásica del electrón}
+
+\textbf{Momento lineal:}
+\[
+\vec{p} = m\vec{v}
+\]
+
+\textbf{Energía total (clásica):}
+\[
+E = K + V = \frac{1}{2}mv^2 + V(\vec{r})
+\]
+
+Para el átomo de hidrógeno, el potencial es coulombiano (atractivo):
+\[
+V(r) = -\frac{ke^2}{r} = -\frac{e^2}{4\pi\varepsilon_0 r}
+\]
+
+Reescribiendo la energía en términos del momento $p = mv$:
+\[
+E = \frac{p^2}{2m} - \frac{ke^2}{r}
+\]
+
+\bigskip\hrule\bigskip
+
+\subsection{Transición a Mecánica Cuántica (Postulados)}
+
+En mecánica cuántica, las observables físicas se reemplazan por \textbf{operadores}:
+
+\[
+\vec{p} \longrightarrow \hat{p} = -i\hbar\vec{\nabla}
+\]
+
+\[
+E \longrightarrow \hat{E} = i\hbar\frac{\partial}{\partial t}
+\]
+
+\bigskip\hrule\bigskip
+
+\subsection{Ecuación de Schrödinger}
+
+Sustituyendo los operadores en la expresión clásica de la energía:
+
+\[
+\left[\frac{(-i\hbar\vec{\nabla})^2}{2m} - \frac{ke^2}{r}\right]\psi = E\psi
+\]
+
+\[
+\left[-\frac{\hbar^2\nabla^2}{2m} - \frac{ke^2}{r}\right]\psi = E\psi
+\]
+
+Reorganizando:
+
+\[
+-\frac{\hbar^2}{2m}\nabla^2\psi - \frac{ke^2}{r}\psi = E\psi
+\]
+
+Definiendo el \textbf{operador Hamiltoniano} $\hat{H}$:
+
+\[
+\hat{H}\psi = E\psi
+\]
+
+donde:
+\[
+\hat{H} = -\frac{\hbar^2}{2m}\nabla^2 - \frac{ke^2}{r} = -\frac{\hbar^2}{2m}\nabla^2 + V(r)
+\]
+
+Esta es la \textbf{ecuación de Schrödinger independiente del tiempo} para el átomo de hidrógeno.
+
+\bigskip\hrule\bigskip
+
+\subsection{Solución en Coordenadas Esféricas}
+
+Dado que el potencial $V(r)$ tiene simetría esférica (solo depende de $r$), es natural usar coordenadas esféricas $(r, \theta, \varphi)$.
+
+\textbf{Separación de variables:}
+
+Proponemos una solución de la forma:
+\[
+\psi(r, \theta, \varphi) = R(r)Y(\theta, \varphi)
+\]
+
+Para simplificar la ecuación radial, se hace el cambio:
+\[
+R(r) = \frac{u(r)}{r}
+\]
+
+Por lo tanto:
+\[
+\psi(r, \theta, \varphi) = \frac{u(r)}{r}Y(\theta, \varphi)
+\]
+
+\textbf{¿Por qué este cambio?} Al sustituir $R(r) = u(r)/r$ en el laplaciano esférico, la ecuación radial se simplifica a una forma similar a la ecuación de Schrödinger unidimensional:
+
+\[
+-\frac{\hbar^2}{2m}\frac{d^2u}{dr^2} + \left[V(r) + \frac{\hbar^2\ell(\ell+1)}{2mr^2}\right]u = Eu
+\]
+
+donde el término $\frac{\hbar^2\ell(\ell+1)}{2mr^2}$ es el \textbf{potencial centrífugo} que aparece al separar la parte angular.
+
+\bigskip\hrule\bigskip
+
+La solución completa lleva a los niveles de energía cuantizados del átomo de hidrógeno:
+\[
+E_n = -\frac{me^4}{2\hbar^2 n^2} = -\frac{13.6 \text{ eV}}{n^2}
+\]
+
+Para volver de la variable radial $u(r)$ a la función de onda completa $\psi(r, \theta, \varphi)$ y simplificar, recordemos la relación entre ambas. En la separación de variables de la ecuación de Schrödinger en coordenadas esféricas, definimos:
+
+\[
+ \psi(r, \theta, \varphi) = R(r) Y_\ell^m(\theta, \varphi) 
+\]
+
+Y para simplificar la ecuación radial, se hace el cambio $u(r) = r R(r)$, de modo que:
+
+\[
+ \psi(r, \theta, \varphi) = \frac{u(r)}{r} Y_\ell^m(\theta, \varphi) 
+\]
+
+\subsection[1. Volviendo a psi y simplificando]{1. Volviendo a $\psi$ y simplificando}
+
+Partimos de tu ecuación radial:
+
+\[
+ -\frac{\hbar^2}{2m}\frac{d^2u}{dr^2} + \left[V(r) + \frac{\hbar^2\ell(\ell+1)}{2mr^2}\right]u = Eu 
+\]
+
+Multiplicamos toda la ecuación por $\frac{Y_\ell^m(\theta, \varphi)}{r}$:
+
+\[
+ -\frac{\hbar^2}{2m} \frac{d^2u}{dr^2} \frac{Y_\ell^m}{r} + V(r) \frac{u}{r} Y_\ell^m + \frac{\hbar^2\ell(\ell+1)}{2mr^2} \frac{u}{r} Y_\ell^m = E \frac{u}{r} Y_\ell^m 
+\]
+
+Reconocemos que $\frac{u}{r} Y_\ell^m = \psi$. Ahora analizamos los otros términos:
+
+\textbf{Primer término (derivada radial):}
+Como $u = r \frac{\psi}{Y_\ell^m}$, la derivada segunda respecto a $r$ es $\frac{d^2u}{dr^2} = \frac{1}{Y_\ell^m} \frac{\partial^2}{\partial r^2}(r\psi)$. Por lo tanto:
+\[
+ \frac{d^2u}{dr^2} \frac{Y_\ell^m}{r} = \frac{1}{r} \frac{\partial^2}{\partial r^2}(r\psi) 
+\]
+
+\textbf{Tercer término (término centrífugo):}
+Aquí es donde usamos la propiedad de los armónicos esféricos. Sabemos que $\ell(\ell+1) Y_\ell^m = \hat{L}^2 Y_\ell^m$ (donde $\hat{L}^2$ es el operador de momento angular adimensional). Entonces:
+\[
+ \frac{\ell(\ell+1)}{r^2} \frac{u}{r} Y_\ell^m = \frac{1}{r^2} \hat{L}^2 \left( \frac{u}{r} Y_\ell^m \right) = \frac{1}{r^2} \hat{L}^2 \psi 
+\]
+
+Sustituyendo esto en la ecuación multiplicada:
+
+\[
+ -\frac{\hbar^2}{2m} \left[ \frac{1}{r} \frac{\partial^2}{\partial r^2}(r\psi) - \frac{\hat{L}^2 \psi}{r^2} \right] + V(r)\psi = E\psi 
+\]
+
+El término entre corchetes es exactamente la definición del \textbf{Laplaciano en coordenadas esféricas} ($\nabla^2 \psi$). Por lo tanto, la ecuación se simplifica a la \textbf{Ecuación de Schrödinger independiente del tiempo en 3D}:
+
+\[
+ -\frac{\hbar^2}{2m} \nabla^2 \psi + V(r)\psi = E\psi 
+\]
+
+
+\section{Desarrollo completo: De Schrödinger a la ecuación radial de Coulomb}
+
+A continuación presentamos el desarrollo sistemático que conecta la ecuación de Schrödinger con potencial coulombiano hasta la ecuación radial en la forma que permite compararla con la familia de Laguerre.
+
+\subsection{1. Punto de partida: Ecuación de Schrödinger estacionaria}
+
+La ecuación de Schrödinger independiente del tiempo para una partícula de masa $m$ en un potencial $V(\vec{r})$ es:
+
+\[
+-\frac{\hbar^2}{2m}\nabla^2\psi(\vec{r}) + V(\vec{r})\psi(\vec{r}) = E\psi(\vec{r})
+\]
+
+Para el átomo de hidrógeno, el potencial es coulombiano (atractivo):
+
+\[
+V(r) = -\frac{K}{r}, \quad \text{donde } K = \frac{q^2}{4\pi\varepsilon_0}
+\]
+
+Reescribiendo la ecuación:
+
+\[
+\nabla^2\psi + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right)\psi = 0
+\]
+
+\subsection{2. Separación de variables en coordenadas esféricas}
+
+Dado que el potencial $V(r)$ depende únicamente de la coordenada radial, el sistema posee simetría esférica. Es natural utilizar coordenadas esféricas $(r, \theta, \varphi)$. El laplaciano en estas coordenadas es:
+
+\[
+\nabla^2 = \frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial}{\partial r}\right) + \frac{1}{r^2\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right) + \frac{1}{r^2\sin^2\theta}\frac{\partial^2}{\partial\varphi^2}
+\]
+
+Es conveniente reescribir el término radial usando la identidad:
+
+\[
+\frac{1}{r^2}\frac{\partial}{\partial r}\left(r^2\frac{\partial\psi}{\partial r}\right) = \frac{1}{r}\frac{\partial^2}{\partial r^2}(r\psi)
+\]
+
+Proponemos una solución separable de la forma:
+
+\[
+\psi(r, \theta, \varphi) = \frac{u(r)}{r} Y(\theta, \varphi)
+\]
+
+El factor $1/r$ se introduce para simplificar la ecuación radial. Sustituyendo en la ecuación de Schrödinger y dividiendo por $\psi = uY/r$:
+
+\[
+\frac{1}{u}\frac{d^2u}{dr^2} + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) = -\frac{1}{Y}\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial Y}{\partial\theta}\right) + \frac{1}{\sin^2\theta}\frac{\partial^2 Y}{\partial\varphi^2}\right]
+\]
+
+\subsection[3. El operador de momento angular L2]{3. El operador de momento angular $\hat{L}^2$}
+
+El lado derecho de la ecuación anterior es precisamente el operador de momento angular adimensional al cuadrado, $\hat{L}^2$, actuando sobre $Y(\theta, \varphi)$.
+
+\[
+\hat{L}^2 = -\left[\frac{1}{\sin\theta}\frac{\partial}{\partial\theta}\left(\sin\theta\frac{\partial}{\partial\theta}\right) + \frac{1}{\sin^2\theta}\frac{\partial^2}{\partial\varphi^2}\right]
+\]
+
+Por lo tanto, la ecuación se escribe:
+
+\[
+\frac{1}{u}\frac{d^2u}{dr^2} + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) = \frac{\hat{L}^2 Y}{Y}
+\]
+
+\subsection{4. Separación de la parte angular}
+
+Dado que el lado izquierdo depende solo de $r$ y el derecho solo de $\theta, \varphi$, ambos deben ser iguales a una constante. Escribimos esta constante como $\ell(\ell+1)$:
+
+\[
+\hat{L}^2 Y(\theta, \varphi) = \ell(\ell+1) Y(\theta, \varphi)
+\]
+
+Esta es la ecuación de autovalores para los armónicos esféricos. Las soluciones son los armónicos esféricos $Y_\ell^m(\theta, \varphi)$ con $\ell = 0, 1, 2, \ldots$ y $m = -\ell, \ldots, \ell$.
+
+\subsection{5. Ecuación radial}
+
+La parte radial queda entonces:
+
+\[
+\frac{d^2u}{dr^2} + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right)u = \ell(\ell+1)\frac{u}{r^2}
+\]
+
+Reorganizando:
+
+\[
+\frac{d^2u}{dr^2} + \left[-\frac{\ell(\ell+1)}{r^2} + \frac{2mK}{\hbar^2 r} + \frac{2mE}{\hbar^2}\right]u = 0
+\]
+
+\subsection[6. Cambio a la función R de r]{6. Cambio a la función $R(r)$}
+
+Recordemos que definimos $\psi = u(r)Y(\theta, \varphi)/r$, por lo que la parte radial de la función de onda es $R(r) = u(r)/r$. Sin embargo, la ecuación anterior ya está en términos de $u(r)$. Si queremos expresarla en términos de $R(r)$, notamos que:
+
+\[
+u(r) = rR(r)
+\]
+
+\[
+\frac{d^2u}{dr^2} = \frac{d^2}{dr^2}[rR(r)] = r\frac{d^2R}{dr^2} + 2\frac{dR}{dr}
+\]
+
+Sustituyendo en la ecuación radial:
+
+\[
+r\frac{d^2R}{dr^2} + 2\frac{dR}{dr} + \left[-\frac{\ell(\ell+1)}{r^2} + \frac{2mK}{\hbar^2 r} + \frac{2mE}{\hbar^2}\right]rR = 0
+\]
+
+Dividiendo por $r$:
+
+\[
+\frac{d^2R}{dr^2} + \frac{2}{r}\frac{dR}{dr} + \left[-\frac{\ell(\ell+1)}{r^2} + \frac{2mK}{\hbar^2 r} + \frac{2mE}{\hbar^2}\right]R = 0
+\]
+
+Esta es la ecuación radial en términos de $R(r)$.
+
+\subsection[7. Forma final de la ecuación radial para u]{7. Forma final de la ecuación radial (para $u(r)$)}
+
+La ecuación para $u(r) = rR(r)$ es:
+
+\[
+\frac{d^2u}{dr^2} + \left[-\frac{\ell(\ell+1)}{r^2} + \frac{2mK}{\hbar^2 r} + \frac{2mE}{\hbar^2}\right]u = 0
+\]
+
+Definiendo las constantes:
+
+\[
+\lambda \equiv \frac{2mK}{\hbar^2}, \quad b \equiv \frac{2mE}{\hbar^2}
+\]
+
+Obtenemos
+
+\[
+\boxed{\ddot{u}(r) + \left[-\frac{\ell(\ell+1)}{r^2} + \frac{\lambda}{r} + b\right]u(r) = 0}
+\]
+
+donde $\ddot{u} = d^2u/dr^2$.
+
+\subsection{8. Adimensionalización y conexión con Laguerre}
+
+Para comparar esta ecuación con la familia de Laguerre, necesitamos una variable adimensional. Introducimos el cambio $r = \alpha x$, donde $\alpha$ tiene dimensiones de longitud y $x$ es adimensional.
+
+Las derivadas se transforman como:
+
+\[
+\frac{du}{dr} = \frac{1}{\alpha}\frac{du}{dx}, \quad \frac{d^2u}{dr^2} = \frac{1}{\alpha^2}\frac{d^2u}{dx^2}
+\]
+
+Sustituyendo en la ecuación radial:
+
+\[
+\frac{1}{\alpha^2}\frac{d^2u}{dx^2} + \left[-\frac{\ell(\ell+1)}{\alpha^2 x^2} + \frac{\lambda}{\alpha x} + b\right]u = 0
+\]
+
+Multiplicando por $\alpha^2$:
+
+\[
+\frac{d^2u}{dx^2} + \left[-\frac{\ell(\ell+1)}{x^2} + \frac{\alpha\lambda}{x} + b\alpha^2\right]u = 0
+\]
+
+\subsection{9. Comparación con la familia de Laguerre}
+
+La transformación $\psi_p^k(x) = x^{(k+1)/2}e^{-x/2}L_p^k(x)$ aplicada a la ecuación de Laguerre asociada conduce a la familia:
+
+\[
+\ddot{\psi}_p^k(x) + \psi_p^k(x)\left[-\frac{k^2-1}{4x^2} + \frac{2p+k+1}{2x} - \frac{1}{4}\right] = 0
+\]
+
+Comparando término a término con nuestra ecuación radial:
+
+\begin{enumerate}
+\item \textbf{Término en $1/x^2$:} $\ell(\ell+1) = \frac{k^2-1}{4} \implies k = 2\ell+1$
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Término constante:} $b\alpha^2 = -\frac{1}{4} \implies \alpha^2 = -\frac{1}{4b} = -\frac{\hbar^2}{8mE}$
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Término en $1/x$:} $\alpha\lambda = \frac{2p+k+1}{2} = p + \ell + 1$
+\end{enumerate}
+
+De la tercera condición, sustituyendo $\lambda$ y $\alpha$:
+
+\[
+\sqrt{-\frac{\hbar^2}{8mE}}\cdot\frac{2mK}{\hbar^2} = p + \ell + 1
+\]
+
+\[
+\sqrt{-\frac{mK^2}{2\hbar^2 E}} = p + \ell + 1 \equiv n
+\]
+
+donde $n$ es un entero positivo (número cuántico principal). Despejando $E$:
+
+\[
+E_n = -\frac{mK^2}{2\hbar^2 n^2} = -\frac{13.6 \text{ eV}}{n^2}
+\]
+
+¡La cuantización de la energía emerge naturalmente de la exigencia de que la solución sea convergente!
+
+\[
+\boxed{\text{Continuará...}}
+\]
+
+\end{document}
