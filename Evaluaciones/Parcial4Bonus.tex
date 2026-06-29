@@ -1,0 +1,354 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage[spanish,es-noquoting]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,patterns}
+\usepackage[margin=2cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{parskip}
+
+\newcommand{\dd}{\,\mathrm{d}}
+
+\begin{document}
+
+\begin{center}
+    \Large\textbf{Problema parcial 4}\\
+    \normalsize Física Matemática I
+\end{center}
+
+\tableofcontents
+
+\section{Enunciado}
+
+Considere una esfera de radio $R$ con densidad
+\[
+\rho(r,\theta,\varphi)=
+\begin{cases}
+\rho_0\left(\dfrac{r}{R}\right)e^{\alpha r/R}\sin^2\theta\cos(2\varphi), & 0\le r\le R,\\
+0, & r>R,
+\end{cases}
+\]
+donde $\alpha$ y $\rho_0$ son constantes. El potencial satisface la ecuación de Poisson
+$\nabla^2\phi(\vec r)=-\rho(\vec r)/\epsilon_0$, cuya solución mediante la función de Green es
+\begin{equation}
+\label{eq:green-potential}
+\phi(\vec r)=\frac{1}{4\pi\epsilon_0}\int \frac{\rho(\vec r\,')}{\lVert \vec r-\vec r\,'\rVert}\dd^3r'.
+\end{equation}
+
+Para la función de Green se usa la expansión
+\[
+\frac{1}{\lVert \vec r-\vec r\,'\rVert}
+=\begin{cases}
+\displaystyle \sum_{\ell=0}^{\infty}\frac{r^\ell}{r'^{\ell+1}}P_\ell(\cos\gamma), & r<r',\\[0.5em]
+\displaystyle \sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma), & r>r',
+\end{cases}
+\]
+donde $\gamma$ es el ángulo entre $\vec r$ y $\vec r\,'$. Además, por el teorema de adición,
+\begin{equation}
+\label{eq:addition-theorem}
+P_\ell(\cos\gamma)=\frac{4\pi}{2\ell+1}\sum_{m=-\ell}^{\ell}
+Y_{\ell m}^*(\theta,\varphi)Y_{\ell m}(\theta',\varphi').
+\end{equation}
+
+Se pide:
+\begin{enumerate}[label=\alph*)]
+    \item Encontrar el potencial eléctrico en el interior de la esfera, $0\le r\le R$.
+    \item Determinar el campo eléctrico para $0\le r\le R$.
+    \item Encontrar el campo eléctrico en el exterior, $r>R$.
+    \item Dibujar la magnitud del campo eléctrico y del potencial.
+\end{enumerate}
+
+\section{Potencial eléctrico en el interior}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[inner color=orange!18, outer color=orange!4, draw=none] (0,0) circle (0.88);
+    \shade[inner color=blue!4, outer color=blue!13, draw=none, even odd rule]
+        (0,0) circle (1.62) (0,0) circle (0.88);
+    \draw[blue!65!black, very thick] (0,0) circle (1.62);
+    \draw[orange!85!black, very thick, dashed] (0,0) circle (0.88);
+    \draw[gray!40, dashed] (-1.62,0) -- (1.62,0);
+    \draw[gray!40, dashed] (0,-1.62) -- (0,1.62);
+    \draw[->, orange!85!black, very thick] (0,0) -- (0.88,0)
+        node[midway, above] {$r$};
+    \draw[->, blue!65!black, very thick] (0,0) -- ({1.62*cos(38)},{1.62*sin(38)})
+        node[midway, above left] {$R$};
+    \draw[orange!85!black, thick] (0.55,-0.55) -- (2.05,-1.05);
+    \draw[blue!65!black, thick] (-1.18,-0.95) -- (-2.3,-1.28);
+    \fill (0,0) circle (1.1pt) node[below left] {$O$};
+    \node[font=\bfseries] at (0,1.95) {Separación radial de la integral};
+    \node[orange!85!black, align=center, fill=white, rounded corners=2pt, inner sep=3pt]
+        at (2.75,-1.12) {Región I\\$0\le r'\le r$};
+    \node[blue!65!black, align=center, fill=white, rounded corners=2pt, inner sep=3pt]
+        at (-3.0,-1.35) {Región II\\$r\le r'\le R$};
+\end{tikzpicture}
+\end{center}
+
+La dependencia angular de la densidad es proporcional a
+$\sin^2\theta\cos(2\varphi)$. Como
+\[
+Y_{\ell m}(\theta,\varphi)=\sqrt{\frac{2\ell+1}{4\pi}\frac{(\ell-m)!}{(\ell+m)!}}
+P_\ell^m(\cos\theta)e^{im\varphi},
+\]
+los términos relevantes son $\ell=2$ y $m=\pm2$. En la expansión multipolar, el índice $\ell$ clasifica el tipo de simetría angular: $\ell=0$ corresponde al término monopolar, $\ell=1$ al dipolar, $\ell=2$ al cuadrupolar, $\ell=3$ al octupolar, y así sucesivamente. En este caso, $\ell=2$ significa que la distribución tiene carácter cuadrupolar: presenta cuatro lóbulos angulares alternados, con regiones de signo opuesto, en lugar de una simetría puramente radial o dipolar. El índice $m=\pm2$ fija la variación azimutal proporcional a $\cos(2\varphi)$.
+
+En particular,
+\[
+Y_{2,2}(\theta,\varphi)=\sqrt{\frac{5}{96\pi}}\,3\sin^2\theta\,e^{2i\varphi},
+\qquad
+Y_{2,-2}(\theta,\varphi)=\sqrt{\frac{5}{96\pi}}\,3\sin^2\theta\,e^{-2i\varphi}.
+\]
+Por tanto,
+\[
+\sin^2\theta\cos(2\varphi)
+=\sqrt{\frac{8\pi}{15}}\left[Y_{2,2}(\theta,\varphi)+Y_{2,-2}(\theta,\varphi)\right].
+\]
+Así, la densidad queda escrita como
+\begin{equation}
+\label{eq:density-harmonics}
+\rho(r',\theta',\varphi')=\rho_0\left(\frac{r'}{R}\right)e^{\alpha r'/R}
+\sqrt{\frac{8\pi}{15}}\left[Y_{2,2}(\theta',\varphi')+Y_{2,-2}(\theta',\varphi')\right].
+\end{equation}
+
+Para un punto interior, $0\le r\le R$, la integral radial debe separarse en dos regiones:
+$0\le r'\le r$, donde $r>r'$, y $r\le r'\le R$, donde $r<r'$. Usando \eqref{eq:green-potential},
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+=\frac{1}{4\pi\epsilon_0}\int_0^R\int_{\Omega'}
+\frac{\rho(r',\theta',\varphi')}{\lVert\vec r-\vec r\,'\rVert}r'^2\dd r'\dd\Omega'.
+\]
+El elemento de volumen en coordenadas esféricas es
+\[
+\dd^3r'=r'^2\dd r'\dd\Omega',
+\qquad
+\int_{\Omega'}\dd\Omega'=\int_0^\pi\int_0^{2\pi}\sin\theta'\dd\varphi'\dd\theta'.
+\]
+
+En la Región I se reemplaza
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma),
+\]
+y en la Región II,
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r^\ell}{r'^{\ell+1}}P_\ell(\cos\gamma).
+\]
+Al sustituir \eqref{eq:density-harmonics} y \eqref{eq:addition-theorem}, resulta
+\begin{align*}
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+&=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}
+\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\frac{4\pi}{2\ell+1}Y_{\ell m}^*(\theta,\varphi) \\
+&\quad \times \left[
+\int_0^r\frac{r'^\ell}{r^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'
+\right.\\
+&\quad\left.+
+\int_r^R\frac{r^\ell}{r'^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'
+\right].
+\end{align*}
+
+Por ortogonalidad angular solo sobreviven $\ell=2$ y $m=\pm2$. Entonces
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}\frac{4\pi}{5}
+\left[\frac{1}{Rr^3}\int_0^r r'^5e^{\alpha r'/R}\dd r'
++\frac{r^2}{R}\int_r^R e^{\alpha r'/R}\dd r'\right]
+\left(Y_{2,2}^*+Y_{2,-2}^*\right).
+\]
+Definimos
+\[
+I_1(r)=\int_0^r r'^5e^{\alpha r'/R}\dd r',
+\qquad
+I_2(r)=\int_r^R e^{\alpha r'/R}\dd r'.
+\]
+Estas integrales son
+\begin{align*}
+I_1(r)
+&=e^{\alpha r/R}\left[\frac{Rr^5}{\alpha}-\frac{5R^2r^4}{\alpha^2}
++\frac{20R^3r^3}{\alpha^3}-\frac{60R^4r^2}{\alpha^4}
++\frac{120R^5r}{\alpha^5}-\frac{720R^6}{\alpha^6}\right]
++\frac{720R^6}{\alpha^6},\\
+I_2(r)&=\frac{R}{\alpha}\left[e^\alpha-e^{\alpha r/R}\right].
+\end{align*}
+
+Usando de nuevo $Y_{2,2}^*+Y_{2,-2}^*=\sqrt{15/(8\pi)}\sin^2\theta\cos(2\varphi)$, se obtiene
+\begin{equation}
+\label{eq:phi-int}
+\boxed{
+\begin{aligned}
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+&=\frac{\rho_0}{5\epsilon_0R}\sin^2\theta\cos(2\varphi)
+\left[\frac{I_1(r)}{r^3}+r^2I_2(r)\right].
+\end{aligned}}
+\end{equation}
+
+\section{Campo eléctrico en el interior}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[ball color=blue!8, opacity=0.55] (0,0) circle (1.55);
+    \draw[blue!60!black, very thick] (0,0) circle (1.55);
+    \draw[->, gray!70] (-1.95,0) -- (2.05,0) node[right] {$x$};
+    \draw[->, gray!70] (0,-1.95) -- (0,2.05) node[above] {$y$};
+    \foreach \x/\y/\u/\v in {-1.05/0.95/-0.52/-0.16, 1.05/0.95/0.52/-0.16,
+        -1.05/-0.95/-0.45/0.22, 1.05/-0.95/0.45/0.22,
+        -0.42/0.58/-0.34/-0.30, 0.42/0.58/0.34/-0.30,
+        -0.42/-0.58/-0.30/0.34, 0.42/-0.58/0.30/0.34,
+        0/1.28/0/-0.48, 0/-1.28/0/0.48}{
+        \draw[->, red!70!black, very thick] (\x,\y) -- ++(\u,\v);
+    }
+    \node[blue!60!black] at (1.78,0.25) {$r=R$};
+    \node[font=\bfseries, align=center] at (0,-2.35) {Campo interior\\$\vec E_{\mathrm{int}}=-\nabla\phi_{\mathrm{int}}$};
+\end{tikzpicture}
+\end{center}
+
+El campo eléctrico se obtiene a partir de
+\[
+\vec E=-\vec\nabla\phi
+=-\left(\frac{\partial\phi}{\partial r}\hat r
++\frac{1}{r}\frac{\partial\phi}{\partial\theta}\hat\theta
++\frac{1}{r\sin\theta}\frac{\partial\phi}{\partial\varphi}\hat\varphi\right).
+\]
+De \eqref{eq:phi-int}, escribimos
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)=f(r)\sin^2\theta\cos(2\varphi),
+\qquad
+f(r)=\frac{\rho_0}{5\epsilon_0R}\left[\frac{I_1(r)}{r^3}+r^2I_2(r)\right].
+\]
+Al derivar,
+\[
+f'(r)=\frac{\rho_0}{5\epsilon_0R}\left[-\frac{3I_1(r)}{r^4}+2rI_2(r)\right],
+\]
+porque los términos $r^2e^{\alpha r/R}$ que provienen de $I_1'(r)$ y de $I_2'(r)$ se cancelan.
+
+Las componentes interiores son
+\begin{align*}
+E_r^{\mathrm{int}}&=-f'(r)\sin^2\theta\cos(2\varphi),\\
+E_\theta^{\mathrm{int}}&=-\frac{f(r)}{r}\sin(2\theta)\cos(2\varphi),\\
+E_\varphi^{\mathrm{int}}&=\frac{2f(r)}{r}\sin\theta\sin(2\varphi).
+\end{align*}
+Por tanto,
+\begin{equation}
+\label{eq:e-int}
+\boxed{
+\vec E_{\mathrm{int}}
+=-f'(r)\sin^2\theta\cos(2\varphi)\hat r
+-\frac{f(r)}{r}\sin(2\theta)\cos(2\varphi)\hat\theta
++\frac{2f(r)}{r}\sin\theta\sin(2\varphi)\hat\varphi.}
+\end{equation}
+
+\section{Campo eléctrico en el exterior}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[ball color=blue!10, opacity=0.6] (0,0) circle (0.95);
+    \draw[blue!60!black, very thick] (0,0) circle (0.95);
+    \draw[gray!45, dashed, thick] (0,0) circle (1.65);
+    \draw[gray!30, dashed] (0,0) circle (2.2);
+    \foreach \ang/\len in {20/0.62,55/0.45,100/0.58,145/0.45,200/0.62,235/0.45,280/0.58,325/0.45}{
+        \draw[->, red!70!black, very thick]
+            ({1.30*cos(\ang)},{1.30*sin(\ang)}) --
+            ({(1.30+\len)*cos(\ang)},{(1.30+\len)*sin(\ang)});
+    }
+    \draw[->, blue!60!black, very thick] (0,0) -- (0.95,0) node[midway, above] {$R$};
+    \node[gray!70!black] at (1.88,0.27) {$r>R$};
+    \node[font=\bfseries, align=center] at (0,-2.55) {Campo exterior\\decaimiento cuadrupolar $\propto r^{-4}$};
+\end{tikzpicture}
+\end{center}
+
+Para $r>R$, todo punto de la fuente cumple $r'>0$ y $r>r'$, de modo que
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma).
+\]
+Usando \eqref{eq:density-harmonics} y \eqref{eq:addition-theorem} en \eqref{eq:green-potential},
+\begin{align*}
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+&=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}
+\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\frac{4\pi}{2\ell+1}Y_{\ell m}^*(\theta,\varphi)\\
+&\quad\times \int_0^R\frac{r'^\ell}{r^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'.
+\end{align*}
+Nuevamente, la integral angular selecciona solo $\ell=2$ y $m=\pm2$. Así,
+\[
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}\frac{4\pi}{5}
+\frac{I_1(R)}{Rr^3}\sqrt{\frac{15}{8\pi}}\sin^2\theta\cos(2\varphi).
+\]
+Como
+\[
+I_1(R)=e^\alpha R^6\left[\frac{1}{\alpha}-\frac{5}{\alpha^2}+\frac{20}{\alpha^3}
+-\frac{60}{\alpha^4}+\frac{120}{\alpha^5}-\frac{720}{\alpha^6}\right]
++\frac{720R^6}{\alpha^6},
+\]
+el potencial exterior queda
+\begin{equation}
+\label{eq:phi-ext}
+\boxed{
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+=\frac{\rho_0R^5}{5\epsilon_0\alpha^6r^3}
+\left[e^\alpha(\alpha^5-5\alpha^4+20\alpha^3-60\alpha^2+120\alpha-720)+720\right]
+\sin^2\theta\cos(2\varphi).}
+\end{equation}
+
+Para calcular el campo, definimos el factor común
+\begin{equation}
+\label{eq:q-ext}
+Q=\frac{\rho_0R^5}{5\epsilon_0\alpha^6}
+\left[e^\alpha(\alpha^5-5\alpha^4+20\alpha^3-60\alpha^2+120\alpha-720)+720\right].
+\end{equation}
+Entonces \eqref{eq:phi-ext} se escribe como
+\[
+\phi_{\mathrm{ext}}(r,\theta,\varphi)=\frac{Q}{r^3}\sin^2\theta\cos(2\varphi).
+\]
+Derivando en coordenadas esféricas,
+\begin{align*}
+E_r^{\mathrm{ext}}
+&=-\frac{\partial}{\partial r}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=\frac{3Q}{r^4}\sin^2\theta\cos(2\varphi),\\
+E_\theta^{\mathrm{ext}}
+&=-\frac{1}{r}\frac{\partial}{\partial\theta}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=-\frac{Q}{r^4}\sin(2\theta)\cos(2\varphi),\\
+E_\varphi^{\mathrm{ext}}
+&=-\frac{1}{r\sin\theta}\frac{\partial}{\partial\varphi}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=\frac{2Q}{r^4}\sin\theta\sin(2\varphi).
+\end{align*}
+Por tanto,
+\begin{equation}
+\label{eq:e-ext}
+\boxed{
+\vec E_{\mathrm{ext}}
+=\frac{Q}{r^4}\left[3\sin^2\theta\cos(2\varphi)\hat r
+-\sin(2\theta)\cos(2\varphi)\hat\theta
++2\sin\theta\sin(2\varphi)\hat\varphi\right].}
+\end{equation}
+
+\section{Indicaciones para graficar}
+
+Para construir una gráfica representativa en el plano $xy$, conviene fijar valores adimensionales sencillos. Una elección adecuada es
+\[
+R=1,\qquad \alpha=1,\qquad \rho_0=1,\qquad \epsilon_0=1.
+\]
+Estos valores no buscan representar un material específico, sino normalizar el problema para visualizar claramente la estructura angular del potencial y del campo. Con $R=1$, el interior corresponde al disco $x^2+y^2\le1$ y el exterior a $x^2+y^2>1$.
+
+Como el plot será únicamente en el plano $xy$, se debe tomar $z=0$. En coordenadas esféricas esto corresponde a $\theta=\pi/2$, mientras que
+\[
+r=\sqrt{x^2+y^2},\qquad \varphi=\operatorname{atan2}(y,x).
+\]
+En cada punto de una malla rectangular del plano $xy$, se evalúa si $r\le R$ o si $r>R$. Para los puntos interiores se usa \eqref{eq:phi-int} y \eqref{eq:e-int}; para los puntos exteriores se usa \eqref{eq:phi-ext} y \eqref{eq:e-ext}.
+
+Para graficar el potencial se puede representar directamente $\phi(x,y)$. Para graficar la magnitud del campo eléctrico se debe calcular
+\[
+\lVert\vec E\rVert=\sqrt{E_r^2+E_\theta^2+E_\varphi^2},
+\]
+usando las componentes interiores o exteriores según corresponda. Si se desea una visualización suave cerca del origen, se recomienda evitar evaluar exactamente en $r=0$ o reemplazar ese punto por un valor límite/nulo apropiado para la escala de la gráfica.
+
+Una buena presentación consiste en hacer dos mapas de color en el plano $xy$: uno para $\phi(x,y)$ y otro para $\lVert\vec E(x,y)\rVert$. También es útil marcar la circunferencia $r=R$ para distinguir visualmente la frontera entre interior y exterior.
+
+\end{document}
