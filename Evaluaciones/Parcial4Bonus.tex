@@ -17,7 +17,9 @@
 
 \begin{center}
     \Large\textbf{Problema parcial 4}\\
-    \normalsize Física Matemática I
+    \normalsize Física Matemática I - Felipe Rivera - 2026-1 \\
+    \normalsize Daniel Soto Villada \\
+    \normalsize \today \\
 \end{center}
 
 \tableofcontents
@@ -329,26 +331,7 @@ Por tanto,
 +2\sin\theta\sin(2\varphi)\hat\varphi\right].}
 \end{equation}
 
-\section{Indicaciones para graficar}
+\section{Graficar}
 
-Para construir una gráfica representativa en el plano $xy$, conviene fijar valores adimensionales sencillos. Una elección adecuada es
-\[
-R=1,\qquad \alpha=1,\qquad \rho_0=1,\qquad \epsilon_0=1.
-\]
-Estos valores no buscan representar un material específico, sino normalizar el problema para visualizar claramente la estructura angular del potencial y del campo. Con $R=1$, el interior corresponde al disco $x^2+y^2\le1$ y el exterior a $x^2+y^2>1$.
-
-Como el plot será únicamente en el plano $xy$, se debe tomar $z=0$. En coordenadas esféricas esto corresponde a $\theta=\pi/2$, mientras que
-\[
-r=\sqrt{x^2+y^2},\qquad \varphi=\operatorname{atan2}(y,x).
-\]
-En cada punto de una malla rectangular del plano $xy$, se evalúa si $r\le R$ o si $r>R$. Para los puntos interiores se usa \eqref{eq:phi-int} y \eqref{eq:e-int}; para los puntos exteriores se usa \eqref{eq:phi-ext} y \eqref{eq:e-ext}.
-
-Para graficar el potencial se puede representar directamente $\phi(x,y)$. Para graficar la magnitud del campo eléctrico se debe calcular
-\[
-\lVert\vec E\rVert=\sqrt{E_r^2+E_\theta^2+E_\varphi^2},
-\]
-usando las componentes interiores o exteriores según corresponda. Si se desea una visualización suave cerca del origen, se recomienda evitar evaluar exactamente en $r=0$ o reemplazar ese punto por un valor límite/nulo apropiado para la escala de la gráfica.
-
-Una buena presentación consiste en hacer dos mapas de color en el plano $xy$: uno para $\phi(x,y)$ y otro para $\lVert\vec E(x,y)\rVert$. También es útil marcar la circunferencia $r=R$ para distinguir visualmente la frontera entre interior y exterior.
 
 \end{document}
