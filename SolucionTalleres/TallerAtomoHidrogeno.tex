@@ -59,7 +59,7 @@ donde $K = \frac{e^2}{4\pi\epsilon_0}$
 Usando la separación de variables $\psi(r,\theta,\varphi) = \frac{R(r)}{r}Y(\theta,\varphi)$, muestre que la ecuación diferencial radial está dada por:
 
 $$
-\ddot{R}(\alpha x) + \left[ -\frac{l(l+1)}{x^2} + \frac{\alpha\tilde{k}2m}{x\hbar^2} + \frac{2mE}{\hbar^2} \right] R(\alpha x) = 0 \,, \eqno{(44)}
+\ddot{R}(\alpha x) + \left[ -\frac{l(l+1)}{x^2} + \frac{\alpha K 2m}{x\hbar^2} + \frac{2mE}{\hbar^2} \right] R(\alpha x) = 0 \,, \eqno{(44)}
 $$
 
 donde $r = \alpha x$.
@@ -154,17 +154,184 @@ $$\ddot{R}(\alpha x) + \left[ -\frac{\ell(\ell+1)}{x^2} + \frac{2mK\alpha}{\hbar
 
 
 \subsection{b)}
-Comprando la anterior ec. con la ec.(42), muestre que:
+Comprando la familia de ecuaciones de Laguerre, muestre que:
 
 $$
-E_n = -\frac{m}{2\hbar^2}\frac{\tilde{k}^2}{n^2} \hspace{1.5cm} n = p + l + 1 = \{1, 2, 3, \cdots \} \,. \eqno{(45)}
+E_n = -\frac{m}{2\hbar^2}\frac{\tilde{k}^2}{n^2} \hspace{1.5cm} n = p + l + 1 = \{1, 2, 3, \cdots \}
 $$
 
-La ec.(42) nos ayuda a obtener la solución para la función de onda ( debidamente normalizada).
+La familia de ecuaciones de Laguerre se escriben así:
 
-$$
-\psi_{nlm}(r, \theta, \varphi) = \sqrt{\left(\frac{2}{na_0}\right)^3 \frac{(n-l-1)!}{2n(n+l)!}} e^{-\rho/2} \rho^l L_{n-l-1}^{2l+1}(\rho) Y_{lm}(\theta, \varphi) \,, \eqno{(46)}
-$$
+$$\ddot{\psi}_p^k(x) + \psi_p^k(x) \left[ -\frac{(k^2 - 1)}{4x^2} + \frac{2p + k + 1}{2x} - \frac{1}{4} \right] = 0$$
+
+La familia de ecuaciones de Laguerre nos ayuda a obtener la solución para la función de onda (debidamente normalizada).
+
+Aquí tienes la transcripción aplicando la notación solicitada:
+
+$$\psi_{n\ell m}(r, \theta, \varphi) = \sqrt{ \left( \frac{2}{na_0} \right)^3 \frac{(n-\ell-1)!}{2n(n+\ell)!} } e^{-\rho/2} \rho^\ell L_{n-\ell-1}^{2\ell+1}(\rho) Y_{\ell m}(\theta, \varphi) ,$$
+
+donde $\rho = 2r/na_0$, $a_0 = \frac{4\pi\epsilon_0\hbar^2}{me^2}$ es el radio de Bohr, $n \geq 1$, $0 \leq \ell < n$, $|m| \leq \ell$.
+
+\subsubsection{Solución}
+
+Veamos las ecuaciones que tenemos que igualar:
+
+$$\ddot{R}(\alpha x) + \left[ -\frac{\ell(\ell+1)}{x^2} + \frac{2mK\alpha}{\hbar^2 x} + \frac{2mE\alpha^2}{\hbar^2} \right] R(\alpha x) = 0$$
+
+$$\ddot{\psi}_p^k(x) + \psi_p^k(x) \left[ -\frac{(k^2 - 1)}{4x^2} + \frac{2p + k + 1}{2x} - \frac{1}{4} \right] = 0$$
+
+Igualamos los coeficientes que dividen por $x^2$:
+
+$$-\ell(\ell+1) = -\frac{k^2 - 1}{4}$$
+
+$$4\ell^2 + 4\ell = k^2 - 1$$
+
+$$4\ell^2 + 4\ell + 1 = k^2$$
+
+El lado izquierdo es un trinomio cuadrado perfecto, lo que nos permite simplificar:
+
+$$(2\ell + 1)^2 = k^2 \implies k = 2\ell + 1$$
+
+Ahora, igualamos los coeficientes que dividen por $x$:
+
+$$\frac{2mK\alpha}{\hbar^2} = \frac{2p + k + 1}{2}$$
+
+Sustituimos el valor de $k = 2\ell + 1$ que acabamos de encontrar:
+
+$$\frac{2mK\alpha}{\hbar^2} = \frac{2p + (2\ell + 1) + 1}{2}$$
+
+$$\frac{2mK\alpha}{\hbar^2} = \frac{2p + 2\ell + 2}{2} = p + \ell + 1$$
+
+Definimos el número cuántico principal como $n = p + \ell + 1$.
+
+$$\frac{2mK\alpha}{\hbar^2} = n$$
+
+De aquí, despejamos el factor de escala $\alpha$:
+
+$$\alpha = \frac{n\hbar^2}{2mK}$$
+
+Finalmente, igualamos los términos que no dependen de $x$:
+
+$$\frac{2mE\alpha^2}{\hbar^2} = -\frac{1}{4}$$
+
+Sustituimos la expresión de $\alpha$ que obtuvimos en el paso anterior:
+
+$$\frac{2mE}{\hbar^2} \left( \frac{n\hbar^2}{2mK} \right)^2 = -\frac{1}{4}$$
+
+Expandimos el cuadrado y simplificamos:
+
+$$\frac{2mE}{\hbar^2} \left( \frac{n^2\hbar^4}{4m^2K^2} \right) = -\frac{1}{4}$$
+
+$$E \left( \frac{n^2\hbar^2}{2mK^2} \right) = -\frac{1}{4}$$
+
+Por último, despejamos la energía $E$ (que ahora llamaremos $E_n$ por su dependencia de $n$):
+
+$$E_n = -\frac{1}{4} \left( \frac{2mK^2}{n^2\hbar^2} \right)$$
+
+$$E_n = -\frac{mK^2}{2\hbar^2 n^2}$$
+
+$$E_n = -\frac{m}{2\hbar^2}\frac{K^2}{n^2} \hspace{1.5cm} n = p + \ell + 1 = \{1, 2, 3, \cdots \}$$
+
+\subsection{c) Obtenga las primeras funciones del átomo de Hidrógeno}
+
+$$\begin{aligned}
+\psi_{100} &= \frac{1}{\sqrt{\pi}a^{3/2}}e^{-\rho} \\
+\psi_{200} &= \frac{1}{\sqrt{32\pi}a^{3/2}}(2-\rho)e^{-\rho/2} \\
+\psi_{210} &= \frac{1}{\sqrt{32\pi}a^{3/2}}\rho e^{-\rho/2}\cos\theta \\
+\psi_{211} &= \frac{1}{\sqrt{64\pi}a^{3/2}}\rho e^{-\rho/2}\sin\theta e^{-i\varphi} \\
+\dots 
+\end{aligned}$$
+
+\textbf{Tenga en cuenta las siguientes expresiones:}
+
+\textbf{Polinomios Asociados de Laguerre}
+
+Los polinomios de Laguerre generalizados (o asociados), $L_q^p(x)$, se pueden definir a partir de la fórmula de Rodrigues:
+
+$$L_q^p(x) = \frac{x^{-p} e^x}{q!} \frac{\mathrm{d}^q}{\mathrm{d}x^q} \left( e^{-x} x^{q+p} \right)$$
+
+Para el caso de la función de onda radial del átomo de hidrógeno, los índices toman los valores $q = n-\ell-1$, $p = 2\ell+1$ y la variable es $\rho$. Su forma explícita expresada como una serie de potencias es:
+
+$$L_{n-\ell-1}^{2\ell+1}(\rho) = \sum_{k=0}^{n-\ell-1} (-1)^k \frac{(n+\ell)!}{(n-\ell-1-k)! \, (2\ell+1+k)! \, k!} \rho^k$$
+
+
+\textbf{Armónicos Esféricos}
+
+Los armónicos esféricos, $Y_{\ell m}(\theta, \varphi)$, constituyen la solución a la parte angular de la ecuación y se definen típicamente (incluyendo la convención de fase de Condon-Shortley) como:
+
+$$Y_{\ell m}(\theta, \varphi) = (-1)^m \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{im\varphi}$$
+
+Donde esta expresión es válida para $m \geq 0$. Para valores negativos de $m$, se utiliza la relación de conjugación compleja: $Y_{\ell, -m}(\theta, \varphi) = (-1)^m Y_{\ell m}^*(\theta, \varphi)$.
+
+El término $P_\ell^m(\cos\theta)$ corresponde a los **polinomios asociados de Legendre**, los cuales se evalúan en $x = \cos\theta$ y se definen mediante:
+
+$$P_\ell^m(x) = \frac{(-1)^m}{2^\ell \ell!} (1-x^2)^{m/2} \frac{\mathrm{d}^{\ell+m}}{\mathrm{d}x^{\ell+m}} (x^2-1)^\ell$$
+
+\subsubsection{Solución}
+
+Función de onda del estado fundamental $\psi_{100}$, $n=1$, $\ell=0$ y $m=0$.
+
+La ecuación general que tenemos es:
+
+$$\psi_{n\ell m}(r, \theta, \varphi) = \sqrt{ \left( \frac{2}{na_0} \right)^3 \frac{(n-\ell-1)!}{2n(n+\ell)!} } e^{-\rho_{eq}/2} \rho_{eq}^\ell L_{n-\ell-1}^{2\ell+1}(\rho_{eq}) Y_{\ell m}(\theta, \varphi)$$
+
+Cálculos:
+
+\textbf{Parámetro de distancia}
+
+Para $n=1$, la variable de la ecuación se reduce a:
+
+$$\rho_{eq} = \frac{2r}{(1)a_0} = \frac{2r}{a_0}$$
+
+Por lo tanto, el término exponencial será $e^{-\rho_{eq}/2} = e^{-r/a_0}$.
+
+\textbf{Constante de Normalización Radial}
+
+Sustituimos $n=1$ y $\ell=0$ en el término dentro de la raíz:
+
+$$\sqrt{ \left( \frac{2}{(1)a_0} \right)^3 \frac{(1-0-1)!}{2(1)(1+0)!} } = \sqrt{ \frac{8}{a_0^3} \frac{0!}{2(1!)} }$$
+
+Dado que $0! = 1$ y $1! = 1$, simplificamos:
+
+$$\sqrt{ \frac{8}{a_0^3} \left(\frac{1}{2}\right) } = \sqrt{ \frac{4}{a_0^3} } = \frac{2}{a_0^{3/2}}$$
+
+\textbf{Término de potencia y Polinomio de Laguerre}
+
+El término de potencia radial es simplemente $\rho_{eq}^\ell = \rho_{eq}^0 = 1$.
+
+Para el polinomio de Laguerre $L_{n-\ell-1}^{2\ell+1}(\rho_{eq})$, evaluamos los índices:
+
+Índice superior: $2\ell+1 = 2(0)+1 = 1$
+
+Índice inferior: $n-\ell-1 = 1-0-1 = 0$
+
+Necesitamos calcular $L_0^1$. Por definición, el polinomio de Laguerre de grado 0 es siempre 1 (independientemente del superíndice y del argumento):
+
+
+$$L_0^1(\rho_{eq}) = 1$$
+
+\textbf{Armónico Esférico}
+
+Para $\ell=0$ y $m=0$, calculamos el armónico esférico $Y_{00}$. Sabiendo que el polinomio de Legendre asociado $P_0^0(\cos\theta) = 1$:
+
+$$Y_{00}(\theta, \varphi) = \sqrt{\frac{2(0)+1}{4\pi} \frac{(0-0)!}{(0+0)!}} P_0^0(\cos\theta) e^{i(0)\varphi} = \sqrt{\frac{1}{4\pi}} = \frac{1}{2\sqrt{\pi}}$$
+
+\textbf{Ensamblaje Final}
+
+Ahora multiplicamos todos los componentes que hemos calculado:
+
+$$\psi_{100} = \left( \frac{2}{a_0^{3/2}} \right) e^{-r/a_0} (1) (1) \left( \frac{1}{2\sqrt{\pi}} \right)$$
+
+
+$$\psi_{100} = \frac{1}{\sqrt{\pi} a_0^{3/2}} e^{-r/a_0}$$
+
+
+
+\subsection{d)} Estudiar la densidad radial de probabilidad electrónica. Muestre que la distancia más probable de encontrar el electrón en el estado $(100)$ es justamente el radio de Bohr.
+
+\subsection{e)} La función de onda del estado base es $\psi_{100} = \frac{1}{\sqrt{\pi}a_0^{3/2}}e^{-\rho}$, ¿cuál es la probabilidad de encontrar al electrón a una distancia menor al radio de Bohr?
+
+
 
 
 \bibliographystyle{plainurl}
