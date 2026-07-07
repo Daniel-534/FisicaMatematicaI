@@ -1,0 +1,172 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática I}
+\fancyhead[c]{Átomo de Hidrógeno}
+
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\Large Universidad de Antioquia\par}
+  \vspace{2cm}
+  {\huge\bfseries Física Matemática I\par}
+  \vspace{0.4cm}
+  {\Large Taller del átomo de hidrógeno \par}
+  \vspace{2.5cm}
+  {\large Autor:\par}
+  \vspace{0.2cm}
+  {\large Daniel Soto Villada\par}
+  {\large Estudiante de Astronomía\par}
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Aplicación: Átomo de Hidrógeno}
+
+En mecánica cuántica el comportamiento del electrón en un átomo de Hidrógeno está descrito por la función de onda $\psi$ que se obtiene al solucionar la ecuación de Schrodinger
+
+$$
+-\frac{\hbar^2}{2m}\nabla^2\psi -\frac{K}{r}\psi = E\psi
+$$
+
+donde $K = \frac{e^2}{4\pi\epsilon_0}$
+
+\subsection{a) Construcción de la ecuación radial}
+Usando la separación de variables $\psi(r,\theta,\varphi) = \frac{R(r)}{r}Y(\theta,\varphi)$, muestre que la ecuación diferencial radial está dada por:
+
+$$
+\ddot{R}(\alpha x) + \left[ -\frac{l(l+1)}{x^2} + \frac{\alpha\tilde{k}2m}{x\hbar^2} + \frac{2mE}{\hbar^2} \right] R(\alpha x) = 0 \,, \eqno{(44)}
+$$
+
+donde $r = \alpha x$.
+
+\subsubsection{Solución}
+Llevamos la ecuación a la forma $(\nabla^2 + \text{factor})\psi = 0$ y nos queda
+
+$$\left[ \nabla^2 + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) \right]\psi = 0$$
+
+Veamos la expresión del laplaciano en coordenadas esféricas.
+
+$$\nabla^2 = \frac{1}{r^2} \partial_r (r^2 \partial_r) + \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2$$
+
+La aplicamos a $\psi$
+
+$$\nabla^2 \left[ \frac{R}{r}Y \right] = Y \cdot \frac{1}{r^2} \partial_r \left( r^2 \partial_r \left(\frac{R}{r}\right)\right) + \frac{R}{r} \cdot \left[ \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2 Y \right]$$
+
+$$\partial_r \left(\frac{R}{r}\right) = \frac{\mathrm{d}}{\mathrm{d}r}\left(\frac{R}{r}\right) = \frac{R'}{r} - \frac{R}{r^2}$$
+
+$$r^2 \partial_r \left(\frac{R}{r}\right) = r^2 \left( \frac{R'}{r} - \frac{R}{r^2} \right) = r R' - R$$
+
+$$\partial_r \left( r R' - R \right) = \frac{\mathrm{d}}{\mathrm{d}r} (r R' - R) = R' + r R'' - R' = r R''$$
+
+$$\frac{1}{r^2} \partial_r \left( r^2 \partial_r \left(\frac{R}{r}\right)\right) = \frac{1}{r^2} (r R'') = \frac{R''}{r}$$
+
+
+Introducimos este término radial simplificado en la ecuación de Schrödinger original:
+
+$$\left[ \nabla^2 + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) \right]\psi = 0$$
+
+$$Y \left( \frac{R''}{r} \right) + \frac{R}{r} \left[ \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2 Y \right] + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) \frac{R}{r} Y = 0$$
+
+Pasamos la parte radial a la izquierda y la angular a la derecha
+
+$$Y \left( \frac{R''}{r} \right) + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) \frac{R}{r} Y = -\frac{R}{r} \left[ \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2 Y \right]$$
+
+Para aislar por completo las variables de cada lado, multiplicamos toda la ecuación por el factor $\frac{r^3}{R Y}$:
+
+$$\frac{r^3}{R Y} \cdot Y \left( \frac{R''}{r} \right) + \frac{r^3}{R Y} \cdot \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right) \frac{R}{r} Y = \frac{r^2 R''}{R} + \frac{2m r^2}{\hbar^2}\left(E + \frac{K}{r}\right)$$
+
+$$\frac{r^3}{R Y} \cdot \left( -\frac{R}{r} \right) \left[ \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2 Y \right] = -\frac{r^2}{Y} \left[ \frac{1}{r^2 \sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{r^2 \sin^2\theta} \partial_\varphi^2 Y \right]$$
+
+$$\frac{r^2 R''}{R} + \frac{2m r^2}{\hbar^2}\left(E + \frac{K}{r}\right) = -\frac{1}{Y} \left[ \frac{1}{\sin\theta} \partial_\theta (\sin\theta \partial_\theta Y) + \frac{1}{\sin^2\theta} \partial_\varphi^2 Y \right]$$
+
+
+Vamos a construir la ecuación radial
+
+Igualamos la parte radial a la constante de separación $\ell(\ell+1)$:
+
+$$\frac{r^2 R''}{R} + \frac{2m r^2}{\hbar^2}\left(E + \frac{K}{r}\right) = \ell(\ell+1)$$
+
+$$R'' + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right)R = \frac{\ell(\ell+1)}{r^2}R$$
+
+$$R'' + \frac{2m}{\hbar^2}\left(E + \frac{K}{r}\right)R - \frac{\ell(\ell+1)}{r^2}R = 0$$
+
+$$R'' + \left[ \frac{2mE}{\hbar^2} + \frac{2mK}{\hbar^2 r} - \frac{\ell(\ell+1)}{r^2} \right] R = 0$$
+
+Vamos a aplicar el cambio de variable.
+
+$$r = \alpha x \implies x = \frac{r}{\alpha}$$
+
+Calculamos la derivada de $x$ respecto a $r$:
+
+$$\frac{dx}{dr} = \frac{1}{\alpha}$$
+
+Aplicamos la regla de la cadena
+
+$$R' = \frac{dR}{dr} = \frac{dR}{dx}\frac{dx}{dr}$$
+
+Sustituyendo el valor de $\frac{dx}{dr}$ y utilizando la notación donde la derivada respecto a $x$ se denota con un punto, es decir, $\frac{dR}{dx} = \dot{R}(\alpha x)$, obtenemos:
+
+$$R' = \frac{1}{\alpha} \dot{R}(\alpha x)$$
+
+$$R'' = \frac{d}{dr}\left(\frac{dR}{dr}\right) = \frac{d}{dx}\left(\frac{dR}{dr}\right) \frac{dx}{dr}$$
+
+$$R'' = \frac{d}{dx}\left(\frac{1}{\alpha} \dot{R}(\alpha x)\right) \cdot \left(\frac{1}{\alpha}\right)$$
+
+$$R'' = \frac{1}{\alpha^2} \ddot{R}(\alpha x)$$
+
+Tengamos a la mano la ecuación diferencial donde $R=R(r)$
+
+$$R'' + \left[ \frac{2mE}{\hbar^2} + \frac{2mK}{\hbar^2 r} - \frac{\ell(\ell+1)}{r^2} \right] R = 0$$
+
+Sustituimos $R''$, $r = \alpha x$, $r^2 = \alpha^2 x^2$ y escribimos $R$ como función explícita de $\alpha x$:
+
+$$\frac{1}{\alpha^2} \ddot{R}(\alpha x) + \left[ \frac{2mE}{\hbar^2} + \frac{2mK}{\hbar^2 \alpha x} - \frac{\ell(\ell+1)}{\alpha^2 x^2} \right] R(\alpha x) = 0$$
+
+$$\ddot{R}(\alpha x) + \left[ \frac{2mE\alpha^2}{\hbar^2} + \frac{2mK\alpha}{\hbar^2 x} - \frac{\ell(\ell+1)}{x^2} \right] R(\alpha x) = 0$$
+
+$$\ddot{R}(\alpha x) + \left[ -\frac{\ell(\ell+1)}{x^2} + \frac{2mK\alpha}{\hbar^2 x} + \frac{2mE\alpha^2}{\hbar^2} \right] R(\alpha x) = 0$$
+
+
+
+\subsection{b)}
+Comprando la anterior ec. con la ec.(42), muestre que:
+
+$$
+E_n = -\frac{m}{2\hbar^2}\frac{\tilde{k}^2}{n^2} \hspace{1.5cm} n = p + l + 1 = \{1, 2, 3, \cdots \} \,. \eqno{(45)}
+$$
+
+La ec.(42) nos ayuda a obtener la solución para la función de onda ( debidamente normalizada).
+
+$$
+\psi_{nlm}(r, \theta, \varphi) = \sqrt{\left(\frac{2}{na_0}\right)^3 \frac{(n-l-1)!}{2n(n+l)!}} e^{-\rho/2} \rho^l L_{n-l-1}^{2l+1}(\rho) Y_{lm}(\theta, \varphi) \,, \eqno{(46)}
+$$
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
