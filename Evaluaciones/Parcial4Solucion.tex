@@ -1,0 +1,206 @@
+\documentclass[a4paper]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb, mathrsfs}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage{parskip}
+\usepackage[most]{tcolorbox}
+\usepackage[hidelinks]{hyperref}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+% cabecera
+\pagestyle{fancy}
+\fancyhead[l]{Física Matemática}
+\fancyhead[c]{Parcial 3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} % linea horizontal
+
+
+\begin{document}
+
+\section{Problema 1}
+
+\begin{enumerate}[a)]
+	\item Demuestre que los armónicos esféricos satisfacen la siguiente relación de conjugación compleja:
+$$
+Y_\ell^{-m}(\theta,\varphi) = (-1)^m \left[Y_\ell^{m}(\theta,\varphi)\right]^*
+$$
+
+	\item Adicionalmente, demuestre que bajo la transformación de paridad $\vec{r} \to -\vec{r}$ los armónicos esféricos satisfacen:
+
+$$Y_\ell^m(-\vec{r}) = (-1)^\ell Y_\ell^m(\vec{r})$$
+\end{enumerate}
+
+\subsection{Solución}
+
+\begin{enumerate}[a)]
+	\item 
+\textbf{Definición de los armónicos esféricos} 
+$$
+Y_\ell^m(\theta, \varphi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{im\varphi}
+$$
+donde $P_\ell^m(\cos\theta)$ son los polinomios asociados de Legendre.
+
+\textbf{Expresión para el índice $-m$} \\
+Sustituimos $m$ por $-m$ en la definición anterior para obtener la expresión de $Y_\ell^{-m}(\theta, \varphi)$:
+$$
+Y_\ell^{-m}(\theta, \varphi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell+m)!}{(\ell-m)!}} P_\ell^{-m}(\cos\theta) e^{-im\varphi}
+$$
+
+\textbf{Propiedad de los polinomios asociados de Legendre para $m$ negativo} 
+
+$$
+P_\ell^{-m}(x) = (-1)^m \frac{(\ell-m)!}{(\ell+m)!} P_\ell^m(x)
+$$
+\textit{\textbf{Nota:} Esta identidad es muy difícil de demostrar}
+
+
+Sustituimos esta identidad directamente en la expresión de $Y_\ell^{-m}(\theta, \varphi)$:
+$$
+Y_\ell^{-m}(\theta, \varphi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell+m)!}{(\ell-m)!}} \left[ (-1)^m \frac{(\ell-m)!}{(\ell+m)!} P_\ell^m(\cos\theta) \right] e^{-im\varphi}
+$$
+
+Primero resolvemos esta parte:
+
+$$
+\sqrt{\frac{(\ell+m)!}{(\ell-m)!}} \frac{(\ell-m)!}{(\ell+m)!} = \sqrt{\frac{(\ell+m)!}{(\ell-m)!} \frac{((\ell-m)!)^2}{((\ell+m)!)^2}} = \sqrt{\frac{(\ell-m)!}{(\ell+m)!}}
+$$
+
+Por lo tanto, la expresión para $Y_\ell^{-m}$ se simplifica a:
+
+$$
+Y_\ell^{-m}(\theta, \varphi) = (-1)^m \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{-im\varphi}
+$$
+
+\textbf{Complejo conjugado de $Y_\ell^m$}
+
+
+$$
+\left[Y_\ell^m(\theta, \varphi)\right]^* = \left( \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{im\varphi} \right)^*
+$$
+$$
+\left[Y_\ell^m(\theta, \varphi)\right]^* = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{-im\varphi}
+$$
+
+Comparamos
+
+$$
+Y_\ell^{-m}(\theta, \varphi) = (-1)^m \left[Y_\ell^m(\theta, \varphi)\right]^*
+$$
+
+\item 
+
+La transformación de paridad o inversión espacial $\vec{r} \to -\vec{r}$ consiste en reflejar el punto a través del origen de coordenadas. Geométricamente, esta operación no altera la distancia radial, por lo que $r \to r$. Sin embargo, la dirección del vector se invierte completamente: el ángulo polar se refleja respecto al plano ecuatorial, lo que implica $\theta \to \pi - \theta$; y la proyección en el plano $xy$ gira medio giro (180 grados), lo que significa $\varphi \to \varphi + \pi$. Por lo tanto, podemos escribir:
+
+$$
+Y_\ell^m(-\vec{r}) \equiv Y_\ell^m(\pi-\theta, \varphi+\pi)
+$$
+Vamos a demostrar que esta expresión es igual a $(-1)^\ell Y_\ell^m(\theta,\varphi)$.
+
+\textbf{Evaluación bajo la transformación de paridad}
+
+Sustituimos las coordenadas transformadas $\theta' = \pi - \theta$ y $\varphi' = \varphi + \pi$ 
+
+$$
+Y_\ell^m(\pi - \theta, \varphi + \pi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos(\pi - \theta)) e^{im(\varphi + \pi)}
+$$
+
+\textbf{Parte azimutal}
+
+El término exponencial que depende del ángulo azimutal se transforma utilizando las propiedades de los números complejos y la identidad de Euler:
+$$
+e^{im(\varphi + \pi)} = e^{im\varphi} e^{im\pi}
+$$
+Dado que $e^{im\pi} = \cos(m\pi) + i\sin(m\pi) = (-1)^m$  $	\forall_{m\in\mathbb{Z}}$, obtenemos:
+$$
+e^{im(\varphi + \pi)} = (-1)^m e^{im\varphi}
+$$
+
+\textbf{Parte polar} 
+
+Para el argumento del polinomio asociado de Legendre, utilizamos la identidad trigonométrica $\cos(\pi - \theta) = -\cos\theta$. 
+
+Recuerde la propiedad
+
+$$
+P_\ell^m(-x) = (-1)^{\ell+m} P_\ell^m(x)
+$$
+
+\vspace{2cm}
+\begin{center}
+\boxed{\text{Espacio para añadir algo después}}
+\end{center}
+\vspace{2cm}
+
+Sustituyendo $x = \cos\theta$, tenemos:
+$$
+P_\ell^m(\cos(\pi - \theta)) = P_\ell^m(-\cos\theta) = (-1)^{\ell+m} P_\ell^m(\cos\theta)
+$$
+
+\textbf{Combinación de los resultados} 
+
+$$
+Y_\ell^m(\pi - \theta, \varphi + \pi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} \left[ (-1)^{\ell+m} P_\ell^m(\cos\theta) \right] \left[ (-1)^m e^{im\varphi} \right]
+$$
+Agrupamos los factores de signo y los términos originales de la función:
+$$
+Y_\ell^m(\pi - \theta, \varphi + \pi) = (-1)^{\ell+m} (-1)^m \left[ \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{im\varphi} \right]
+$$
+El término entre corchetes es exactamente la definición de $Y_\ell^m(\theta, \varphi)$. Simplificamos el producto de las potencias de $-1$:
+$$
+(-1)^{\ell+m} (-1)^m = (-1)^{\ell+2m} = (-1)^\ell (-1)^{2m}
+$$
+
+$$
+(-1)^{\ell+2m} = (-1)^\ell
+$$
+
+Sustituyendo esta simplificación en nuestra ecuación, llegamos finalmente al resultado:
+$$
+Y_\ell^m(\pi - \theta, \varphi + \pi) = (-1)^\ell Y_\ell^m(\theta, \varphi)
+$$
+\end{enumerate}
+
+\section{Problema 2}
+
+Este ya se hizo en otro documento
+
+\section{Problema 3}
+
+La función de onda normalizada para el electrón en el átomo de hidrógeno está dada por la expresión:
+
+$$
+\psi_{nlm}(\rho, \theta, \varphi) = \left[ \left(\frac{2}{na_0}\right)^3 \frac{(n-\ell-1)!}{2n(n+\ell)!} \right]^{1/2} e^{-\rho/2} \rho^\ell L_{n-\ell-1}^{2\ell+1}(\rho) Y_{\ell m}(\theta, \varphi)
+$$
+
+donde $\rho = \frac{2r}{na_0}$ y $a_0$ es el radio de Bohr, definido como:
+$$
+a_0 = \frac{4\pi\varepsilon_0 \hbar^2}{m q^2}
+$$
+
+\begin{enumerate}[a)]
+    \item Encuentre la expresión explícita y simplificada de la función de onda $\psi_{200}(r,\theta,\varphi)$.
+    \item Halle la distancia radial $r$ más probable para encontrar el electrón en el estado $\psi_{200}$.
+    \item Calcule la probabilidad de que el electrón se encuentre dentro de una región esférica centrada en el núcleo con radio igual al doble del radio del item anterior ($r \le 2a_0$).
+\end{enumerate}
+
+\subsection{Solución}
+
+
+
+
+\bibliographystyle{plainurl}
+\bibliography{bibliografia} 
+\end{document}
