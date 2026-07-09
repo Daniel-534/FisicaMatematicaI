@@ -12,23 +12,26 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{float}
 \usepackage{booktabs}
-\usepackage{mathrsfs}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta, calc, decorations.pathreplacing}
+\usetikzlibrary{arrows.meta, babel, calc, decorations.pathreplacing}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+
+\newcommand{\dd}{\mathop{}\!\mathrm{d}}
 
 
 % cabecera
 \pagestyle{fancy}
 \fancyhead[l]{Física Matemática}
-\fancyhead[c]{Parcial 3}
+\fancyhead[c]{Parcial 4}
 \fancyhead[r]{\today}
 \fancyfoot[c]{\thepage}
 \renewcommand{\headrulewidth}{0.2pt} % linea horizontal
 
 
 \begin{document}
+
+\tableofcontents
 
 \section{Problema 1}
 
@@ -138,11 +141,44 @@ $$
 P_\ell^m(-x) = (-1)^{\ell+m} P_\ell^m(x)
 $$
 
-\vspace{2cm}
-\begin{center}
-\boxed{\text{Espacio para añadir algo después}}
-\end{center}
-\vspace{2cm}
+\textbf{\textit{Demostración:}}
+
+Partimos de la fórmula de Rodrigues para los polinomios asociados de Legendre
+
+$$
+P_\ell^m(x) = \frac{1}{2^\ell \ell!} (1-x^2)^{m/2} \frac{d^{\,\ell+m}}{dx^{\ell+m}} (x^2 - 1)^\ell
+$$
+
+Evaluamos esta expresión en $-x$. Observamos que el factor $(1-x^2)^{m/2}$ es una función par, por lo que permanece inalterado:
+
+$$
+(1-(-x)^2)^{m/2} = (1-x^2)^{m/2}
+$$
+
+Para el término diferencial, introducimos el cambio de variable $u = -x$, de modo que $du = -dx$ y el operador derivada transforma como:
+
+$$
+\frac{d}{du} = -\frac{d}{dx} \quad \Longrightarrow \quad \frac{d^{\,\ell+m}}{du^{\ell+m}} = (-1)^{\ell+m} \frac{d^{\,\ell+m}}{dx^{\ell+m}}
+$$
+
+Además, el argumento del polinomio base es invariante bajo el cambio de signo:
+
+$$
+(u^2 - 1)^\ell \big|_{u=-x} = ((-x)^2 - 1)^\ell = (x^2 - 1)^\ell
+$$
+
+Reensamblando todos los factores en la fórmula de Rodrigues evaluada en $-x$:
+
+$$
+P_\ell^m(-x) = \frac{1}{2^\ell \ell!} (1-x^2)^{m/2} \left[ (-1)^{\ell+m} \frac{d^{\,\ell+m}}{dx^{\ell+m}} (x^2 - 1)^\ell \right]
+$$
+
+Factorizando el signo $(-1)^{\ell+m}$, reconocemos exactamente la expresión original de $P_\ell^m(x)$:
+
+$$
+P_\ell^m(-x) = (-1)^{\ell+m} P_\ell^m(x)
+$$
+\hfill $\blacksquare$
 
 Sustituyendo $x = \cos\theta$, tenemos:
 $$
@@ -175,7 +211,315 @@ $$
 
 \section{Problema 2}
 
-Este ya se hizo en otro documento
+Considere una esfera de radio $R$ con densidad
+\[
+\rho(r,\theta,\varphi)=
+\begin{cases}
+\rho_0\left(\dfrac{r}{R}\right)e^{\alpha r/R}\sin^2\theta\cos(2\varphi), & 0\le r\le R,\\
+0, & r>R,
+\end{cases}
+\]
+donde $\alpha$ y $\rho_0$ son constantes. El potencial satisface la ecuación de Poisson
+$\nabla^2\phi(\vec r)=-\rho(\vec r)/\epsilon_0$, cuya solución mediante la función de Green es
+\begin{equation}
+\label{eq:green-potential}
+\phi(\vec r)=\frac{1}{4\pi\epsilon_0}\int \frac{\rho(\vec r\,')}{\lVert \vec r-\vec r\,'\rVert}\dd^3r'.
+\end{equation}
+
+Para la función de Green se usa la expansión
+\[
+\frac{1}{\lVert \vec r-\vec r\,'\rVert}
+=\begin{cases}
+\displaystyle \sum_{\ell=0}^{\infty}\frac{r^\ell}{r'^{\ell+1}}P_\ell(\cos\gamma), & r<r',\\[0.5em]
+\displaystyle \sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma), & r>r',
+\end{cases}
+\]
+donde $\gamma$ es el ángulo entre $\vec r$ y $\vec r\,'$. Además, por el teorema de adición,
+\begin{equation}
+\label{eq:addition-theorem}
+P_\ell(\cos\gamma)=\frac{4\pi}{2\ell+1}\sum_{m=-\ell}^{\ell}
+Y_{\ell m}^*(\theta,\varphi)Y_{\ell m}(\theta',\varphi').
+\end{equation}
+
+\begin{enumerate}[a)]
+    \item Encontrar el potencial eléctrico en el interior de la esfera, $0\le r\le R$.
+    \item Determinar el campo eléctrico para $0\le r\le R$.
+    \item Encontrar el campo eléctrico en el exterior, $r>R$.
+    \item Dibujar la magnitud del campo eléctrico y del potencial.
+\end{enumerate}
+
+\subsection{Solución}
+
+\begin{enumerate}[a)]
+    \item Potencial eléctrico en el interior
+    
+    \begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[inner color=orange!18, outer color=orange!4, draw=none] (0,0) circle (0.88);
+    \shade[inner color=blue!4, outer color=blue!13, draw=none, even odd rule]
+        (0,0) circle (1.62) (0,0) circle (0.88);
+    \draw[blue!65!black, very thick] (0,0) circle (1.62);
+    \draw[orange!85!black, very thick, dashed] (0,0) circle (0.88);
+    \draw[gray!40, dashed] (-1.62,0) -- (1.62,0);
+    \draw[gray!40, dashed] (0,-1.62) -- (0,1.62);
+    \draw[->, orange!85!black, very thick] (0,0) -- (0.88,0)
+        node[midway, above] {$r$};
+    \draw[->, blue!65!black, very thick] (0,0) -- ({1.62*cos(38)},{1.62*sin(38)})
+        node[midway, above left] {$R$};
+    \draw[orange!85!black, thick] (0.55,-0.55) -- (2.05,-1.05);
+    \draw[blue!65!black, thick] (-1.18,-0.95) -- (-2.3,-1.28);
+    \fill (0,0) circle (1.1pt) node[below left] {$O$};
+    \node[font=\bfseries] at (0,1.95) {Separación radial de la integral};
+    \node[orange!85!black, align=center, fill=white, rounded corners=2pt, inner sep=3pt]
+        at (2.75,-1.12) {Región I\\$0\le r'\le r$};
+    \node[blue!65!black, align=center, fill=white, rounded corners=2pt, inner sep=3pt]
+        at (-3.0,-1.35) {Región II\\$r\le r'\le R$};
+\end{tikzpicture}
+\end{center}
+
+La dependencia angular de la densidad es proporcional a
+$\sin^2\theta\cos(2\varphi)$. Como
+\[
+Y_{\ell m}(\theta,\varphi)=\sqrt{\frac{2\ell+1}{4\pi}\frac{(\ell-m)!}{(\ell+m)!}}
+P_\ell^m(\cos\theta)e^{im\varphi},
+\]
+los términos relevantes son $\ell=2$ y $m=\pm2$. En la expansión multipolar, el índice $\ell$ clasifica el tipo de simetría angular: $\ell=0$ corresponde al término monopolar, $\ell=1$ al dipolar, $\ell=2$ al cuadrupolar, $\ell=3$ al octupolar, y así sucesivamente. En este caso, $\ell=2$ significa que la distribución tiene carácter cuadrupolar: presenta cuatro lóbulos angulares alternados, con regiones de signo opuesto, en lugar de una simetría puramente radial o dipolar. El índice $m=\pm2$ fija la variación azimutal proporcional a $\cos(2\varphi)$.
+
+En particular,
+\[
+Y_{2,2}(\theta,\varphi)=\sqrt{\frac{5}{96\pi}}\,3\sin^2\theta\,e^{2i\varphi},
+\qquad
+Y_{2,-2}(\theta,\varphi)=\sqrt{\frac{5}{96\pi}}\,3\sin^2\theta\,e^{-2i\varphi}.
+\]
+Por tanto,
+\[
+\sin^2\theta\cos(2\varphi)
+=\sqrt{\frac{8\pi}{15}}\left[Y_{2,2}(\theta,\varphi)+Y_{2,-2}(\theta,\varphi)\right].
+\]
+Así, la densidad queda escrita como
+\begin{equation}
+\label{eq:density-harmonics}
+\rho(r',\theta',\varphi')=\rho_0\left(\frac{r'}{R}\right)e^{\alpha r'/R}
+\sqrt{\frac{8\pi}{15}}\left[Y_{2,2}(\theta',\varphi')+Y_{2,-2}(\theta',\varphi')\right].
+\end{equation}
+
+Para un punto interior, $0\le r\le R$, la integral radial debe separarse en dos regiones:
+$0\le r'\le r$, donde $r>r'$, y $r\le r'\le R$, donde $r<r'$. Usando \eqref{eq:green-potential},
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+=\frac{1}{4\pi\epsilon_0}\int_0^R\int_{\Omega'}
+\frac{\rho(r',\theta',\varphi')}{\lVert\vec r-\vec r\,'\rVert}r'^2\dd r'\dd\Omega'.
+\]
+El elemento de volumen en coordenadas esféricas es
+\[
+\dd^3r'=r'^2\dd r'\dd\Omega',
+\qquad
+\int_{\Omega'}\dd\Omega'=\int_0^\pi\int_0^{2\pi}\sin\theta'\dd\varphi'\dd\theta'.
+\]
+
+En la Región I se reemplaza
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma),
+\]
+y en la Región II,
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r^\ell}{r'^{\ell+1}}P_\ell(\cos\gamma).
+\]
+Al sustituir \eqref{eq:density-harmonics} y \eqref{eq:addition-theorem}, resulta
+\begin{align*}
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+&=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}
+\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\frac{4\pi}{2\ell+1}Y_{\ell m}^*(\theta,\varphi) \\
+&\quad \times \left[
+\int_0^r\frac{r'^\ell}{r^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'
+\right.\\
+&\quad\left.+
+\int_r^R\frac{r^\ell}{r'^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'
+\right].
+\end{align*}
+
+Por ortogonalidad angular solo sobreviven $\ell=2$ y $m=\pm2$. Entonces
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}\frac{4\pi}{5}
+\left[\frac{1}{Rr^3}\int_0^r r'^5e^{\alpha r'/R}\dd r'
++\frac{r^2}{R}\int_r^R e^{\alpha r'/R}\dd r'\right]
+\left(Y_{2,2}^*+Y_{2,-2}^*\right).
+\]
+Definimos
+\[
+I_1(r)=\int_0^r r'^5e^{\alpha r'/R}\dd r',
+\qquad
+I_2(r)=\int_r^R e^{\alpha r'/R}\dd r'.
+\]
+Estas integrales son
+\begin{align*}
+I_1(r)
+&=e^{\alpha r/R}\left[\frac{Rr^5}{\alpha}-\frac{5R^2r^4}{\alpha^2}
++\frac{20R^3r^3}{\alpha^3}-\frac{60R^4r^2}{\alpha^4}
++\frac{120R^5r}{\alpha^5}-\frac{720R^6}{\alpha^6}\right]
++\frac{720R^6}{\alpha^6},\\
+I_2(r)&=\frac{R}{\alpha}\left[e^\alpha-e^{\alpha r/R}\right].
+\end{align*}
+
+Usando de nuevo $Y_{2,2}^*+Y_{2,-2}^*=\sqrt{15/(8\pi)}\sin^2\theta\cos(2\varphi)$, se obtiene
+\begin{equation}
+\label{eq:phi-int}
+\boxed{
+\begin{aligned}
+\phi_{\mathrm{int}}(r,\theta,\varphi)
+&=\frac{\rho_0}{5\epsilon_0R}\sin^2\theta\cos(2\varphi)
+\left[\frac{I_1(r)}{r^3}+r^2I_2(r)\right].
+\end{aligned}}
+\end{equation}
+
+    \item Campo eléctrico en el interior
+    
+    \begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[ball color=blue!8, opacity=0.55] (0,0) circle (1.55);
+    \draw[blue!60!black, very thick] (0,0) circle (1.55);
+    \draw[->, gray!70] (-1.95,0) -- (2.05,0) node[right] {$x$};
+    \draw[->, gray!70] (0,-1.95) -- (0,2.05) node[above] {$y$};
+    \foreach \x/\y/\u/\v in {-1.05/0.95/-0.52/-0.16, 1.05/0.95/0.52/-0.16,
+        -1.05/-0.95/-0.45/0.22, 1.05/-0.95/0.45/0.22,
+        -0.42/0.58/-0.34/-0.30, 0.42/0.58/0.34/-0.30,
+        -0.42/-0.58/-0.30/0.34, 0.42/-0.58/0.30/0.34,
+        0/1.28/0/-0.48, 0/-1.28/0/0.48}{
+        \draw[->, red!70!black, very thick] (\x,\y) -- ++(\u,\v);
+    }
+    \node[blue!60!black] at (1.78,0.25) {$r=R$};
+    \node[font=\bfseries, align=center] at (0,-2.35) {Campo interior\\$\vec E_{\mathrm{int}}=-\nabla\phi_{\mathrm{int}}$};
+\end{tikzpicture}
+\end{center}
+
+El campo eléctrico se obtiene a partir de
+\[
+\vec E=-\vec\nabla\phi
+=-\left(\frac{\partial\phi}{\partial r}\hat r
++\frac{1}{r}\frac{\partial\phi}{\partial\theta}\hat\theta
++\frac{1}{r\sin\theta}\frac{\partial\phi}{\partial\varphi}\hat\varphi\right).
+\]
+De \eqref{eq:phi-int}, escribimos
+\[
+\phi_{\mathrm{int}}(r,\theta,\varphi)=f(r)\sin^2\theta\cos(2\varphi),
+\qquad
+f(r)=\frac{\rho_0}{5\epsilon_0R}\left[\frac{I_1(r)}{r^3}+r^2I_2(r)\right].
+\]
+Al derivar,
+\[
+f'(r)=\frac{\rho_0}{5\epsilon_0R}\left[-\frac{3I_1(r)}{r^4}+2rI_2(r)\right],
+\]
+porque los términos $r^2e^{\alpha r/R}$ que provienen de $I_1'(r)$ y de $I_2'(r)$ se cancelan.
+
+Las componentes interiores son
+\begin{align*}
+E_r^{\mathrm{int}}&=-f'(r)\sin^2\theta\cos(2\varphi),\\
+E_\theta^{\mathrm{int}}&=-\frac{f(r)}{r}\sin(2\theta)\cos(2\varphi),\\
+E_\varphi^{\mathrm{int}}&=\frac{2f(r)}{r}\sin\theta\sin(2\varphi).
+\end{align*}
+Por tanto,
+\begin{equation}
+\label{eq:e-int}
+\boxed{
+\vec E_{\mathrm{int}}
+=-f'(r)\sin^2\theta\cos(2\varphi)\hat r
+-\frac{f(r)}{r}\sin(2\theta)\cos(2\varphi)\hat\theta
++\frac{2f(r)}{r}\sin\theta\sin(2\varphi)\hat\varphi.}
+\end{equation}
+
+    
+    \item Campo eléctrico en el exterior
+
+\begin{center}
+\begin{tikzpicture}[scale=1.35, line cap=round, line join=round, >=Latex]
+    \shade[ball color=blue!10, opacity=0.6] (0,0) circle (0.95);
+    \draw[blue!60!black, very thick] (0,0) circle (0.95);
+    \draw[gray!45, dashed, thick] (0,0) circle (1.65);
+    \draw[gray!30, dashed] (0,0) circle (2.2);
+    \foreach \ang/\len in {20/0.62,55/0.45,100/0.58,145/0.45,200/0.62,235/0.45,280/0.58,325/0.45}{
+        \draw[->, red!70!black, very thick]
+            ({1.30*cos(\ang)},{1.30*sin(\ang)}) --
+            ({(1.30+\len)*cos(\ang)},{(1.30+\len)*sin(\ang)});
+    }
+    \draw[->, blue!60!black, very thick] (0,0) -- (0.95,0) node[midway, above] {$R$};
+    \node[gray!70!black] at (1.88,0.27) {$r>R$};
+    \node[font=\bfseries, align=center] at (0,-2.55) {Campo exterior\\decaimiento cuadrupolar $\propto r^{-4}$};
+\end{tikzpicture}
+\end{center}
+
+Para $r>R$, todo punto de la fuente cumple $r'>0$ y $r>r'$, de modo que
+\[
+\frac{1}{\lVert\vec r-\vec r\,'\rVert}
+=\sum_{\ell=0}^{\infty}\frac{r'^\ell}{r^{\ell+1}}P_\ell(\cos\gamma).
+\]
+Usando \eqref{eq:density-harmonics} y \eqref{eq:addition-theorem} en \eqref{eq:green-potential},
+\begin{align*}
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+&=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}
+\sum_{\ell=0}^{\infty}\sum_{m=-\ell}^{\ell}\frac{4\pi}{2\ell+1}Y_{\ell m}^*(\theta,\varphi)\\
+&\quad\times \int_0^R\frac{r'^\ell}{r^{\ell+1}}\frac{r'}{R}r'^2e^{\alpha r'/R}\dd r'
+\int_{\Omega'}Y_{\ell m}(\theta',\varphi')\left(Y_{2,2}+Y_{2,-2}\right)\dd\Omega'.
+\end{align*}
+Nuevamente, la integral angular selecciona solo $\ell=2$ y $m=\pm2$. Así,
+\[
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+=\frac{\rho_0}{4\pi\epsilon_0}\sqrt{\frac{8\pi}{15}}\frac{4\pi}{5}
+\frac{I_1(R)}{Rr^3}\sqrt{\frac{15}{8\pi}}\sin^2\theta\cos(2\varphi).
+\]
+Como
+\[
+I_1(R)=e^\alpha R^6\left[\frac{1}{\alpha}-\frac{5}{\alpha^2}+\frac{20}{\alpha^3}
+-\frac{60}{\alpha^4}+\frac{120}{\alpha^5}-\frac{720}{\alpha^6}\right]
++\frac{720R^6}{\alpha^6},
+\]
+el potencial exterior queda
+\begin{equation}
+\label{eq:phi-ext}
+\boxed{
+\phi_{\mathrm{ext}}(r,\theta,\varphi)
+=\frac{\rho_0R^5}{5\epsilon_0\alpha^6r^3}
+\left[e^\alpha(\alpha^5-5\alpha^4+20\alpha^3-60\alpha^2+120\alpha-720)+720\right]
+\sin^2\theta\cos(2\varphi).}
+\end{equation}
+
+Para calcular el campo, definimos el factor común
+\begin{equation}
+\label{eq:q-ext}
+Q=\frac{\rho_0R^5}{5\epsilon_0\alpha^6}
+\left[e^\alpha(\alpha^5-5\alpha^4+20\alpha^3-60\alpha^2+120\alpha-720)+720\right].
+\end{equation}
+Entonces \eqref{eq:phi-ext} se escribe como
+\[
+\phi_{\mathrm{ext}}(r,\theta,\varphi)=\frac{Q}{r^3}\sin^2\theta\cos(2\varphi).
+\]
+Derivando en coordenadas esféricas,
+\begin{align*}
+E_r^{\mathrm{ext}}
+&=-\frac{\partial}{\partial r}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=\frac{3Q}{r^4}\sin^2\theta\cos(2\varphi),\\
+E_\theta^{\mathrm{ext}}
+&=-\frac{1}{r}\frac{\partial}{\partial\theta}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=-\frac{Q}{r^4}\sin(2\theta)\cos(2\varphi),\\
+E_\varphi^{\mathrm{ext}}
+&=-\frac{1}{r\sin\theta}\frac{\partial}{\partial\varphi}\left[\frac{Q}{r^3}\sin^2\theta\cos(2\varphi)\right]
+=\frac{2Q}{r^4}\sin\theta\sin(2\varphi).
+\end{align*}
+Por tanto,
+\begin{equation}
+\label{eq:e-ext}
+\boxed{
+\vec E_{\mathrm{ext}}
+=\frac{Q}{r^4}\left[3\sin^2\theta\cos(2\varphi)\hat r
+-\sin(2\theta)\cos(2\varphi)\hat\theta
++2\sin\theta\sin(2\varphi)\hat\varphi\right].}
+\end{equation}
+
+\end{enumerate}
 
 \section{Problema 3}
 
@@ -190,17 +534,183 @@ $$
 a_0 = \frac{4\pi\varepsilon_0 \hbar^2}{m q^2}
 $$
 
+y los polinomios de Laguerre asocados están dados por la expresión:
+
+$$ L_n^{k}(x)=\frac{e^{x}\,x^{-k}}{n!}\,\frac{d^{\,n}}{dx^{n}}\left(x^{\,n+k}\,e^{-x}\right)$$
+
 \begin{enumerate}[a)]
     \item Encuentre la expresión explícita y simplificada de la función de onda $\psi_{200}(r,\theta,\varphi)$.
     \item Halle la distancia radial $r$ más probable para encontrar el electrón en el estado $\psi_{200}$.
-    \item Calcule la probabilidad de que el electrón se encuentre dentro de una región esférica centrada en el núcleo con radio igual al doble del radio del item anterior ($r \le 2a_0$).
+    \item Calcule la probabilidad de localizar el electrón, en el estado $\psi_{200}$ del átomo de hidrógeno, en el interior de una región esférica centrada en el núcleo cuyo radio es igual a dos veces la distancia radial más probable determinada en el problema anterior.
 \end{enumerate}
 
 \subsection{Solución}
 
+\begin{enumerate}[a)]
+	\item 
+	
+	En primer lugar, calculamos la variable adimensional $\rho$ para este estado cuántico:
+$$ \rho = \frac{2r}{na_0} = \frac{2r}{2a_0} = \frac{r}{a_0} $$
+
+Determinamos el polinomio de Laguerre asociado correspondiente. 
+
+Reemplazamos con $2\ell+1 = 1$ y $n-\ell -1 = 1$. Esto implica que debemos calcular $L_1^1$.
+
+$$ L_1^1(\rho) = \frac{e^\rho \rho^{-1}}{1!} \frac{d}{d\rho} \left( \rho^{1+1} e^{-\rho} \right) = \frac{e^\rho}{\rho} \frac{d}{d\rho} \left( \rho^2 e^{-\rho} \right) $$
+Aplicando la regla del producto para la derivada:
+$$ \frac{d}{d\rho} \left( \rho^2 e^{-\rho} \right) = 2\rho e^{-\rho} - \rho^2 e^{-\rho} = \rho e^{-\rho} (2 - \rho) $$
+Sustituyendo este resultado en la expresión del polinomio:
+$$ L_1^1(\rho) = \frac{e^\rho}{\rho} \left[ \rho e^{-\rho} (2 - \rho) \right] = 2 - \rho $$
+Reemplazando $\rho = r/a_0$, obtenemos la dependencia radial del polinomio:
+$$ L_1^1(r/a_0) = 2 - \frac{r}{a_0} $$
+
+Evaluamos el armónico esférico $Y_{00}(\theta, \varphi)$. 
+$$ Y_{\ell m}(\theta, \varphi) = \sqrt{\frac{2\ell+1}{4\pi} \frac{(\ell-m)!}{(\ell+m)!}} P_\ell^m(\cos\theta) e^{im\varphi} $$
+Para $\ell=0$ y $m=0$, calculamos el polinomio asociado de Legendre $P_0^0(\cos\theta)$ 
+
+$$ P_\ell^m(x) = \frac{1}{2^\ell \ell!} (1-x^2)^{m/2} \frac{d^{\,\ell+m}}{dx^{\ell+m}}(x^2 - 1)^\ell $$
+Evaluando para $\ell=0$ y $m=0$:
+$$ P_0^0(x) = \frac{1}{2^0 \cdot 0!} (1-x^2)^{0} \frac{d^{\,0}}{dx^{0}}(x^2 - 1)^0 = 1 \cdot 1 \cdot 1 = 1 \implies P_0^0(\cos\theta) = 1 $$
+Sustituyendo en el armónico esférico:
+$$ Y_{00}(\theta, \varphi) = \sqrt{\frac{1}{4\pi} \frac{0!}{0!}} (1) e^{0} = \frac{1}{\sqrt{4\pi}} $$
+
+Ahora calculamos la constante de normalización $N$:
+
+$$ N = \left[ \left(\frac{2}{na_0}\right)^3 \frac{(n-\ell-1)!}{2n(n+\ell)!} \right]^{1/2} $$
+Sustituyendo $n=2$ y $\ell=0$:
+$$ N = \left[ \left(\frac{2}{2a_0}\right)^3 \frac{(2-0-1)!}{2(2)(2+0)!} \right]^{1/2} = \left[ \left(\frac{1}{a_0}\right)^3 \frac{1!}{4 \cdot 2!} \right]^{1/2} = \left[ \frac{1}{a_0^3} \frac{1}{8} \right]^{1/2} = \frac{1}{2\sqrt{2} a_0^{3/2}} $$
+
+Finalmente, ensamblamos todas las partes en la expresión general de la función de onda:
+$$ \psi_{200}(r, \theta, \varphi) = N e^{-\rho/2} \rho^\ell L_{n-\ell-1}^{2\ell+1}(\rho) Y_{\ell m}(\theta, \varphi) $$
+Dado que $\ell=0$, el término $\rho^\ell = (r/a_0)^0 = 1$. Sustituyendo los componentes calculados:
+$$ \psi_{200}(r, \theta, \varphi) = \left( \frac{1}{2\sqrt{2} a_0^{3/2}} \right) e^{-r/2a_0} (1) \left( 2 - \frac{r}{a_0} \right) \left( \frac{1}{\sqrt{4\pi}} \right) $$
+
+$$ \frac{1}{2\sqrt{2} a_0^{3/2}} \cdot \frac{1}{2\sqrt{\pi}} = \frac{1}{4\sqrt{2\pi} a_0^{3/2}} $$
+Por lo tanto, la función de onda explícita y simplificada es:
+$$ \psi_{200}(r, \theta, \varphi) = \frac{1}{4\sqrt{2\pi} a_0^{3/2}} \left( 2 - \frac{r}{a_0} \right) e^{-r/2a_0} $$
+
+Esta expresión representa el estado excitado de menor energía (nivel $n=2$, subnivel $s$) del átomo de hidrógeno.
+	
+
+\item Para este problema, partimos de la densidad de probabilidad volumétrica
+$$ \frac{dP}{dV} = |\psi_{nlm}|^2 $$
+El elemento de volumen en coordenadas esféricas es:
+
+$$ dV = r^2 \sin\theta \, dr \, d\theta \, d\varphi $$
+Sustituyendo esta expresión en la probabilidad diferencial:
+$$ dP = |\psi_{nlm}|^2 \, r^2 \sin\theta \, dr \, d\theta \, d\varphi $$
+Para obtener la densidad de probabilidad radial $\frac{dP}{dr}$, que representa la probabilidad de encontrar al electrón en una capa esférica de radio $r$ y espesor infinitesimal $dr$, integramos sobre todas las direcciones angulares (es decir, sobre todo el ángulo sólido):
+$$ \frac{dP}{dr} = \int_{0}^{\pi}\int_{0}^{2\pi} |\psi_{nlm}|^2 \, r^2 \sin\theta \, d\theta \, d\varphi $$
+
+$$ \frac{dP}{dr} = r^2 |\psi_{200}|^2 \int_{0}^{\pi}\int_{0}^{2\pi} \sin\theta \, d\theta \, d\varphi $$
+Evaluamos la integral angular:
+$$ \int_{0}^{\pi}\int_{0}^{2\pi} \sin\theta \, d\theta \, d\varphi = \int_{0}^{2\pi} d\varphi \int_{0}^{\pi} \sin\theta \, d\theta = (2\pi)\left[-\cos\theta\right]_0^\pi = (2\pi)(1 - (-1)) = 4\pi $$
+Por lo tanto, la densidad de probabilidad radial se reduce a:
+$$ \frac{dP}{dr} = 4\pi r^2 |\psi_{200}|^2 $$
+Sustituyendo la función de onda $\psi_{200}$ obtenida en el problema anterior:
+$$ \psi_{200}(r) = \frac{1}{4\sqrt{2\pi} a_0^{3/2}} \left( 2 - \frac{r}{a_0} \right) e^{-r/2a_0} $$
+
+$$ \frac{dP}{dr} = 4\pi r^2 \left[ \frac{1}{4\sqrt{2\pi} a_0^{3/2}} \left( 2 - \frac{r}{a_0} \right) e^{-r/2a_0} \right]^2 $$
+$$ \frac{dP}{dr} = 4\pi r^2 \cdot \frac{1}{32\pi a_0^3} \left( 2 - \frac{r}{a_0} \right)^2 e^{-r/a_0} $$
+Simplificando:
+$$ \frac{dP}{dr} = \frac{1}{8a_0^3} r^2 \left( 2 - \frac{r}{a_0} \right)^2 e^{-r/a_0} $$
+
+Para hallar la distancia más probable, buscamos el máximo global de esta función derivando e igualando a cero:
+$$ \frac{d}{dr}\left(\frac{dP}{dr}\right) = 0 $$
+Aplicando la regla del producto sobre $f(r) = r^2 \left( 2 - \frac{r}{a_0} \right)^2 e^{-r/a_0}$:
+$$ f'(r) = 2r\left(2-\frac{r}{a_0}\right)^2 e^{-r/a_0} + r^2 \cdot 2\left(2-\frac{r}{a_0}\right)\left(-\frac{1}{a_0}\right)e^{-r/a_0} + r^2\left(2-\frac{r}{a_0}\right)^2\left(-\frac{1}{a_0}\right)e^{-r/a_0} $$
+
+$$ f'(r) = r\left(2-\frac{r}{a_0}\right)e^{-r/a_0} \left[ 2\left(2-\frac{r}{a_0}\right) - \frac{2r}{a_0} - \frac{r}{a_0}\left(2-\frac{r}{a_0}\right) \right] $$
+Simplificación de la expresión en paréntesis
+$$ 4 - \frac{2r}{a_0} - \frac{2r}{a_0} - \frac{2r}{a_0} + \frac{r^2}{a_0^2} = 4 - \frac{6r}{a_0} + \frac{r^2}{a_0^2} $$
+La ecuación a resolver es entonces:
+$$ r\left(2-\frac{r}{a_0}\right)e^{-r/a_0} \left( \frac{r^2}{a_0^2} - \frac{6r}{a_0} + 4 \right) = 0 $$
+Esto nos da tres tipos de soluciones:
+\begin{itemize}
+    \item $r = 0$: corresponde a un mínimo (la probabilidad radial se anula en el origen).
+    \item $r = 2a_0$: es el nodo radial de la función de onda $\psi_{200}$, donde la probabilidad también se anula (mínimo local).
+    \item $\frac{r^2}{a_0^2} - \frac{6r}{a_0} + 4 = 0$: esta ecuación cuadrática nos da los máximos locales.
+\end{itemize}
+
+Resolvemos la ecuación cuadrática haciendo el cambio $x = r/a_0$:
+$$ x^2 - 6x + 4 = 0 \implies x = \frac{6 \pm \sqrt{36 - 16}}{2} = \frac{6 \pm \sqrt{20}}{2} = 3 \pm \sqrt{5} $$
+Obtenemos dos máximos locales:
+$$ r_1 = (3 - \sqrt{5})a_0   \qquad \text{y} \qquad r_2 = (3 + \sqrt{5})a_0 $$
+Para determinar cuál es el máximo global, evaluamos $\frac{dP}{dr}$ en ambos puntos. Dado que el factor exponencial $e^{-r/a_0}$ decae rápidamente, comparamos las magnitudes:
+$$ \left.\frac{dP}{dr}\right|_{r_1} \propto (3-\sqrt{5})^2(\sqrt{5}-1)^2 e^{-(3-\sqrt{5})} \approx 0.415 $$
+$$ \left.\frac{dP}{dr}\right|_{r_2} \propto (3+\sqrt{5})^2(1+\sqrt{5})^2 e^{-(3+\sqrt{5})} \approx 1.530 $$
+Dado que $\left.\frac{dP}{dr}\right|_{r_2} > \left.\frac{dP}{dr}\right|_{r_1}$, el máximo global de la densidad de probabilidad radial se encuentra en $r_2$. Denotamos este radio más probable como:
+$$ r_{200}^{mp} \equiv \text{Radio más probable en el estado } \psi_{200} $$
+Por lo tanto, la distancia radial más probable para encontrar el electrón en el estado $\psi_{200}$ es:
+$$ r_{200}^{mp} = (3 + \sqrt{5})\, a_0 \approx 5.236\, a_0 $$
+
+	\item En mecánica cuántica, la probabilidad de localizar una partícula en una región del espacio $V$ se obtiene integrando la densidad de probabilidad volumétrica $|\psi|^2$ sobre dicho volumen
+$$ P(V) = \int_V |\psi_{nlm}|^2 \, dV $$
+$$ P(r \leq R) = \int_0^R r^2 |\psi_{200}(r)|^2 \, dr \int_0^\pi \sin\theta \, d\theta \int_0^{2\pi} d\varphi $$
+$$ \frac{dP}{dr} = 4\pi r^2 |\psi_{200}(r)|^2 $$
+Por consiguiente, la probabilidad de encontrar el electrón a una distancia menor o igual a $R$ es simplemente la integral de esta densidad radial:
+$$ P(r \leq R) = \int_0^R \frac{dP}{dr} \, dr $$
+Para nuestro caso específico:
+$$ P(r \leq 2r_{200}^{mp}) = \int_{0}^{2r_{200}^{mp}} \frac{dP}{dr} \, dr $$
 
 
+La densidad de probabilidad radial para el estado $\psi_{200}$ es:
 
-\bibliographystyle{plainurl}
-\bibliography{bibliografia} 
+$$ \frac{dP}{dr} = \frac{1}{8a_0^3} r^2 \left( 2 - \frac{r}{a_0} \right)^2 e^{-r/a_0} $$
+
+Asimismo, establecimos que la distancia radial más probable (el máximo global de $\frac{dP}{dr}$) ocurre en:
+
+$$ r_{200}^{mp} = (3 + \sqrt{5})a_0 $$
+
+El límite superior de nuestra integral es $R = 2r_{200}^{mp} = 2(3 + \sqrt{5})a_0$. Para simplificar el cálculo, realizamos el cambio de variable adimensional $x = r/a_0$, de modo que $dr = a_0 \, dx$. El límite superior de integración se convierte en $X = 2(3 + \sqrt{5}) = 6 + 2\sqrt{5}$. La integral se reescribe como:
+
+$$ P(r \leq 2r_{200}^{mp}) = \int_{0}^{X} \frac{1}{8a_0^3} (a_0 x)^2 (2 - x)^2 e^{-x} (a_0 \, dx) = \frac{1}{8} \int_{0}^{X} x^2 (2 - x)^2 e^{-x} \, dx  = \frac{1}{8} \int_{0}^{X} (x^4 - 4x^3 + 4x^2)e^{-x} \, dx$$
+
+La integral a resolver es de la forma $\int P(x) e^{-x} \, dx$, donde $P(x)$ es un polinomio. Este tipo de integrales, estrechamente relacionadas con la función Gamma incompleta, se resuelven mediante integración por partes sucesivas o el método de coeficientes indeterminados. Buscamos un polinomio $Q(x)$ tal que:
+
+$$ \frac{d}{dx} \left[ -e^{-x} Q(x) \right] = (x^4 - 4x^3 + 4x^2) e^{-x} $$
+
+Al derivar el lado izquierdo e igualar los coeficientes de las potencias de $x$, obtenemos que $Q(x) = x^4 + 4x^2 + 8x + 8$. Por lo tanto, la integral indefinida es:
+
+$$ \int (x^4 - 4x^3 + 4x^2) e^{-x} \, dx = -e^{-x} (x^4 + 4x^2 + 8x + 8) $$
+
+Evaluamos esta primitiva en los límites de integración $0$ y $X$:
+
+$$ \int_{0}^{X} (x^4 - 4x^3 + 4x^2) e^{-x} \, dx = \left[ -e^{-x} (x^4 + 4x^2 + 8x + 8) \right]_0^X $$
+$$ = -e^{-X} (X^4 + 4X^2 + 8X + 8) - \left( -e^{0} (0 + 0 + 0 + 8) \right) $$
+$$ = 8 - e^{-X} (X^4 + 4X^2 + 8X + 8) $$
+
+Sustituyendo este resultado en la expresión de la probabilidad:
+
+$$ P(r \leq 2r_{200}^{mp}) = \frac{1}{8} \left[ 8 - e^{-X} (X^4 + 4X^2 + 8X + 8) \right] = 1 - \frac{1}{8} e^{-X} (X^4 + 4X^2 + 8X + 8) $$
+
+Para simplificar la expresión polinómica evaluada en $X = 6 + 2\sqrt{5}$, notamos que este valor no es arbitrario, sino que proviene de la ecuación cuadrática de los máximos locales. Si $x = 3 + \sqrt{5}$ satisface $x^2 - 6x + 4 = 0$, entonces $X = 2x$ satisface:
+
+$$ \left(\frac{X}{2}\right)^2 - 6\left(\frac{X}{2}\right) + 4 = 0 \implies X^2 - 12X + 16 = 0 \implies X^2 = 12X - 16 $$
+
+Utilizamos esta relación recursiva para reducir las potencias superiores de $X$ en el polinomio:
+
+$$ X^2 = 12X - 16 $$
+$$ X^4 = (12X - 16)^2 = 144X^2 - 384X + 256 = 144(12X - 16) - 384X + 256 = 1344X - 2048 $$
+
+Sustituimos $X^4$ y $X^2$ en la expresión $X^4 + 4X^2 + 8X + 8$:
+
+$$ (1344X - 2048) + 4(12X - 16) + 8X + 8 $$
+$$ = 1344X - 2048 + 48X - 64 + 8X + 8 $$
+$$ = 1400X - 2104 $$
+
+Dividiendo entre 8, como exige nuestra fórmula de la probabilidad:
+
+$$ \frac{1}{8} (1400X - 2104) = 175X - 263 $$
+
+Finalmente, evaluamos este polinomio lineal en $X = 6 + 2\sqrt{5}$:
+
+$$ 175(6 + 2\sqrt{5}) - 263 = 1050 + 350\sqrt{5} - 263 = 787 + 350\sqrt{5} $$
+
+Sustituyendo esto en la ecuación de la probabilidad:
+
+$$ P(r \leq 2r_{200}^{mp}) = 1 - (787 + 350\sqrt{5}) e^{-(6 + 2\sqrt{5})} \approx 0.9556$$
+\end{enumerate}
+
+
 \end{document}
