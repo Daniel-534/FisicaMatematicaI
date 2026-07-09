@@ -646,7 +646,8 @@ $$ r_{200}^{mp} = (3 + \sqrt{5})\, a_0 \approx 5.236\, a_0 $$
 
 	\item En mecánica cuántica, la probabilidad de localizar una partícula en una región del espacio $V$ se obtiene integrando la densidad de probabilidad volumétrica $|\psi|^2$ sobre dicho volumen
 $$ P(V) = \int_V |\psi_{nlm}|^2 \, dV $$
-$$ P(r \leq R) = \int_0^R r^2 |\psi_{200}(r)|^2 \, dr \int_0^\pi \sin\theta \, d\theta \int_0^{2\pi} d\varphi $$
+$$ P(r \leq R) = \int_0^R r^2 |\psi_{200}(r)|^2 \, dr \int_0^\pi \sin\theta \, d\theta \int_0^{2\pi} d\varphi =\int_0^R 4\pi r^2 |\psi_{200}(r)|^2$$
+Recuerde que
 $$ \frac{dP}{dr} = 4\pi r^2 |\psi_{200}(r)|^2 $$
 Por consiguiente, la probabilidad de encontrar el electrón a una distancia menor o igual a $R$ es simplemente la integral de esta densidad radial:
 $$ P(r \leq R) = \int_0^R \frac{dP}{dr} \, dr $$
@@ -710,6 +711,25 @@ $$ 175(6 + 2\sqrt{5}) - 263 = 1050 + 350\sqrt{5} - 263 = 787 + 350\sqrt{5} $$
 Sustituyendo esto en la ecuación de la probabilidad:
 
 $$ P(r \leq 2r_{200}^{mp}) = 1 - (787 + 350\sqrt{5}) e^{-(6 + 2\sqrt{5})} \approx 0.9556$$
+
+
+\textbf{\textit{Solución alternativa usando la función gamma incompleta}}
+
+\textbf{Función Gamma incompleta inferior:}
+    $$ \gamma(s, X) = \int_0^X t^{s-1} e^{-t} \, dt $$
+Que podemos reescribir, por comodidad, así:
+
+$$ \gamma(n+1, X) = \int_0^X x^n e^{-x} \, dx $$
+
+La integral a resolver es:
+
+$$P(r \leq 2r_{200}^{mp}) =  \frac{1}{8} \int_{0}^{X} (x^4 - 4x^3 + 4x^2)e^{-x} \, dx$$
+
+En términos de la función gamma incompleta nos queda
+
+$$ P(r \leq 2r_{200}^{mp}) = \frac{1}{8} \Big[ \gamma(5, X) - 4\gamma(4, X) + 4\gamma(3, X) \Big] $$
+
+
 \end{enumerate}
 
 
